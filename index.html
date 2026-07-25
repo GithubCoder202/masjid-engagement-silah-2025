@@ -1,0 +1,2517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silah — AI-Powered Community Platform</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <style>
+        /* ========== DESIGN SYSTEM ========== */
+        :root {
+            --green: #1A6B4F;
+            --green-light: #238B68;
+            --green-dark: #0F4A37;
+            --green-pale: #E8F5F0;
+            --gold: #C9A84C;
+            --gold-light: #E8D48A;
+            --gold-pale: #FDF6E0;
+            --cream: #FDF8F0;
+            --teal: #2A9D8F;
+            --teal-light: #6BC4B8;
+            --charcoal: #2C3E50;
+            --charcoal-light: #4A627A;
+            --gray-50: #F8FAFB;
+            --gray-100: #EEF2F5;
+            --gray-200: #DCE3E9;
+            --gray-300: #B8C4CE;
+            --gray-400: #8FA0AE;
+            --gray-500: #6B7F8F;
+            --shadow-sm: 0 2px 8px rgba(26, 107, 79, 0.08);
+            --shadow-md: 0 8px 24px rgba(26, 107, 79, 0.12);
+            --shadow-lg: 0 16px 48px rgba(26, 107, 79, 0.16);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-full: 9999px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ========== RESET & BASE ========== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--charcoal);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ========== APP SHELL ========== */
+        .app {
+            width: 100%;
+            max-width: 1280px;
+            height: 820px;
+            background: var(--cream);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 260px;
+            min-width: 260px;
+            background: var(--green);
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .sidebar-brand .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--green-dark);
+            font-weight: 800;
+        }
+
+        .sidebar-brand h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .sidebar-brand h1 span {
+            color: var(--gold-light);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sidebar-nav .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sidebar-nav .nav-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .sidebar-nav .nav-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            box-shadow: inset 3px 0 0 var(--gold);
+        }
+
+        .sidebar-nav .nav-item i {
+            width: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .sidebar-stats {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .sidebar-stats .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .sidebar-stats .stat-row span:last-child {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .sidebar-hadith {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            border-left: 3px solid var(--gold);
+        }
+        .sidebar-hadith .source {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 4px;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--cream);
+        }
+
+        /* ========== TOP BAR ========== */
+        .topbar {
+            padding: 18px 32px;
+            background: #fff;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .topbar-left .greeting {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .topbar-left .greeting small {
+            font-weight: 400;
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .topbar-right .search-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .topbar-right .search-wrap input {
+            padding: 8px 16px 8px 40px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+            transition: var(--transition);
+            width: 200px;
+            outline: none;
+        }
+        .topbar-right .search-wrap input:focus {
+            border-color: var(--green);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.1);
+            width: 240px;
+        }
+        .topbar-right .search-wrap i {
+            position: absolute;
+            left: 14px;
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .topbar-right .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--gray-500);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .topbar-right .icon-btn:hover {
+            background: var(--gray-100);
+            color: var(--charcoal);
+        }
+        .topbar-right .icon-btn .badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 18px;
+            height: 18px;
+            background: var(--gold);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .topbar-right .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            border: 2px solid var(--gray-200);
+            transition: var(--transition);
+        }
+        .topbar-right .avatar:hover {
+            border-color: var(--green);
+        }
+
+        /* ========== SCREEN CONTAINER ========== */
+        .screen-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 32px 32px;
+            position: relative;
+        }
+
+        .screen-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .screen-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .screen-container::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 10px;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeUp 0.4s ease;
+        }
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== SCREEN: ONBOARDING ========== */
+        .onboarding-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .onboarding-header .moon-icon {
+            font-size: 48px;
+            color: var(--gold);
+            margin-bottom: 8px;
+            display: block;
+        }
+        .onboarding-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            color: var(--charcoal);
+        }
+        .onboarding-header p {
+            color: var(--gray-500);
+            font-size: 16px;
+            margin-top: 4px;
+        }
+
+        .onboarding-form {
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+
+        .form-group .radio-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .form-group .radio-grid .radio-option {
+            padding: 10px 18px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+            background: #fff;
+            flex: 1 0 auto;
+            text-align: center;
+            min-width: 120px;
+        }
+        .form-group .radio-grid .radio-option:hover {
+            border-color: var(--green-light);
+        }
+        .form-group .radio-grid .radio-option.selected {
+            border-color: var(--green);
+            background: var(--green-pale);
+            color: var(--green-dark);
+            font-weight: 600;
+        }
+
+        .form-group .checkbox-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .form-group .checkbox-grid .checkbox-option {
+            padding: 10px 18px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-group .checkbox-grid .checkbox-option:hover {
+            border-color: var(--green-light);
+        }
+        .form-group .checkbox-grid .checkbox-option.selected {
+            border-color: var(--green);
+            background: var(--green-pale);
+        }
+        .form-group .checkbox-grid .checkbox-option i {
+            color: var(--green);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .form-group .checkbox-grid .checkbox-option.selected i {
+            opacity: 1;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            transition: var(--transition);
+            outline: none;
+            color: var(--charcoal);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7F8F' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+        .form-group select:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: var(--green);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-primary:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .onboarding-footer {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+        .onboarding-footer i {
+            color: var(--green);
+        }
+
+        /* ========== SCREEN: DASHBOARD ========== */
+        .dash-welcome {
+            margin-bottom: 24px;
+        }
+        .dash-welcome h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            color: var(--charcoal);
+        }
+        .dash-welcome h2 span {
+            color: var(--green);
+        }
+        .dash-welcome p {
+            color: var(--gray-500);
+            font-size: 15px;
+        }
+
+        .dash-progress {
+            background: #fff;
+            padding: 18px 24px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            border: 1px solid var(--gray-100);
+        }
+        .dash-progress .prog-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .dash-progress .prog-left .emoji-big {
+            font-size: 28px;
+        }
+        .dash-progress .prog-left .prog-text {
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+        .dash-progress .prog-left .prog-text strong {
+            color: var(--charcoal);
+        }
+        .dash-progress .prog-bar {
+            flex: 1;
+            min-width: 120px;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .dash-progress .prog-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--teal));
+            border-radius: 10px;
+            width: 45%;
+            transition: width 1s ease;
+        }
+        .dash-progress .prog-pct {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--green);
+        }
+
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .dash-card {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            margin-bottom: 20px;
+        }
+        .dash-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .dash-card .card-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .dash-card .card-header a {
+            font-size: 13px;
+            color: var(--green);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .dash-card .card-header a:hover {
+            text-decoration: underline;
+        }
+
+        .recommend-item {
+            display: flex;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .recommend-item:last-child {
+            border-bottom: none;
+        }
+        .recommend-item .rec-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            color: var(--green);
+        }
+        .recommend-item .rec-info {
+            flex: 1;
+        }
+        .recommend-item .rec-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .recommend-item .rec-info p {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin: 2px 0 6px;
+        }
+        .recommend-item .rec-info .rec-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .recommend-item .rec-info .rec-actions button {
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .recommend-item .rec-info .rec-actions .btn-join {
+            background: var(--green);
+            color: #fff;
+        }
+        .recommend-item .rec-info .rec-actions .btn-join:hover {
+            background: var(--green-dark);
+        }
+        .recommend-item .rec-info .rec-actions .btn-save {
+            background: var(--gray-100);
+            color: var(--gray-500);
+        }
+        .recommend-item .rec-info .rec-actions .btn-save:hover {
+            background: var(--gray-200);
+        }
+
+        /* Mentor Card */
+        .mentor-card {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .mentor-card:last-child {
+            border-bottom: none;
+        }
+        .mentor-card .mentor-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--gold-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--gold);
+            flex-shrink: 0;
+            border: 2px solid var(--gold-light);
+        }
+        .mentor-card .mentor-info {
+            flex: 1;
+        }
+        .mentor-card .mentor-info .name {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--charcoal);
+        }
+        .mentor-card .mentor-info .name .stars {
+            color: var(--gold);
+            font-size: 13px;
+            margin-left: 6px;
+        }
+        .mentor-card .mentor-info .title {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .mentor-card .mentor-info .msg {
+            font-size: 13px;
+            color: var(--gray-400);
+            margin-top: 2px;
+            font-style: italic;
+        }
+        .mentor-card .mentor-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .mentor-card .mentor-actions button {
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+        .mentor-card .mentor-actions .btn-msg {
+            background: var(--gray-100);
+            color: var(--charcoal);
+        }
+        .mentor-card .mentor-actions .btn-msg:hover {
+            background: var(--gray-200);
+        }
+        .mentor-card .mentor-actions .btn-sched {
+            background: var(--green);
+            color: #fff;
+        }
+        .mentor-card .mentor-actions .btn-sched:hover {
+            background: var(--green-dark);
+        }
+
+        .ai-tip {
+            margin-top: 12px;
+            padding: 14px 18px;
+            background: var(--green-pale);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--green);
+            font-size: 14px;
+            color: var(--charcoal);
+        }
+        .ai-tip i {
+            color: var(--green);
+            margin-right: 8px;
+        }
+
+        /* ========== SCREEN: MENTOR MATCH ========== */
+        .match-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            border: 1px solid var(--gray-100);
+            align-items: center;
+        }
+        .match-filters .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+        .match-filters .filter-group select {
+            padding: 6px 12px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            outline: none;
+            color: var(--charcoal);
+            cursor: pointer;
+        }
+        .match-filters .filter-group select:focus {
+            border-color: var(--green);
+        }
+
+        .match-result {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            margin-bottom: 16px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: var(--transition);
+        }
+        .match-result:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .match-result .match-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--green);
+            flex-shrink: 0;
+        }
+        .match-result .match-body {
+            flex: 1;
+        }
+        .match-result .match-body .mname {
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--charcoal);
+        }
+        .match-result .match-body .mname .stars {
+            color: var(--gold);
+            font-size: 14px;
+            margin-left: 6px;
+        }
+        .match-result .match-body .mmeta {
+            font-size: 14px;
+            color: var(--gray-500);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 4px 0 6px;
+        }
+        .match-result .match-body .mmeta .dot {
+            color: var(--gray-300);
+        }
+        .match-result .match-body .mdesc {
+            font-size: 14px;
+            color: var(--gray-400);
+            margin-bottom: 8px;
+        }
+        .match-result .match-body .mactions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .match-result .match-body .mactions button {
+            padding: 6px 18px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .match-result .match-body .mactions .btn-view {
+            background: var(--gray-100);
+            color: var(--charcoal);
+        }
+        .match-result .match-body .mactions .btn-view:hover {
+            background: var(--gray-200);
+        }
+        .match-result .match-body .mactions .btn-req {
+            background: var(--green);
+            color: #fff;
+        }
+        .match-result .match-body .mactions .btn-req:hover {
+            background: var(--green-dark);
+        }
+        .match-result .match-badge {
+            background: var(--green-pale);
+            color: var(--green);
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            align-self: center;
+        }
+
+        .notify-cta {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+        .notify-cta button {
+            padding: 8px 24px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--green);
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            margin-top: 6px;
+        }
+        .notify-cta button:hover {
+            background: var(--green-dark);
+        }
+
+        /* ========== SCREEN: COMMUNITY DISCOVERY ========== */
+        .disco-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 6px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--gray-100);
+            box-shadow: var(--shadow-sm);
+            width: fit-content;
+        }
+        .disco-tabs .tab {
+            padding: 8px 20px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            background: transparent;
+            color: var(--gray-500);
+        }
+        .disco-tabs .tab.active {
+            background: var(--green);
+            color: #fff;
+        }
+        .disco-tabs .tab:hover:not(.active) {
+            background: var(--gray-100);
+        }
+
+        .disco-search {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .disco-search input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+            background: #fff;
+            min-width: 160px;
+        }
+        .disco-search input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
+        }
+        .disco-search .filter-chips {
+            display: flex;
+            gap: 8px;
+        }
+        .disco-search .filter-chips .chip {
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--gray-200);
+            background: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            color: var(--gray-500);
+        }
+        .disco-search .filter-chips .chip.active {
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green);
+        }
+        .disco-search .filter-chips .chip:hover:not(.active) {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .event-card {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 18px 22px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            transition: var(--transition);
+        }
+        .event-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .event-card .ev-left {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+        .event-card .ev-left .ev-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--gold-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+        .event-card .ev-left .ev-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .event-card .ev-left .ev-info .ev-loc {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .event-card .ev-left .ev-info .ev-meta {
+            font-size: 13px;
+            color: var(--gray-400);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+        .event-card .ev-left .ev-info .ev-meta .tag {
+            background: var(--green-pale);
+            color: var(--green);
+            padding: 0 10px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .event-card .ev-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .event-card .ev-right button {
+            padding: 6px 18px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .event-card .ev-right .btn-rsvp {
+            background: var(--green);
+            color: #fff;
+        }
+        .event-card .ev-right .btn-rsvp:hover {
+            background: var(--green-dark);
+        }
+        .event-card .ev-right .btn-share {
+            background: var(--gray-100);
+            color: var(--gray-500);
+        }
+        .event-card .ev-right .btn-share:hover {
+            background: var(--gray-200);
+        }
+
+        .mosque-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .mosque-row:last-child {
+            border-bottom: none;
+        }
+        .mosque-row .mq-icon {
+            font-size: 22px;
+            color: var(--gold);
+            width: 36px;
+            text-align: center;
+        }
+        .mosque-row .mq-info {
+            flex: 1;
+        }
+        .mosque-row .mq-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .mosque-row .mq-info .mq-detail {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .mosque-row .mq-info .mq-detail .stars {
+            color: var(--gold);
+        }
+        .mosque-row .mq-actions button {
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-100);
+            color: var(--charcoal);
+        }
+        .mosque-row .mq-actions button:hover {
+            background: var(--gray-200);
+        }
+
+        /* ========== SCREEN: COMMUNITY FEED ========== */
+        .feed-post-box {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 18px 22px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            margin-bottom: 20px;
+        }
+        .feed-post-box .post-input {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+        .feed-post-box .post-input .pa {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--green);
+            flex-shrink: 0;
+        }
+        .feed-post-box .post-input input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+            background: var(--gray-50);
+        }
+        .feed-post-box .post-input input:focus {
+            border-color: var(--green);
+            background: #fff;
+        }
+        .feed-post-box .post-tools {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-100);
+        }
+        .feed-post-box .post-tools button {
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .feed-post-box .post-tools button:hover {
+            color: var(--green);
+        }
+
+        .feed-item {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 18px 22px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            margin-bottom: 16px;
+        }
+        .feed-item .feed-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .feed-item .feed-head .fh-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feed-item .feed-head .fh-left .fa {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--green);
+        }
+        .feed-item .feed-head .fh-left .fname {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--charcoal);
+        }
+        .feed-item .feed-head .fh-left .ftime {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+        .feed-item .feed-body {
+            font-size: 15px;
+            color: var(--charcoal);
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+        .feed-item .feed-body .emoji-big {
+            font-size: 20px;
+        }
+        .feed-item .feed-actions {
+            display: flex;
+            gap: 20px;
+            padding-top: 10px;
+            border-top: 1px solid var(--gray-100);
+        }
+        .feed-item .feed-actions button {
+            background: none;
+            border: none;
+            font-size: 14px;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .feed-item .feed-actions button:hover {
+            color: var(--green);
+        }
+        .feed-item .feed-actions button .count {
+            font-weight: 600;
+        }
+        .feed-item .feed-comments {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--gray-100);
+        }
+        .feed-item .feed-comments .comment {
+            font-size: 13px;
+            color: var(--gray-500);
+            padding: 4px 0;
+        }
+        .feed-item .feed-comments .comment strong {
+            color: var(--charcoal);
+        }
+
+        /* ========== SCREEN: PROFILE ========== */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .profile-header .big-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 30px;
+            color: var(--green);
+            margin: 0 auto 10px;
+            border: 4px solid var(--gold-light);
+        }
+        .profile-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            color: var(--charcoal);
+        }
+        .profile-header .p-badge {
+            display: inline-block;
+            padding: 2px 16px;
+            border-radius: var(--radius-full);
+            background: var(--green-pale);
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+        .profile-header .p-loc {
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+        .profile-header .p-edit {
+            margin-top: 10px;
+            padding: 6px 24px;
+            border-radius: var(--radius-full);
+            border: 2px solid var(--gray-200);
+            background: transparent;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            color: var(--charcoal);
+        }
+        .profile-header .p-edit:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .profile-grid .dash-card {
+            margin-bottom: 0;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+        .milestone-item.done {
+            color: var(--charcoal);
+        }
+        .milestone-item.done i {
+            color: var(--green);
+        }
+        .milestone-item i {
+            width: 20px;
+            color: var(--gray-300);
+        }
+
+        .profile-setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .profile-setting-row:last-child {
+            border-bottom: none;
+        }
+        .profile-setting-row .ps-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--charcoal);
+        }
+        .profile-setting-row .ps-left i {
+            color: var(--gray-400);
+            width: 20px;
+        }
+        .toggle {
+            width: 44px;
+            height: 24px;
+            background: var(--gray-300);
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .toggle.on {
+            background: var(--green);
+        }
+        .toggle .toggle-knob {
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: var(--transition);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        }
+        .toggle.on .toggle-knob {
+            left: 23px;
+        }
+
+        /* ========== BOTTOM NAV (mobile) ========== */
+        .bottom-nav {
+            display: none;
+            background: #fff;
+            border-top: 1px solid var(--gray-100);
+            padding: 8px 0 10px;
+            justify-content: space-around;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .bottom-nav .bn-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            font-size: 10px;
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
+            padding: 4px 12px;
+        }
+        .bottom-nav .bn-item i {
+            font-size: 18px;
+        }
+        .bottom-nav .bn-item.active {
+            color: var(--green);
+        }
+        .bottom-nav .bn-item:hover {
+            color: var(--green);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .app {
+                height: auto;
+                min-height: 100vh;
+                border-radius: 0;
+                flex-direction: column;
+            }
+            .sidebar {
+                display: none;
+            }
+            .bottom-nav {
+                display: flex;
+            }
+            .topbar {
+                padding: 14px 20px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .topbar-right .search-wrap input {
+                width: 140px;
+            }
+            .topbar-right .search-wrap input:focus {
+                width: 160px;
+            }
+            .screen-container {
+                padding: 20px;
+                padding-bottom: 8px;
+            }
+            .dash-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .match-result {
+                flex-wrap: wrap;
+            }
+            .event-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .onboarding-form {
+                max-width: 100%;
+            }
+            .match-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 0;
+            }
+            .app {
+                border-radius: 0;
+            }
+            .topbar {
+                padding: 12px 16px;
+            }
+            .topbar-left .greeting {
+                font-size: 14px;
+            }
+            .topbar-left .greeting small {
+                font-size: 12px;
+                display: block;
+            }
+            .topbar-right .search-wrap input {
+                width: 100px;
+                font-size: 12px;
+                padding: 6px 12px 6px 32px;
+            }
+            .topbar-right .search-wrap input:focus {
+                width: 120px;
+            }
+            .topbar-right .search-wrap i {
+                left: 10px;
+                font-size: 12px;
+            }
+            .topbar-right .icon-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+            .topbar-right .avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+            .screen-container {
+                padding: 16px;
+                padding-bottom: 4px;
+            }
+            .dash-progress {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .dash-progress .prog-left {
+                flex-wrap: wrap;
+            }
+            .recommend-item {
+                flex-wrap: wrap;
+            }
+            .mentor-card {
+                flex-wrap: wrap;
+            }
+            .mentor-card .mentor-actions {
+                flex-direction: row;
+                width: 100%;
+            }
+            .match-result {
+                flex-direction: column;
+            }
+            .match-result .match-badge {
+                align-self: flex-start;
+            }
+            .disco-tabs {
+                width: 100%;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            .disco-search {
+                flex-direction: column;
+            }
+            .disco-search .filter-chips {
+                flex-wrap: wrap;
+            }
+            .form-group .radio-grid,
+            .form-group .checkbox-grid {
+                flex-direction: column;
+            }
+            .form-group .radio-grid .radio-option,
+            .form-group .checkbox-grid .checkbox-option {
+                flex: 1;
+                min-width: unset;
+            }
+            .feed-post-box .post-input {
+                flex-wrap: wrap;
+            }
+            .feed-post-box .post-input input {
+                width: 100%;
+            }
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .onboarding-header h2 {
+                font-size: 22px;
+            }
+            .bottom-nav .bn-item {
+                font-size: 9px;
+                padding: 2px 8px;
+            }
+            .bottom-nav .bn-item i {
+                font-size: 16px;
+            }
+            .sidebar-hadith {
+                display: none;
+            }
+            .sidebar-stats {
+                display: none;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .topbar-right .search-wrap input {
+                width: 70px;
+            }
+            .topbar-right .search-wrap input:focus {
+                width: 90px;
+            }
+            .topbar-right .icon-btn .badge {
+                width: 14px;
+                height: 14px;
+                font-size: 8px;
+                top: 2px;
+                right: 2px;
+            }
+        }
+
+        /* Scrollable content within cards on small screens */
+        @media (max-width: 768px) {
+            .screen-container {
+                overflow-y: visible;
+            }
+            .app {
+                height: auto;
+                min-height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app" id="app">
+
+        <!-- ========== SIDEBAR ========== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-icon">ص</div>
+                <h1>Silah<span>.</span></h1>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-screen="dashboard">
+                    <i class="fas fa-home"></i> Home
+                </button>
+                <button class="nav-item" data-screen="onboarding">
+                    <i class="fas fa-user-plus"></i> Onboarding
+                </button>
+                <button class="nav-item" data-screen="mentor">
+                    <i class="fas fa-handshake"></i> My Mentor
+                </button>
+                <button class="nav-item" data-screen="discover">
+                    <i class="fas fa-compass"></i> Discover
+                </button>
+                <button class="nav-item" data-screen="feed">
+                    <i class="fas fa-comments"></i> Community
+                </button>
+                <button class="nav-item" data-screen="profile">
+                    <i class="fas fa-user"></i> Profile
+                </button>
+            </nav>
+
+            <div class="sidebar-stats">
+                <div class="stat-row"><span>📖 Classes</span><span>6</span></div>
+                <div class="stat-row"><span>🤝 Sessions</span><span>2</span></div>
+                <div class="stat-row"><span>🕌 Events</span><span>4</span></div>
+                <div class="stat-row"><span>❤️ Connections</span><span>15</span></div>
+            </div>
+
+            <div class="sidebar-hadith">
+                “The example of believers in their affection and mercy is like the body...”
+                <div class="source">— Bukhari &amp; Muslim</div>
+            </div>
+        </aside>
+
+        <!-- ========== MAIN ========== -->
+        <div class="main">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <div class="greeting">
+                        👋 Assalamu alaikum, <strong>Sarah</strong>
+                        <small>· Your journey continues</small>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="search-wrap">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search..." />
+                    </div>
+                    <button class="icon-btn" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn" title="AI Assistant">
+                        <i class="fas fa-sparkles"></i>
+                    </button>
+                    <div class="avatar">SA</div>
+                </div>
+            </header>
+
+            <!-- SCREEN CONTAINER -->
+            <div class="screen-container" id="screenContainer">
+
+                <!-- ===== SCREEN: ONBOARDING ===== -->
+                <div class="screen" id="screen-onboarding">
+                    <div class="onboarding-header">
+                        <span class="moon-icon">🌙</span>
+                        <h2>Welcome to Silah</h2>
+                        <p>Your path to community &amp; belonging begins here</p>
+                    </div>
+
+                    <div class="onboarding-form">
+                        <div class="form-group">
+                            <label>What brings you here today?</label>
+                            <div class="radio-grid" id="purposeGroup">
+                                <div class="radio-option selected" data-value="new">○ I'm new to Islam</div>
+                                <div class="radio-option" data-value="explore">○ I'm exploring Islam</div>
+                                <div class="radio-option" data-value="support">○ I want to support others</div>
+                                <div class="radio-option" data-value="leader">○ I'm a community leader</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Your Location</label>
+                            <select>
+                                <option value="chicago">📍 Chicago, IL</option>
+                                <option value="nyc">📍 New York, NY</option>
+                                <option value="la">📍 Los Angeles, CA</option>
+                                <option value="houston">📍 Houston, TX</option>
+                                <option value="london">📍 London, UK</option>
+                                <option value="other">🌍 Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Your Interests <span style="font-weight:400;color:var(--gray-400)">(select all)</span></label>
+                            <div class="checkbox-grid" id="interestsGroup">
+                                <div class="checkbox-option selected"><i class="fas fa-check-circle"></i> Quran Study</div>
+                                <div class="checkbox-option selected"><i class="fas fa-check-circle"></i> Arabic Learning</div>
+                                <div class="checkbox-option"><i class="fas fa-check-circle"></i> Prayer Guidance</div>
+                                <div class="checkbox-option"><i class="fas fa-check-circle"></i> Community Service</div>
+                                <div class="checkbox-option"><i class="fas fa-check-circle"></i> Islamic History</div>
+                                <div class="checkbox-option"><i class="fas fa-check-circle"></i> Mental Wellness</div>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary" id="onboardingContinue">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <div class="onboarding-footer">
+                            <i class="fas fa-lock"></i> We'll never share your data · Privacy-first
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== SCREEN: DASHBOARD ===== -->
+                <div class="screen active" id="screen-dashboard">
+                    <div class="dash-welcome">
+                        <h2>👋 Assalamu alaikum, <span>Sarah</span>!</h2>
+                        <p>Here's your personalized path for today.</p>
+                    </div>
+
+                    <div class="dash-progress">
+                        <div class="prog-left">
+                            <span class="emoji-big">🌱</span>
+                            <div class="prog-text">
+                                <strong>Beginner</strong> · 📍 Chicago · 🎯 8/15 goals
+                            </div>
+                        </div>
+                        <div class="prog-bar"><div class="fill" style="width:45%"></div></div>
+                        <span class="prog-pct">45%</span>
+                    </div>
+
+                    <div class="dash-grid">
+                        <div>
+                            <!-- Recommendations -->
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <h3>📖 For You</h3>
+                                    <a href="#">See all →</a>
+                                </div>
+
+                                <div class="recommend-item">
+                                    <div class="rec-icon">📖</div>
+                                    <div class="rec-info">
+                                        <h4>Understanding Prayer</h4>
+                                        <p>Beginner Class · Tomorrow 6PM</p>
+                                        <div class="rec-actions">
+                                            <button class="btn-join">Join</button>
+                                            <button class="btn-save">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="recommend-item">
+                                    <div class="rec-icon">🤝</div>
+                                    <div class="rec-info">
+                                        <h4>Sister's Halaqa Circle</h4>
+                                        <p>Weekly · Sat 10AM · 3 spots left</p>
+                                        <div class="rec-actions">
+                                            <button class="btn-join">RSVP</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="recommend-item">
+                                    <div class="rec-icon">🕌</div>
+                                    <div class="rec-info">
+                                        <h4>Open Mosque Day</h4>
+                                        <p>This Sunday · 2PM–6PM</p>
+                                        <div class="rec-actions">
+                                            <button class="btn-join" style="background:var(--teal);color:#fff">Learn More</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mentor Match -->
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <h3>⭐ Your Mentor Match</h3>
+                                    <a href="#" onclick="navigateTo('mentor')">Find more →</a>
+                                </div>
+
+                                <div class="mentor-card">
+                                    <div class="mentor-avatar">FH</div>
+                                    <div class="mentor-info">
+                                        <div class="name">Fatima H. <span class="stars">★★★★★</span></div>
+                                        <div class="title">3 years as mentor · Hafiza</div>
+                                        <div class="msg">"I'd love to help you with prayer &amp; Quran"</div>
+                                    </div>
+                                    <div class="mentor-actions">
+                                        <button class="btn-msg"><i class="fas fa-envelope"></i> Message</button>
+                                        <button class="btn-sched">Schedule</button>
+                                    </div>
+                                </div>
+
+                                <div class="ai-tip">
+                                    <i class="fas fa-robot"></i>
+                                    Based on your goals, I recommend starting with the <strong>"Daily Duas"</strong> class.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right column: quick stats / upcoming -->
+                        <div>
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <h3>📅 Upcoming</h3>
+                                    <a href="#" onclick="navigateTo('discover')">View all →</a>
+                                </div>
+                                <div style="font-size:14px;padding:4px 0;color:var(--gray-500);border-bottom:1px solid var(--gray-100);padding-bottom:10px;">
+                                    <strong style="color:var(--charcoal);">Wed 7PM</strong> — Essentials Class
+                                </div>
+                                <div style="font-size:14px;padding:4px 0;color:var(--gray-500);border-bottom:1px solid var(--gray-100);padding-bottom:10px;margin-top:6px;">
+                                    <strong style="color:var(--charcoal);">Fri 6PM</strong> — Community Iftar
+                                </div>
+                                <div style="font-size:14px;padding:4px 0;color:var(--gray-500);margin-top:6px;">
+                                    <strong style="color:var(--charcoal);">Sat 10AM</strong> — Halaqa Circle
+                                </div>
+                            </div>
+
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <h3>🤲 Quick Dua</h3>
+                                </div>
+                                <div style="font-size:15px;color:var(--charcoal);font-style:italic;line-height:1.8;">
+                                    "Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan waqina azaban-nar."
+                                </div>
+                                <div style="font-size:12px;color:var(--gray-400);margin-top:6px;">— Surah Al-Baqarah 2:201</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== SCREEN: MENTOR ===== -->
+                <div class="screen" id="screen-mentor">
+                    <div style="margin-bottom:16px;">
+                        <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">🤝 Find a Mentor</h2>
+                        <p style="color:var(--gray-500);">Let AI find the perfect guide for you.</p>
+                    </div>
+
+                    <div class="match-filters">
+                        <div class="filter-group">
+                            <span>Looking for:</span>
+                            <select><option>Sister</option><option>Brother</option><option>Any</option></select>
+                        </div>
+                        <div class="filter-group">
+                            <span>Focus:</span>
+                            <select><option>Quran &amp; Tajweed</option><option>Islamic Basics</option><option>Arabic</option><option>Mental Wellness</option></select>
+                        </div>
+                        <div class="filter-group">
+                            <span>Meeting:</span>
+                            <select><option>In-person</option><option>Online</option><option>Either</option></select>
+                        </div>
+                        <div class="filter-group">
+                            <span>Language:</span>
+                            <select><option>English</option><option>Arabic</option><option>Both</option></select>
+                        </div>
+                    </div>
+
+                    <div style="font-weight:600;color:var(--charcoal);margin-bottom:14px;font-size:15px;">
+                        ═══ 3 Matches Found ═══
+                    </div>
+
+                    <div class="match-result">
+                        <div class="match-avatar">AK</div>
+                        <div class="match-body">
+                            <div class="mname">Aisha K. <span class="stars">★★★★★</span></div>
+                            <div class="mmeta">Hafiza · 5 years experience <span class="dot">•</span> 📍 Nearby <span class="dot">•</span> <span style="color:var(--green);">🟢 Available this week</span></div>
+                            <div class="mdesc">"I help new sisters build confidence in prayer and reading Quran."</div>
+                            <div class="mactions">
+                                <button class="btn-view">View Profile</button>
+                                <button class="btn-req">Request Connect</button>
+                            </div>
+                        </div>
+                        <div class="match-badge">🤖 92% match</div>
+                    </div>
+
+                    <div class="match-result">
+                        <div class="match-avatar">ZM</div>
+                        <div class="match-body">
+                            <div class="mname">Zainab M. <span class="stars">★★★★☆</span></div>
+                            <div class="mmeta">Islamic Studies Teacher <span class="dot">•</span> 📍 Online only <span class="dot">•</span> <span style="color:var(--gold);">🟡 Busy this week</span></div>
+                            <div class="mdesc">"Specializing in Islamic basics &amp; aqeedah."</div>
+                            <div class="mactions">
+                                <button class="btn-view">View Profile</button>
+                                <button class="btn-req">Request Connect</button>
+                            </div>
+                        </div>
+                        <div class="match-badge">🤖 85% match</div>
+                    </div>
+
+                    <div class="match-result">
+                        <div class="match-avatar">OA</div>
+                        <div class="match-body">
+                            <div class="mname">Omar A. <span class="stars">★★★★★</span></div>
+                            <div class="mmeta">Quran Teacher · 8 years <span class="dot">•</span> 📍 2 miles away <span class="dot">•</span> <span style="color:var(--green);">🟢 Available</span></div>
+                            <div class="mdesc">"Focus on tajweed and memorization with a gentle approach."</div>
+                            <div class="mactions">
+                                <button class="btn-view">View Profile</button>
+                                <button class="btn-req">Request Connect</button>
+                            </div>
+                        </div>
+                        <div class="match-badge">🤖 88% match</div>
+                    </div>
+
+                    <div class="notify-cta">
+                        Not seeing who you're looking for? We'll notify you when new mentors join.
+                        <br />
+                        <button><i class="fas fa-bell"></i> Notify Me</button>
+                    </div>
+                </div>
+
+                <!-- ===== SCREEN: DISCOVER ===== -->
+                <div class="screen" id="screen-discover">
+                    <div style="margin-bottom:16px;">
+                        <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">📍 Discover Near You</h2>
+                    </div>
+
+                    <div class="disco-tabs">
+                        <button class="tab active">📋 List View</button>
+                        <button class="tab">🗺️ Map View</button>
+                    </div>
+
+                    <div class="disco-search">
+                        <input type="text" placeholder="🔍 Search events, classes, mosques..." />
+                        <div class="filter-chips">
+                            <button class="chip active">📍 Near me</button>
+                            <button class="chip">📅 This week</button>
+                            <button class="chip">🎯 All</button>
+                        </div>
+                    </div>
+
+                    <div style="font-weight:600;color:var(--charcoal);margin-bottom:12px;font-size:15px;">
+                        ═══ UPCOMING EVENTS ═══
+                    </div>
+
+                    <div class="event-card">
+                        <div class="ev-left">
+                            <div class="ev-icon">📖</div>
+                            <div class="ev-info">
+                                <h4>New Muslim Essentials</h4>
+                                <div class="ev-loc">Islamic Center of Chicago</div>
+                                <div class="ev-meta">
+                                    <span>🗓 Wed 7PM</span>
+                                    <span>🏷️ Free</span>
+                                    <span class="tag">👥 12 attending · 8 spots left</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ev-right">
+                            <button class="btn-rsvp">RSVP</button>
+                            <button class="btn-share"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="ev-left">
+                            <div class="ev-icon">🤝</div>
+                            <div class="ev-info">
+                                <h4>Community Iftar &amp; Dinner</h4>
+                                <div class="ev-loc">Masjid Al-Noor</div>
+                                <div class="ev-meta">
+                                    <span>🗓 Fri 6:30PM</span>
+                                    <span>🏷️ $5 donation</span>
+                                    <span class="tag">👥 45 attending</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ev-right">
+                            <button class="btn-rsvp">RSVP</button>
+                            <button class="btn-share"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+
+                    <div style="font-weight:600;color:var(--charcoal);margin:20px 0 12px;font-size:15px;">
+                        ═══ MOSQUES NEAR YOU ═══
+                    </div>
+
+                    <div class="mosque-row">
+                        <div class="mq-icon">🕌</div>
+                        <div class="mq-info">
+                            <h4>Islamic Center of Chicago</h4>
+                            <div class="mq-detail"><span class="stars">★★★★★</span> 4.8 · 0.8mi · 5 min walk · <span style="color:var(--green);">Open now</span></div>
+                        </div>
+                        <div class="mq-actions">
+                            <button>Directions</button>
+                            <button>Details</button>
+                        </div>
+                    </div>
+
+                    <div class="mosque-row">
+                        <div class="mq-icon">🕌</div>
+                        <div class="mq-info">
+                            <h4>Masjid Al-Huda</h4>
+                            <div class="mq-detail"><span class="stars">★★★★☆</span> 4.6 · 1.2mi · 8 min drive · Prayer times</div>
+                        </div>
+                        <div class="mq-actions">
+                            <button>Directions</button>
+                            <button>Details</button>
+                        </div>
+                    </div>
+
+                    <div class="mosque-row">
+                        <div class="mq-icon">🕌</div>
+                        <div class="mq-info">
+                            <h4>Islamic Foundation</h4>
+                            <div class="mq-detail"><span class="stars">★★★★★</span> 4.9 · 2.0mi · 12 min drive · <span style="color:var(--green);">Open now</span></div>
+                        </div>
+                        <div class="mq-actions">
+                            <button>Directions</button>
+                            <button>Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== SCREEN: FEED ===== -->
+                <div class="screen" id="screen-feed">
+                    <div style="margin-bottom:16px;">
+                        <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">💬 Community Feed</h2>
+                    </div>
+
+                    <div class="feed-post-box">
+                        <div class="post-input">
+                            <div class="pa">SA</div>
+                            <input type="text" placeholder="What's on your mind, Sarah?" />
+                        </div>
+                        <div class="post-tools">
+                            <button><i class="fas fa-image"></i> Photo</button>
+                            <button><i class="fas fa-link"></i> Link</button>
+                            <button><i class="fas fa-location-dot"></i> Location</button>
+                            <button style="margin-left:auto;background:var(--green);color:#fff;padding:4px 18px;border-radius:20px;font-weight:600;">Post</button>
+                        </div>
+                    </div>
+
+                    <div class="feed-item">
+                        <div class="feed-head">
+                            <div class="fh-left">
+                                <div class="fa">AJ</div>
+                                <div>
+                                    <div class="fname">Ahmed J.</div>
+                                    <div class="ftime">2h ago</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feed-body">
+                            "Just said my first full prayer with confidence! Alhamdulillah 🙏"
+                        </div>
+                        <div class="feed-actions">
+                            <button><i class="fas fa-heart"></i> <span class="count">24</span></button>
+                            <button><i class="fas fa-comment"></i> <span class="count">8</span></button>
+                            <button><i class="fas fa-share"></i> <span class="count">3</span></button>
+                        </div>
+                        <div class="feed-comments">
+                            <div class="comment"><strong>Fatima:</strong> Mashallah! So proud of you!</div>
+                            <div class="comment"><strong>Omar:</strong> Keep going, brother!</div>
+                        </div>
+                    </div>
+
+                    <div class="feed-item">
+                        <div class="feed-head">
+                            <div class="fh-left">
+                                <div class="fa">AK</div>
+                                <div>
+                                    <div class="fname">Aisha K.</div>
+                                    <div class="ftime">5h ago</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feed-body">
+                            "Does anyone know a good Quran teacher for beginners in the area?"
+                        </div>
+                        <div class="feed-actions">
+                            <button><i class="fas fa-heart"></i> <span class="count">12</span></button>
+                            <button><i class="fas fa-comment"></i> <span class="count">15</span></button>
+                            <button><i class="fas fa-share"></i> <span class="count">2</span></button>
+                        </div>
+                        <div class="feed-comments">
+                            <div class="comment"><strong>Zainab:</strong> I can recommend someone! DM me.</div>
+                            <div class="comment"><strong>Noor:</strong> Check the mentor section!</div>
+                        </div>
+                    </div>
+
+                    <div style="padding:16px;background:var(--green-pale);border-radius:var(--radius-sm);border-left:4px solid var(--green);font-size:14px;color:var(--charcoal);">
+                        <i class="fas fa-lightbulb" style="color:var(--green);margin-right:8px;"></i>
+                        <strong>Silah Tip:</strong> Did you know? You can find volunteer opportunities near you in the Discover section. Get involved and build bonds!
+                    </div>
+                </div>
+
+                <!-- ===== SCREEN: PROFILE ===== -->
+                <div class="screen" id="screen-profile">
+                    <div class="profile-header">
+                        <div class="big-avatar">SA</div>
+                        <h2>Sarah Ahmed</h2>
+                        <div class="p-badge">🌱 New Muslim · 6 months</div>
+                        <div class="p-loc">📍 Chicago, IL</div>
+                        <button class="p-edit">✎ Edit Profile</button>
+                    </div>
+
+                    <div class="profile-grid">
+                        <div>
+                            <div class="dash-card">
+                                <div class="card-header"><h3>🏆 My Journey</h3></div>
+                                <div class="milestone-item done"><i class="fas fa-check-circle"></i> Said Shahada</div>
+                                <div class="milestone-item done"><i class="fas fa-check-circle"></i> Attended first Jummah</div>
+                                <div class="milestone-item"><i class="far fa-circle"></i> Memorized 5 short surahs</div>
+                                <div class="milestone-item"><i class="far fa-circle"></i> Completed beginner class</div>
+                                <div style="margin-top:10px;"><a href="#" style="color:var(--green);font-weight:500;font-size:14px;">View All →</a></div>
+                            </div>
+
+                            <div class="dash-card">
+                                <div class="card-header"><h3>⭐ My Mentor</h3></div>
+                                <div style="display:flex;align-items:center;gap:14px;">
+                                    <div style="width:44px;height:44px;border-radius:50%;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--gold);">FH</div>
+                                    <div>
+                                        <div style="font-weight:600;">Fatima H. <span style="color:var(--gold);">★</span></div>
+                                        <div style="font-size:13px;color:var(--gray-500);">Next session: Tomorrow 7PM</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex;gap:10px;margin-top:10px;">
+                                    <button style="padding:6px 18px;border-radius:var(--radius-full);border:none;background:var(--gray-100);font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Message</button>
+                                    <button style="padding:6px 18px;border-radius:var(--radius-full);border:none;background:var(--green);color:#fff;font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Reschedule</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="dash-card">
+                                <div class="card-header"><h3>🤝 My Community</h3></div>
+                                <div style="font-size:14px;padding:4px 0;border-bottom:1px solid var(--gray-100);padding-bottom:8px;">
+                                    🕌 <strong>Islamic Center of Chicago</strong>
+                                </div>
+                                <div style="font-size:14px;padding:4px 0;border-bottom:1px solid var(--gray-100);padding-bottom:8px;margin-top:4px;">
+                                    🤝 <strong>Sister's Halaqa Circle</strong>
+                                </div>
+                                <div style="font-size:14px;padding:4px 0;margin-top:4px;">
+                                    📅 <strong>3 events</strong> attended this month
+                                </div>
+                            </div>
+
+                            <div class="dash-card">
+                                <div class="card-header"><h3>⚙️ Settings Quick</h3></div>
+                                <div class="profile-setting-row">
+                                    <span class="ps-left"><i class="fas fa-moon"></i> Ramadan Mode</span>
+                                    <div class="toggle" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
+                                </div>
+                                <div class="profile-setting-row">
+                                    <span class="ps-left"><i class="fas fa-bell"></i> Daily Duas Reminder</span>
+                                    <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
+                                </div>
+                                <div class="profile-setting-row">
+                                    <span class="ps-left"><i class="fas fa-envelope"></i> Community Digest</span>
+                                    <span style="font-size:13px;color:var(--gray-500);">Weekly</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /screen-container -->
+
+            <!-- BOTTOM NAV (mobile) -->
+            <nav class="bottom-nav" id="bottomNav">
+                <button class="bn-item active" data-screen="dashboard"><i class="fas fa-home"></i> Home</button>
+                <button class="bn-item" data-screen="mentor"><i class="fas fa-handshake"></i> Mentor</button>
+                <button class="bn-item" data-screen="discover"><i class="fas fa-compass"></i> Discover</button>
+                <button class="bn-item" data-screen="feed"><i class="fas fa-comments"></i> Feed</button>
+                <button class="bn-item" data-screen="profile"><i class="fas fa-user"></i> Profile</button>
+            </nav>
+
+        </div><!-- /main -->
+    </div><!-- /app -->
+
+    <script>
+        // ========== NAVIGATION ==========
+        const screens = {
+            onboarding: document.getElementById('screen-onboarding'),
+            dashboard: document.getElementById('screen-dashboard'),
+            mentor: document.getElementById('screen-mentor'),
+            discover: document.getElementById('screen-discover'),
+            feed: document.getElementById('screen-feed'),
+            profile: document.getElementById('screen-profile'),
+        };
+
+        const navItems = document.querySelectorAll('.nav-item');
+        const bottomNavItems = document.querySelectorAll('.bn-item');
+
+        function navigateTo(screenId) {
+            // Hide all screens
+            Object.values(screens).forEach(s => s.classList.remove('active'));
+
+            // Show target
+            const target = screens[screenId];
+            if (target) {
+                target.classList.add('active');
+                // Re-trigger animation
+                target.style.animation = 'none';
+                requestAnimationFrame(() => {
+                    target.style.animation = 'fadeUp 0.4s ease';
+                });
+            }
+
+            // Update sidebar nav
+            navItems.forEach(n => n.classList.remove('active'));
+            navItems.forEach(n => {
+                if (n.dataset.screen === screenId) n.classList.add('active');
+            });
+
+            // Update bottom nav
+            bottomNavItems.forEach(n => n.classList.remove('active'));
+            bottomNavItems.forEach(n => {
+                if (n.dataset.screen === screenId) n.classList.add('active');
+            });
+
+            // Scroll to top
+            document.getElementById('screenContainer').scrollTop = 0;
+        }
+
+        // Sidebar nav clicks
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const screen = item.dataset.screen;
+                if (screen) navigateTo(screen);
+            });
+        });
+
+        // Bottom nav clicks
+        bottomNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const screen = item.dataset.screen;
+                if (screen) navigateTo(screen);
+            });
+        });
+
+        // ========== ONBOARDING INTERACTIONS ==========
+        // Radio options
+        document.querySelectorAll('.radio-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                const parent = this.closest('.radio-grid');
+                parent.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Checkbox options
+        document.querySelectorAll('.checkbox-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+        });
+
+        // Onboarding continue
+        document.getElementById('onboardingContinue').addEventListener('click', function() {
+            // Collect selected interests
+            const interests = [];
+            document.querySelectorAll('#interestsGroup .checkbox-option.selected').forEach(el => {
+                interests.push(el.textContent.trim());
+            });
+            // Navigate to dashboard
+            navigateTo('dashboard');
+            // Show a little toast-like effect (optional)
+            const btn = this;
+            const orig = btn.innerHTML;
+            btn.innerHTML = '✅ Welcome!';
+            btn.style.background = 'var(--teal)';
+            setTimeout(() => {
+                btn.innerHTML = orig;
+                btn.style.background = '';
+            }, 1200);
+        });
+
+        // ========== TOGGLE SWITCH ==========
+        function toggleSwitch(el) {
+            el.classList.toggle('on');
+        }
+
+        // ========== TAB SWITCHING (Discover) ==========
+        document.querySelectorAll('.disco-tabs .tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const parent = this.closest('.disco-tabs');
+                parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // ========== CHIP TOGGLE (Discover) ==========
+        document.querySelectorAll('.filter-chips .chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                const parent = this.closest('.filter-chips');
+                parent.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // ========== RSVP / JOIN BUTTON FEEDBACK ==========
+        document.querySelectorAll('.btn-rsvp, .btn-join').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const orig = this.textContent;
+                this.textContent = '✅ Done!';
+                this.style.background = 'var(--teal)';
+                setTimeout(() => {
+                    this.textContent = orig;
+                    this.style.background = '';
+                }, 1200);
+            });
+        });
+
+        // ========== SAVE BUTTON ==========
+        document.querySelectorAll('.btn-save').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const orig = this.textContent;
+                this.textContent = '⭐ Saved';
+                this.style.background = 'var(--gold-pale)';
+                this.style.color = 'var(--gold)';
+                setTimeout(() => {
+                    this.textContent = orig;
+                    this.style.background = '';
+                    this.style.color = '';
+                }, 1200);
+            });
+        });
+
+        // ========== REQUEST CONNECT ==========
+        document.querySelectorAll('.btn-req').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const orig = this.textContent;
+                this.textContent = '✓ Requested';
+                this.style.background = 'var(--teal)';
+                setTimeout(() => {
+                    this.textContent = orig;
+                    this.style.background = '';
+                }, 1400);
+            });
+        });
+
+        // ========== NOTIFY ME ==========
+        document.querySelector('.notify-cta button')?.addEventListener('click', function() {
+            const orig = this.innerHTML;
+            this.innerHTML = '✅ Subscribed!';
+            this.style.background = 'var(--teal)';
+            setTimeout(() => {
+                this.innerHTML = orig;
+                this.style.background = '';
+            }, 1500);
+        });
+
+        // ========== POST BUTTON ==========
+        document.querySelector('.feed-post-box .post-tools button:last-child')?.addEventListener('click', function() {
+            const input = document.querySelector('.feed-post-box .post-input input');
+            if (input && input.value.trim()) {
+                const msg = input.value.trim();
+                // Create a new feed item
+                const feedContainer = document.querySelector('#screen-feed');
+                const newItem = document.createElement('div');
+                newItem.className = 'feed-item';
+                newItem.style.animation = 'fadeUp 0.4s ease';
+                newItem.innerHTML = `
+                            <div class="feed-head">
+                                <div class="fh-left">
+                                    <div class="fa">SA</div>
+                                    <div>
+                                        <div class="fname">Sarah A.</div>
+                                        <div class="ftime">Just now</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feed-body">"${msg}"</div>
+                            <div class="feed-actions">
+                                <button><i class="fas fa-heart"></i> <span class="count">0</span></button>
+                                <button><i class="fas fa-comment"></i> <span class="count">0</span></button>
+                                <button><i class="fas fa-share"></i> <span class="count">0</span></button>
+                            </div>
+                        `;
+                // Insert after the post box
+                const postBox = document.querySelector('.feed-post-box');
+                postBox.parentNode.insertBefore(newItem, postBox.nextSibling);
+                input.value = '';
+                // Show feedback
+                this.textContent = '✅ Posted!';
+                this.style.background = 'var(--teal)';
+                setTimeout(() => {
+                    this.textContent = 'Post';
+                    this.style.background = '';
+                }, 1000);
+            } else {
+                alert('Write something to post!');
+            }
+        });
+
+        // ========== LIKE BUTTON ==========
+        document.addEventListener('click', function(e) {
+            const likeBtn = e.target.closest('.feed-actions button:first-child');
+            if (likeBtn) {
+                const countSpan = likeBtn.querySelector('.count');
+                if (countSpan) {
+                    let count = parseInt(countSpan.textContent) || 0;
+                    const heart = likeBtn.querySelector('i');
+                    if (heart.classList.contains('fas')) {
+                        // Unlike
+                        heart.classList.remove('fas');
+                        heart.classList.add('far');
+                        count = Math.max(0, count - 1);
+                        countSpan.textContent = count;
+                    } else {
+                        // Like
+                        heart.classList.remove('far');
+                        heart.classList.add('fas');
+                        heart.style.color = '#e74c3c';
+                        count += 1;
+                        countSpan.textContent = count;
+                        setTimeout(() => { heart.style.color = ''; }, 300);
+                    }
+                }
+            }
+        });
+
+        // ========== KEYBOARD SHORTCUT: ESC to dashboard ==========
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                navigateTo('dashboard');
+            }
+        });
+
+        // ========== RESPONSIVE: Ensure bottom nav shows on small screens ==========
+        function checkBottomNav() {
+            const bottomNav = document.getElementById('bottomNav');
+            if (window.innerWidth <= 1024) {
+                bottomNav.style.display = 'flex';
+            } else {
+                bottomNav.style.display = 'none';
+            }
+        }
+        checkBottomNav();
+        window.addEventListener('resize', checkBottomNav);
+
+        // ========== INIT: Show dashboard by default ==========
+        // Ensure dashboard is active on load
+        navigateTo('dashboard');
+
+        console.log('🌙 Silah — AI-Powered Community Platform mock-up loaded.');
+    </script>
+
+</body>
+</html>
