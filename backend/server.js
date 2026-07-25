@@ -1,5 +1,5 @@
 // server.js
-// Silah AI Backend – Uses Google Gemini API
+// Silah Backend – Gemini Chat + Mosque Proxy
 
 require('dotenv').config();
 const express = require('express');
@@ -10,13 +10,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Initialize Gemini with your API key from .env
+// ============================================================
+// 1. GEMINI AI CHAT ENDPOINT
+// ============================================================
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-/**
- * POST /api/chat
- * Accepts messages and a model type, returns Gemini's response.
- */
 app.post('/api/chat', async (req, res) => {
     try {
         const { messages, model } = req.body;
@@ -31,16 +29,13 @@ app.post('/api/chat', async (req, res) => {
             systemPrompt = 'You are a guide to Islamic history. Offer detailed historical context and timelines.';
         }
 
-        // Use the Gemini 1.5 Flash model (fast and capable)
         const geminiModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-        // Convert message history to Gemini's format
         const history = messages.map(msg => ({
             role: msg.role === 'user' ? 'user' : 'model',
             parts: [{ text: msg.content }]
         }));
 
-        // Start a chat with system instruction embedded in history
         const chat = geminiModel.startChat({
             history: [
                 { role: 'user', parts: [{ text: systemPrompt }] },
@@ -53,7 +48,6 @@ app.post('/api/chat', async (req, res) => {
             },
         });
 
-        // Get the last user message and send it
         const lastUserMessage = messages[messages.length - 1];
         const result = await chat.sendMessage(lastUserMessage.content);
         const responseText = result.response.text();
@@ -65,8 +59,38 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
-// Start the server
+// ============================================================
+// 2. MOSQUE PROXY ENDPOINT (optional)
+// ============================================================
+app.get('/api/mosques', async (req, res) => {
+    try {
+        const { lat, lon, radius = 30, limit = 5 } = req.query;
+
+        if (!lat || !lon) {
+            return res.status(400).json({ error: 'Missing lat or lon parameters' });
+        }
+
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        const apiUrl = `https://time.now/mosques/api/mosques?lat=${lat}&lon=${lon}&radius=${radius}&limit=${limit}`;
+        const url = proxyUrl + encodeURIComponent(apiUrl);
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error('Mosque API error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ============================================================
+// 3. START THE SERVER
+// ============================================================
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`✅ Silah AI backend running on port ${PORT}`);
+    console.log(`✅ Silah backend running on port ${PORT}`);
+    console.log(`   - POST /api/chat     (Gemini AI)`);
+    console.log(`   - GET  /api/mosques  (Mosque finder)`);
 });
