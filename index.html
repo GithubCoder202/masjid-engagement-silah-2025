@@ -648,7 +648,7 @@
         .profile-avatar-wrapper {
             position: relative;
             cursor: pointer;
-            margin-left: 0; /* remove any extra spacing */
+            margin-left: 0;
         }
         .topbar-right .avatar {
             width: 40px;
@@ -2521,6 +2521,253 @@
             padding-left: 14px;
         }
 
+        /* ========== SCREEN: AI MODEL HUB (TutorHub Inspired) ========== */
+        .ai-container {
+            display: flex;
+            gap: 24px;
+            height: calc(100% - 80px);
+            min-height: 500px;
+        }
+        .ai-sidebar {
+            width: 260px;
+            min-width: 200px;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            transition: all var(--transition-theme);
+        }
+        .ai-sidebar .ai-new-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--green);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+        .ai-sidebar .ai-new-btn:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .ai-sidebar .ai-search {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            outline: none;
+            margin-bottom: 16px;
+            transition: var(--transition);
+        }
+        .ai-sidebar .ai-search:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(26, 107, 79, 0.1);
+        }
+        .ai-sidebar .ai-conv-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .ai-sidebar .ai-conv-list .conv-item {
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-secondary);
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid transparent;
+        }
+        .ai-sidebar .ai-conv-list .conv-item:hover {
+            background: var(--gray-100);
+            color: var(--text-primary);
+        }
+        .ai-sidebar .ai-conv-list .conv-item.active {
+            background: var(--green-pale);
+            color: var(--green-dark);
+            border-color: var(--green-light);
+            font-weight: 500;
+        }
+        .ai-sidebar .ai-conv-list .conv-item .conv-time {
+            font-size: 11px;
+            color: var(--gray-400);
+        }
+
+        .ai-chat {
+            flex: 1;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all var(--transition-theme);
+        }
+        .ai-chat .ai-chat-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .ai-chat .ai-chat-header .ai-model-select {
+            padding: 6px 12px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            outline: none;
+            cursor: pointer;
+        }
+        .ai-chat .ai-chat-header .ai-model-select:focus {
+            border-color: var(--green);
+        }
+        .ai-chat .ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .ai-chat .ai-chat-messages .message {
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            max-width: 80%;
+            animation: fadeUp 0.3s ease;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+        .ai-chat .ai-chat-messages .message.user {
+            background: var(--green-pale);
+            color: var(--green-dark);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .ai-chat .ai-chat-messages .message.ai {
+            background: var(--gray-100);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .ai-chat .ai-chat-messages .message .msg-time {
+            font-size: 10px;
+            color: var(--gray-400);
+            margin-top: 4px;
+            text-align: right;
+        }
+        .ai-chat .ai-chat-messages .typing-indicator {
+            padding: 10px 16px;
+            background: var(--gray-100);
+            border-radius: var(--radius-sm);
+            align-self: flex-start;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+        .ai-chat .ai-chat-messages .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--gray-400);
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite both;
+        }
+        .ai-chat .ai-chat-messages .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .ai-chat .ai-chat-messages .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typingBounce {
+            0%,
+            80%,
+            100% {
+                transform: scale(0.6);
+                opacity: 0.4;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .ai-chat .ai-chat-input {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: var(--card-bg);
+            border-bottom-left-radius: var(--radius-sm);
+            border-bottom-right-radius: var(--radius-sm);
+        }
+        .ai-chat .ai-chat-input input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+        .ai-chat .ai-chat-input input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(26, 107, 79, 0.1);
+        }
+        .ai-chat .ai-chat-input button {
+            padding: 10px 20px;
+            background: var(--green);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .ai-chat .ai-chat-input button:hover {
+            background: var(--green-dark);
+            box-shadow: var(--shadow-md);
+        }
+        .ai-chat .ai-chat-input button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* ========== BOTTOM NAV (mobile) ========== */
         .bottom-nav {
             display: none;
@@ -2619,6 +2866,47 @@
             .feed-item .feed-head .post-actions button {
                 font-size: 11px;
                 padding: 2px 6px;
+            }
+            .ai-container {
+                flex-direction: column;
+                height: auto;
+                min-height: 500px;
+            }
+            .ai-sidebar {
+                width: 100%;
+                min-width: unset;
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding: 16px;
+                gap: 12px;
+            }
+            .ai-sidebar .ai-new-btn {
+                width: auto;
+                margin-bottom: 0;
+                padding: 8px 16px;
+            }
+            .ai-sidebar .ai-search {
+                flex: 1;
+                margin-bottom: 0;
+                min-width: 120px;
+            }
+            .ai-sidebar .ai-conv-list {
+                flex-direction: row;
+                flex-wrap: wrap;
+                flex: none;
+                width: 100%;
+                max-height: 120px;
+                overflow-y: auto;
+            }
+            .ai-sidebar .ai-conv-list .conv-item {
+                white-space: nowrap;
+                padding: 6px 12px;
+            }
+            .ai-chat {
+                min-height: 400px;
+            }
+            .ai-chat .ai-chat-messages .message {
+                max-width: 90%;
             }
         }
 
@@ -2766,6 +3054,47 @@
             }
             .feed-item .feed-head .post-actions {
                 flex-wrap: wrap;
+            }
+            .ai-sidebar {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .ai-sidebar .ai-new-btn {
+                width: 100%;
+            }
+            .ai-sidebar .ai-search {
+                width: 100%;
+                min-width: unset;
+            }
+            .ai-sidebar .ai-conv-list {
+                flex-wrap: nowrap;
+                flex-direction: column;
+                max-height: 100px;
+                overflow-x: hidden;
+            }
+            .ai-chat .ai-chat-messages .message {
+                max-width: 95%;
+                font-size: 14px;
+            }
+            .ai-chat .ai-chat-input {
+                flex-wrap: wrap;
+                padding: 12px 16px;
+            }
+            .ai-chat .ai-chat-input input {
+                width: 100%;
+            }
+            .ai-chat .ai-chat-input button {
+                width: 100%;
+                justify-content: center;
+                padding: 10px;
+            }
+            .ai-chat .ai-chat-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .ai-chat .ai-chat-header .ai-model-select {
+                width: 100%;
             }
         }
 
@@ -2988,6 +3317,9 @@
                 </button>
                 <button class="nav-item" data-screen="pillars">
                     <i class="fas fa-star"></i> Five Pillars
+                </button>
+                <button class="nav-item" data-screen="ai-model">
+                    <i class="fas fa-robot"></i> AI Model
                 </button>
             </nav>
 
@@ -3810,6 +4142,47 @@
 
                 </div>
 
+                <!-- ===== AI MODEL HUB ===== -->
+                <div class="screen" id="screen-ai-model">
+                    <div style="margin-bottom:20px;">
+                        <h2 style="font-family:'Poppins',sans-serif;font-size:24px;color:var(--text-primary);">🤖 AI Model Hub</h2>
+                        <p style="color:var(--text-secondary);font-size:15px;">Your personal AI tutor for Islamic learning and community support.</p>
+                    </div>
+
+                    <div class="ai-container">
+                        <!-- Sidebar -->
+                        <div class="ai-sidebar">
+                            <button class="ai-new-btn" id="aiNewChatBtn">
+                                <i class="fas fa-plus-circle"></i> New Conversation
+                            </button>
+                            <input type="text" class="ai-search" placeholder="Search conversations..." id="aiSearchInput" />
+                            <div class="ai-conv-list" id="aiConvList">
+                                <!-- Conversation items will be injected here -->
+                            </div>
+                        </div>
+
+                        <!-- Chat Area -->
+                        <div class="ai-chat">
+                            <div class="ai-chat-header">
+                                <span style="font-weight:600;color:var(--text-primary);" id="aiActiveTitle">General Assistant</span>
+                                <select class="ai-model-select" id="aiModelSelect">
+                                    <option value="General Assistant" selected>General Assistant</option>
+                                    <option value="Quranic Arabic Tutor">Quranic Arabic Tutor</option>
+                                    <option value="Hadith Expert">Hadith Expert</option>
+                                    <option value="Islamic History Guide">Islamic History Guide</option>
+                                </select>
+                            </div>
+                            <div class="ai-chat-messages" id="aiChatMessages">
+                                <!-- Messages will be injected here -->
+                            </div>
+                            <div class="ai-chat-input">
+                                <input type="text" placeholder="Ask me anything..." id="aiChatInput" />
+                                <button id="aiSendBtn"><i class="fas fa-paper-plane"></i> Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div><!-- /screen-container -->
 
             <!-- BOTTOM NAV -->
@@ -3821,6 +4194,7 @@
                 <button class="bn-item" data-screen="profile"><i class="fas fa-user"></i> Profile</button>
                 <button class="bn-item" data-screen="settings"><i class="fas fa-cog"></i> Settings</button>
                 <button class="bn-item" data-screen="pillars"><i class="fas fa-star"></i> Pillars</button>
+                <button class="bn-item" data-screen="ai-model"><i class="fas fa-robot"></i> AI</button>
             </nav>
 
         </div><!-- /main -->
@@ -4012,6 +4386,7 @@
             profile: document.getElementById('screen-profile'),
             settings: document.getElementById('screen-settings'),
             pillars: document.getElementById('screen-pillars'),
+            'ai-model': document.getElementById('screen-ai-model'),
         };
 
         const navItems = document.querySelectorAll('.nav-item');
@@ -4040,9 +4415,13 @@
                 setTimeout(displayQuranVerse, 200);
             }
 
-            // Load mosque data if Discover is opened
             if (screenId === 'discover') {
                 loadMosques();
+            }
+
+            if (screenId === 'ai-model') {
+                renderConversations();
+                renderMessages();
             }
         }
 
@@ -5317,6 +5696,259 @@
                 runFetch(MOSQUE_FALLBACK_LAT, MOSQUE_FALLBACK_LON, true);
             }
         }
+
+        // ============================================================
+        // ========== AI MODEL HUB LOGIC ==========
+        // ============================================================
+        let conversations = [];
+        let activeConversationId = null;
+        let aiResponses = [
+            "That's a great question! Let me think about that for a moment...",
+            "Alhamdulillah, I'm here to help. Could you tell me more about what you're looking for?",
+            "Based on my knowledge, the answer lies in understanding the context better.",
+            "Mashallah, that's a wonderful topic to explore. Let's dive into it.",
+            "I appreciate your curiosity! Here's what I can share regarding that...",
+            "Barakallahu feek for asking. I'd recommend looking into this further.",
+            "That's an interesting perspective. Let's break it down step by step.",
+            "I'm still learning, but here's what I know so far about this subject."
+        ];
+
+        function getRandomAIResponse() {
+            return aiResponses[Math.floor(Math.random() * aiResponses.length)];
+        }
+
+        function getTimeStamp() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function createNewConversation(title = 'New Chat') {
+            const id = Date.now().toString();
+            const conv = {
+                id: id,
+                title: title,
+                messages: [],
+                model: 'General Assistant',
+                created_at: new Date().toISOString()
+            };
+            conversations.unshift(conv);
+            activeConversationId = id;
+            renderConversations();
+            renderMessages();
+            updateModelSelect(conv.model);
+            return conv;
+        }
+
+        function deleteConversation(id) {
+            if (!confirm('Are you sure you want to delete this conversation?')) return;
+            conversations = conversations.filter(c => c.id !== id);
+            if (activeConversationId === id) {
+                activeConversationId = conversations.length > 0 ? conversations[0].id : null;
+                if (conversations.length === 0) {
+                    createNewConversation('Welcome Chat');
+                }
+            }
+            renderConversations();
+            renderMessages();
+        }
+
+        function switchConversation(id) {
+            activeConversationId = id;
+            const conv = conversations.find(c => c.id === id);
+            if (conv) {
+                updateModelSelect(conv.model);
+            }
+            renderConversations();
+            renderMessages();
+        }
+
+        function updateModelSelect(model) {
+            const select = document.getElementById('aiModelSelect');
+            if (select) {
+                select.value = model || 'General Assistant';
+            }
+        }
+
+        function renderConversations() {
+            const list = document.getElementById('aiConvList');
+            const searchInput = document.getElementById('aiSearchInput');
+            if (!list) return;
+
+            const searchTerm = searchInput?.value?.toLowerCase() || '';
+            let filtered = conversations;
+            if (searchTerm) {
+                filtered = conversations.filter(c => c.title.toLowerCase().includes(searchTerm));
+            }
+
+            if (filtered.length === 0) {
+                list.innerHTML =
+                    `<div style="padding:20px;text-align:center;color:var(--text-secondary);font-size:13px;">No conversations found. Start a new one!</div>`;
+                return;
+            }
+
+            list.innerHTML = filtered.map(conv => `
+                    <div class="conv-item ${activeConversationId === conv.id ? 'active' : ''}" data-id="${conv.id}">
+                        <span>${conv.title}</span>
+                        <span class="conv-time">${getTimeAgo(conv.created_at)}</span>
+                        <button class="delete-conv" data-id="${conv.id}" style="background:none;border:none;color:var(--gray-400);cursor:pointer;padding:2px 6px;border-radius:4px;font-size:12px;">✕</button>
+                    </div>
+                `).join('');
+
+            // Add event listeners
+            list.querySelectorAll('.conv-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    if (e.target.closest('.delete-conv')) return;
+                    const id = item.dataset.id;
+                    if (id) switchConversation(id);
+                });
+                const deleteBtn = item.querySelector('.delete-conv');
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = deleteBtn.dataset.id;
+                        if (id) deleteConversation(id);
+                    });
+                }
+            });
+        }
+
+        function renderMessages() {
+            const container = document.getElementById('aiChatMessages');
+            if (!container) return;
+
+            const conv = conversations.find(c => c.id === activeConversationId);
+            if (!conv) {
+                container.innerHTML = `
+                        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text-secondary);text-align:center;padding:20px;">
+                            <i class="fas fa-robot" style="font-size:48px;color:var(--gray-300);margin-bottom:16px;"></i>
+                            <h3 style="font-weight:600;color:var(--text-primary);">Welcome to Silah AI</h3>
+                            <p style="max-width:400px;">Start a new conversation or select an existing one to continue learning.</p>
+                            <button class="ai-new-btn" style="margin-top:16px;width:auto;padding:10px 24px;" onclick="document.getElementById('aiNewChatBtn').click();">
+                                <i class="fas fa-plus-circle"></i> New Conversation
+                            </button>
+                        </div>
+                    `;
+                return;
+            }
+
+            if (conv.messages.length === 0) {
+                container.innerHTML = `
+                        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text-secondary);text-align:center;padding:20px;">
+                            <i class="fas fa-comment-dots" style="font-size:36px;color:var(--gray-300);margin-bottom:12px;"></i>
+                            <p>No messages yet. Start the conversation!</p>
+                        </div>
+                    `;
+                return;
+            }
+
+            container.innerHTML = conv.messages.map(msg => `
+                    <div class="message ${msg.role}">
+                        ${msg.content}
+                        <div class="msg-time">${msg.time || 'Just now'}</div>
+                    </div>
+                `).join('');
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleSendMessage() {
+            const input = document.getElementById('aiChatInput');
+            const content = input.value.trim();
+            if (!content) return;
+
+            const conv = conversations.find(c => c.id === activeConversationId);
+            if (!conv) {
+                createNewConversation('New Chat');
+                // Re-fetch the conversation
+                const newConv = conversations.find(c => c.id === activeConversationId);
+                if (newConv) {
+                    newConv.messages.push({ role: 'user', content: content, time: getTimeStamp() });
+                    newConv.title = content.slice(0, 30) + (content.length > 30 ? '...' : '');
+                }
+            } else {
+                conv.messages.push({ role: 'user', content: content, time: getTimeStamp() });
+                conv.title = content.slice(0, 30) + (content.length > 30 ? '...' : '');
+            }
+
+            input.value = '';
+            renderConversations();
+            renderMessages();
+
+            // Show typing indicator
+            const container = document.getElementById('aiChatMessages');
+            const typingHtml = `
+                    <div class="typing-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                `;
+            container.insertAdjacentHTML('beforeend', typingHtml);
+            container.scrollTop = container.scrollHeight;
+
+            // Simulate AI response after delay
+            setTimeout(() => {
+                // Remove typing indicator
+                const indicator = container.querySelector('.typing-indicator');
+                if (indicator) indicator.remove();
+
+                const activeConv = conversations.find(c => c.id === activeConversationId);
+                if (activeConv) {
+                    const aiMsg = getRandomAIResponse();
+                    activeConv.messages.push({ role: 'ai', content: aiMsg, time: getTimeStamp() });
+                    renderMessages();
+                    renderConversations();
+                }
+            }, 1200 + Math.random() * 1500);
+        }
+
+        // ============================================================
+        // ========== AI MODEL HUB EVENT LISTENERS ==========
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AI conversations
+            if (!conversations.length) {
+                const defaultConv = createNewConversation('Welcome to Silah AI');
+                defaultConv.messages.push({
+                    role: 'ai',
+                    content: 'Assalamu alaikum! I\'m your AI assistant. How can I help you with your Islamic learning journey today?',
+                    time: getTimeStamp()
+                });
+                renderConversations();
+                renderMessages();
+            }
+
+            // New Chat button
+            document.getElementById('aiNewChatBtn')?.addEventListener('click', function() {
+                createNewConversation('New Conversation');
+                renderConversations();
+                renderMessages();
+                document.getElementById('aiChatInput')?.focus();
+            });
+
+            // Send button
+            document.getElementById('aiSendBtn')?.addEventListener('click', handleSendMessage);
+
+            // Enter key on input
+            document.getElementById('aiChatInput')?.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                }
+            });
+
+            // Model selector change
+            document.getElementById('aiModelSelect')?.addEventListener('change', function() {
+                const conv = conversations.find(c => c.id === activeConversationId);
+                if (conv) {
+                    conv.model = this.value;
+                    document.getElementById('aiActiveTitle').textContent = this.value;
+                }
+            });
+
+            // Search conversations
+            document.getElementById('aiSearchInput')?.addEventListener('input', function() {
+                renderConversations();
+            });
+        });
 
         // ============================================================
         // ========== INIT ==========
