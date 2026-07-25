@@ -23,7 +23,7 @@ File: page.tsx
 1import { createClient } from '@/utils/supabase/server'
 2import { cookies } from 'next/headers'
 3
-4export default async function Page() {
+4  export default async function Page() {
 5  const cookieStore = await cookies()
 6  const supabase = createClient(cookieStore)
 7
