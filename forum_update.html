@@ -46,6 +46,8 @@
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --red: #e74c3c;
             --red-light: #fde8e8;
+            --orange: #f39c12;
+            --orange-light: #fef5e7;
         }
 
         /* ========== RESET & BASE ========== */
@@ -1422,8 +1424,10 @@
         .feed-item .feed-head {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         .feed-item .feed-head .fh-left {
             display: flex;
@@ -1451,6 +1455,41 @@
             font-size: 12px;
             color: var(--gray-400);
         }
+        .feed-item .feed-head .post-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .feed-item .feed-head .post-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--gray-400);
+            transition: var(--transition);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+        }
+        .feed-item .feed-head .post-actions button:hover {
+            color: var(--charcoal);
+            background: var(--gray-100);
+        }
+        .feed-item .feed-head .post-actions .delete-post {
+            color: var(--red);
+        }
+        .feed-item .feed-head .post-actions .delete-post:hover {
+            background: var(--red-light);
+            color: var(--red);
+        }
+        .feed-item .feed-head .post-actions .report-post {
+            color: var(--orange);
+        }
+        .feed-item .feed-head .post-actions .report-post:hover {
+            background: var(--orange-light);
+            color: var(--orange);
+        }
+
         .feed-item .feed-body {
             font-size: 15px;
             color: var(--charcoal);
@@ -1493,6 +1532,43 @@
             font-size: 13px;
             color: var(--gray-500);
             padding: 4px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .feed-item .feed-comments .comment .comment-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .feed-item .feed-comments .comment .comment-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--gray-400);
+            transition: var(--transition);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+        }
+        .feed-item .feed-comments .comment .comment-actions button:hover {
+            color: var(--charcoal);
+            background: var(--gray-100);
+        }
+        .feed-item .feed-comments .comment .comment-actions .delete-comment {
+            color: var(--red);
+        }
+        .feed-item .feed-comments .comment .comment-actions .delete-comment:hover {
+            background: var(--red-light);
+            color: var(--red);
+        }
+        .feed-item .feed-comments .comment .comment-actions .report-comment {
+            color: var(--orange);
+        }
+        .feed-item .feed-comments .comment .comment-actions .report-comment:hover {
+            background: var(--orange-light);
+            color: var(--orange);
         }
         .feed-item .feed-comments .comment strong {
             color: var(--charcoal);
@@ -1913,6 +1989,13 @@
             .comment-input-wrap input {
                 width: 100%;
             }
+            .feed-item .feed-comments .comment {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .feed-item .feed-head {
+                flex-wrap: wrap;
+            }
         }
 
         @media (max-width: 400px) {
@@ -1947,7 +2030,7 @@
     <!-- ========== MODERATION TOAST ========== -->
     <div class="moderation-toast" id="moderationToast"></div>
 
-    <!-- ========== AUTH SCREEN ========== -->
+    <!-- ========== AUTH SCREEN (SIGN IN / REGISTER / ONBOARDING) ========== -->
     <div class="auth-screen" id="authScreen">
         <div class="auth-card">
             <div class="auth-brand">
@@ -1955,6 +2038,7 @@
                 <h1>Silah<span>.</span></h1>
             </div>
 
+            <!-- ===== STEP 1: SIGN IN / CREATE ACCOUNT ===== -->
             <div class="auth-step active" id="authStep">
                 <div class="auth-tabs">
                     <button type="button" class="auth-tab active" data-auth="signin">Sign In</button>
@@ -2003,7 +2087,7 @@
                 </div>
             </div>
 
-            <!-- ONBOARDING -->
+            <!-- ===== STEP 2: ONBOARDING ===== -->
             <div class="auth-step" id="onboardingStep">
                 <div class="onboarding-header" style="margin-bottom:20px;">
                     <span class="moon-icon">🌙</span>
@@ -2061,7 +2145,7 @@
     <!-- ========== APP ========== -->
     <div class="app" id="app">
 
-        <!-- SIDEBAR -->
+        <!-- ========== SIDEBAR ========== -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
                 <div class="logo-icon">ص</div>
@@ -2099,7 +2183,7 @@
             </div>
         </aside>
 
-        <!-- MAIN -->
+        <!-- ========== MAIN ========== -->
         <div class="main">
 
             <!-- TOPBAR -->
@@ -2129,7 +2213,7 @@
             <!-- SCREEN CONTAINER -->
             <div class="screen-container" id="screenContainer">
 
-                <!-- DASHBOARD -->
+                <!-- ===== SCREEN: DASHBOARD ===== -->
                 <div class="screen active" id="screen-dashboard">
                     <div class="dash-welcome">
                         <h2>👋 Assalamu alaikum, <span id="dashName">Sarah</span>!</h2>
@@ -2149,6 +2233,7 @@
 
                     <div class="dash-grid">
                         <div>
+                            <!-- Recommendations -->
                             <div class="dash-card">
                                 <div class="card-header">
                                     <h3>📖 For You</h3>
@@ -2190,6 +2275,7 @@
                                 </div>
                             </div>
 
+                            <!-- Mentor Match -->
                             <div class="dash-card">
                                 <div class="card-header">
                                     <h3>⭐ Your Mentor Match</h3>
@@ -2216,6 +2302,7 @@
                             </div>
                         </div>
 
+                        <!-- Right column: quick stats / upcoming -->
                         <div>
                             <div class="dash-card">
                                 <div class="card-header">
@@ -2246,7 +2333,7 @@
                     </div>
                 </div>
 
-                <!-- MENTOR -->
+                <!-- ===== SCREEN: MENTOR ===== -->
                 <div class="screen" id="screen-mentor">
                     <div style="margin-bottom:16px;">
                         <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">🤝 Find a Mentor</h2>
@@ -2325,7 +2412,7 @@
                     </div>
                 </div>
 
-                <!-- DISCOVER -->
+                <!-- ===== SCREEN: DISCOVER ===== -->
                 <div class="screen" id="screen-discover">
                     <div style="margin-bottom:16px;">
                         <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">📍 Discover Near You</h2>
@@ -2416,11 +2503,11 @@
                     </div>
                 </div>
 
-                <!-- FEED -->
+                <!-- ===== SCREEN: FEED ===== -->
                 <div class="screen" id="screen-feed">
                     <div style="margin-bottom:16px;">
                         <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">💬 Community Feed</h2>
-                        <p style="color:var(--gray-500);font-size:14px;">All posts are AI-moderated to ensure a safe, supportive environment.</p>
+                        <p style="color:var(--gray-500);font-size:14px;">All posts are AI-moderated. You can delete or report any content.</p>
                     </div>
 
                     <div class="feed-post-box">
@@ -2448,7 +2535,7 @@
                     </div>
                 </div>
 
-                <!-- PROFILE -->
+                <!-- ===== SCREEN: PROFILE ===== -->
                 <div class="screen" id="screen-profile">
                     <div class="profile-header">
                         <div class="big-avatar" id="profileAvatar">SA</div>
@@ -3212,14 +3299,22 @@
                     const isLiked = likedPostIds.has(postId);
                     const commentCount = post.comments?.length || 0;
                     const timeAgo = getTimeAgo(post.created_at);
+                    const isPostOwner = currentUser && post.user_id === currentUser.id;
 
                     let commentsHtml = '';
                     if (post.comments && post.comments.length > 0) {
                         post.comments.forEach(comment => {
                             const commentAuthor = comment.profiles?.full_name || 'Unknown';
+                            const isCommentOwner = currentUser && comment.user_id === currentUser.id;
                             commentsHtml += `
-                                <div class="comment">
-                                    <strong>${commentAuthor}:</strong> ${comment.content}
+                                <div class="comment" data-comment-id="${comment.id}">
+                                    <div>
+                                        <strong>${commentAuthor}:</strong> ${comment.content}
+                                    </div>
+                                    <div class="comment-actions">
+                                        ${isCommentOwner ? `<button class="delete-comment" data-comment-id="${comment.id}" title="Delete your comment"><i class="fas fa-trash"></i></button>` : ''}
+                                        <button class="report-comment" data-comment-id="${comment.id}" data-comment-author="${commentAuthor}" data-comment-content="${comment.content}" title="Report this comment"><i class="fas fa-flag"></i></button>
+                                    </div>
                                 </div>
                             `;
                         });
@@ -3237,8 +3332,10 @@
                                     <div class="ftime">${timeAgo}</div>
                                 </div>
                             </div>
-                            <div>
-                                <span class="moderation-badge approved">✓ Moderated</span>
+                            <div class="post-actions">
+                                ${isPostOwner ? `<button class="delete-post" data-post-id="${postId}" title="Delete your post"><i class="fas fa-trash"></i> Delete</button>` : ''}
+                                <button class="report-post" data-post-id="${postId}" data-post-author="${authorName}" data-post-content="${post.content}" title="Report this post"><i class="fas fa-flag"></i> Report</button>
+                                <span class="moderation-badge approved">✓</span>
                             </div>
                         </div>
                         <div class="feed-body">${post.content}</div>
@@ -3251,7 +3348,6 @@
                                 <i class="fas fa-comment"></i>
                                 <span class="count">${commentCount}</span>
                             </button>
-                            <button><i class="fas fa-share"></i> <span class="count">0</span></button>
                         </div>
                         <div class="feed-comments" id="comments-${postId}" style="${post.comments && post.comments.length > 0 ? '' : 'display:none;'}">
                             ${commentsHtml}
@@ -3298,6 +3394,30 @@
             document.querySelectorAll('.comment-input').forEach(input => {
                 input.removeEventListener('keydown', handleCommentKeydown);
                 input.addEventListener('keydown', handleCommentKeydown);
+            });
+
+            // Delete comment buttons
+            document.querySelectorAll('.delete-comment').forEach(btn => {
+                btn.removeEventListener('click', handleDeleteComment);
+                btn.addEventListener('click', handleDeleteComment);
+            });
+
+            // Report comment buttons
+            document.querySelectorAll('.report-comment').forEach(btn => {
+                btn.removeEventListener('click', handleReportComment);
+                btn.addEventListener('click', handleReportComment);
+            });
+
+            // Delete post buttons
+            document.querySelectorAll('.delete-post').forEach(btn => {
+                btn.removeEventListener('click', handleDeletePost);
+                btn.addEventListener('click', handleDeletePost);
+            });
+
+            // Report post buttons
+            document.querySelectorAll('.report-post').forEach(btn => {
+                btn.removeEventListener('click', handleReportPost);
+                btn.addEventListener('click', handleReportPost);
             });
         }
 
@@ -3403,8 +3523,14 @@
                 if (commentsDiv) {
                     const commentAuthor = data.profiles?.full_name || 'Unknown';
                     const commentHtml = `
-                        <div class="comment">
-                            <strong>${commentAuthor}:</strong> ${data.content}
+                        <div class="comment" data-comment-id="${data.id}">
+                            <div>
+                                <strong>${commentAuthor}:</strong> ${data.content}
+                            </div>
+                            <div class="comment-actions">
+                                <button class="delete-comment" data-comment-id="${data.id}" title="Delete your comment"><i class="fas fa-trash"></i></button>
+                                <button class="report-comment" data-comment-id="${data.id}" data-comment-author="${commentAuthor}" data-comment-content="${data.content}" title="Report this comment"><i class="fas fa-flag"></i></button>
+                            </div>
                         </div>
                     `;
                     const inputWrap = commentsDiv.querySelector('.comment-input-wrap');
@@ -3417,6 +3543,16 @@
                     commentsDiv.style.display = 'block';
                     input.value = '';
                     showModerationToast('Comment posted successfully!', 'success');
+
+                    // Add event listeners to new buttons
+                    const newDeleteBtn = commentsDiv.querySelector(`.delete-comment[data-comment-id="${data.id}"]`);
+                    if (newDeleteBtn) {
+                        newDeleteBtn.addEventListener('click', handleDeleteComment);
+                    }
+                    const newReportBtn = commentsDiv.querySelector(`.report-comment[data-comment-id="${data.id}"]`);
+                    if (newReportBtn) {
+                        newReportBtn.addEventListener('click', handleReportComment);
+                    }
                 }
 
             } catch (error) {
@@ -3433,6 +3569,156 @@
                 if (submitBtn) {
                     submitBtn.click();
                 }
+            }
+        }
+
+        // ===== DELETE COMMENT =====
+        async function handleDeleteComment(e) {
+            e.stopPropagation();
+            const btn = e.currentTarget;
+            const commentId = btn.dataset.commentId;
+
+            if (!currentUser) {
+                showModerationToast('Please sign in to delete comments.', 'warning');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to delete this comment?')) {
+                return;
+            }
+
+            try {
+                const { error } = await sb
+                    .from('comments')
+                    .delete()
+                    .eq('id', commentId)
+                    .eq('user_id', currentUser.id);
+
+                if (error) throw error;
+
+                const commentElement = document.querySelector(`.comment[data-comment-id="${commentId}"]`);
+                if (commentElement) {
+                    const commentsDiv = commentElement.closest('.feed-comments');
+                    commentElement.remove();
+
+                    const postId = commentsDiv?.id?.replace('comments-', '');
+                    if (postId) {
+                        const commentToggle = document.querySelector(`.comment-toggle[data-post-id="${postId}"]`);
+                        const countSpan = commentToggle?.querySelector('.count');
+                        if (countSpan) {
+                            countSpan.textContent = Math.max(0, parseInt(countSpan.textContent) - 1);
+                        }
+                    }
+                }
+
+                showModerationToast('Comment deleted successfully.', 'success');
+
+            } catch (error) {
+                console.error('Error deleting comment:', error);
+                showModerationToast('Failed to delete comment. Please try again.', 'error');
+            }
+        }
+
+        // ===== REPORT COMMENT =====
+        async function handleReportComment(e) {
+            e.stopPropagation();
+            const btn = e.currentTarget;
+            const commentId = btn.dataset.commentId;
+            const commentAuthor = btn.dataset.commentAuthor || 'Unknown';
+            const commentContent = btn.dataset.commentContent || '';
+
+            if (!currentUser) {
+                showModerationToast('Please sign in to report content.', 'warning');
+                return;
+            }
+
+            if (!confirm(`Report this comment from "${commentAuthor}" to the moderation team?`)) {
+                return;
+            }
+
+            try {
+                const moderationResult = await moderateContent(commentContent);
+
+                if (!moderationResult.approved) {
+                    showModerationToast(`This comment has been flagged for: ${moderationResult.reason}`, 'warning', 5000);
+                    showModerationToast('Thank you for reporting. Our team will review this content.', 'success');
+                } else {
+                    showModerationToast('Thank you for reporting. Our moderation team will review this content.', 'success');
+                }
+
+            } catch (error) {
+                console.error('Error reporting comment:', error);
+                showModerationToast('Failed to report comment. Please try again.', 'error');
+            }
+        }
+
+        // ===== DELETE POST =====
+        async function handleDeletePost(e) {
+            e.stopPropagation();
+            const btn = e.currentTarget;
+            const postId = btn.dataset.postId;
+
+            if (!currentUser) {
+                showModerationToast('Please sign in to delete posts.', 'warning');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to delete this post? All comments will also be deleted.')) {
+                return;
+            }
+
+            try {
+                const { error } = await sb
+                    .from('posts')
+                    .delete()
+                    .eq('id', postId)
+                    .eq('user_id', currentUser.id);
+
+                if (error) throw error;
+
+                const feedItem = document.querySelector(`.feed-item[data-post-id="${postId}"]`);
+                if (feedItem) {
+                    feedItem.remove();
+                }
+
+                showModerationToast('Post deleted successfully.', 'success');
+
+            } catch (error) {
+                console.error('Error deleting post:', error);
+                showModerationToast('Failed to delete post. Please try again.', 'error');
+            }
+        }
+
+        // ===== REPORT POST =====
+        async function handleReportPost(e) {
+            e.stopPropagation();
+            const btn = e.currentTarget;
+            const postId = btn.dataset.postId;
+            const postAuthor = btn.dataset.postAuthor || 'Unknown';
+            const postContent = btn.dataset.postContent || '';
+
+            if (!currentUser) {
+                showModerationToast('Please sign in to report content.', 'warning');
+                return;
+            }
+
+            if (!confirm(`Report this post from "${postAuthor}" to the moderation team?`)) {
+                return;
+            }
+
+            try {
+                const moderationResult = await moderateContent(postContent);
+
+                if (!moderationResult.approved) {
+                    showModerationToast(`This post has been flagged for: ${moderationResult.reason}`, 'warning', 5000);
+                    showModerationToast('Thank you for reporting. Our team will review this content.', 'success');
+                } else {
+                    showModerationToast('Thank you for reporting. Our moderation team will review this content.', 'success');
+                }
+
+            } catch (error) {
+                console.error('Error reporting post:', error);
+                showModerationToast('Failed to report post. Please try again.', 'error');
             }
         }
 
