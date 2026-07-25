@@ -1,6 +1,4 @@
-// server.js
-// Silah Backend – Gemini Chat + Mosque Proxy
-
+// server.js – Gemini Chat + Mosque Proxy
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -11,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // ============================================================
-// 1. GEMINI AI CHAT ENDPOINT
+// GEMINI AI CHAT
 // ============================================================
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -19,7 +17,6 @@ app.post('/api/chat', async (req, res) => {
     try {
         const { messages, model } = req.body;
 
-        // Build system prompt based on selected model
         let systemPrompt = 'You are a helpful Islamic learning assistant.';
         if (model === 'Quranic Arabic Tutor') {
             systemPrompt = 'You are an expert tutor in Quranic Arabic. Help users understand grammar, vocabulary, and tafsir.';
@@ -60,7 +57,7 @@ app.post('/api/chat', async (req, res) => {
 });
 
 // ============================================================
-// 2. MOSQUE PROXY ENDPOINT (optional)
+// MOSQUE PROXY (optional)
 // ============================================================
 app.get('/api/mosques', async (req, res) => {
     try {
@@ -86,7 +83,7 @@ app.get('/api/mosques', async (req, res) => {
 });
 
 // ============================================================
-// 3. START THE SERVER
+// START SERVER
 // ============================================================
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
