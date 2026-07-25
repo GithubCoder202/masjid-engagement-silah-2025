@@ -13,6 +13,10 @@
     <!-- Font Awesome 6 (Free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
+    <!-- Supabase JS client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
+
     <style>
         /* ========== DESIGN SYSTEM ========== */
         :root {
@@ -118,6 +122,185 @@
             overflow: hidden;
             position: relative;
             transition: background var(--transition-theme);
+        }
+
+        body:not(.authenticated) .app {
+            display: none;
+        }
+        body.authenticated .auth-screen {
+            display: none;
+        }
+
+        /* ========== AUTH SCREEN ========== */
+        .auth-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: linear-gradient(160deg, var(--green-dark) 0%, var(--green) 45%, var(--teal) 100%);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 520px;
+            background: var(--cream);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 36px 36px 28px;
+            margin: auto;
+            transition: background var(--transition-theme);
+        }
+
+        .auth-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .auth-brand .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--green-dark);
+            font-weight: 800;
+            flex-shrink: 0;
+            transition: background var(--transition-theme);
+        }
+        [data-theme="dark"] .auth-brand .logo-icon {
+            background: #d4b55c;
+            color: #0d1f17;
+        }
+        .auth-brand h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            transition: color var(--transition-theme);
+        }
+        .auth-brand h1 span {
+            color: var(--gold);
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            padding: 4px;
+            margin-bottom: 24px;
+            transition: background var(--transition-theme);
+        }
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-full);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .auth-tab.active {
+            background: var(--green);
+            color: #fff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .auth-step {
+            display: none;
+        }
+        .auth-step.active {
+            display: block;
+            animation: fadeUp 0.4s ease;
+        }
+
+        .auth-form {
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+            animation: fadeUp 0.4s ease;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+            background: var(--input-bg);
+            color: var(--text-primary);
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color var(--transition-theme);
+        }
+        .auth-switch a {
+            color: var(--green);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .auth-error {
+            background: #FDEDEC;
+            color: #C0392B;
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            font-size: 13px;
+            margin-bottom: 18px;
+            display: none;
+        }
+        .auth-error.show {
+            display: block;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            color: #C0392B;
+            border: 2px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+        .btn-logout:hover {
+            border-color: #C0392B;
+            background: #FDEDEC;
         }
 
         /* ========== SIDEBAR ========== */
@@ -577,169 +760,6 @@
 
         [data-theme="dark"] .quran-verse-widget .qv-refresh:hover {
             background: #2a2418;
-        }
-
-        /* ========== SCREEN: ONBOARDING ========== */
-        .onboarding-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        .onboarding-header .moon-icon {
-            font-size: 48px;
-            color: var(--gold);
-            margin-bottom: 8px;
-            display: block;
-        }
-        .onboarding-header h2 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 28px;
-            color: var(--charcoal);
-            transition: color var(--transition-theme);
-        }
-        .onboarding-header p {
-            color: var(--text-secondary);
-            font-size: 16px;
-            margin-top: 4px;
-            transition: color var(--transition-theme);
-        }
-
-        .onboarding-form {
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            transition: color var(--transition-theme);
-        }
-
-        .form-group .radio-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .form-group .radio-grid .radio-option {
-            padding: 10px 18px;
-            border: 2px solid var(--border-medium);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-size: 14px;
-            transition: var(--transition);
-            background: var(--card-bg);
-            flex: 1 0 auto;
-            text-align: center;
-            min-width: 120px;
-            color: var(--text-primary);
-        }
-        .form-group .radio-grid .radio-option:hover {
-            border-color: var(--green-light);
-        }
-        .form-group .radio-grid .radio-option.selected {
-            border-color: var(--green);
-            background: var(--green-pale);
-            color: var(--green-dark);
-            font-weight: 600;
-        }
-        [data-theme="dark"] .form-group .radio-grid .radio-option.selected {
-            color: #b8e0d0;
-        }
-
-        .form-group .checkbox-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .form-group .checkbox-grid .checkbox-option {
-            padding: 10px 18px;
-            border: 2px solid var(--border-medium);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-size: 14px;
-            transition: var(--transition);
-            background: var(--card-bg);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-primary);
-        }
-        .form-group .checkbox-grid .checkbox-option:hover {
-            border-color: var(--green-light);
-        }
-        .form-group .checkbox-grid .checkbox-option.selected {
-            border-color: var(--green);
-            background: var(--green-pale);
-        }
-        .form-group .checkbox-grid .checkbox-option i {
-            color: var(--green);
-            opacity: 0;
-            transition: var(--transition);
-        }
-        .form-group .checkbox-grid .checkbox-option.selected i {
-            opacity: 1;
-        }
-
-        .form-group select {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--border-medium);
-            border-radius: var(--radius-sm);
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
-            background: var(--input-bg);
-            transition: var(--transition);
-            outline: none;
-            color: var(--text-primary);
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7F8F' stroke-width='2' fill='none'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-        }
-        .form-group select:focus {
-            border-color: var(--green);
-            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: var(--green);
-            color: #fff;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 16px;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .btn-primary:hover {
-            background: var(--green-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .onboarding-footer {
-            text-align: center;
-            margin-top: 16px;
-            font-size: 13px;
-            color: var(--gray-400);
-        }
-        .onboarding-footer i {
-            color: var(--green);
         }
 
         /* ========== SCREEN: DASHBOARD ========== */
@@ -1320,6 +1340,12 @@
             font-size: 12px;
             font-weight: 600;
         }
+        .event-card .ev-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
         .event-card .ev-right button {
             padding: 6px 18px;
             border-radius: var(--radius-full);
@@ -1380,6 +1406,11 @@
         }
         .mosque-row .mq-info .mq-detail .stars {
             color: var(--gold);
+        }
+        .mosque-row .mq-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
         }
         .mosque-row .mq-actions button {
             padding: 4px 14px;
@@ -1829,7 +1860,6 @@
             color: #fff;
         }
 
-        /* Dark mode toggle specific */
         .dark-mode-toggle-wrap {
             display: flex;
             align-items: center;
@@ -1923,9 +1953,6 @@
             .event-card {
                 flex-direction: column;
                 align-items: stretch;
-            }
-            .onboarding-form {
-                max-width: 100%;
             }
             .match-filters {
                 flex-direction: column;
@@ -2025,9 +2052,6 @@
             .profile-grid {
                 grid-template-columns: 1fr;
             }
-            .onboarding-header h2 {
-                font-size: 22px;
-            }
             .bottom-nav .bn-item {
                 font-size: 8px;
                 padding: 2px 6px;
@@ -2049,6 +2073,9 @@
             }
             .settings-section {
                 padding: 14px 16px;
+            }
+            .auth-card {
+                padding: 24px 16px 20px;
             }
         }
 
@@ -2088,6 +2115,119 @@
 </head>
 <body>
 
+    <!-- ========== AUTH SCREEN ========== -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-card">
+            <div class="auth-brand">
+                <div class="logo-icon">ص</div>
+                <h1>Silah<span>.</span></h1>
+            </div>
+
+            <!-- STEP 1: SIGN IN / REGISTER -->
+            <div class="auth-step active" id="authStep">
+                <div class="auth-tabs">
+                    <button type="button" class="auth-tab active" data-auth="signin">Sign In</button>
+                    <button type="button" class="auth-tab" data-auth="register">Register</button>
+                </div>
+
+                <div class="auth-error" id="authError"></div>
+
+                <!-- SIGN IN -->
+                <div class="auth-form active" id="signInForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="signInEmail" placeholder="you@example.com" />
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signInPassword" placeholder="••••••••" />
+                    </div>
+                    <button type="button" class="btn-primary" id="signInSubmit">Sign In <i class="fas fa-arrow-right"></i></button>
+                    <div class="auth-switch">Don't have an account? <a data-auth="register">Register</a></div>
+                </div>
+
+                <!-- REGISTER -->
+                <div class="auth-form" id="registerForm">
+                    <div style="text-align:center;margin-bottom:20px;">
+                        <span style="font-size:36px;display:block;margin-bottom:4px;">🌙</span>
+                        <h2 style="font-family:'Poppins',sans-serif;font-size:24px;color:var(--text-primary);">Welcome to Silah</h2>
+                        <p style="color:var(--text-secondary);font-size:14px;">Your path to community &amp; belonging begins here</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="regName" placeholder="Sarah Ahmed" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="regEmail" placeholder="you@example.com" />
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password" />
+                    </div>
+
+                    <button type="button" class="btn-primary" id="registerContinue">Continue <i class="fas fa-arrow-right"></i></button>
+                    <div class="auth-switch">Already have an account? <a data-auth="signin">Sign In</a></div>
+                </div>
+            </div>
+
+            <!-- STEP 2: ONBOARDING -->
+            <div class="auth-step" id="onboardingStep">
+                <div style="text-align:center;margin-bottom:20px;">
+                    <span style="font-size:36px;display:block;margin-bottom:4px;">🌙</span>
+                    <h2 style="font-family:'Poppins',sans-serif;font-size:24px;color:var(--text-primary);">Tell Us About You</h2>
+                    <p style="color:var(--text-secondary);font-size:14px;">So we can connect you with the right guidance, mentors &amp; community</p>
+                </div>
+
+                <div class="form-group">
+                    <label>What brings you here today?</label>
+                    <div class="radio-grid" id="purposeGroup">
+                        <div class="radio-option selected" data-value="new">○ I'm new to Islam</div>
+                        <div class="radio-option" data-value="explore">○ I'm exploring Islam</div>
+                        <div class="radio-option" data-value="support">○ I want to support others</div>
+                        <div class="radio-option" data-value="leader">○ I'm a community leader</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Location</label>
+                    <select id="regLocation">
+                        <option value="chicago">📍 Chicago, IL</option>
+                        <option value="nyc">📍 New York, NY</option>
+                        <option value="la">📍 Los Angeles, CA</option>
+                        <option value="houston">📍 Houston, TX</option>
+                        <option value="london">📍 London, UK</option>
+                        <option value="other">🌍 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Interests <span style="font-weight:400;color:var(--gray-400)">(select all)</span></label>
+                    <div class="checkbox-grid" id="interestsGroup">
+                        <div class="checkbox-option selected"><i class="fas fa-check-circle"></i> Finding a Mentor</div>
+                        <div class="checkbox-option selected"><i class="fas fa-check-circle"></i> New Muslim Support Group</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Prayer Guidance</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Quran Study</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Arabic Learning</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Local Mosque &amp; Events</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Building Muslim Friendships</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Family &amp; Shahada Support</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Islamic History</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Mental Wellness</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Community Service</div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-primary" id="onboardingFinish">Finish <i class="fas fa-arrow-right"></i></button>
+                <div class="onboarding-footer">
+                    <i class="fas fa-lock"></i> We'll never share your data · Privacy-first
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== APP ========== -->
     <div class="app" id="app">
 
         <!-- ========== SIDEBAR ========== -->
@@ -2100,9 +2240,6 @@
             <nav class="sidebar-nav">
                 <button class="nav-item active" data-screen="dashboard">
                     <i class="fas fa-home"></i> Home
-                </button>
-                <button class="nav-item" data-screen="onboarding">
-                    <i class="fas fa-user-plus"></i> Onboarding
                 </button>
                 <button class="nav-item" data-screen="mentor">
                     <i class="fas fa-handshake"></i> My Mentor
@@ -2141,7 +2278,7 @@
             <header class="topbar">
                 <div class="topbar-left">
                     <div class="greeting">
-                        👋 Assalamu alaikum, <strong>Sarah</strong>
+                        👋 Assalamu alaikum, <strong id="greetingName">Sarah</strong>
                         <small>· Your journey continues</small>
                     </div>
                 </div>
@@ -2157,73 +2294,21 @@
                     <button class="icon-btn" title="AI Assistant">
                         <i class="fas fa-sparkles"></i>
                     </button>
-                    <div class="avatar">SA</div>
+                    <div class="avatar" id="topbarAvatar">SA</div>
                 </div>
             </header>
 
             <!-- SCREEN CONTAINER -->
             <div class="screen-container" id="screenContainer">
 
-                <!-- ===== SCREEN: ONBOARDING ===== -->
-                <div class="screen" id="screen-onboarding">
-                    <div class="onboarding-header">
-                        <span class="moon-icon">🌙</span>
-                        <h2>Welcome to Silah</h2>
-                        <p>Your path to community &amp; belonging begins here</p>
-                    </div>
-
-                    <div class="onboarding-form">
-                        <div class="form-group">
-                            <label>What brings you here today?</label>
-                            <div class="radio-grid" id="purposeGroup">
-                                <div class="radio-option selected" data-value="new">○ I'm new to Islam</div>
-                                <div class="radio-option" data-value="explore">○ I'm exploring Islam</div>
-                                <div class="radio-option" data-value="support">○ I want to support others</div>
-                                <div class="radio-option" data-value="leader">○ I'm a community leader</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Your Location</label>
-                            <select>
-                                <option value="chicago">📍 Chicago, IL</option>
-                                <option value="nyc">📍 New York, NY</option>
-                                <option value="la">📍 Los Angeles, CA</option>
-                                <option value="houston">📍 Houston, TX</option>
-                                <option value="london">📍 London, UK</option>
-                                <option value="other">🌍 Other</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Your Interests <span style="font-weight:400;color:var(--gray-400)">(select all)</span></label>
-                            <div class="checkbox-grid" id="interestsGroup">
-                                <div class="checkbox-option selected"><i class="fas fa-check-circle"></i> Quran Study</div>
-                                <div class="checkbox-option selected"><i class="fas fa-check-circle"></i> Arabic Learning</div>
-                                <div class="checkbox-option"><i class="fas fa-check-circle"></i> Prayer Guidance</div>
-                                <div class="checkbox-option"><i class="fas fa-check-circle"></i> Community Service</div>
-                                <div class="checkbox-option"><i class="fas fa-check-circle"></i> Islamic History</div>
-                                <div class="checkbox-option"><i class="fas fa-check-circle"></i> Mental Wellness</div>
-                            </div>
-                        </div>
-
-                        <button class="btn-primary" id="onboardingContinue">
-                            Continue <i class="fas fa-arrow-right"></i>
-                        </button>
-                        <div class="onboarding-footer">
-                            <i class="fas fa-lock"></i> We'll never share your data · Privacy-first
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ===== SCREEN: DASHBOARD ===== -->
+                <!-- ===== DASHBOARD ===== -->
                 <div class="screen active" id="screen-dashboard">
                     <div class="dash-welcome">
-                        <h2>👋 Assalamu alaikum, <span>Sarah</span>!</h2>
+                        <h2>👋 Assalamu alaikum, <span id="dashName">Sarah</span>!</h2>
                         <p>Here's your personalized path for today.</p>
                     </div>
 
-                    <!-- ===== QURAN VERSE WIDGET ===== -->
+                    <!-- QURAN VERSE WIDGET -->
                     <div class="quran-verse-widget" id="quranVerseWidget">
                         <div class="qv-inner">
                             <div class="qv-icon-col">📖</div>
@@ -2348,7 +2433,7 @@
                     </div>
                 </div>
 
-                <!-- ===== SCREEN: MENTOR ===== -->
+                <!-- ===== MENTOR ===== -->
                 <div class="screen" id="screen-mentor">
                     <div style="margin-bottom:16px;">
                         <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">🤝 Find a Mentor</h2>
@@ -2427,7 +2512,7 @@
                     </div>
                 </div>
 
-                <!-- ===== SCREEN: DISCOVER ===== -->
+                <!-- ===== DISCOVER ===== -->
                 <div class="screen" id="screen-discover">
                     <div style="margin-bottom:16px;">
                         <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">📍 Discover Near You</h2>
@@ -2518,7 +2603,7 @@
                     </div>
                 </div>
 
-                <!-- ===== SCREEN: FEED ===== -->
+                <!-- ===== FEED ===== -->
                 <div class="screen" id="screen-feed">
                     <div style="margin-bottom:16px;">
                         <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">💬 Community Feed</h2>
@@ -2591,13 +2676,13 @@
                     </div>
                 </div>
 
-                <!-- ===== SCREEN: PROFILE ===== -->
+                <!-- ===== PROFILE ===== -->
                 <div class="screen" id="screen-profile">
                     <div class="profile-header">
-                        <div class="big-avatar">SA</div>
-                        <h2>Sarah Ahmed</h2>
+                        <div class="big-avatar" id="profileAvatar">SA</div>
+                        <h2 id="profileName">Sarah Ahmed</h2>
                         <div class="p-badge">🌱 New Muslim · 6 months</div>
-                        <div class="p-loc">📍 Chicago, IL</div>
+                        <div class="p-loc" id="profileLoc">📍 Chicago, IL</div>
                         <button class="p-edit">✎ Edit Profile</button>
                     </div>
 
@@ -2656,19 +2741,20 @@
                                     <span class="ps-left"><i class="fas fa-envelope"></i> Community Digest</span>
                                     <span style="font-size:13px;color:var(--text-secondary);">Weekly</span>
                                 </div>
+                                <button class="btn-logout" id="logoutBtn"><i class="fas fa-arrow-right-from-bracket"></i> Log Out</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- ===== SCREEN: SETTINGS ===== -->
+                <!-- ===== SETTINGS ===== -->
                 <div class="screen" id="screen-settings">
                     <div class="settings-header">
                         <h2>⚙️ Settings</h2>
                         <p>Customize your Silah experience</p>
                     </div>
 
-                    <!-- Appearance Section -->
+                    <!-- Appearance -->
                     <div class="settings-section">
                         <div class="section-title">
                             <i class="fas fa-palette"></i> Appearance
@@ -2710,7 +2796,7 @@
                         </div>
                     </div>
 
-                    <!-- Notifications Section -->
+                    <!-- Notifications -->
                     <div class="settings-section">
                         <div class="section-title">
                             <i class="fas fa-bell"></i> Notifications
@@ -2754,7 +2840,7 @@
                         </div>
                     </div>
 
-                    <!-- Privacy Section -->
+                    <!-- Privacy -->
                     <div class="settings-section">
                         <div class="section-title">
                             <i class="fas fa-shield-alt"></i> Privacy &amp; Data
@@ -2802,7 +2888,7 @@
                         </div>
                     </div>
 
-                    <!-- Language Section -->
+                    <!-- Language -->
                     <div class="settings-section">
                         <div class="section-title">
                             <i class="fas fa-language"></i> Language &amp; Region
@@ -2843,7 +2929,7 @@
                         </div>
                     </div>
 
-                    <!-- Account Section -->
+                    <!-- Account -->
                     <div class="settings-section">
                         <div class="section-title">
                             <i class="fas fa-user-cog"></i> Account
@@ -2881,7 +2967,7 @@
                                 </div>
                             </div>
                             <div class="sr-right">
-                                <button class="btn-sm">Log Out</button>
+                                <button class="btn-sm" id="settingsLogoutBtn">Log Out</button>
                             </div>
                         </div>
                         <div class="settings-row">
@@ -2898,7 +2984,7 @@
                         </div>
                     </div>
 
-                    <!-- About Section -->
+                    <!-- About -->
                     <div class="settings-section">
                         <div class="section-title">
                             <i class="fas fa-info-circle"></i> About Silah
@@ -2913,7 +2999,7 @@
 
             </div><!-- /screen-container -->
 
-            <!-- BOTTOM NAV (mobile) -->
+            <!-- BOTTOM NAV -->
             <nav class="bottom-nav" id="bottomNav">
                 <button class="bn-item active" data-screen="dashboard"><i class="fas fa-home"></i> Home</button>
                 <button class="bn-item" data-screen="mentor"><i class="fas fa-handshake"></i> Mentor</button>
@@ -2927,59 +3013,50 @@
     </div><!-- /app -->
 
     <script>
-        // ========== QURAN VERSES COLLECTION ==========
-        const quranVerses = [
-            {
-                arabic: 'وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ',
-                translation: 'And We have certainly made the Quran easy for remembrance, so is there any who will remember?',
-                reference: '— Surah Al-Qamar 54:17',
-            },
-            {
-                arabic: 'إِنَّ هَٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ',
-                translation: 'Indeed, this Quran guides to that which is most suitable.',
-                reference: '— Surah Al-Isra 17:9',
-            },
-            {
-                arabic: 'فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ',
-                translation: 'So remember Me; I will remember you. And be grateful to Me and do not deny Me.',
-                reference: '— Surah Al-Baqarah 2:152',
-            },
-            {
-                arabic: 'وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ',
-                translation: 'And when My servants ask you concerning Me, indeed I am near.',
-                reference: '— Surah Al-Baqarah 2:186',
-            },
-            {
-                arabic: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا  إِنَّ مَعَ الْعُسْرِ يُسْرًا',
-                translation: 'For indeed, with hardship comes ease. Indeed, with hardship comes ease.',
-                reference: '— Surah Ash-Sharh 94:5–6',
-            },
-            {
-                arabic: 'وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ',
-                translation: 'And whoever puts their trust in Allah, He will be sufficient for them.',
-                reference: '— Surah At-Talaq 65:3',
-            },
-            {
-                arabic: 'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ',
-                translation: 'Indeed, Allah is with those who are patient.',
-                reference: '— Surah Al-Baqarah 2:153',
-            },
-            {
-                arabic: 'وَقُل رَّبِّ زِدْنِي عِلْمًا',
-                translation: 'And say, "My Lord, increase me in knowledge."',
-                reference: '— Surah Ta-Ha 20:114',
-            },
-            {
-                arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
-                translation: 'Our Lord, give us in this world good and in the Hereafter good and protect us from the punishment of the Fire.',
-                reference: '— Surah Al-Baqarah 2:201',
-            },
-            {
-                arabic: 'وَاعْتَصِمُوا بِحَبْلِ اللَّهِ جَمِيعًا وَلَا تَفَرَّقُوا',
-                translation: 'And hold firmly to the rope of Allah all together and do not become divided.',
-                reference: '— Surah Aal-Imran 3:103',
-            },
-        ];
+        // ============================================================
+        // 1. QURAN VERSES
+        // ============================================================
+        const quranVerses = [{
+            arabic: 'وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ',
+            translation: 'And We have certainly made the Quran easy for remembrance, so is there any who will remember?',
+            reference: '— Surah Al-Qamar 54:17',
+        }, {
+            arabic: 'إِنَّ هَٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ',
+            translation: 'Indeed, this Quran guides to that which is most suitable.',
+            reference: '— Surah Al-Isra 17:9',
+        }, {
+            arabic: 'فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ',
+            translation: 'So remember Me; I will remember you. And be grateful to Me and do not deny Me.',
+            reference: '— Surah Al-Baqarah 2:152',
+        }, {
+            arabic: 'وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ',
+            translation: 'And when My servants ask you concerning Me, indeed I am near.',
+            reference: '— Surah Al-Baqarah 2:186',
+        }, {
+            arabic: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا  إِنَّ مَعَ الْعُسْرِ يُسْرًا',
+            translation: 'For indeed, with hardship comes ease. Indeed, with hardship comes ease.',
+            reference: '— Surah Ash-Sharh 94:5–6',
+        }, {
+            arabic: 'وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ',
+            translation: 'And whoever puts their trust in Allah, He will be sufficient for them.',
+            reference: '— Surah At-Talaq 65:3',
+        }, {
+            arabic: 'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ',
+            translation: 'Indeed, Allah is with those who are patient.',
+            reference: '— Surah Al-Baqarah 2:153',
+        }, {
+            arabic: 'وَقُل رَّبِّ زِدْنِي عِلْمًا',
+            translation: 'And say, "My Lord, increase me in knowledge."',
+            reference: '— Surah Ta-Ha 20:114',
+        }, {
+            arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
+            translation: 'Our Lord, give us in this world good and in the Hereafter good and protect us from the punishment of the Fire.',
+            reference: '— Surah Al-Baqarah 2:201',
+        }, {
+            arabic: 'وَاعْتَصِمُوا بِحَبْلِ اللَّهِ جَمِيعًا وَلَا تَفَرَّقُوا',
+            translation: 'And hold firmly to the rope of Allah all together and do not become divided.',
+            reference: '— Surah Aal-Imran 3:103',
+        }, ];
 
         let currentVerseIndex = -1;
 
@@ -2998,50 +3075,25 @@
             const translationEl = document.getElementById('qvTranslation');
             const referenceEl = document.getElementById('qvReference');
 
-            // Fade out
+            if (!arabicEl) return;
+
             arabicEl.style.opacity = '0';
             translationEl.style.opacity = '0';
             referenceEl.style.opacity = '0';
-            arabicEl.style.transition = 'opacity 0.3s ease';
-            translationEl.style.transition = 'opacity 0.3s ease';
-            referenceEl.style.transition = 'opacity 0.3s ease';
 
             setTimeout(() => {
                 arabicEl.textContent = verse.arabic;
                 translationEl.textContent = verse.translation;
                 referenceEl.textContent = verse.reference;
-                // Fade in
                 arabicEl.style.opacity = '1';
                 translationEl.style.opacity = '1';
                 referenceEl.style.opacity = '1';
             }, 300);
         }
 
-        // Initialize verse on load
-        document.addEventListener('DOMContentLoaded', () => {
-            displayQuranVerse();
-        });
-
-        // Refresh button
-        document.getElementById('qvRefreshBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            displayQuranVerse();
-            // Add a subtle pulse to the button
-            const btn = e.currentTarget;
-            btn.style.transform = 'scale(1.2) rotate(90deg)';
-            setTimeout(() => {
-                btn.style.transform = 'scale(1) rotate(0deg)';
-            }, 300);
-        });
-
-        // Auto-rotate verse every 45 seconds
-        setInterval(() => {
-            if (document.getElementById('screen-dashboard').classList.contains('active')) {
-                displayQuranVerse();
-            }
-        }, 45000);
-
-        // ========== DARK MODE ==========
+        // ============================================================
+        // 2. DARK MODE
+        // ============================================================
         function applyDarkMode(isDark) {
             const html = document.documentElement;
             const darkToggle = document.getElementById('darkModeToggle');
@@ -3062,14 +3114,10 @@
 
             applyDarkMode(newMode);
             localStorage.setItem('silah-dark-mode', newMode ? 'dark' : 'light');
-
-            // Show brief toast
-            const toastMsg = newMode ? '🌙 Dark mode activated' : '☀️ Light mode activated';
-            showMiniToast(toastMsg);
+            showMiniToast(newMode ? '🌙 Dark mode activated' : '☀️ Light mode activated');
         }
 
         function showMiniToast(message) {
-            // Remove existing toast
             const existing = document.querySelector('.mini-toast');
             if (existing) existing.remove();
 
@@ -3094,13 +3142,9 @@
                         pointer-events: none;
                     `;
             document.body.appendChild(toast);
-
-            setTimeout(() => {
-                if (toast.parentNode) toast.remove();
-            }, 2200);
+            setTimeout(() => { if (toast.parentNode) toast.remove(); }, 2200);
         }
 
-        // Add toast animation keyframes dynamically
         const toastStyle = document.createElement('style');
         toastStyle.textContent = `
                     @keyframes fadeUpToast {
@@ -3114,7 +3158,6 @@
                 `;
         document.head.appendChild(toastStyle);
 
-        // Load saved preference
         function loadDarkModePreference() {
             const saved = localStorage.getItem('silah-dark-mode');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -3122,20 +3165,15 @@
             applyDarkMode(isDark);
         }
 
-        // Listen for system theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
             const saved = localStorage.getItem('silah-dark-mode');
-            if (!saved) {
-                applyDarkMode(e.matches);
-            }
+            if (!saved) applyDarkMode(e.matches);
         });
 
-        // Initialize dark mode on load
-        loadDarkModePreference();
-
-        // ========== NAVIGATION ==========
+        // ============================================================
+        // 3. NAVIGATION
+        // ============================================================
         const screens = {
-            onboarding: document.getElementById('screen-onboarding'),
             dashboard: document.getElementById('screen-dashboard'),
             mentor: document.getElementById('screen-mentor'),
             discover: document.getElementById('screen-discover'),
@@ -3148,41 +3186,29 @@
         const bottomNavItems = document.querySelectorAll('.bn-item');
 
         function navigateTo(screenId) {
-            // Hide all screens
-            Object.values(screens).forEach(s => s.classList.remove('active'));
+            Object.values(screens).forEach(s => { if (s) s.classList.remove('active'); });
 
-            // Show target
             const target = screens[screenId];
             if (target) {
                 target.classList.add('active');
                 target.style.animation = 'none';
-                requestAnimationFrame(() => {
-                    target.style.animation = 'fadeUp 0.4s ease';
-                });
+                requestAnimationFrame(() => { target.style.animation = 'fadeUp 0.4s ease'; });
             }
 
-            // Update sidebar nav
             navItems.forEach(n => n.classList.remove('active'));
-            navItems.forEach(n => {
-                if (n.dataset.screen === screenId) n.classList.add('active');
-            });
+            navItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
 
-            // Update bottom nav
             bottomNavItems.forEach(n => n.classList.remove('active'));
-            bottomNavItems.forEach(n => {
-                if (n.dataset.screen === screenId) n.classList.add('active');
-            });
+            bottomNavItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
 
-            // Scroll to top
-            document.getElementById('screenContainer').scrollTop = 0;
+            const container = document.getElementById('screenContainer');
+            if (container) container.scrollTop = 0;
 
-            // If navigating to dashboard, refresh Quran verse
             if (screenId === 'dashboard') {
                 setTimeout(displayQuranVerse, 200);
             }
         }
 
-        // Sidebar nav clicks
         navItems.forEach(item => {
             item.addEventListener('click', () => {
                 const screen = item.dataset.screen;
@@ -3190,7 +3216,6 @@
             });
         });
 
-        // Bottom nav clicks
         bottomNavItems.forEach(item => {
             item.addEventListener('click', () => {
                 const screen = item.dataset.screen;
@@ -3198,11 +3223,22 @@
             });
         });
 
-        // ========== ONBOARDING INTERACTIONS ==========
+        // ============================================================
+        // 4. TOGGLE SWITCH (generic)
+        // ============================================================
+        function toggleSwitch(el) {
+            el.classList.toggle('on');
+        }
+
+        // ============================================================
+        // 5. UI INTERACTIONS (onboarding radios, checkboxes, buttons)
+        // ============================================================
         document.querySelectorAll('.radio-option').forEach(opt => {
             opt.addEventListener('click', function() {
                 const parent = this.closest('.radio-grid');
-                parent.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+                if (parent) {
+                    parent.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+                }
                 this.classList.add('selected');
             });
         });
@@ -3213,46 +3249,29 @@
             });
         });
 
-        document.getElementById('onboardingContinue').addEventListener('click', function() {
-            const interests = [];
-            document.querySelectorAll('#interestsGroup .checkbox-option.selected').forEach(el => {
-                interests.push(el.textContent.trim());
-            });
-            navigateTo('dashboard');
-            const btn = this;
-            const orig = btn.innerHTML;
-            btn.innerHTML = '✅ Welcome!';
-            btn.style.background = 'var(--teal)';
-            setTimeout(() => {
-                btn.innerHTML = orig;
-                btn.style.background = '';
-            }, 1200);
-        });
-
-        // ========== TOGGLE SWITCH ==========
-        function toggleSwitch(el) {
-            el.classList.toggle('on');
-        }
-
-        // ========== TAB SWITCHING (Discover) ==========
+        // Tab switching (Discover)
         document.querySelectorAll('.disco-tabs .tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 const parent = this.closest('.disco-tabs');
-                parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                if (parent) {
+                    parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                }
                 this.classList.add('active');
             });
         });
 
-        // ========== CHIP TOGGLE (Discover) ==========
+        // Chip toggle (Discover)
         document.querySelectorAll('.filter-chips .chip').forEach(chip => {
             chip.addEventListener('click', function() {
                 const parent = this.closest('.filter-chips');
-                parent.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                if (parent) {
+                    parent.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                }
                 this.classList.add('active');
             });
         });
 
-        // ========== RSVP / JOIN BUTTON FEEDBACK ==========
+        // RSVP / Join feedback
         document.querySelectorAll('.btn-rsvp, .btn-join').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -3266,7 +3285,7 @@
             });
         });
 
-        // ========== SAVE BUTTON ==========
+        // Save button
         document.querySelectorAll('.btn-save').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -3282,7 +3301,7 @@
             });
         });
 
-        // ========== REQUEST CONNECT ==========
+        // Request connect
         document.querySelectorAll('.btn-req').forEach(btn => {
             btn.addEventListener('click', function() {
                 const orig = this.textContent;
@@ -3295,7 +3314,7 @@
             });
         });
 
-        // ========== NOTIFY ME ==========
+        // Notify me
         document.querySelector('.notify-cta button')?.addEventListener('click', function() {
             const orig = this.innerHTML;
             this.innerHTML = '✅ Subscribed!';
@@ -3306,12 +3325,11 @@
             }, 1500);
         });
 
-        // ========== POST BUTTON ==========
+        // Post button
         document.querySelector('.feed-post-box .post-tools button:last-child')?.addEventListener('click', function() {
             const input = document.querySelector('.feed-post-box .post-input input');
             if (input && input.value.trim()) {
                 const msg = input.value.trim();
-                const feedContainer = document.querySelector('#screen-feed');
                 const newItem = document.createElement('div');
                 newItem.className = 'feed-item';
                 newItem.style.animation = 'fadeUp 0.4s ease';
@@ -3333,7 +3351,9 @@
                             </div>
                         `;
                 const postBox = document.querySelector('.feed-post-box');
-                postBox.parentNode.insertBefore(newItem, postBox.nextSibling);
+                if (postBox && postBox.parentNode) {
+                    postBox.parentNode.insertBefore(newItem, postBox.nextSibling);
+                }
                 input.value = '';
                 this.textContent = '✅ Posted!';
                 this.style.background = 'var(--teal)';
@@ -3346,7 +3366,7 @@
             }
         });
 
-        // ========== LIKE BUTTON ==========
+        // Like button
         document.addEventListener('click', function(e) {
             const likeBtn = e.target.closest('.feed-actions button:first-child');
             if (likeBtn) {
@@ -3354,64 +3374,287 @@
                 if (countSpan) {
                     let count = parseInt(countSpan.textContent) || 0;
                     const heart = likeBtn.querySelector('i');
-                    if (heart.classList.contains('fas')) {
-                        heart.classList.remove('fas');
-                        heart.classList.add('far');
-                        heart.style.color = '';
-                        count = Math.max(0, count - 1);
-                        countSpan.textContent = count;
-                    } else {
-                        heart.classList.remove('far');
-                        heart.classList.add('fas');
-                        heart.style.color = '#e74c3c';
-                        count += 1;
-                        countSpan.textContent = count;
-                        setTimeout(() => { heart.style.color = ''; }, 300);
+                    if (heart) {
+                        if (heart.classList.contains('fas')) {
+                            heart.classList.remove('fas');
+                            heart.classList.add('far');
+                            heart.style.color = '';
+                            count = Math.max(0, count - 1);
+                            countSpan.textContent = count;
+                        } else {
+                            heart.classList.remove('far');
+                            heart.classList.add('fas');
+                            heart.style.color = '#e74c3c';
+                            count += 1;
+                            countSpan.textContent = count;
+                            setTimeout(() => { heart.style.color = ''; }, 300);
+                        }
                     }
                 }
             }
         });
 
-        // ========== KEYBOARD SHORTCUTS ==========
+        // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                navigateTo('dashboard');
-            }
-            // Ctrl+Shift+D to toggle dark mode
+            if (e.key === 'Escape') navigateTo('dashboard');
             if (e.ctrlKey && e.shiftKey && e.key === 'D') {
                 e.preventDefault();
                 toggleDarkMode();
             }
         });
 
-        // ========== RESPONSIVE: Ensure bottom nav shows on small screens ==========
+        // ============================================================
+        // 6. RESPONSIVE BOTTOM NAV
+        // ============================================================
         function checkBottomNav() {
             const bottomNav = document.getElementById('bottomNav');
-            if (window.innerWidth <= 1024) {
-                bottomNav.style.display = 'flex';
-            } else {
-                bottomNav.style.display = 'none';
+            if (bottomNav) {
+                bottomNav.style.display = window.innerWidth <= 1024 ? 'flex' : 'none';
             }
         }
         checkBottomNav();
         window.addEventListener('resize', checkBottomNav);
 
-        // ========== INIT: Show dashboard by default ==========
-        navigateTo('dashboard');
+        // ============================================================
+        // 7. SUPABASE AUTH
+        // ============================================================
+        const SUPABASE_URL = 'https://bjwvijrtlqripfmaaxie.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_unxr5JhStwZ4xB14LaFcsg_jINQ15Dk';
+        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ========== FETCH MOSQUES FROM API ==========
+        const authScreen = document.getElementById('authScreen');
+        const authStep = document.getElementById('authStep');
+        const onboardingStep = document.getElementById('onboardingStep');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authForms = {
+            signin: document.getElementById('signInForm'),
+            register: document.getElementById('registerForm'),
+        };
+        const authError = document.getElementById('authError');
+
+        function showAuthTab(which) {
+            authError.classList.remove('show');
+            authError.textContent = '';
+            authTabs.forEach(t => t.classList.toggle('active', t.dataset.auth === which));
+            Object.entries(authForms).forEach(([key, form]) => {
+                if (form) form.classList.toggle('active', key === which);
+            });
+        }
+
+        function showAuthStep() {
+            if (authStep) authStep.classList.add('active');
+            if (onboardingStep) onboardingStep.classList.remove('active');
+        }
+
+        function showOnboardingStep() {
+            if (authStep) authStep.classList.remove('active');
+            if (onboardingStep) onboardingStep.classList.add('active');
+        }
+
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => showAuthTab(tab.dataset.auth));
+        });
+
+        document.querySelectorAll('.auth-switch a[data-auth]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showAuthTab(link.dataset.auth);
+            });
+        });
+
+        function getInitials(name) {
+            const parts = name.trim().split(/\s+/).filter(Boolean);
+            if (parts.length === 0) return '?';
+            if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+            return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        }
+
+        function applyProfileToUI(profile) {
+            const name = profile.full_name || 'Friend';
+            const initials = getInitials(name);
+            const firstName = name.split(/\s+/)[0];
+            const nameEl = document.getElementById('greetingName');
+            const dashEl = document.getElementById('dashName');
+            const avatarEl = document.getElementById('topbarAvatar');
+            const profAvatarEl = document.getElementById('profileAvatar');
+            const profNameEl = document.getElementById('profileName');
+            const profLocEl = document.getElementById('profileLoc');
+
+            if (nameEl) nameEl.textContent = firstName;
+            if (dashEl) dashEl.textContent = firstName;
+            if (avatarEl) avatarEl.textContent = initials;
+            if (profAvatarEl) profAvatarEl.textContent = initials;
+            if (profNameEl) profNameEl.textContent = name;
+            if (profLocEl && profile.location) profLocEl.textContent = profile.location;
+        }
+
+        function enterApp() {
+            document.body.classList.add('authenticated');
+            navigateTo('dashboard');
+        }
+
+        function showAuthError(message) {
+            if (authError) {
+                authError.textContent = message;
+                authError.classList.add('show');
+            }
+        }
+
+        let pendingUserId = null;
+
+        // Sign In
+        async function handleSignIn() {
+            const email = document.getElementById('signInEmail')?.value.trim() || '';
+            const password = document.getElementById('signInPassword')?.value || '';
+            if (!email || !password) {
+                showAuthError('Please enter your email and password.');
+                return;
+            }
+
+            const { data, error } = await sb.auth.signInWithPassword({ email, password });
+            if (error) {
+                showAuthError(error.message);
+                return;
+            }
+
+            const { data: profile } = await sb
+                .from('profiles')
+                .select('*')
+                .eq('id', data.user.id)
+                .single();
+
+            if (profile) applyProfileToUI(profile);
+            enterApp();
+        }
+        document.getElementById('signInSubmit')?.addEventListener('click', handleSignIn);
+        ['signInEmail', 'signInPassword'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') { e.preventDefault();
+                        handleSignIn(); }
+                });
+            }
+        });
+
+        // Register
+        async function handleRegisterContinue() {
+            const name = document.getElementById('regName')?.value.trim() || '';
+            const email = document.getElementById('regEmail')?.value.trim() || '';
+            const password = document.getElementById('regPassword')?.value || '';
+
+            if (!name || !email || !password) {
+                showAuthError('Please fill in your name, email, and password.');
+                return;
+            }
+
+            const { data, error } = await sb.auth.signUp({ email, password });
+            if (error) {
+                showAuthError(error.message);
+                return;
+            }
+
+            pendingUserId = data.user.id;
+            window.__pendingName = name;
+            showOnboardingStep();
+        }
+        document.getElementById('registerContinue')?.addEventListener('click', handleRegisterContinue);
+        ['regName', 'regEmail', 'regPassword'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') { e.preventDefault();
+                        handleRegisterContinue(); }
+                });
+            }
+        });
+
+        // Onboarding Finish
+        document.getElementById('onboardingFinish')?.addEventListener('click', async function() {
+            const name = window.__pendingName || 'Friend';
+            const purposeEl = document.querySelector('#purposeGroup .radio-option.selected');
+            const purpose = purposeEl ? purposeEl.dataset.value : null;
+            const locationSelect = document.getElementById('regLocation');
+            const locationText = locationSelect ? locationSelect.options[locationSelect.selectedIndex].textContent
+                .trim() : 'Chicago, IL';
+            const interests = [];
+            document.querySelectorAll('#interestsGroup .checkbox-option.selected').forEach(el => {
+                interests.push(el.textContent.trim());
+            });
+
+            const btn = this;
+            const origLabel = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = 'Saving…';
+
+            const { error } = await sb.from('profiles').upsert({
+                id: pendingUserId,
+                full_name: name,
+                location: locationText,
+                purpose: purpose,
+                interests: interests,
+            });
+
+            btn.disabled = false;
+            btn.innerHTML = origLabel;
+
+            if (error) {
+                showAuthStep();
+                showAuthTab('register');
+                showAuthError('Account created, but saving your profile failed: ' + error.message);
+                return;
+            }
+
+            applyProfileToUI({ full_name: name, location: locationText });
+            enterApp();
+        });
+
+        // Log Out
+        function performLogout() {
+            sb.auth.signOut().then(() => {
+                document.body.classList.remove('authenticated');
+                showAuthStep();
+                showAuthTab('signin');
+                const emailEl = document.getElementById('signInEmail');
+                const pwdEl = document.getElementById('signInPassword');
+                if (emailEl) emailEl.value = '';
+                if (pwdEl) pwdEl.value = '';
+            });
+        }
+        document.getElementById('logoutBtn')?.addEventListener('click', performLogout);
+        document.getElementById('settingsLogoutBtn')?.addEventListener('click', performLogout);
+
+        // Auto sign-in
+        (async function restoreSession() {
+            const { data } = await sb.auth.getSession();
+            if (data.session) {
+                const { data: profile } = await sb
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', data.session.user.id)
+                    .single();
+                if (profile) applyProfileToUI(profile);
+                enterApp();
+            }
+        })();
+
+        // ============================================================
+        // 8. FETCH MOSQUES
+        // ============================================================
         async function fetchMosques(lat, lon) {
             const loadingEl = document.getElementById('mosqueLoading');
             const errorEl = document.getElementById('mosqueError');
             const noResultsEl = document.getElementById('mosqueNoResults');
             const mosqueList = document.getElementById('mosqueList');
 
-            loadingEl.style.display = 'flex';
-            errorEl.style.display = 'none';
-            noResultsEl.style.display = 'none';
+            if (loadingEl) loadingEl.style.display = 'flex';
+            if (errorEl) errorEl.style.display = 'none';
+            if (noResultsEl) noResultsEl.style.display = 'none';
 
-            const existingRows = mosqueList.querySelectorAll('.mosque-row.dynamic');
-            existingRows.forEach(row => row.remove());
+            if (mosqueList) {
+                const existingRows = mosqueList.querySelectorAll('.mosque-row.dynamic');
+                existingRows.forEach(row => row.remove());
+            }
 
             try {
                 const proxyUrl = 'https://api.allorigins.win/raw?url=';
@@ -3423,15 +3666,16 @@
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
                 const data = await response.json();
-                loadingEl.style.display = 'none';
+                if (loadingEl) loadingEl.style.display = 'none';
 
                 if (!data || !data.data || data.data.length === 0) {
-                    noResultsEl.style.display = 'flex';
+                    if (noResultsEl) noResultsEl.style.display = 'flex';
                     return;
                 }
 
                 const mosques = data.data;
                 mosques.forEach((mosque) => {
+                    if (!mosqueList) return;
                     const row = document.createElement('div');
                     row.className = 'mosque-row dynamic';
                     const name = mosque.name || 'Unnamed Mosque';
@@ -3440,7 +3684,7 @@
                         'Distance unknown';
                     const rating = mosque.rating || 0;
                     const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(
-                        rating));
+                    rating));
                     const openStatus = mosque.open_now ? '🟢 Open now' : '🔴 Closed';
 
                     row.innerHTML = `
@@ -3461,8 +3705,8 @@
                 });
             } catch (error) {
                 console.error('Error fetching mosques:', error);
-                loadingEl.style.display = 'none';
-                errorEl.style.display = 'flex';
+                if (loadingEl) loadingEl.style.display = 'none';
+                if (errorEl) errorEl.style.display = 'flex';
             }
         }
 
@@ -3470,8 +3714,7 @@
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        const { latitude, longitude } = position.coords;
-                        fetchMosques(latitude, longitude);
+                        fetchMosques(position.coords.latitude, position.coords.longitude);
                     },
                     () => {
                         fetchMosques(41.8781, -87.6298);
@@ -3482,26 +3725,52 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            getUserLocationAndFetchMosques();
-            displayQuranVerse();
+        // ============================================================
+        // 9. INIT
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
             loadDarkModePreference();
-        });
+            displayQuranVerse();
 
-        const discoverScreen = document.getElementById('screen-discover');
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                    if (discoverScreen.classList.contains('active')) {
-                        getUserLocationAndFetchMosques();
-                    }
+            // Auto-rotate verse every 45s
+            setInterval(() => {
+                const dash = document.getElementById('screen-dashboard');
+                if (dash && dash.classList.contains('active')) {
+                    displayQuranVerse();
                 }
-            });
-        });
-        observer.observe(discoverScreen, { attributes: true });
+            }, 45000);
 
-        console.log('🌙 Silah — AI-Powered Community Platform loaded.');
-        console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
+            // Refresh button
+            document.getElementById('qvRefreshBtn')?.addEventListener('click', function(e) {
+                e.stopPropagation();
+                displayQuranVerse();
+                const btn = this;
+                btn.style.transform = 'scale(1.2) rotate(90deg)';
+                setTimeout(() => { btn.style.transform = 'scale(1) rotate(0deg)'; }, 300);
+            });
+
+            // Fetch mosques on Discover screen activation
+            const discoverScreen = document.getElementById('screen-discover');
+            if (discoverScreen) {
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                            if (discoverScreen.classList.contains('active')) {
+                                getUserLocationAndFetchMosques();
+                            }
+                        }
+                    });
+                });
+                observer.observe(discoverScreen, { attributes: true });
+            }
+
+            // Initial mosque fetch (if discover is active by default it's not, but we'll load anyway)
+            getUserLocationAndFetchMosques();
+
+            navigateTo('dashboard');
+            console.log('🌙 Silah — AI-Powered Community Platform loaded.');
+            console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
+        });
     </script>
 
 </body>
