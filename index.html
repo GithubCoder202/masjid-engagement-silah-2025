@@ -153,6 +153,7 @@
             padding: 36px 36px 28px;
             margin: auto;
             transition: background var(--transition-theme);
+            position: relative;
         }
 
         .auth-brand {
@@ -161,6 +162,7 @@
             justify-content: center;
             gap: 12px;
             margin-bottom: 24px;
+            cursor: pointer;
         }
         .auth-brand .logo-icon {
             width: 42px;
@@ -174,7 +176,10 @@
             color: var(--green-dark);
             font-weight: 800;
             flex-shrink: 0;
-            transition: background var(--transition-theme);
+            transition: background var(--transition-theme), transform 0.3s ease;
+        }
+        .auth-brand .logo-icon:hover {
+            transform: scale(1.05);
         }
         [data-theme="dark"] .auth-brand .logo-icon {
             background: #d4b55c;
@@ -303,6 +308,79 @@
             background: #FDEDEC;
         }
 
+        /* ===== ENHANCED SIGN-IN BUTTON ===== */
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(26, 107, 79, 0.25);
+            letter-spacing: 0.3px;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: inherit;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 8px 30px rgba(26, 107, 79, 0.35);
+        }
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+        .btn-primary:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 2px 10px rgba(26, 107, 79, 0.2);
+        }
+        .btn-primary span,
+        .btn-primary i {
+            position: relative;
+            z-index: 1;
+        }
+        .btn-primary i {
+            transition: transform 0.3s ease;
+        }
+        .btn-primary:hover i {
+            transform: translateX(4px);
+        }
+        .btn-primary .btn-shimmer {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transform: skewX(-25deg);
+            animation: shimmer 3s infinite;
+            z-index: 0;
+        }
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 200%;
+            }
+        }
+
         /* ========== SIDEBAR ========== */
         .sidebar {
             width: 260px;
@@ -331,6 +409,7 @@
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             flex-shrink: 0;
+            cursor: pointer;
         }
 
         .sidebar-brand .logo-icon {
@@ -344,7 +423,10 @@
             font-size: 20px;
             color: var(--green-dark);
             font-weight: 800;
-            transition: background var(--transition-theme);
+            transition: background var(--transition-theme), transform 0.3s ease;
+        }
+        .sidebar-brand .logo-icon:hover {
+            transform: scale(1.05);
         }
 
         [data-theme="dark"] .sidebar-brand .logo-icon {
@@ -463,6 +545,8 @@
             flex-wrap: wrap;
             gap: 10px;
             transition: background var(--transition-theme), border-color var(--transition-theme);
+            position: relative;
+            z-index: 50;
         }
 
         .topbar-left {
@@ -635,6 +719,289 @@
         }
         .profile-popup .pp-logout:hover {
             color: #c0392b;
+        }
+
+        /* ===== NOTIFICATION POPUP ===== */
+        .notification-popup {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            width: 340px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            animation: slideDownNotif 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: background var(--transition-theme), border-color var(--transition-theme);
+        }
+        .notification-popup.show {
+            display: block;
+        }
+        @keyframes slideDownNotif {
+            from {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .notification-popup .notif-header {
+            padding: 14px 18px 10px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .notification-popup .notif-header h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .notification-popup .notif-header .notif-mark-all {
+            font-size: 12px;
+            color: var(--green);
+            cursor: pointer;
+            font-weight: 600;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .notification-popup .notif-header .notif-mark-all:hover {
+            text-decoration: underline;
+        }
+        .notification-popup .notif-item {
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            transition: background 0.2s ease;
+            cursor: pointer;
+        }
+        .notification-popup .notif-item:hover {
+            background: var(--gray-50);
+        }
+        [data-theme="dark"] .notification-popup .notif-item:hover {
+            background: var(--gray-100);
+        }
+        .notification-popup .notif-item .notif-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .notification-popup .notif-item .notif-body {
+            flex: 1;
+        }
+        .notification-popup .notif-item .notif-body .notif-text {
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+        .notification-popup .notif-item .notif-body .notif-text strong {
+            color: var(--green);
+        }
+        .notification-popup .notif-item .notif-body .notif-time {
+            font-size: 11px;
+            color: var(--gray-400);
+            margin-top: 2px;
+        }
+        .notification-popup .notif-item.unread {
+            border-left: 3px solid var(--green);
+        }
+        .notification-popup .notif-empty {
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .notification-popup .notif-empty i {
+            font-size: 28px;
+            color: var(--gray-300);
+            display: block;
+            margin-bottom: 8px;
+        }
+        .notification-popup::-webkit-scrollbar {
+            width: 4px;
+        }
+        .notification-popup::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 10px;
+        }
+
+        /* ===== ABOUT MODAL ===== */
+        .about-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeInOverlay 0.3s ease;
+        }
+        .about-overlay.show {
+            display: flex;
+        }
+        @keyframes fadeInOverlay {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .about-modal {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            max-width: 480px;
+            width: 100%;
+            padding: 32px 36px 28px;
+            box-shadow: var(--shadow-lg);
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: background var(--transition-theme);
+            position: relative;
+        }
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .about-modal .about-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .about-modal .about-close:hover {
+            color: var(--text-primary);
+            transform: rotate(90deg);
+        }
+        .about-modal .about-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .about-modal .about-brand .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--green-dark);
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .about-modal .about-brand .logo-icon {
+            background: #d4b55c;
+            color: #0d1f17;
+        }
+        .about-modal .about-brand h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            color: var(--text-primary);
+        }
+        .about-modal .about-brand h2 span {
+            color: var(--gold);
+        }
+        .about-modal .about-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+        .about-modal .about-divider {
+            border: none;
+            border-top: 2px solid var(--border-light);
+            margin: 14px 0 16px;
+        }
+        .about-modal .about-credit {
+            text-align: center;
+            padding: 6px 0 2px;
+        }
+        .about-modal .about-credit .credit-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .about-modal .about-credit .credit-label span {
+            color: var(--gold);
+        }
+        .about-modal .about-names {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 16px;
+            margin-top: 10px;
+        }
+        .about-modal .about-names .name-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--green-pale);
+            color: var(--green-dark);
+            padding: 4px 14px 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all var(--transition-theme);
+        }
+        [data-theme="dark"] .about-modal .about-names .name-tag {
+            background: #1a2f26;
+            color: #b8e0d0;
+        }
+        .about-modal .about-names .name-tag i {
+            font-size: 12px;
+            color: var(--gold);
+        }
+        .about-modal .about-names .name-tag .initial {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 22px;
+        }
+        .about-modal .about-version {
+            text-align: center;
+            margin-top: 14px;
+            font-size: 12px;
+            color: var(--gray-400);
         }
 
         /* ========== SCREEN CONTAINER ========== */
@@ -2109,6 +2476,10 @@
                 border-top: 2px solid var(--gold);
                 padding-top: 10px;
             }
+            .notification-popup {
+                width: 300px;
+                right: -10px;
+            }
         }
 
         @media (max-width: 600px) {
@@ -2233,6 +2604,17 @@
             .pillar-card .pillar-content h3 .arabic {
                 font-size: 17px;
             }
+            .notification-popup {
+                width: 280px;
+                right: -20px;
+            }
+            .about-modal {
+                padding: 24px 20px 20px;
+            }
+            .about-modal .about-names .name-tag {
+                font-size: 12px;
+                padding: 3px 10px 3px 8px;
+            }
         }
 
         @media (max-width: 400px) {
@@ -2256,6 +2638,10 @@
             .bottom-nav .bn-item i {
                 font-size: 13px;
             }
+            .notification-popup {
+                width: 260px;
+                right: -30px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -2274,7 +2660,7 @@
     <!-- ========== AUTH SCREEN ========== -->
     <div class="auth-screen" id="authScreen">
         <div class="auth-card">
-            <div class="auth-brand">
+            <div class="auth-brand" id="authBrand">
                 <div class="logo-icon">ص</div>
                 <h1>Silah<span>.</span></h1>
             </div>
@@ -2298,7 +2684,11 @@
                         <label>Password</label>
                         <input type="password" id="signInPassword" placeholder="••••••••" />
                     </div>
-                    <button type="button" class="btn-primary" id="signInSubmit">Sign In <i class="fas fa-arrow-right"></i></button>
+                    <button type="button" class="btn-primary" id="signInSubmit">
+                        <span class="btn-shimmer"></span>
+                        <span>Sign In</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
                     <div class="auth-switch">Don't have an account? <a data-auth="register">Register</a></div>
                 </div>
 
@@ -2323,7 +2713,11 @@
                         <input type="password" id="regPassword" placeholder="Create a password" />
                     </div>
 
-                    <button type="button" class="btn-primary" id="registerContinue">Continue <i class="fas fa-arrow-right"></i></button>
+                    <button type="button" class="btn-primary" id="registerContinue">
+                        <span class="btn-shimmer"></span>
+                        <span>Continue</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
                     <div class="auth-switch">Already have an account? <a data-auth="signin">Sign In</a></div>
                 </div>
             </div>
@@ -2375,11 +2769,57 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn-primary" id="onboardingFinish">Finish <i class="fas fa-arrow-right"></i></button>
+                <button type="button" class="btn-primary" id="onboardingFinish">
+                    <span class="btn-shimmer"></span>
+                    <span>Finish</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
                 <div class="onboarding-footer">
                     <i class="fas fa-lock"></i> We'll never share your data · Privacy-first
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- ========== ABOUT OVERLAY ========== -->
+    <div class="about-overlay" id="aboutOverlay">
+        <div class="about-modal">
+            <button class="about-close" id="aboutCloseBtn">✕</button>
+            <div class="about-brand">
+                <div class="logo-icon">ص</div>
+                <h2>Silah<span>.</span></h2>
+            </div>
+            <p class="about-desc">
+                Silah is an AI-powered community platform designed to connect Muslims with mentors,
+                events, and a supportive community. Our mission is to make Islamic learning and
+                belonging accessible to everyone.
+            </p>
+            <hr class="about-divider" />
+            <div class="about-credit">
+                <div class="credit-label">✨ Website inspired by <span>Cobalt Coders</span> ✨</div>
+                <div class="about-names">
+                    <span class="name-tag"><span class="initial">A</span> Aisha <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">B</span> Bilal <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">C</span> Chadi <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">D</span> Dania <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">E</span> Elias <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">F</span> Fatima <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">H</span> Hadi <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">I</span> Iman <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">J</span> Jalal <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">K</span> Khadija <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">L</span> Layla <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">M</span> Malik <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">N</span> Nour <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">O</span> Omar <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">R</span> Ranya <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">S</span> Samir <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">T</span> Tariq <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">Y</span> Yasmin <i class="fas fa-star" style="font-size:10px;"></i></span>
+                    <span class="name-tag"><span class="initial">Z</span> Zayn <i class="fas fa-star" style="font-size:10px;"></i></span>
+                </div>
+            </div>
+            <div class="about-version">v1.2.0 · © 2026 Silah Foundation</div>
         </div>
     </div>
 
@@ -2388,7 +2828,7 @@
 
         <!-- ========== SIDEBAR ========== -->
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-brand">
+            <div class="sidebar-brand" id="sidebarBrand">
                 <div class="logo-icon">ص</div>
                 <h1>Silah<span>.</span></h1>
             </div>
@@ -2446,10 +2886,60 @@
                         <i class="fas fa-search"></i>
                         <input type="text" placeholder="Search..." />
                     </div>
-                    <button class="icon-btn" title="Notifications">
-                        <i class="fas fa-bell"></i>
-                        <span class="badge">3</span>
-                    </button>
+                    <!-- Bell with notification popup -->
+                    <div style="position:relative;">
+                        <button class="icon-btn" id="bellBtn" title="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge" id="notifBadge">3</span>
+                        </button>
+                        <div class="notification-popup" id="notificationPopup">
+                            <div class="notif-header">
+                                <h4>🔔 Notifications</h4>
+                                <button class="notif-mark-all" id="markAllBtn">Mark all read</button>
+                            </div>
+                            <div id="notifList">
+                                <div class="notif-item unread" data-id="1">
+                                    <div class="notif-icon"><i class="fas fa-user-plus"></i></div>
+                                    <div class="notif-body">
+                                        <div class="notif-text"><strong>Fatima H.</strong> accepted your mentor request</div>
+                                        <div class="notif-time">2 min ago</div>
+                                    </div>
+                                </div>
+                                <div class="notif-item unread" data-id="2">
+                                    <div class="notif-icon"><i class="fas fa-calendar-check"></i></div>
+                                    <div class="notif-body">
+                                        <div class="notif-text">Reminder: <strong>Understanding Prayer</strong> class starts in 1 hour</div>
+                                        <div class="notif-time">45 min ago</div>
+                                    </div>
+                                </div>
+                                <div class="notif-item" data-id="3">
+                                    <div class="notif-icon"><i class="fas fa-heart"></i></div>
+                                    <div class="notif-body">
+                                        <div class="notif-text"><strong>Ahmed J.</strong> liked your post</div>
+                                        <div class="notif-time">2h ago</div>
+                                    </div>
+                                </div>
+                                <div class="notif-item" data-id="4">
+                                    <div class="notif-icon"><i class="fas fa-comment"></i></div>
+                                    <div class="notif-body">
+                                        <div class="notif-text"><strong>Aisha K.</strong> commented on your post: "Mashallah! 🙌"</div>
+                                        <div class="notif-time">4h ago</div>
+                                    </div>
+                                </div>
+                                <div class="notif-item" data-id="5">
+                                    <div class="notif-icon"><i class="fas fa-mosque"></i></div>
+                                    <div class="notif-body">
+                                        <div class="notif-text">New event: <strong>Open Mosque Day</strong> this Sunday at 2PM</div>
+                                        <div class="notif-time">1d ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notif-empty" id="notifEmpty" style="display:none;">
+                                <i class="fas fa-bell-slash"></i>
+                                No new notifications
+                            </div>
+                        </div>
+                    </div>
                     <button class="icon-btn" title="AI Assistant">
                         <i class="fas fa-sparkles"></i>
                     </button>
@@ -3461,7 +3951,7 @@
         }
 
         // ============================================================
-        // 5. UI INTERACTIONS (onboarding radios, checkboxes, buttons)
+        // 5. UI INTERACTIONS
         // ============================================================
         document.querySelectorAll('.radio-option').forEach(opt => {
             opt.addEventListener('click', function() {
@@ -3646,7 +4136,108 @@
         window.addEventListener('resize', checkBottomNav);
 
         // ============================================================
-        // 7. SUPABASE AUTH & PROFILE POPUP
+        // 7. ABOUT MODAL
+        // ============================================================
+        const aboutOverlay = document.getElementById('aboutOverlay');
+        const aboutCloseBtn = document.getElementById('aboutCloseBtn');
+
+        function openAboutModal() {
+            aboutOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAboutModal() {
+            aboutOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        // Click on logo in auth screen
+        document.getElementById('authBrand')?.addEventListener('click', openAboutModal);
+
+        // Click on logo in sidebar
+        document.getElementById('sidebarBrand')?.addEventListener('click', openAboutModal);
+
+        // Close button
+        aboutCloseBtn?.addEventListener('click', closeAboutModal);
+
+        // Click outside to close
+        aboutOverlay?.addEventListener('click', function(e) {
+            if (e.target === this) closeAboutModal();
+        });
+
+        // Escape key to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && aboutOverlay.classList.contains('show')) {
+                closeAboutModal();
+            }
+        });
+
+        // ============================================================
+        // 8. NOTIFICATION POPUP
+        // ============================================================
+        const bellBtn = document.getElementById('bellBtn');
+        const notificationPopup = document.getElementById('notificationPopup');
+        const notifBadge = document.getElementById('notifBadge');
+        const markAllBtn = document.getElementById('markAllBtn');
+        const notifList = document.getElementById('notifList');
+        const notifEmpty = document.getElementById('notifEmpty');
+
+        // Toggle notification popup
+        bellBtn?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            notificationPopup.classList.toggle('show');
+            // Close profile popup if open
+            profilePopup?.classList.remove('show');
+        });
+
+        // Close notification popup when clicking outside
+        document.addEventListener('click', function(e) {
+            if (notificationPopup && !notificationPopup.contains(e.target) && !bellBtn.contains(e.target)) {
+                notificationPopup.classList.remove('show');
+            }
+        });
+
+        // Mark all as read
+        markAllBtn?.addEventListener('click', function() {
+            const unreadItems = document.querySelectorAll('.notif-item.unread');
+            unreadItems.forEach(item => item.classList.remove('unread'));
+            notifBadge.textContent = '0';
+            notifBadge.style.display = 'none';
+            checkEmptyNotifications();
+        });
+
+        // Mark individual as read on click
+        document.querySelectorAll('.notif-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.remove('unread');
+                const count = document.querySelectorAll('.notif-item.unread').length;
+                notifBadge.textContent = count;
+                if (count === 0) {
+                    notifBadge.style.display = 'none';
+                }
+                checkEmptyNotifications();
+            });
+        });
+
+        function checkEmptyNotifications() {
+            const items = document.querySelectorAll('.notif-item');
+            const unread = document.querySelectorAll('.notif-item.unread');
+            if (items.length === 0 || unread.length === 0 && items.length > 0) {
+                // All read, but we still show items
+                // Just update badge
+            }
+            // If no items at all, show empty state
+            if (items.length === 0) {
+                notifList.style.display = 'none';
+                notifEmpty.style.display = 'block';
+            } else {
+                notifList.style.display = 'block';
+                notifEmpty.style.display = 'none';
+            }
+        }
+
+        // ============================================================
+        // 9. SUPABASE AUTH & PROFILE POPUP
         // ============================================================
         const SUPABASE_URL = 'https://bjwvijrtlqripfmaaxie.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_unxr5JhStwZ4xB14LaFcsg_jINQ15Dk';
@@ -3697,22 +4288,20 @@
         const profilePopup = document.getElementById('profilePopup');
         const ppLogoutBtn = document.getElementById('ppLogoutBtn');
 
-        // Toggle popup on avatar click
         if (profileAvatarWrapper) {
             profileAvatarWrapper.addEventListener('click', function(e) {
                 e.stopPropagation();
                 profilePopup.classList.toggle('show');
+                notificationPopup?.classList.remove('show');
             });
         }
 
-        // Close popup when clicking outside
         document.addEventListener('click', function(e) {
             if (profilePopup && !profilePopup.contains(e.target) && !profileAvatarWrapper.contains(e.target)) {
                 profilePopup.classList.remove('show');
             }
         });
 
-        // Update popup with user info
         function updateProfilePopup(name, email, location) {
             const ppName = document.getElementById('ppName');
             const ppEmail = document.getElementById('ppEmail');
@@ -3722,7 +4311,6 @@
             if (ppLocation) ppLocation.textContent = location ? '📍 ' + location : '📍 Location not set';
         }
 
-        // ------------------------------------------------------------
         // Auth helpers
         function getInitials(name) {
             const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -3749,7 +4337,6 @@
             if (profNameEl) profNameEl.textContent = name;
             if (profLocEl && profile.location) profLocEl.textContent = profile.location;
 
-            // Update popup
             updateProfilePopup(name, email || 'No email', profile.location || null);
         }
 
@@ -3881,6 +4468,7 @@
             sb.auth.signOut().then(() => {
                 document.body.classList.remove('authenticated');
                 profilePopup.classList.remove('show');
+                notificationPopup.classList.remove('show');
                 showAuthStep();
                 showAuthTab('signin');
                 const emailEl = document.getElementById('signInEmail');
@@ -3908,7 +4496,7 @@
         })();
 
         // ============================================================
-        // 8. FETCH MOSQUES
+        // 10. FETCH MOSQUES
         // ============================================================
         async function fetchMosques(lat, lon) {
             const loadingEl = document.getElementById('mosqueLoading');
@@ -3928,7 +4516,7 @@
             try {
                 const proxyUrl = 'https://api.allorigins.win/raw?url=';
                 const apiUrl =
-                `https://time.now/mosques/api/mosques?lat=${lat}&lon=${lon}&radius=30&limit=5`;
+                    `https://time.now/mosques/api/mosques?lat=${lat}&lon=${lon}&radius=30&limit=5`;
                 const url = proxyUrl + encodeURIComponent(apiUrl);
                 const response = await fetch(url);
 
@@ -3995,7 +4583,7 @@
         }
 
         // ============================================================
-        // 9. INIT
+        // 11. INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             loadDarkModePreference();
@@ -4037,8 +4625,13 @@
             getUserLocationAndFetchMosques();
 
             navigateTo('dashboard');
+
+            // Remove badge if no unread notifications (for demo, we have 2 unread)
+            // Keep as is with 2 unread initially
+
             console.log('🌙 Silah — AI-Powered Community Platform loaded.');
             console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
+            console.log('💡 Click the Silah logo to see the about modal!');
         });
     </script>
 
