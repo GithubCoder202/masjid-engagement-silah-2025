@@ -1,4 +1,4 @@
-// server.js – Gemini Chat + Mosque Proxy
+// server.js – Gemini Chat + Mosque Proxy + Test Route
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -7,6 +7,19 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Log all requests for debugging
+app.use((req, res, next) => {
+    console.log(`📨 ${req.method} ${req.url}`);
+    next();
+});
+
+// ============================================================
+// TEST ROUTE – to verify server is responding
+// ============================================================
+app.get('/ping', (req, res) => {
+    res.json({ message: 'pong', routes: ['/ping', '/api/chat', '/api/mosques'] });
+});
 
 // ============================================================
 // GEMINI AI CHAT
@@ -88,6 +101,7 @@ app.get('/api/mosques', async (req, res) => {
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`✅ Silah backend running on port ${PORT}`);
-    console.log(`   - POST /api/chat     (Gemini AI)`);
-    console.log(`   - GET  /api/mosques  (Mosque finder)`);
+    console.log(`   📌 GET  /ping          (test)`);
+    console.log(`   📌 POST /api/chat      (Gemini AI)`);
+    console.log(`   📌 GET  /api/mosques   (Mosque finder)`);
 });
