@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:wght@400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
     <!-- Font Awesome 6 (Free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
@@ -34,6 +34,13 @@
             --gray-300: #B8C4CE;
             --gray-400: #8FA0AE;
             --gray-500: #6B7F8F;
+            --white: #ffffff;
+            --card-bg: #ffffff;
+            --input-bg: #ffffff;
+            --text-primary: #2C3E50;
+            --text-secondary: #6B7F8F;
+            --border-light: #EEF2F5;
+            --border-medium: #DCE3E9;
             --shadow-sm: 0 2px 8px rgba(26, 107, 79, 0.08);
             --shadow-md: 0 8px 24px rgba(26, 107, 79, 0.12);
             --shadow-lg: 0 16px 48px rgba(26, 107, 79, 0.16);
@@ -41,6 +48,39 @@
             --radius-sm: 10px;
             --radius-full: 9999px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-theme: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ========== DARK MODE VARIABLES ========== */
+        [data-theme="dark"] {
+            --green: #2ea87a;
+            --green-light: #3cc08e;
+            --green-dark: #1a5c40;
+            --green-pale: #1a2f26;
+            --gold: #d4b55c;
+            --gold-light: #c9a84c;
+            --gold-pale: #2a2418;
+            --cream: #181a1d;
+            --teal: #3ab8a8;
+            --teal-light: #5ccfc0;
+            --charcoal: #d0d5dc;
+            --charcoal-light: #a0a8b4;
+            --gray-50: #1f2126;
+            --gray-100: #282b30;
+            --gray-200: #33363c;
+            --gray-300: #4a4e55;
+            --gray-400: #7a7f88;
+            --gray-500: #9a9fa8;
+            --white: #1f2126;
+            --card-bg: #23252b;
+            --input-bg: #2a2d34;
+            --text-primary: #e0e3e8;
+            --text-secondary: #9a9fa8;
+            --border-light: #2a2d34;
+            --border-medium: #3a3d44;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
         }
 
         /* ========== RESET & BASE ========== */
@@ -66,6 +106,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: background var(--transition-theme), color var(--transition-theme);
         }
 
         /* ========== APP SHELL ========== */
@@ -76,6 +117,7 @@
             display: flex;
             overflow: hidden;
             position: relative;
+            transition: background var(--transition-theme);
         }
 
         /* ========== SIDEBAR ========== */
@@ -90,6 +132,12 @@
             flex-shrink: 0;
             height: 100%;
             overflow-y: auto;
+            transition: background var(--transition-theme);
+        }
+
+        [data-theme="dark"] .sidebar {
+            background: #0d1f17;
+            border-right: 1px solid #1a3025;
         }
 
         .sidebar-brand {
@@ -113,6 +161,12 @@
             font-size: 20px;
             color: var(--green-dark);
             font-weight: 800;
+            transition: background var(--transition-theme);
+        }
+
+        [data-theme="dark"] .sidebar-brand .logo-icon {
+            background: #d4b55c;
+            color: #0d1f17;
         }
 
         .sidebar-brand h1 {
@@ -211,19 +265,21 @@
             overflow: hidden;
             background: var(--cream);
             min-width: 0;
+            transition: background var(--transition-theme);
         }
 
         /* ========== TOP BAR ========== */
         .topbar {
             padding: 18px 32px;
-            background: #fff;
-            border-bottom: 1px solid var(--gray-100);
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-shrink: 0;
             flex-wrap: wrap;
             gap: 10px;
+            transition: background var(--transition-theme), border-color var(--transition-theme);
         }
 
         .topbar-left {
@@ -234,12 +290,14 @@
         .topbar-left .greeting {
             font-size: 16px;
             font-weight: 600;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .topbar-left .greeting small {
             font-weight: 400;
-            color: var(--gray-500);
+            color: var(--text-secondary);
             font-size: 14px;
+            transition: color var(--transition-theme);
         }
 
         .topbar-right {
@@ -256,7 +314,7 @@
         }
         .topbar-right .search-wrap input {
             padding: 8px 16px 8px 40px;
-            border: 1px solid var(--gray-200);
+            border: 1px solid var(--border-medium);
             border-radius: var(--radius-full);
             font-size: 14px;
             font-family: 'Inter', sans-serif;
@@ -264,10 +322,11 @@
             transition: var(--transition);
             width: 200px;
             outline: none;
+            color: var(--text-primary);
         }
         .topbar-right .search-wrap input:focus {
             border-color: var(--green);
-            background: #fff;
+            background: var(--input-bg);
             box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.1);
             width: 240px;
         }
@@ -324,7 +383,7 @@
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
-            border: 2px solid var(--gray-200);
+            border: 2px solid var(--border-medium);
             transition: var(--transition);
         }
         .topbar-right .avatar:hover {
@@ -338,6 +397,11 @@
             padding: 28px 32px 32px;
             position: relative;
             min-height: 0;
+            transition: background var(--transition-theme);
+        }
+
+        [data-theme="dark"] .screen-container {
+            background: #181a1d;
         }
 
         .screen-container::-webkit-scrollbar {
@@ -370,6 +434,151 @@
             }
         }
 
+        /* ========== QURAN VERSE WIDGET (Dashboard) ========== */
+        .quran-verse-widget {
+            background: linear-gradient(135deg, #fdf6e0 0%, #fef9ee 30%, #faf3e0 60%, #fdf6e0 100%);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+        }
+
+        [data-theme="dark"] .quran-verse-widget {
+            background: linear-gradient(135deg, #1f2418 0%, #23281c 30%, #1e2216 60%, #1f2418 100%);
+            border-color: rgba(212, 181, 92, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .quran-verse-widget::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .quran-verse-widget::after {
+            content: '☾';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 32px;
+            opacity: 0.15;
+            pointer-events: none;
+            color: var(--gold);
+        }
+
+        [data-theme="dark"] .quran-verse-widget::after {
+            opacity: 0.2;
+            color: #d4b55c;
+        }
+
+        .quran-verse-widget .qv-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .quran-verse-widget .qv-icon-col {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--gold-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 2px solid var(--gold-light);
+            transition: all var(--transition-theme);
+        }
+
+        [data-theme="dark"] .quran-verse-widget .qv-icon-col {
+            background: #2a2418;
+            border-color: #5a4820;
+        }
+
+        .quran-verse-widget .qv-content {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .quran-verse-widget .qv-arabic {
+            font-family: 'Amiri', 'Traditional Arabic', serif;
+            font-size: 26px;
+            line-height: 1.8;
+            color: #3d2e0a;
+            margin-bottom: 8px;
+            direction: rtl;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: color var(--transition-theme);
+        }
+
+        [data-theme="dark"] .quran-verse-widget .qv-arabic {
+            color: #e8d48a;
+        }
+
+        .quran-verse-widget .qv-translation {
+            font-size: 15px;
+            color: var(--charcoal);
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 6px;
+            transition: color var(--transition-theme);
+        }
+
+        [data-theme="dark"] .quran-verse-widget .qv-translation {
+            color: #c5c9d0;
+        }
+
+        .quran-verse-widget .qv-reference {
+            font-size: 13px;
+            color: var(--gold);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .quran-verse-widget .qv-refresh {
+            position: absolute;
+            bottom: 14px;
+            right: 20px;
+            background: transparent;
+            border: 1px solid rgba(201, 168, 76, 0.4);
+            color: var(--gold);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .quran-verse-widget .qv-refresh:hover {
+            background: var(--gold-pale);
+            border-color: var(--gold);
+            transform: rotate(60deg);
+        }
+
+        [data-theme="dark"] .quran-verse-widget .qv-refresh:hover {
+            background: #2a2418;
+        }
+
         /* ========== SCREEN: ONBOARDING ========== */
         .onboarding-header {
             text-align: center;
@@ -385,11 +594,13 @@
             font-family: 'Poppins', sans-serif;
             font-size: 28px;
             color: var(--charcoal);
+            transition: color var(--transition-theme);
         }
         .onboarding-header p {
-            color: var(--gray-500);
+            color: var(--text-secondary);
             font-size: 16px;
             margin-top: 4px;
+            transition: color var(--transition-theme);
         }
 
         .onboarding-form {
@@ -404,8 +615,9 @@
             display: block;
             font-weight: 600;
             font-size: 14px;
-            color: var(--charcoal);
+            color: var(--text-primary);
             margin-bottom: 8px;
+            transition: color var(--transition-theme);
         }
 
         .form-group .radio-grid {
@@ -415,15 +627,16 @@
         }
         .form-group .radio-grid .radio-option {
             padding: 10px 18px;
-            border: 2px solid var(--gray-200);
+            border: 2px solid var(--border-medium);
             border-radius: var(--radius-sm);
             cursor: pointer;
             font-size: 14px;
             transition: var(--transition);
-            background: #fff;
+            background: var(--card-bg);
             flex: 1 0 auto;
             text-align: center;
             min-width: 120px;
+            color: var(--text-primary);
         }
         .form-group .radio-grid .radio-option:hover {
             border-color: var(--green-light);
@@ -434,6 +647,9 @@
             color: var(--green-dark);
             font-weight: 600;
         }
+        [data-theme="dark"] .form-group .radio-grid .radio-option.selected {
+            color: #b8e0d0;
+        }
 
         .form-group .checkbox-grid {
             display: flex;
@@ -442,15 +658,16 @@
         }
         .form-group .checkbox-grid .checkbox-option {
             padding: 10px 18px;
-            border: 2px solid var(--gray-200);
+            border: 2px solid var(--border-medium);
             border-radius: var(--radius-sm);
             cursor: pointer;
             font-size: 14px;
             transition: var(--transition);
-            background: #fff;
+            background: var(--card-bg);
             display: flex;
             align-items: center;
             gap: 8px;
+            color: var(--text-primary);
         }
         .form-group .checkbox-grid .checkbox-option:hover {
             border-color: var(--green-light);
@@ -471,14 +688,14 @@
         .form-group select {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid var(--gray-200);
+            border: 2px solid var(--border-medium);
             border-radius: var(--radius-sm);
             font-size: 15px;
             font-family: 'Inter', sans-serif;
-            background: #fff;
+            background: var(--input-bg);
             transition: var(--transition);
             outline: none;
-            color: var(--charcoal);
+            color: var(--text-primary);
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7F8F' stroke-width='2' fill='none'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
@@ -532,18 +749,20 @@
         .dash-welcome h2 {
             font-family: 'Poppins', sans-serif;
             font-size: 24px;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .dash-welcome h2 span {
             color: var(--green);
         }
         .dash-welcome p {
-            color: var(--gray-500);
+            color: var(--text-secondary);
             font-size: 15px;
+            transition: color var(--transition-theme);
         }
 
         .dash-progress {
-            background: #fff;
+            background: var(--card-bg);
             padding: 18px 24px;
             border-radius: var(--radius-sm);
             box-shadow: var(--shadow-sm);
@@ -553,7 +772,8 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 12px;
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
         }
         .dash-progress .prog-left {
             display: flex;
@@ -565,10 +785,12 @@
         }
         .dash-progress .prog-left .prog-text {
             font-size: 14px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
+            transition: color var(--transition-theme);
         }
         .dash-progress .prog-left .prog-text strong {
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .dash-progress .prog-bar {
             flex: 1;
@@ -598,12 +820,13 @@
         }
 
         .dash-card {
-            background: #fff;
+            background: var(--card-bg);
             border-radius: var(--radius-sm);
             padding: 20px 24px;
             box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-light);
             margin-bottom: 20px;
+            transition: all var(--transition-theme);
         }
         .dash-card .card-header {
             display: flex;
@@ -614,7 +837,8 @@
         .dash-card .card-header h3 {
             font-size: 16px;
             font-weight: 600;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .dash-card .card-header a {
             font-size: 13px;
@@ -631,7 +855,8 @@
             display: flex;
             gap: 14px;
             padding: 12px 0;
-            border-bottom: 1px solid var(--gray-100);
+            border-bottom: 1px solid var(--border-light);
+            transition: border-color var(--transition-theme);
         }
         .recommend-item:last-child {
             border-bottom: none;
@@ -654,12 +879,14 @@
         .recommend-item .rec-info h4 {
             font-size: 15px;
             font-weight: 600;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .recommend-item .rec-info p {
             font-size: 13px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
             margin: 2px 0 6px;
+            transition: color var(--transition-theme);
         }
         .recommend-item .rec-info .rec-actions {
             display: flex;
@@ -685,7 +912,7 @@
         }
         .recommend-item .rec-info .rec-actions .btn-save {
             background: var(--gray-100);
-            color: var(--gray-500);
+            color: var(--text-secondary);
         }
         .recommend-item .rec-info .rec-actions .btn-save:hover {
             background: var(--gray-200);
@@ -696,8 +923,9 @@
             gap: 16px;
             align-items: center;
             padding: 14px 0;
-            border-bottom: 1px solid var(--gray-100);
+            border-bottom: 1px solid var(--border-light);
             flex-wrap: wrap;
+            transition: border-color var(--transition-theme);
         }
         .mentor-card:last-child {
             border-bottom: none;
@@ -723,7 +951,8 @@
         .mentor-card .mentor-info .name {
             font-weight: 600;
             font-size: 15px;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .mentor-card .mentor-info .name .stars {
             color: var(--gold);
@@ -732,7 +961,7 @@
         }
         .mentor-card .mentor-info .title {
             font-size: 13px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
         }
         .mentor-card .mentor-info .msg {
             font-size: 13px;
@@ -758,7 +987,7 @@
         }
         .mentor-card .mentor-actions .btn-msg {
             background: var(--gray-100);
-            color: var(--charcoal);
+            color: var(--text-primary);
         }
         .mentor-card .mentor-actions .btn-msg:hover {
             background: var(--gray-200);
@@ -778,7 +1007,8 @@
             border-radius: var(--radius-sm);
             border-left: 4px solid var(--green);
             font-size: 14px;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: all var(--transition-theme);
         }
         .ai-tip i {
             color: var(--green);
@@ -790,30 +1020,31 @@
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            background: #fff;
+            background: var(--card-bg);
             padding: 16px 20px;
             border-radius: var(--radius-sm);
             box-shadow: var(--shadow-sm);
             margin-bottom: 24px;
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-light);
             align-items: center;
+            transition: all var(--transition-theme);
         }
         .match-filters .filter-group {
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 14px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
         }
         .match-filters .filter-group select {
             padding: 6px 12px;
-            border: 1px solid var(--gray-200);
+            border: 1px solid var(--border-medium);
             border-radius: var(--radius-full);
             font-size: 13px;
             font-family: 'Inter', sans-serif;
-            background: #fff;
+            background: var(--input-bg);
             outline: none;
-            color: var(--charcoal);
+            color: var(--text-primary);
             cursor: pointer;
         }
         .match-filters .filter-group select:focus {
@@ -821,16 +1052,16 @@
         }
 
         .match-result {
-            background: #fff;
+            background: var(--card-bg);
             border-radius: var(--radius-sm);
             padding: 20px 24px;
             box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-light);
             margin-bottom: 16px;
             display: flex;
             gap: 20px;
             align-items: flex-start;
-            transition: var(--transition);
+            transition: all var(--transition-theme);
             flex-wrap: wrap;
         }
         .match-result:hover {
@@ -857,7 +1088,8 @@
         .match-result .match-body .mname {
             font-weight: 700;
             font-size: 17px;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .match-result .match-body .mname .stars {
             color: var(--gold);
@@ -866,11 +1098,12 @@
         }
         .match-result .match-body .mmeta {
             font-size: 14px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             margin: 4px 0 6px;
+            transition: color var(--transition-theme);
         }
         .match-result .match-body .mmeta .dot {
             color: var(--gray-300);
@@ -897,7 +1130,7 @@
         }
         .match-result .match-body .mactions .btn-view {
             background: var(--gray-100);
-            color: var(--charcoal);
+            color: var(--text-primary);
         }
         .match-result .match-body .mactions .btn-view:hover {
             background: var(--gray-200);
@@ -923,7 +1156,7 @@
         .notify-cta {
             text-align: center;
             padding: 20px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
             font-size: 14px;
         }
         .notify-cta button {
@@ -948,12 +1181,13 @@
             display: flex;
             gap: 8px;
             margin-bottom: 20px;
-            background: #fff;
+            background: var(--card-bg);
             padding: 6px;
             border-radius: var(--radius-sm);
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
             width: fit-content;
+            transition: all var(--transition-theme);
         }
         .disco-tabs .tab {
             padding: 8px 20px;
@@ -965,7 +1199,7 @@
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
             background: transparent;
-            color: var(--gray-500);
+            color: var(--text-secondary);
         }
         .disco-tabs .tab.active {
             background: var(--green);
@@ -984,14 +1218,15 @@
         .disco-search input {
             flex: 1;
             padding: 10px 16px;
-            border: 1px solid var(--gray-200);
+            border: 1px solid var(--border-medium);
             border-radius: var(--radius-sm);
             font-size: 14px;
             font-family: 'Inter', sans-serif;
             outline: none;
             transition: var(--transition);
-            background: #fff;
+            background: var(--input-bg);
             min-width: 160px;
+            color: var(--text-primary);
         }
         .disco-search input:focus {
             border-color: var(--green);
@@ -1005,14 +1240,14 @@
         .disco-search .filter-chips .chip {
             padding: 8px 16px;
             border-radius: var(--radius-full);
-            border: 1px solid var(--gray-200);
-            background: #fff;
+            border: 1px solid var(--border-medium);
+            background: var(--card-bg);
             font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
-            color: var(--gray-500);
+            color: var(--text-secondary);
         }
         .disco-search .filter-chips .chip.active {
             background: var(--green);
@@ -1025,18 +1260,18 @@
         }
 
         .event-card {
-            background: #fff;
+            background: var(--card-bg);
             border-radius: var(--radius-sm);
             padding: 18px 22px;
             box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-light);
             margin-bottom: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            transition: var(--transition);
+            transition: all var(--transition-theme);
         }
         .event-card:hover {
             box-shadow: var(--shadow-md);
@@ -1061,11 +1296,13 @@
         .event-card .ev-left .ev-info h4 {
             font-size: 15px;
             font-weight: 600;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .event-card .ev-left .ev-info .ev-loc {
             font-size: 13px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
+            transition: color var(--transition-theme);
         }
         .event-card .ev-left .ev-info .ev-meta {
             font-size: 13px;
@@ -1082,12 +1319,6 @@
             border-radius: var(--radius-full);
             font-size: 12px;
             font-weight: 600;
-        }
-        .event-card .ev-right {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
         }
         .event-card .ev-right button {
             padding: 6px 18px;
@@ -1108,7 +1339,7 @@
         }
         .event-card .ev-right .btn-share {
             background: var(--gray-100);
-            color: var(--gray-500);
+            color: var(--text-secondary);
         }
         .event-card .ev-right .btn-share:hover {
             background: var(--gray-200);
@@ -1119,8 +1350,9 @@
             align-items: center;
             gap: 16px;
             padding: 14px 0;
-            border-bottom: 1px solid var(--gray-100);
+            border-bottom: 1px solid var(--border-light);
             flex-wrap: wrap;
+            transition: border-color var(--transition-theme);
         }
         .mosque-row:last-child {
             border-bottom: none;
@@ -1138,19 +1370,16 @@
         .mosque-row .mq-info h4 {
             font-size: 15px;
             font-weight: 600;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .mosque-row .mq-info .mq-detail {
             font-size: 13px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
+            transition: color var(--transition-theme);
         }
         .mosque-row .mq-info .mq-detail .stars {
             color: var(--gold);
-        }
-        .mosque-row .mq-actions {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
         }
         .mosque-row .mq-actions button {
             padding: 4px 14px;
@@ -1162,7 +1391,7 @@
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
             background: var(--gray-100);
-            color: var(--charcoal);
+            color: var(--text-primary);
         }
         .mosque-row .mq-actions button:hover {
             background: var(--gray-200);
@@ -1170,12 +1399,13 @@
 
         /* ========== SCREEN: COMMUNITY FEED ========== */
         .feed-post-box {
-            background: #fff;
+            background: var(--card-bg);
             border-radius: var(--radius-sm);
             padding: 18px 22px;
             box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-light);
             margin-bottom: 20px;
+            transition: all var(--transition-theme);
         }
         .feed-post-box .post-input {
             display: flex;
@@ -1199,7 +1429,7 @@
         .feed-post-box .post-input input {
             flex: 1;
             padding: 10px 16px;
-            border: 1px solid var(--gray-200);
+            border: 1px solid var(--border-medium);
             border-radius: var(--radius-full);
             font-size: 14px;
             font-family: 'Inter', sans-serif;
@@ -1207,18 +1437,20 @@
             transition: var(--transition);
             background: var(--gray-50);
             min-width: 120px;
+            color: var(--text-primary);
         }
         .feed-post-box .post-input input:focus {
             border-color: var(--green);
-            background: #fff;
+            background: var(--input-bg);
         }
         .feed-post-box .post-tools {
             display: flex;
             gap: 12px;
             margin-top: 12px;
             padding-top: 12px;
-            border-top: 1px solid var(--gray-100);
+            border-top: 1px solid var(--border-light);
             flex-wrap: wrap;
+            transition: border-color var(--transition-theme);
         }
         .feed-post-box .post-tools button {
             background: none;
@@ -1237,12 +1469,13 @@
         }
 
         .feed-item {
-            background: #fff;
+            background: var(--card-bg);
             border-radius: var(--radius-sm);
             padding: 18px 22px;
             box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-light);
             margin-bottom: 16px;
+            transition: all var(--transition-theme);
         }
         .feed-item .feed-head {
             display: flex;
@@ -1270,7 +1503,8 @@
         .feed-item .feed-head .fh-left .fname {
             font-weight: 600;
             font-size: 14px;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .feed-item .feed-head .fh-left .ftime {
             font-size: 12px;
@@ -1278,24 +1512,23 @@
         }
         .feed-item .feed-body {
             font-size: 15px;
-            color: var(--charcoal);
+            color: var(--text-primary);
             margin-bottom: 10px;
             line-height: 1.7;
-        }
-        .feed-item .feed-body .emoji-big {
-            font-size: 20px;
+            transition: color var(--transition-theme);
         }
         .feed-item .feed-actions {
             display: flex;
             gap: 20px;
             padding-top: 10px;
-            border-top: 1px solid var(--gray-100);
+            border-top: 1px solid var(--border-light);
+            transition: border-color var(--transition-theme);
         }
         .feed-item .feed-actions button {
             background: none;
             border: none;
             font-size: 14px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
@@ -1312,15 +1545,17 @@
         .feed-item .feed-comments {
             margin-top: 10px;
             padding-top: 10px;
-            border-top: 1px solid var(--gray-100);
+            border-top: 1px solid var(--border-light);
+            transition: border-color var(--transition-theme);
         }
         .feed-item .feed-comments .comment {
             font-size: 13px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
             padding: 4px 0;
+            transition: color var(--transition-theme);
         }
         .feed-item .feed-comments .comment strong {
-            color: var(--charcoal);
+            color: var(--text-primary);
         }
 
         /* ========== SCREEN: PROFILE ========== */
@@ -1345,7 +1580,8 @@
         .profile-header h2 {
             font-family: 'Poppins', sans-serif;
             font-size: 22px;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .profile-header .p-badge {
             display: inline-block;
@@ -1359,20 +1595,21 @@
         }
         .profile-header .p-loc {
             font-size: 14px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
+            transition: color var(--transition-theme);
         }
         .profile-header .p-edit {
             margin-top: 10px;
             padding: 6px 24px;
             border-radius: var(--radius-full);
-            border: 2px solid var(--gray-200);
+            border: 2px solid var(--border-medium);
             background: transparent;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
-            color: var(--charcoal);
+            color: var(--text-primary);
         }
         .profile-header .p-edit:hover {
             border-color: var(--green);
@@ -1394,10 +1631,11 @@
             gap: 12px;
             padding: 6px 0;
             font-size: 14px;
-            color: var(--gray-500);
+            color: var(--text-secondary);
+            transition: color var(--transition-theme);
         }
         .milestone-item.done {
-            color: var(--charcoal);
+            color: var(--text-primary);
         }
         .milestone-item.done i {
             color: var(--green);
@@ -1412,7 +1650,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 0;
-            border-bottom: 1px solid var(--gray-100);
+            border-bottom: 1px solid var(--border-light);
+            transition: border-color var(--transition-theme);
         }
         .profile-setting-row:last-child {
             border-bottom: none;
@@ -1422,7 +1661,8 @@
             align-items: center;
             gap: 10px;
             font-size: 14px;
-            color: var(--charcoal);
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
         }
         .profile-setting-row .ps-left i {
             color: var(--gray-400);
@@ -1456,15 +1696,176 @@
             left: 23px;
         }
 
+        /* ========== SCREEN: SETTINGS ========== */
+        .settings-header {
+            margin-bottom: 24px;
+        }
+        .settings-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 26px;
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
+        }
+        .settings-header p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            transition: color var(--transition-theme);
+        }
+
+        .settings-section {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 22px 26px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            margin-bottom: 20px;
+            transition: all var(--transition-theme);
+        }
+        .settings-section .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color var(--transition-theme);
+        }
+        .settings-section .section-title i {
+            color: var(--green);
+            width: 22px;
+            text-align: center;
+        }
+        .settings-section .section-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            transition: color var(--transition-theme);
+        }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+            flex-wrap: wrap;
+            gap: 10px;
+            transition: border-color var(--transition-theme);
+        }
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+        .settings-row .sr-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            flex: 1;
+            min-width: 180px;
+        }
+        .settings-row .sr-left i {
+            color: var(--gray-400);
+            font-size: 18px;
+            margin-top: 2px;
+            width: 20px;
+            text-align: center;
+        }
+        .settings-row .sr-left .sr-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
+        }
+        .settings-row .sr-left .sr-info p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            transition: color var(--transition-theme);
+        }
+
+        .settings-row .sr-right {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .settings-row .sr-right select {
+            padding: 8px 14px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            outline: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .settings-row .sr-right select:focus {
+            border-color: var(--green);
+        }
+
+        .settings-row .sr-right .btn-sm {
+            padding: 7px 16px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-medium);
+            background: transparent;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+        }
+        .settings-row .sr-right .btn-sm:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .settings-row .sr-right .btn-sm.danger {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+        .settings-row .sr-right .btn-sm.danger:hover {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        /* Dark mode toggle specific */
+        .dark-mode-toggle-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .dark-mode-toggle-wrap .toggle-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
+        }
+        .dark-mode-toggle-wrap .toggle-icon {
+            font-size: 18px;
+        }
+
+        .settings-about {
+            text-align: center;
+            padding: 10px 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+            transition: color var(--transition-theme);
+        }
+        .settings-about strong {
+            color: var(--green);
+        }
+
         /* ========== BOTTOM NAV (mobile) ========== */
         .bottom-nav {
             display: none;
-            background: #fff;
-            border-top: 1px solid var(--gray-100);
+            background: var(--white);
+            border-top: 1px solid var(--border-light);
             padding: 8px 0 10px;
             justify-content: space-around;
             align-items: center;
             flex-shrink: 0;
+            transition: all var(--transition-theme);
         }
         .bottom-nav .bn-item {
             display: flex;
@@ -1478,10 +1879,10 @@
             border: none;
             background: none;
             font-family: 'Inter', sans-serif;
-            padding: 4px 12px;
+            padding: 4px 8px;
         }
         .bottom-nav .bn-item i {
-            font-size: 18px;
+            font-size: 17px;
         }
         .bottom-nav .bn-item.active {
             color: var(--green);
@@ -1628,17 +2029,26 @@
                 font-size: 22px;
             }
             .bottom-nav .bn-item {
-                font-size: 9px;
-                padding: 2px 8px;
+                font-size: 8px;
+                padding: 2px 6px;
             }
             .bottom-nav .bn-item i {
-                font-size: 16px;
+                font-size: 15px;
             }
             .sidebar-hadith {
                 display: none;
             }
             .sidebar-stats {
                 display: none;
+            }
+            .quran-verse-widget .qv-arabic {
+                font-size: 20px;
+            }
+            .quran-verse-widget {
+                padding: 16px 18px;
+            }
+            .settings-section {
+                padding: 14px 16px;
             }
         }
 
@@ -1655,6 +2065,13 @@
                 font-size: 8px;
                 top: 2px;
                 right: 2px;
+            }
+            .bottom-nav .bn-item {
+                font-size: 7px;
+                padding: 2px 4px;
+            }
+            .bottom-nav .bn-item i {
+                font-size: 13px;
             }
         }
 
@@ -1699,6 +2116,9 @@
                 <button class="nav-item" data-screen="profile">
                     <i class="fas fa-user"></i> Profile
                 </button>
+                <button class="nav-item" data-screen="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
             </nav>
 
             <div class="sidebar-stats">
@@ -1709,7 +2129,7 @@
             </div>
 
             <div class="sidebar-hadith">
-                “The example of believers in their affection and mercy is like the body...”
+                "The example of believers in their affection and mercy is like the body..."
                 <div class="source">— Bukhari &amp; Muslim</div>
             </div>
         </aside>
@@ -1803,6 +2223,21 @@
                         <p>Here's your personalized path for today.</p>
                     </div>
 
+                    <!-- ===== QURAN VERSE WIDGET ===== -->
+                    <div class="quran-verse-widget" id="quranVerseWidget">
+                        <div class="qv-inner">
+                            <div class="qv-icon-col">📖</div>
+                            <div class="qv-content">
+                                <div class="qv-arabic" id="qvArabic">...جاري تحميل الآية</div>
+                                <div class="qv-translation" id="qvTranslation">Loading verse...</div>
+                                <div class="qv-reference" id="qvReference">—</div>
+                            </div>
+                        </div>
+                        <button class="qv-refresh" id="qvRefreshBtn" title="Show another verse">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+
                     <div class="dash-progress">
                         <div class="prog-left">
                             <span class="emoji-big">🌱</span>
@@ -1816,7 +2251,6 @@
 
                     <div class="dash-grid">
                         <div>
-                            <!-- Recommendations -->
                             <div class="dash-card">
                                 <div class="card-header">
                                     <h3>📖 For You</h3>
@@ -1858,7 +2292,6 @@
                                 </div>
                             </div>
 
-                            <!-- Mentor Match -->
                             <div class="dash-card">
                                 <div class="card-header">
                                     <h3>⭐ Your Mentor Match</h3>
@@ -1885,21 +2318,20 @@
                             </div>
                         </div>
 
-                        <!-- Right column: quick stats / upcoming -->
                         <div>
                             <div class="dash-card">
                                 <div class="card-header">
                                     <h3>📅 Upcoming</h3>
                                     <a href="#" onclick="navigateTo('discover');return false;">View all →</a>
                                 </div>
-                                <div style="font-size:14px;padding:4px 0;color:var(--gray-500);border-bottom:1px solid var(--gray-100);padding-bottom:10px;">
-                                    <strong style="color:var(--charcoal);">Wed 7PM</strong> — Essentials Class
+                                <div style="font-size:14px;padding:4px 0;color:var(--text-secondary);border-bottom:1px solid var(--border-light);padding-bottom:10px;">
+                                    <strong style="color:var(--text-primary);">Wed 7PM</strong> — Essentials Class
                                 </div>
-                                <div style="font-size:14px;padding:4px 0;color:var(--gray-500);border-bottom:1px solid var(--gray-100);padding-bottom:10px;margin-top:6px;">
-                                    <strong style="color:var(--charcoal);">Fri 6PM</strong> — Community Iftar
+                                <div style="font-size:14px;padding:4px 0;color:var(--text-secondary);border-bottom:1px solid var(--border-light);padding-bottom:10px;margin-top:6px;">
+                                    <strong style="color:var(--text-primary);">Fri 6PM</strong> — Community Iftar
                                 </div>
-                                <div style="font-size:14px;padding:4px 0;color:var(--gray-500);margin-top:6px;">
-                                    <strong style="color:var(--charcoal);">Sat 10AM</strong> — Halaqa Circle
+                                <div style="font-size:14px;padding:4px 0;color:var(--text-secondary);margin-top:6px;">
+                                    <strong style="color:var(--text-primary);">Sat 10AM</strong> — Halaqa Circle
                                 </div>
                             </div>
 
@@ -1907,7 +2339,7 @@
                                 <div class="card-header">
                                     <h3>🤲 Quick Dua</h3>
                                 </div>
-                                <div style="font-size:15px;color:var(--charcoal);font-style:italic;line-height:1.8;">
+                                <div style="font-size:15px;color:var(--text-primary);font-style:italic;line-height:1.8;">
                                     "Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan waqina azaban-nar."
                                 </div>
                                 <div style="font-size:12px;color:var(--gray-400);margin-top:6px;">— Surah Al-Baqarah 2:201</div>
@@ -1920,7 +2352,7 @@
                 <div class="screen" id="screen-mentor">
                     <div style="margin-bottom:16px;">
                         <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">🤝 Find a Mentor</h2>
-                        <p style="color:var(--gray-500);">Let AI find the perfect guide for you.</p>
+                        <p style="color:var(--text-secondary);">Let AI find the perfect guide for you.</p>
                     </div>
 
                     <div class="match-filters">
@@ -1942,7 +2374,7 @@
                         </div>
                     </div>
 
-                    <div style="font-weight:600;color:var(--charcoal);margin-bottom:14px;font-size:15px;">
+                    <div style="font-weight:600;color:var(--text-primary);margin-bottom:14px;font-size:15px;">
                         ═══ 3 Matches Found ═══
                     </div>
 
@@ -2015,7 +2447,7 @@
                         </div>
                     </div>
 
-                    <div style="font-weight:600;color:var(--charcoal);margin-bottom:12px;font-size:15px;">
+                    <div style="font-weight:600;color:var(--text-primary);margin-bottom:12px;font-size:15px;">
                         ═══ UPCOMING EVENTS ═══
                     </div>
 
@@ -2057,13 +2489,11 @@
                         </div>
                     </div>
 
-                    <div style="font-weight:600;color:var(--charcoal);margin:20px 0 12px;font-size:15px;">
+                    <div style="font-weight:600;color:var(--text-primary);margin:20px 0 12px;font-size:15px;">
                         ═══ MOSQUES NEAR YOU ═══
                     </div>
 
-                    <!-- ===== DYNAMIC MOSQUE LIST ===== -->
                     <div id="mosqueList">
-                        <!-- Loading state -->
                         <div class="mosque-row" id="mosqueLoading">
                             <div class="mq-icon">⏳</div>
                             <div class="mq-info">
@@ -2071,7 +2501,6 @@
                                 <div class="mq-detail">Please wait while we find mosques near you.</div>
                             </div>
                         </div>
-                        <!-- Error state (hidden by default) -->
                         <div class="mosque-row" id="mosqueError" style="display:none;">
                             <div class="mq-icon">⚠️</div>
                             <div class="mq-info">
@@ -2079,7 +2508,6 @@
                                 <div class="mq-detail">Could not fetch mosque data. Please try again later.</div>
                             </div>
                         </div>
-                        <!-- No results state (hidden by default) -->
                         <div class="mosque-row" id="mosqueNoResults" style="display:none;">
                             <div class="mq-icon">🕌</div>
                             <div class="mq-info">
@@ -2157,7 +2585,7 @@
                         </div>
                     </div>
 
-                    <div style="padding:16px;background:var(--green-pale);border-radius:var(--radius-sm);border-left:4px solid var(--green);font-size:14px;color:var(--charcoal);">
+                    <div style="padding:16px;background:var(--green-pale);border-radius:var(--radius-sm);border-left:4px solid var(--green);font-size:14px;color:var(--text-primary);">
                         <i class="fas fa-lightbulb" style="color:var(--green);margin-right:8px;"></i>
                         <strong>Silah Tip:</strong> Did you know? You can find volunteer opportunities near you in the Discover section. Get involved and build bonds!
                     </div>
@@ -2190,7 +2618,7 @@
                                     <div style="width:44px;height:44px;border-radius:50%;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--gold);">FH</div>
                                     <div>
                                         <div style="font-weight:600;">Fatima H. <span style="color:var(--gold);">★</span></div>
-                                        <div style="font-size:13px;color:var(--gray-500);">Next session: Tomorrow 7PM</div>
+                                        <div style="font-size:13px;color:var(--text-secondary);">Next session: Tomorrow 7PM</div>
                                     </div>
                                 </div>
                                 <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
@@ -2203,10 +2631,10 @@
                         <div>
                             <div class="dash-card">
                                 <div class="card-header"><h3>🤝 My Community</h3></div>
-                                <div style="font-size:14px;padding:4px 0;border-bottom:1px solid var(--gray-100);padding-bottom:8px;">
+                                <div style="font-size:14px;padding:4px 0;border-bottom:1px solid var(--border-light);padding-bottom:8px;">
                                     🕌 <strong>Islamic Center of Chicago</strong>
                                 </div>
-                                <div style="font-size:14px;padding:4px 0;border-bottom:1px solid var(--gray-100);padding-bottom:8px;margin-top:4px;">
+                                <div style="font-size:14px;padding:4px 0;border-bottom:1px solid var(--border-light);padding-bottom:8px;margin-top:4px;">
                                     🤝 <strong>Sister's Halaqa Circle</strong>
                                 </div>
                                 <div style="font-size:14px;padding:4px 0;margin-top:4px;">
@@ -2226,9 +2654,259 @@
                                 </div>
                                 <div class="profile-setting-row">
                                     <span class="ps-left"><i class="fas fa-envelope"></i> Community Digest</span>
-                                    <span style="font-size:13px;color:var(--gray-500);">Weekly</span>
+                                    <span style="font-size:13px;color:var(--text-secondary);">Weekly</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== SCREEN: SETTINGS ===== -->
+                <div class="screen" id="screen-settings">
+                    <div class="settings-header">
+                        <h2>⚙️ Settings</h2>
+                        <p>Customize your Silah experience</p>
+                    </div>
+
+                    <!-- Appearance Section -->
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <i class="fas fa-palette"></i> Appearance
+                        </div>
+                        <div class="section-desc">Personalize how Silah looks and feels.</div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-moon"></i>
+                                <div class="sr-info">
+                                    <h4>Dark Mode</h4>
+                                    <p>Switch between light and dark themes. Easier on the eyes at night.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <div class="dark-mode-toggle-wrap">
+                                    <span class="toggle-icon">☀️</span>
+                                    <div class="toggle" id="darkModeToggle" onclick="toggleDarkMode()">
+                                        <div class="toggle-knob"></div>
+                                    </div>
+                                    <span class="toggle-icon">🌙</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-font"></i>
+                                <div class="sr-info">
+                                    <h4>Font Size</h4>
+                                    <p>Adjust the text size across the platform.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <select>
+                                    <option>Small</option>
+                                    <option selected>Medium</option>
+                                    <option>Large</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Section -->
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <i class="fas fa-bell"></i> Notifications
+                        </div>
+                        <div class="section-desc">Manage how and when you receive alerts.</div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-envelope"></i>
+                                <div class="sr-info">
+                                    <h4>Email Notifications</h4>
+                                    <p>Receive community updates via email.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div class="sr-info">
+                                    <h4>Push Notifications</h4>
+                                    <p>Get instant alerts on your device.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-comment-dots"></i>
+                                <div class="sr-info">
+                                    <h4>Mentor Messages</h4>
+                                    <p>Notify when your mentor sends a message.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy Section -->
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <i class="fas fa-shield-alt"></i> Privacy &amp; Data
+                        </div>
+                        <div class="section-desc">Control your data and who can see your profile.</div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-user-shield"></i>
+                                <div class="sr-info">
+                                    <h4>Profile Visibility</h4>
+                                    <p>Choose who can view your full profile.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <select>
+                                    <option>Community Only</option>
+                                    <option>Mentors Only</option>
+                                    <option selected>Everyone</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="sr-info">
+                                    <h4>Location Sharing</h4>
+                                    <p>Allow the app to use your location for nearby results.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-database"></i>
+                                <div class="sr-info">
+                                    <h4>Data Usage</h4>
+                                    <p>Manage how your data is used for recommendations.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <button class="btn-sm">Manage</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Language Section -->
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <i class="fas fa-language"></i> Language &amp; Region
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-globe"></i>
+                                <div class="sr-info">
+                                    <h4>App Language</h4>
+                                    <p>Choose your preferred language.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <select>
+                                    <option selected>English</option>
+                                    <option>Arabic (العربية)</option>
+                                    <option>Urdu (اردو)</option>
+                                    <option>Turkish (Türkçe)</option>
+                                    <option>French (Français)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-clock"></i>
+                                <div class="sr-info">
+                                    <h4>Prayer Time Calculation</h4>
+                                    <p>Method used for calculating prayer times.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <select>
+                                    <option selected>ISNA (North America)</option>
+                                    <option>MWL (Muslim World League)</option>
+                                    <option>Umm Al-Qura</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Section -->
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <i class="fas fa-user-cog"></i> Account
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-key"></i>
+                                <div class="sr-info">
+                                    <h4>Change Password</h4>
+                                    <p>Update your account password regularly.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <button class="btn-sm">Update</button>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-download"></i>
+                                <div class="sr-info">
+                                    <h4>Download My Data</h4>
+                                    <p>Request a copy of all your data.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <button class="btn-sm">Request</button>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <div class="sr-info">
+                                    <h4>Log Out</h4>
+                                    <p>Sign out of your account on this device.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <button class="btn-sm">Log Out</button>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-trash-alt" style="color:#e74c3c;"></i>
+                                <div class="sr-info">
+                                    <h4 style="color:#e74c3c;">Delete Account</h4>
+                                    <p>Permanently remove your account and all data.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <button class="btn-sm danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- About Section -->
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <i class="fas fa-info-circle"></i> About Silah
+                        </div>
+                        <div class="settings-about">
+                            <strong>Silah</strong> v1.2.0 · AI-Powered Community Platform<br />
+                            Built with ❤️ for the global Muslim community.<br />
+                            <span style="font-size:11px;color:var(--gray-400);">© 2026 Silah Foundation · All rights reserved.</span>
                         </div>
                     </div>
                 </div>
@@ -2242,12 +2920,219 @@
                 <button class="bn-item" data-screen="discover"><i class="fas fa-compass"></i> Discover</button>
                 <button class="bn-item" data-screen="feed"><i class="fas fa-comments"></i> Feed</button>
                 <button class="bn-item" data-screen="profile"><i class="fas fa-user"></i> Profile</button>
+                <button class="bn-item" data-screen="settings"><i class="fas fa-cog"></i> Settings</button>
             </nav>
 
         </div><!-- /main -->
     </div><!-- /app -->
 
     <script>
+        // ========== QURAN VERSES COLLECTION ==========
+        const quranVerses = [
+            {
+                arabic: 'وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ',
+                translation: 'And We have certainly made the Quran easy for remembrance, so is there any who will remember?',
+                reference: '— Surah Al-Qamar 54:17',
+            },
+            {
+                arabic: 'إِنَّ هَٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ',
+                translation: 'Indeed, this Quran guides to that which is most suitable.',
+                reference: '— Surah Al-Isra 17:9',
+            },
+            {
+                arabic: 'فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ',
+                translation: 'So remember Me; I will remember you. And be grateful to Me and do not deny Me.',
+                reference: '— Surah Al-Baqarah 2:152',
+            },
+            {
+                arabic: 'وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ',
+                translation: 'And when My servants ask you concerning Me, indeed I am near.',
+                reference: '— Surah Al-Baqarah 2:186',
+            },
+            {
+                arabic: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا  إِنَّ مَعَ الْعُسْرِ يُسْرًا',
+                translation: 'For indeed, with hardship comes ease. Indeed, with hardship comes ease.',
+                reference: '— Surah Ash-Sharh 94:5–6',
+            },
+            {
+                arabic: 'وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ',
+                translation: 'And whoever puts their trust in Allah, He will be sufficient for them.',
+                reference: '— Surah At-Talaq 65:3',
+            },
+            {
+                arabic: 'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ',
+                translation: 'Indeed, Allah is with those who are patient.',
+                reference: '— Surah Al-Baqarah 2:153',
+            },
+            {
+                arabic: 'وَقُل رَّبِّ زِدْنِي عِلْمًا',
+                translation: 'And say, "My Lord, increase me in knowledge."',
+                reference: '— Surah Ta-Ha 20:114',
+            },
+            {
+                arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
+                translation: 'Our Lord, give us in this world good and in the Hereafter good and protect us from the punishment of the Fire.',
+                reference: '— Surah Al-Baqarah 2:201',
+            },
+            {
+                arabic: 'وَاعْتَصِمُوا بِحَبْلِ اللَّهِ جَمِيعًا وَلَا تَفَرَّقُوا',
+                translation: 'And hold firmly to the rope of Allah all together and do not become divided.',
+                reference: '— Surah Aal-Imran 3:103',
+            },
+        ];
+
+        let currentVerseIndex = -1;
+
+        function getRandomVerse() {
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * quranVerses.length);
+            } while (newIndex === currentVerseIndex && quranVerses.length > 1);
+            currentVerseIndex = newIndex;
+            return quranVerses[currentVerseIndex];
+        }
+
+        function displayQuranVerse() {
+            const verse = getRandomVerse();
+            const arabicEl = document.getElementById('qvArabic');
+            const translationEl = document.getElementById('qvTranslation');
+            const referenceEl = document.getElementById('qvReference');
+
+            // Fade out
+            arabicEl.style.opacity = '0';
+            translationEl.style.opacity = '0';
+            referenceEl.style.opacity = '0';
+            arabicEl.style.transition = 'opacity 0.3s ease';
+            translationEl.style.transition = 'opacity 0.3s ease';
+            referenceEl.style.transition = 'opacity 0.3s ease';
+
+            setTimeout(() => {
+                arabicEl.textContent = verse.arabic;
+                translationEl.textContent = verse.translation;
+                referenceEl.textContent = verse.reference;
+                // Fade in
+                arabicEl.style.opacity = '1';
+                translationEl.style.opacity = '1';
+                referenceEl.style.opacity = '1';
+            }, 300);
+        }
+
+        // Initialize verse on load
+        document.addEventListener('DOMContentLoaded', () => {
+            displayQuranVerse();
+        });
+
+        // Refresh button
+        document.getElementById('qvRefreshBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            displayQuranVerse();
+            // Add a subtle pulse to the button
+            const btn = e.currentTarget;
+            btn.style.transform = 'scale(1.2) rotate(90deg)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1) rotate(0deg)';
+            }, 300);
+        });
+
+        // Auto-rotate verse every 45 seconds
+        setInterval(() => {
+            if (document.getElementById('screen-dashboard').classList.contains('active')) {
+                displayQuranVerse();
+            }
+        }, 45000);
+
+        // ========== DARK MODE ==========
+        function applyDarkMode(isDark) {
+            const html = document.documentElement;
+            const darkToggle = document.getElementById('darkModeToggle');
+
+            if (isDark) {
+                html.setAttribute('data-theme', 'dark');
+                if (darkToggle) darkToggle.classList.add('on');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                if (darkToggle) darkToggle.classList.remove('on');
+            }
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isCurrentlyDark = html.getAttribute('data-theme') === 'dark';
+            const newMode = !isCurrentlyDark;
+
+            applyDarkMode(newMode);
+            localStorage.setItem('silah-dark-mode', newMode ? 'dark' : 'light');
+
+            // Show brief toast
+            const toastMsg = newMode ? '🌙 Dark mode activated' : '☀️ Light mode activated';
+            showMiniToast(toastMsg);
+        }
+
+        function showMiniToast(message) {
+            // Remove existing toast
+            const existing = document.querySelector('.mini-toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'mini-toast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                        position: fixed;
+                        bottom: 24px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background: var(--green);
+                        color: #fff;
+                        padding: 10px 24px;
+                        border-radius: 30px;
+                        font-size: 14px;
+                        font-weight: 600;
+                        font-family: 'Inter', sans-serif;
+                        z-index: 9999;
+                        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+                        animation: fadeUpToast 0.4s ease, fadeDownToast 0.4s ease 1.6s forwards;
+                        pointer-events: none;
+                    `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                if (toast.parentNode) toast.remove();
+            }, 2200);
+        }
+
+        // Add toast animation keyframes dynamically
+        const toastStyle = document.createElement('style');
+        toastStyle.textContent = `
+                    @keyframes fadeUpToast {
+                        from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                    }
+                    @keyframes fadeDownToast {
+                        from { opacity: 1; transform: translateX(-50%) translateY(0); }
+                        to { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                    }
+                `;
+        document.head.appendChild(toastStyle);
+
+        // Load saved preference
+        function loadDarkModePreference() {
+            const saved = localStorage.getItem('silah-dark-mode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = saved ? saved === 'dark' : prefersDark;
+            applyDarkMode(isDark);
+        }
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            const saved = localStorage.getItem('silah-dark-mode');
+            if (!saved) {
+                applyDarkMode(e.matches);
+            }
+        });
+
+        // Initialize dark mode on load
+        loadDarkModePreference();
+
         // ========== NAVIGATION ==========
         const screens = {
             onboarding: document.getElementById('screen-onboarding'),
@@ -2256,6 +3141,7 @@
             discover: document.getElementById('screen-discover'),
             feed: document.getElementById('screen-feed'),
             profile: document.getElementById('screen-profile'),
+            settings: document.getElementById('screen-settings'),
         };
 
         const navItems = document.querySelectorAll('.nav-item');
@@ -2269,7 +3155,6 @@
             const target = screens[screenId];
             if (target) {
                 target.classList.add('active');
-                // Re-trigger animation
                 target.style.animation = 'none';
                 requestAnimationFrame(() => {
                     target.style.animation = 'fadeUp 0.4s ease';
@@ -2290,6 +3175,11 @@
 
             // Scroll to top
             document.getElementById('screenContainer').scrollTop = 0;
+
+            // If navigating to dashboard, refresh Quran verse
+            if (screenId === 'dashboard') {
+                setTimeout(displayQuranVerse, 200);
+            }
         }
 
         // Sidebar nav clicks
@@ -2309,7 +3199,6 @@
         });
 
         // ========== ONBOARDING INTERACTIONS ==========
-        // Radio options
         document.querySelectorAll('.radio-option').forEach(opt => {
             opt.addEventListener('click', function() {
                 const parent = this.closest('.radio-grid');
@@ -2318,23 +3207,18 @@
             });
         });
 
-        // Checkbox options
         document.querySelectorAll('.checkbox-option').forEach(opt => {
             opt.addEventListener('click', function() {
                 this.classList.toggle('selected');
             });
         });
 
-        // Onboarding continue
         document.getElementById('onboardingContinue').addEventListener('click', function() {
-            // Collect selected interests
             const interests = [];
             document.querySelectorAll('#interestsGroup .checkbox-option.selected').forEach(el => {
                 interests.push(el.textContent.trim());
             });
-            // Navigate to dashboard
             navigateTo('dashboard');
-            // Show a little toast-like effect (optional)
             const btn = this;
             const orig = btn.innerHTML;
             btn.innerHTML = '✅ Welcome!';
@@ -2427,7 +3311,6 @@
             const input = document.querySelector('.feed-post-box .post-input input');
             if (input && input.value.trim()) {
                 const msg = input.value.trim();
-                // Create a new feed item
                 const feedContainer = document.querySelector('#screen-feed');
                 const newItem = document.createElement('div');
                 newItem.className = 'feed-item';
@@ -2442,18 +3325,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="feed-body">"${msg}"</div>
+                            <div class="feed-body">"${msg.replace(/"/g, '&quot;')}"</div>
                             <div class="feed-actions">
-                                <button><i class="fas fa-heart"></i> <span class="count">0</span></button>
+                                <button><i class="far fa-heart"></i> <span class="count">0</span></button>
                                 <button><i class="fas fa-comment"></i> <span class="count">0</span></button>
                                 <button><i class="fas fa-share"></i> <span class="count">0</span></button>
                             </div>
                         `;
-                // Insert after the post box
                 const postBox = document.querySelector('.feed-post-box');
                 postBox.parentNode.insertBefore(newItem, postBox.nextSibling);
                 input.value = '';
-                // Show feedback
                 this.textContent = '✅ Posted!';
                 this.style.background = 'var(--teal)';
                 setTimeout(() => {
@@ -2474,13 +3355,12 @@
                     let count = parseInt(countSpan.textContent) || 0;
                     const heart = likeBtn.querySelector('i');
                     if (heart.classList.contains('fas')) {
-                        // Unlike
                         heart.classList.remove('fas');
                         heart.classList.add('far');
+                        heart.style.color = '';
                         count = Math.max(0, count - 1);
                         countSpan.textContent = count;
                     } else {
-                        // Like
                         heart.classList.remove('far');
                         heart.classList.add('fas');
                         heart.style.color = '#e74c3c';
@@ -2492,10 +3372,15 @@
             }
         });
 
-        // ========== KEYBOARD SHORTCUT: ESC to dashboard ==========
+        // ========== KEYBOARD SHORTCUTS ==========
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 navigateTo('dashboard');
+            }
+            // Ctrl+Shift+D to toggle dark mode
+            if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                e.preventDefault();
+                toggleDarkMode();
             }
         });
 
@@ -2514,78 +3399,66 @@
         // ========== INIT: Show dashboard by default ==========
         navigateTo('dashboard');
 
-        // ========== FETCH MOSQUES FROM API (with CORS proxy) ==========
+        // ========== FETCH MOSQUES FROM API ==========
         async function fetchMosques(lat, lon) {
             const loadingEl = document.getElementById('mosqueLoading');
             const errorEl = document.getElementById('mosqueError');
             const noResultsEl = document.getElementById('mosqueNoResults');
             const mosqueList = document.getElementById('mosqueList');
 
-            // Show loading, hide others
             loadingEl.style.display = 'flex';
             errorEl.style.display = 'none';
             noResultsEl.style.display = 'none';
 
-            // Remove any previously added dynamic mosque rows (keep the static ones)
             const existingRows = mosqueList.querySelectorAll('.mosque-row.dynamic');
             existingRows.forEach(row => row.remove());
 
             try {
-                // Use a CORS proxy to bypass the CORS restriction
                 const proxyUrl = 'https://api.allorigins.win/raw?url=';
-                const apiUrl = `https://time.now/mosques/api/mosques?lat=${lat}&lon=${lon}&radius=30&limit=5`;
+                const apiUrl =
+                `https://time.now/mosques/api/mosques?lat=${lat}&lon=${lon}&radius=30&limit=5`;
                 const url = proxyUrl + encodeURIComponent(apiUrl);
-
                 const response = await fetch(url);
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
                 const data = await response.json();
-
-                // Hide loading
                 loadingEl.style.display = 'none';
 
-                // Check if we have data
                 if (!data || !data.data || data.data.length === 0) {
                     noResultsEl.style.display = 'flex';
                     return;
                 }
 
                 const mosques = data.data;
-
-                // Render each mosque
-                mosques.forEach((mosque, index) => {
+                mosques.forEach((mosque) => {
                     const row = document.createElement('div');
                     row.className = 'mosque-row dynamic';
-
-                    // Extract data with fallbacks
                     const name = mosque.name || 'Unnamed Mosque';
                     const address = mosque.address || 'Address not available';
-                    const distance = mosque.distance ? `${mosque.distance.toFixed(1)} mi` : 'Distance unknown';
+                    const distance = mosque.distance ? `${mosque.distance.toFixed(1)} mi` :
+                        'Distance unknown';
                     const rating = mosque.rating || 0;
-                    const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+                    const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(
+                        rating));
                     const openStatus = mosque.open_now ? '🟢 Open now' : '🔴 Closed';
 
                     row.innerHTML = `
-                        <div class="mq-icon">🕌</div>
-                        <div class="mq-info">
-                            <h4>${name}</h4>
-                            <div class="mq-detail">
-                                <span class="stars">${stars}</span> ${rating.toFixed(1)} · ${distance} · ${openStatus}
-                                <br><span style="font-size:12px;color:var(--gray-400);">${address}</span>
-                            </div>
-                        </div>
-                        <div class="mq-actions">
-                            <button onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}', '_blank')">Directions</button>
-                            <button onclick="alert('More details for ${name}')">Details</button>
-                        </div>
-                    `;
-
+                                <div class="mq-icon">🕌</div>
+                                <div class="mq-info">
+                                    <h4>${name}</h4>
+                                    <div class="mq-detail">
+                                        <span class="stars">${stars}</span> ${rating.toFixed(1)} · ${distance} · ${openStatus}
+                                        <br><span style="font-size:12px;color:var(--gray-400);">${address}</span>
+                                    </div>
+                                </div>
+                                <div class="mq-actions">
+                                    <button onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}', '_blank')">Directions</button>
+                                    <button onclick="alert('More details for ${name.replace(/'/g, "\\'")}')">Details</button>
+                                </div>
+                            `;
                     mosqueList.appendChild(row);
                 });
-
             } catch (error) {
                 console.error('Error fetching mosques:', error);
                 loadingEl.style.display = 'none';
@@ -2593,7 +3466,6 @@
             }
         }
 
-        // ========== GET USER LOCATION AND FETCH MOSQUES ==========
         function getUserLocationAndFetchMosques() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
@@ -2601,25 +3473,21 @@
                         const { latitude, longitude } = position.coords;
                         fetchMosques(latitude, longitude);
                     },
-                    (error) => {
-                        console.warn('Geolocation error:', error);
-                        // Fallback to a default location (e.g., Chicago)
+                    () => {
                         fetchMosques(41.8781, -87.6298);
-                    },
-                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+                    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
                 );
             } else {
-                // Fallback if geolocation not supported
                 fetchMosques(41.8781, -87.6298);
             }
         }
 
-        // ========== CALL THE FUNCTION ON PAGE LOAD ==========
         document.addEventListener('DOMContentLoaded', () => {
             getUserLocationAndFetchMosques();
+            displayQuranVerse();
+            loadDarkModePreference();
         });
 
-        // Re-fetch when Discover tab becomes active
         const discoverScreen = document.getElementById('screen-discover');
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
@@ -2633,6 +3501,7 @@
         observer.observe(discoverScreen, { attributes: true });
 
         console.log('🌙 Silah — AI-Powered Community Platform loaded.');
+        console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
     </script>
 
 </body>
