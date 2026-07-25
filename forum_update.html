@@ -1,0 +1,3544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silah — AI-Powered Community Platform</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- Supabase JS client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        /* ========== DESIGN SYSTEM ========== */
+        :root {
+            --green: #1A6B4F;
+            --green-light: #238B68;
+            --green-dark: #0F4A37;
+            --green-pale: #E8F5F0;
+            --gold: #C9A84C;
+            --gold-light: #E8D48A;
+            --gold-pale: #FDF6E0;
+            --cream: #FDF8F0;
+            --teal: #2A9D8F;
+            --teal-light: #6BC4B8;
+            --charcoal: #2C3E50;
+            --charcoal-light: #4A627A;
+            --gray-50: #F8FAFB;
+            --gray-100: #EEF2F5;
+            --gray-200: #DCE3E9;
+            --gray-300: #B8C4CE;
+            --gray-400: #8FA0AE;
+            --gray-500: #6B7F8F;
+            --shadow-sm: 0 2px 8px rgba(26, 107, 79, 0.08);
+            --shadow-md: 0 8px 24px rgba(26, 107, 79, 0.12);
+            --shadow-lg: 0 16px 48px rgba(26, 107, 79, 0.16);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-full: 9999px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --red: #e74c3c;
+            --red-light: #fde8e8;
+        }
+
+        /* ========== RESET & BASE ========== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--charcoal);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ========== APP SHELL ========== */
+        .app {
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ========== AUTH SCREEN ========== */
+        body:not(.authenticated) .app {
+            display: none;
+        }
+        body.authenticated .auth-screen {
+            display: none;
+        }
+
+        .auth-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: linear-gradient(160deg, var(--green-dark) 0%, var(--green) 45%, var(--teal) 100%);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 520px;
+            background: var(--cream);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 36px 36px 28px;
+            margin: auto;
+        }
+
+        .auth-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .auth-brand .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--green-dark);
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .auth-brand h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--charcoal);
+            letter-spacing: -0.5px;
+        }
+        .auth-brand h1 span {
+            color: var(--gold);
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-full);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .auth-tab.active {
+            background: var(--green);
+            color: #fff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .auth-step {
+            display: none;
+        }
+        .auth-step.active {
+            display: block;
+            animation: fadeUp 0.4s ease;
+        }
+
+        .auth-form {
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+            animation: fadeUp 0.4s ease;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+            background: #fff;
+            color: var(--charcoal);
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+        .auth-switch a {
+            color: var(--green);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .auth-error {
+            background: #FDEDEC;
+            color: #C0392B;
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            font-size: 13px;
+            margin-bottom: 18px;
+            display: none;
+        }
+        .auth-error.show {
+            display: block;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            color: #C0392B;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+        .btn-logout:hover {
+            border-color: #C0392B;
+            background: #FDEDEC;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 260px;
+            min-width: 260px;
+            background: var(--green);
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            flex-shrink: 0;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--green-dark);
+            font-weight: 800;
+        }
+
+        .sidebar-brand h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .sidebar-brand h1 span {
+            color: var(--gold-light);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sidebar-nav .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sidebar-nav .nav-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .sidebar-nav .nav-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            box-shadow: inset 3px 0 0 var(--gold);
+        }
+
+        .sidebar-nav .nav-item i {
+            width: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .sidebar-stats {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            flex-shrink: 0;
+        }
+
+        .sidebar-stats .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .sidebar-stats .stat-row span:last-child {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .sidebar-hadith {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            border-left: 3px solid var(--gold);
+            flex-shrink: 0;
+        }
+        .sidebar-hadith .source {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 4px;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--cream);
+            min-width: 0;
+        }
+
+        /* ========== TOP BAR ========== */
+        .topbar {
+            padding: 18px 32px;
+            background: #fff;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .topbar-left .greeting {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .topbar-left .greeting small {
+            font-weight: 400;
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .topbar-right .search-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .topbar-right .search-wrap input {
+            padding: 8px 16px 8px 40px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+            transition: var(--transition);
+            width: 200px;
+            outline: none;
+        }
+        .topbar-right .search-wrap input:focus {
+            border-color: var(--green);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.1);
+            width: 240px;
+        }
+        .topbar-right .search-wrap i {
+            position: absolute;
+            left: 14px;
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .topbar-right .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--gray-500);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .topbar-right .icon-btn:hover {
+            background: var(--gray-100);
+            color: var(--charcoal);
+        }
+        .topbar-right .icon-btn .badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 18px;
+            height: 18px;
+            background: var(--gold);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .topbar-right .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            border: 2px solid var(--gray-200);
+            transition: var(--transition);
+        }
+        .topbar-right .avatar:hover {
+            border-color: var(--green);
+        }
+
+        /* ========== SCREEN CONTAINER ========== */
+        .screen-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 32px 32px;
+            position: relative;
+            min-height: 0;
+        }
+
+        .screen-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .screen-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .screen-container::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 10px;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeUp 0.4s ease;
+        }
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== SCREEN: ONBOARDING ========== */
+        .onboarding-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .onboarding-header .moon-icon {
+            font-size: 48px;
+            color: var(--gold);
+            margin-bottom: 8px;
+            display: block;
+        }
+        .onboarding-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            color: var(--charcoal);
+        }
+        .onboarding-header p {
+            color: var(--gray-500);
+            font-size: 16px;
+            margin-top: 4px;
+        }
+
+        .onboarding-form {
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+
+        .form-group .radio-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .form-group .radio-grid .radio-option {
+            padding: 10px 18px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+            background: #fff;
+            flex: 1 0 auto;
+            text-align: center;
+            min-width: 120px;
+        }
+        .form-group .radio-grid .radio-option:hover {
+            border-color: var(--green-light);
+        }
+        .form-group .radio-grid .radio-option.selected {
+            border-color: var(--green);
+            background: var(--green-pale);
+            color: var(--green-dark);
+            font-weight: 600;
+        }
+
+        .form-group .checkbox-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .form-group .checkbox-grid .checkbox-option {
+            padding: 10px 18px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-group .checkbox-grid .checkbox-option:hover {
+            border-color: var(--green-light);
+        }
+        .form-group .checkbox-grid .checkbox-option.selected {
+            border-color: var(--green);
+            background: var(--green-pale);
+        }
+        .form-group .checkbox-grid .checkbox-option i {
+            color: var(--green);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .form-group .checkbox-grid .checkbox-option.selected i {
+            opacity: 1;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            transition: var(--transition);
+            outline: none;
+            color: var(--charcoal);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7F8F' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+        .form-group select:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: var(--green);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-primary:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .onboarding-footer {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+        .onboarding-footer i {
+            color: var(--green);
+        }
+
+        /* ========== SCREEN: DASHBOARD ========== */
+        .dash-welcome {
+            margin-bottom: 24px;
+        }
+        .dash-welcome h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            color: var(--charcoal);
+        }
+        .dash-welcome h2 span {
+            color: var(--green);
+        }
+        .dash-welcome p {
+            color: var(--gray-500);
+            font-size: 15px;
+        }
+
+        .dash-progress {
+            background: #fff;
+            padding: 18px 24px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            border: 1px solid var(--gray-100);
+        }
+        .dash-progress .prog-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .dash-progress .prog-left .emoji-big {
+            font-size: 28px;
+        }
+        .dash-progress .prog-left .prog-text {
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+        .dash-progress .prog-left .prog-text strong {
+            color: var(--charcoal);
+        }
+        .dash-progress .prog-bar {
+            flex: 1;
+            min-width: 120px;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .dash-progress .prog-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--teal));
+            border-radius: 10px;
+            width: 45%;
+            transition: width 1s ease;
+        }
+        .dash-progress .prog-pct {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--green);
+        }
+
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .dash-card {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            margin-bottom: 20px;
+        }
+        .dash-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .dash-card .card-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .dash-card .card-header a {
+            font-size: 13px;
+            color: var(--green);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .dash-card .card-header a:hover {
+            text-decoration: underline;
+        }
+
+        .recommend-item {
+            display: flex;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .recommend-item:last-child {
+            border-bottom: none;
+        }
+        .recommend-item .rec-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            color: var(--green);
+        }
+        .recommend-item .rec-info {
+            flex: 1;
+        }
+        .recommend-item .rec-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .recommend-item .rec-info p {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin: 2px 0 6px;
+        }
+        .recommend-item .rec-info .rec-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .recommend-item .rec-info .rec-actions button {
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .recommend-item .rec-info .rec-actions .btn-join {
+            background: var(--green);
+            color: #fff;
+        }
+        .recommend-item .rec-info .rec-actions .btn-join:hover {
+            background: var(--green-dark);
+        }
+        .recommend-item .rec-info .rec-actions .btn-save {
+            background: var(--gray-100);
+            color: var(--gray-500);
+        }
+        .recommend-item .rec-info .rec-actions .btn-save:hover {
+            background: var(--gray-200);
+        }
+
+        .mentor-card {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--gray-100);
+            flex-wrap: wrap;
+        }
+        .mentor-card:last-child {
+            border-bottom: none;
+        }
+        .mentor-card .mentor-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--gold-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--gold);
+            flex-shrink: 0;
+            border: 2px solid var(--gold-light);
+        }
+        .mentor-card .mentor-info {
+            flex: 1;
+            min-width: 120px;
+        }
+        .mentor-card .mentor-info .name {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--charcoal);
+        }
+        .mentor-card .mentor-info .name .stars {
+            color: var(--gold);
+            font-size: 13px;
+            margin-left: 6px;
+        }
+        .mentor-card .mentor-info .title {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .mentor-card .mentor-info .msg {
+            font-size: 13px;
+            color: var(--gray-400);
+            margin-top: 2px;
+            font-style: italic;
+        }
+        .mentor-card .mentor-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .mentor-card .mentor-actions button {
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+        .mentor-card .mentor-actions .btn-msg {
+            background: var(--gray-100);
+            color: var(--charcoal);
+        }
+        .mentor-card .mentor-actions .btn-msg:hover {
+            background: var(--gray-200);
+        }
+        .mentor-card .mentor-actions .btn-sched {
+            background: var(--green);
+            color: #fff;
+        }
+        .mentor-card .mentor-actions .btn-sched:hover {
+            background: var(--green-dark);
+        }
+
+        .ai-tip {
+            margin-top: 12px;
+            padding: 14px 18px;
+            background: var(--green-pale);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--green);
+            font-size: 14px;
+            color: var(--charcoal);
+        }
+        .ai-tip i {
+            color: var(--green);
+            margin-right: 8px;
+        }
+
+        /* ========== SCREEN: MENTOR MATCH ========== */
+        .match-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            border: 1px solid var(--gray-100);
+            align-items: center;
+        }
+        .match-filters .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+        .match-filters .filter-group select {
+            padding: 6px 12px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            outline: none;
+            color: var(--charcoal);
+            cursor: pointer;
+        }
+        .match-filters .filter-group select:focus {
+            border-color: var(--green);
+        }
+
+        .match-result {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            margin-bottom: 16px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: var(--transition);
+            flex-wrap: wrap;
+        }
+        .match-result:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .match-result .match-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--green);
+            flex-shrink: 0;
+        }
+        .match-result .match-body {
+            flex: 1;
+            min-width: 180px;
+        }
+        .match-result .match-body .mname {
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--charcoal);
+        }
+        .match-result .match-body .mname .stars {
+            color: var(--gold);
+            font-size: 14px;
+            margin-left: 6px;
+        }
+        .match-result .match-body .mmeta {
+            font-size: 14px;
+            color: var(--gray-500);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 4px 0 6px;
+        }
+        .match-result .match-body .mmeta .dot {
+            color: var(--gray-300);
+        }
+        .match-result .match-body .mdesc {
+            font-size: 14px;
+            color: var(--gray-400);
+            margin-bottom: 8px;
+        }
+        .match-result .match-body .mactions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .match-result .match-body .mactions button {
+            padding: 6px 18px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .match-result .match-body .mactions .btn-view {
+            background: var(--gray-100);
+            color: var(--charcoal);
+        }
+        .match-result .match-body .mactions .btn-view:hover {
+            background: var(--gray-200);
+        }
+        .match-result .match-body .mactions .btn-req {
+            background: var(--green);
+            color: #fff;
+        }
+        .match-result .match-body .mactions .btn-req:hover {
+            background: var(--green-dark);
+        }
+        .match-result .match-badge {
+            background: var(--green-pale);
+            color: var(--green);
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            align-self: center;
+        }
+
+        .notify-cta {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+        .notify-cta button {
+            padding: 8px 24px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--green);
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            margin-top: 6px;
+        }
+        .notify-cta button:hover {
+            background: var(--green-dark);
+        }
+
+        /* ========== SCREEN: COMMUNITY DISCOVERY ========== */
+        .disco-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 6px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--gray-100);
+            box-shadow: var(--shadow-sm);
+            width: fit-content;
+        }
+        .disco-tabs .tab {
+            padding: 8px 20px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            background: transparent;
+            color: var(--gray-500);
+        }
+        .disco-tabs .tab.active {
+            background: var(--green);
+            color: #fff;
+        }
+        .disco-tabs .tab:hover:not(.active) {
+            background: var(--gray-100);
+        }
+
+        .disco-search {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .disco-search input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+            background: #fff;
+            min-width: 160px;
+        }
+        .disco-search input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
+        }
+        .disco-search .filter-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .disco-search .filter-chips .chip {
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--gray-200);
+            background: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            color: var(--gray-500);
+        }
+        .disco-search .filter-chips .chip.active {
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green);
+        }
+        .disco-search .filter-chips .chip:hover:not(.active) {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .event-card {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 18px 22px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            transition: var(--transition);
+        }
+        .event-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .event-card .ev-left {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+        .event-card .ev-left .ev-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--gold-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+        .event-card .ev-left .ev-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .event-card .ev-left .ev-info .ev-loc {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .event-card .ev-left .ev-info .ev-meta {
+            font-size: 13px;
+            color: var(--gray-400);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+        .event-card .ev-left .ev-info .ev-meta .tag {
+            background: var(--green-pale);
+            color: var(--green);
+            padding: 0 10px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .event-card .ev-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .event-card .ev-right button {
+            padding: 6px 18px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .event-card .ev-right .btn-rsvp {
+            background: var(--green);
+            color: #fff;
+        }
+        .event-card .ev-right .btn-rsvp:hover {
+            background: var(--green-dark);
+        }
+        .event-card .ev-right .btn-share {
+            background: var(--gray-100);
+            color: var(--gray-500);
+        }
+        .event-card .ev-right .btn-share:hover {
+            background: var(--gray-200);
+        }
+
+        .mosque-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--gray-100);
+            flex-wrap: wrap;
+        }
+        .mosque-row:last-child {
+            border-bottom: none;
+        }
+        .mosque-row .mq-icon {
+            font-size: 22px;
+            color: var(--gold);
+            width: 36px;
+            text-align: center;
+        }
+        .mosque-row .mq-info {
+            flex: 1;
+            min-width: 140px;
+        }
+        .mosque-row .mq-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        .mosque-row .mq-info .mq-detail {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .mosque-row .mq-info .mq-detail .stars {
+            color: var(--gold);
+        }
+        .mosque-row .mq-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .mosque-row .mq-actions button {
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-100);
+            color: var(--charcoal);
+        }
+        .mosque-row .mq-actions button:hover {
+            background: var(--gray-200);
+        }
+
+        /* ========== SCREEN: COMMUNITY FEED ========== */
+        .feed-post-box {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 18px 22px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            margin-bottom: 20px;
+        }
+        .feed-post-box .post-input {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .feed-post-box .post-input .pa {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--green);
+            flex-shrink: 0;
+        }
+        .feed-post-box .post-input input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+            background: var(--gray-50);
+            min-width: 120px;
+        }
+        .feed-post-box .post-input input:focus {
+            border-color: var(--green);
+            background: #fff;
+        }
+        .feed-post-box .post-tools {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-100);
+            flex-wrap: wrap;
+        }
+        .feed-post-box .post-tools button {
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .feed-post-box .post-tools button:hover {
+            color: var(--green);
+        }
+
+        .feed-item {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 18px 22px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+            margin-bottom: 16px;
+        }
+        .feed-item .feed-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .feed-item .feed-head .fh-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feed-item .feed-head .fh-left .fa {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--green);
+        }
+        .feed-item .feed-head .fh-left .fname {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--charcoal);
+        }
+        .feed-item .feed-head .fh-left .ftime {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+        .feed-item .feed-body {
+            font-size: 15px;
+            color: var(--charcoal);
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+        .feed-item .feed-body .emoji-big {
+            font-size: 20px;
+        }
+        .feed-item .feed-actions {
+            display: flex;
+            gap: 20px;
+            padding-top: 10px;
+            border-top: 1px solid var(--gray-100);
+        }
+        .feed-item .feed-actions button {
+            background: none;
+            border: none;
+            font-size: 14px;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .feed-item .feed-actions button:hover {
+            color: var(--green);
+        }
+        .feed-item .feed-actions button .count {
+            font-weight: 600;
+        }
+        .feed-item .feed-comments {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--gray-100);
+        }
+        .feed-item .feed-comments .comment {
+            font-size: 13px;
+            color: var(--gray-500);
+            padding: 4px 0;
+        }
+        .feed-item .feed-comments .comment strong {
+            color: var(--charcoal);
+        }
+
+        .comment-input-wrap {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+            align-items: center;
+        }
+        .comment-input-wrap input {
+            flex: 1;
+            padding: 6px 14px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+            background: var(--gray-50);
+        }
+        .comment-input-wrap input:focus {
+            border-color: var(--green);
+            background: #fff;
+        }
+        .comment-input-wrap button {
+            padding: 6px 16px;
+            border: none;
+            background: var(--green);
+            color: #fff;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .comment-input-wrap button:hover {
+            background: var(--green-dark);
+        }
+
+        /* ========== MODERATION BADGE ========== */
+        .moderation-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .moderation-badge.approved {
+            background: var(--green-pale);
+            color: var(--green);
+        }
+        .moderation-badge.pending {
+            background: var(--gold-pale);
+            color: var(--gold);
+        }
+        .moderation-badge.rejected {
+            background: var(--red-light);
+            color: var(--red);
+        }
+
+        /* ========== SCREEN: PROFILE ========== */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .profile-header .big-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 30px;
+            color: var(--green);
+            margin: 0 auto 10px;
+            border: 4px solid var(--gold-light);
+        }
+        .profile-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            color: var(--charcoal);
+        }
+        .profile-header .p-badge {
+            display: inline-block;
+            padding: 2px 16px;
+            border-radius: var(--radius-full);
+            background: var(--green-pale);
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+        .profile-header .p-loc {
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+        .profile-header .p-edit {
+            margin-top: 10px;
+            padding: 6px 24px;
+            border-radius: var(--radius-full);
+            border: 2px solid var(--gray-200);
+            background: transparent;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            color: var(--charcoal);
+        }
+        .profile-header .p-edit:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .profile-grid .dash-card {
+            margin-bottom: 0;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+        .milestone-item.done {
+            color: var(--charcoal);
+        }
+        .milestone-item.done i {
+            color: var(--green);
+        }
+        .milestone-item i {
+            width: 20px;
+            color: var(--gray-300);
+        }
+
+        .profile-setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .profile-setting-row:last-child {
+            border-bottom: none;
+        }
+        .profile-setting-row .ps-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--charcoal);
+        }
+        .profile-setting-row .ps-left i {
+            color: var(--gray-400);
+            width: 20px;
+        }
+        .toggle {
+            width: 44px;
+            height: 24px;
+            background: var(--gray-300);
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .toggle.on {
+            background: var(--green);
+        }
+        .toggle .toggle-knob {
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: var(--transition);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        }
+        .toggle.on .toggle-knob {
+            left: 23px;
+        }
+
+        /* ========== BOTTOM NAV (mobile) ========== */
+        .bottom-nav {
+            display: none;
+            background: #fff;
+            border-top: 1px solid var(--gray-100);
+            padding: 8px 0 10px;
+            justify-content: space-around;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .bottom-nav .bn-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            font-size: 10px;
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
+            padding: 4px 12px;
+        }
+        .bottom-nav .bn-item i {
+            font-size: 18px;
+        }
+        .bottom-nav .bn-item.active {
+            color: var(--green);
+        }
+        .bottom-nav .bn-item:hover {
+            color: var(--green);
+        }
+
+        /* ========== MODERATION TOAST ========== */
+        .moderation-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--charcoal);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 90%;
+            text-align: center;
+            pointer-events: none;
+        }
+        .moderation-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .moderation-toast.success {
+            background: var(--green);
+        }
+        .moderation-toast.error {
+            background: var(--red);
+        }
+        .moderation-toast.warning {
+            background: var(--gold);
+            color: var(--charcoal);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+            .bottom-nav {
+                display: flex;
+            }
+            .topbar {
+                padding: 14px 20px;
+            }
+            .topbar-right .search-wrap input {
+                width: 140px;
+            }
+            .topbar-right .search-wrap input:focus {
+                width: 160px;
+            }
+            .screen-container {
+                padding: 20px;
+            }
+            .dash-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .match-result {
+                flex-wrap: wrap;
+            }
+            .event-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .match-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .disco-tabs {
+                width: 100%;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            .disco-tabs .tab {
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 12px 16px;
+            }
+            .topbar-left .greeting {
+                font-size: 14px;
+            }
+            .topbar-left .greeting small {
+                font-size: 12px;
+                display: block;
+            }
+            .topbar-right .search-wrap input {
+                width: 100px;
+                font-size: 12px;
+                padding: 6px 12px 6px 32px;
+            }
+            .topbar-right .search-wrap input:focus {
+                width: 120px;
+            }
+            .topbar-right .search-wrap i {
+                left: 10px;
+                font-size: 12px;
+            }
+            .topbar-right .icon-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+            .topbar-right .avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+            .screen-container {
+                padding: 16px;
+            }
+            .dash-progress {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .dash-progress .prog-left {
+                flex-wrap: wrap;
+            }
+            .recommend-item {
+                flex-wrap: wrap;
+            }
+            .mentor-card {
+                flex-wrap: wrap;
+            }
+            .mentor-card .mentor-actions {
+                flex-direction: row;
+                width: 100%;
+            }
+            .match-result {
+                flex-direction: column;
+            }
+            .match-result .match-badge {
+                align-self: flex-start;
+            }
+            .disco-search {
+                flex-direction: column;
+            }
+            .disco-search .filter-chips {
+                flex-wrap: wrap;
+            }
+            .form-group .radio-grid,
+            .form-group .checkbox-grid {
+                flex-direction: column;
+            }
+            .form-group .radio-grid .radio-option,
+            .form-group .checkbox-grid .checkbox-option {
+                flex: 1;
+                min-width: unset;
+            }
+            .feed-post-box .post-input {
+                flex-wrap: wrap;
+            }
+            .feed-post-box .post-input input {
+                width: 100%;
+            }
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .onboarding-header h2 {
+                font-size: 22px;
+            }
+            .bottom-nav .bn-item {
+                font-size: 9px;
+                padding: 2px 8px;
+            }
+            .bottom-nav .bn-item i {
+                font-size: 16px;
+            }
+            .sidebar-hadith {
+                display: none;
+            }
+            .sidebar-stats {
+                display: none;
+            }
+            .comment-input-wrap {
+                flex-wrap: wrap;
+            }
+            .comment-input-wrap input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .topbar-right .search-wrap input {
+                width: 70px;
+            }
+            .topbar-right .search-wrap input:focus {
+                width: 90px;
+            }
+            .topbar-right .icon-btn .badge {
+                width: 14px;
+                height: 14px;
+                font-size: 8px;
+                top: 2px;
+                right: 2px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app {
+                height: 100%;
+                min-height: 100vh;
+            }
+            .screen-container {
+                overflow-y: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== MODERATION TOAST ========== -->
+    <div class="moderation-toast" id="moderationToast"></div>
+
+    <!-- ========== AUTH SCREEN ========== -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-card">
+            <div class="auth-brand">
+                <div class="logo-icon">ص</div>
+                <h1>Silah<span>.</span></h1>
+            </div>
+
+            <div class="auth-step active" id="authStep">
+                <div class="auth-tabs">
+                    <button type="button" class="auth-tab active" data-auth="signin">Sign In</button>
+                    <button type="button" class="auth-tab" data-auth="register">Register</button>
+                </div>
+
+                <div class="auth-error" id="authError"></div>
+
+                <!-- SIGN IN -->
+                <div class="auth-form active" id="signInForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="signInEmail" placeholder="you@example.com" />
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signInPassword" placeholder="••••••••" />
+                    </div>
+                    <button type="button" class="btn-primary" id="signInSubmit">Sign In <i class="fas fa-arrow-right"></i></button>
+                    <div class="auth-switch">Don't have an account? <a data-auth="register">Register</a></div>
+                </div>
+
+                <!-- REGISTER -->
+                <div class="auth-form" id="registerForm">
+                    <div class="onboarding-header" style="margin-bottom:20px;">
+                        <span class="moon-icon">🌙</span>
+                        <h2>Welcome to Silah</h2>
+                        <p>Your path to community &amp; belonging begins here</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="regName" placeholder="Sarah Ahmed" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="regEmail" placeholder="you@example.com" />
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password" />
+                    </div>
+
+                    <button type="button" class="btn-primary" id="registerContinue">Continue <i class="fas fa-arrow-right"></i></button>
+                    <div class="auth-switch">Already have an account? <a data-auth="signin">Sign In</a></div>
+                </div>
+            </div>
+
+            <!-- ONBOARDING -->
+            <div class="auth-step" id="onboardingStep">
+                <div class="onboarding-header" style="margin-bottom:20px;">
+                    <span class="moon-icon">🌙</span>
+                    <h2>Tell Us About You</h2>
+                    <p>So we can connect you with the right guidance, mentors &amp; community</p>
+                </div>
+
+                <div class="form-group">
+                    <label>What brings you here today?</label>
+                    <div class="radio-grid" id="purposeGroup">
+                        <div class="radio-option selected" data-value="new">○ I'm new to Islam</div>
+                        <div class="radio-option" data-value="explore">○ I'm exploring Islam</div>
+                        <div class="radio-option" data-value="support">○ I want to support others</div>
+                        <div class="radio-option" data-value="leader">○ I'm a community leader</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Location</label>
+                    <select id="regLocation">
+                        <option value="chicago">📍 Chicago, IL</option>
+                        <option value="nyc">📍 New York, NY</option>
+                        <option value="la">📍 Los Angeles, CA</option>
+                        <option value="houston">📍 Houston, TX</option>
+                        <option value="london">📍 London, UK</option>
+                        <option value="other">🌍 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Interests <span style="font-weight:400;color:var(--gray-400)">(select all)</span></label>
+                    <div class="checkbox-grid" id="interestsGroup">
+                        <div class="checkbox-option selected"><i class="fas fa-check-circle"></i> Finding a Mentor</div>
+                        <div class="checkbox-option selected"><i class="fas fa-check-circle"></i> New Muslim Support Group</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Prayer Guidance</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Quran Study</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Arabic Learning</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Local Mosque &amp; Events</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Building Muslim Friendships</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Family &amp; Shahada Support</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Islamic History</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Mental Wellness</div>
+                        <div class="checkbox-option"><i class="fas fa-check-circle"></i> Community Service</div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-primary" id="onboardingFinish">Finish <i class="fas fa-arrow-right"></i></button>
+                <div class="onboarding-footer">
+                    <i class="fas fa-lock"></i> We'll never share your data · Privacy-first
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== APP ========== -->
+    <div class="app" id="app">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-icon">ص</div>
+                <h1>Silah<span>.</span></h1>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-screen="dashboard">
+                    <i class="fas fa-home"></i> Home
+                </button>
+                <button class="nav-item" data-screen="mentor">
+                    <i class="fas fa-handshake"></i> My Mentor
+                </button>
+                <button class="nav-item" data-screen="discover">
+                    <i class="fas fa-compass"></i> Discover
+                </button>
+                <button class="nav-item" data-screen="feed">
+                    <i class="fas fa-comments"></i> Community
+                </button>
+                <button class="nav-item" data-screen="profile">
+                    <i class="fas fa-user"></i> Profile
+                </button>
+            </nav>
+
+            <div class="sidebar-stats">
+                <div class="stat-row"><span>📖 Classes</span><span>6</span></div>
+                <div class="stat-row"><span>🤝 Sessions</span><span>2</span></div>
+                <div class="stat-row"><span>🕌 Events</span><span>4</span></div>
+                <div class="stat-row"><span>❤️ Connections</span><span>15</span></div>
+            </div>
+
+            <div class="sidebar-hadith">
+                “The example of believers in their affection and mercy is like the body...”
+                <div class="source">— Bukhari &amp; Muslim</div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <div class="main">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <div class="greeting">
+                        👋 Assalamu alaikum, <strong id="greetingName">Sarah</strong>
+                        <small>· Your journey continues</small>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="search-wrap">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search..." />
+                    </div>
+                    <button class="icon-btn" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn" title="AI Assistant">
+                        <i class="fas fa-sparkles"></i>
+                    </button>
+                    <div class="avatar" id="topbarAvatar">SA</div>
+                </div>
+            </header>
+
+            <!-- SCREEN CONTAINER -->
+            <div class="screen-container" id="screenContainer">
+
+                <!-- DASHBOARD -->
+                <div class="screen active" id="screen-dashboard">
+                    <div class="dash-welcome">
+                        <h2>👋 Assalamu alaikum, <span id="dashName">Sarah</span>!</h2>
+                        <p>Here's your personalized path for today.</p>
+                    </div>
+
+                    <div class="dash-progress">
+                        <div class="prog-left">
+                            <span class="emoji-big">🌱</span>
+                            <div class="prog-text">
+                                <strong>Beginner</strong> · 📍 Chicago · 🎯 8/15 goals
+                            </div>
+                        </div>
+                        <div class="prog-bar"><div class="fill" style="width:45%"></div></div>
+                        <span class="prog-pct">45%</span>
+                    </div>
+
+                    <div class="dash-grid">
+                        <div>
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <h3>📖 For You</h3>
+                                    <a href="#" onclick="navigateTo('discover');return false;">See all →</a>
+                                </div>
+
+                                <div class="recommend-item">
+                                    <div class="rec-icon">📖</div>
+                                    <div class="rec-info">
+                                        <h4>Understanding Prayer</h4>
+                                        <p>Beginner Class · Tomorrow 6PM</p>
+                                        <div class="rec-actions">
+                                            <button class="btn-join">Join</button>
+                                            <button class="btn-save">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="recommend-item">
+                                    <div class="rec-icon">🤝</div>
+                                    <div class="rec-info">
+                                        <h4>Sister's Halaqa Circle</h4>
+                                        <p>Weekly · Sat 10AM · 3 spots left</p>
+                                        <div class="rec-actions">
+                                            <button class="btn-join">RSVP</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="recommend-item">
+                                    <div class="rec-icon">🕌</div>
+                                    <div class="rec-info">
+                                        <h4>Open Mosque Day</h4>
+                                        <p>This Sunday · 2PM–6PM</p>
+                                        <div class="rec-actions">
+                                            <button class="btn-join" style="background:var(--teal);color:#fff">Learn More</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <h3>⭐ Your Mentor Match</h3>
+                                    <a href="#" onclick="navigateTo('mentor');return false;">Find more →</a>
+                                </div>
+
+                                <div class="mentor-card">
+                                    <div class="mentor-avatar">FH</div>
+                                    <div class="mentor-info">
+                                        <div class="name">Fatima H. <span class="stars">★★★★★</span></div>
+                                        <div class="title">3 years as mentor · Hafiza</div>
+                                        <div class="msg">"I'd love to help you with prayer &amp; Quran"</div>
+                                    </div>
+                                    <div class="mentor-actions">
+                                        <button class="btn-msg"><i class="fas fa-envelope"></i> Message</button>
+                                        <button class="btn-sched">Schedule</button>
+                                    </div>
+                                </div>
+
+                                <div class="ai-tip">
+                                    <i class="fas fa-robot"></i>
+                                    Based on your goals, I recommend starting with the <strong>"Daily Duas"</strong> class.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <h3>📅 Upcoming</h3>
+                                    <a href="#" onclick="navigateTo('discover');return false;">View all →</a>
+                                </div>
+                                <div style="font-size:14px;padding:4px 0;color:var(--gray-500);border-bottom:1px solid var(--gray-100);padding-bottom:10px;">
+                                    <strong style="color:var(--charcoal);">Wed 7PM</strong> — Essentials Class
+                                </div>
+                                <div style="font-size:14px;padding:4px 0;color:var(--gray-500);border-bottom:1px solid var(--gray-100);padding-bottom:10px;margin-top:6px;">
+                                    <strong style="color:var(--charcoal);">Fri 6PM</strong> — Community Iftar
+                                </div>
+                                <div style="font-size:14px;padding:4px 0;color:var(--gray-500);margin-top:6px;">
+                                    <strong style="color:var(--charcoal);">Sat 10AM</strong> — Halaqa Circle
+                                </div>
+                            </div>
+
+                            <div class="dash-card">
+                                <div class="card-header">
+                                    <h3>🤲 Quick Dua</h3>
+                                </div>
+                                <div style="font-size:15px;color:var(--charcoal);font-style:italic;line-height:1.8;">
+                                    "Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan waqina azaban-nar."
+                                </div>
+                                <div style="font-size:12px;color:var(--gray-400);margin-top:6px;">— Surah Al-Baqarah 2:201</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MENTOR -->
+                <div class="screen" id="screen-mentor">
+                    <div style="margin-bottom:16px;">
+                        <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">🤝 Find a Mentor</h2>
+                        <p style="color:var(--gray-500);">Let AI find the perfect guide for you.</p>
+                    </div>
+
+                    <div class="match-filters">
+                        <div class="filter-group">
+                            <span>Looking for:</span>
+                            <select><option>Sister</option><option>Brother</option><option>Any</option></select>
+                        </div>
+                        <div class="filter-group">
+                            <span>Focus:</span>
+                            <select><option>Quran &amp; Tajweed</option><option>Islamic Basics</option><option>Arabic</option><option>Mental Wellness</option></select>
+                        </div>
+                        <div class="filter-group">
+                            <span>Meeting:</span>
+                            <select><option>In-person</option><option>Online</option><option>Either</option></select>
+                        </div>
+                        <div class="filter-group">
+                            <span>Language:</span>
+                            <select><option>English</option><option>Arabic</option><option>Both</option></select>
+                        </div>
+                    </div>
+
+                    <div style="font-weight:600;color:var(--charcoal);margin-bottom:14px;font-size:15px;">
+                        ═══ 3 Matches Found ═══
+                    </div>
+
+                    <div class="match-result">
+                        <div class="match-avatar">AK</div>
+                        <div class="match-body">
+                            <div class="mname">Aisha K. <span class="stars">★★★★★</span></div>
+                            <div class="mmeta">Hafiza · 5 years experience <span class="dot">•</span> 📍 Nearby <span class="dot">•</span> <span style="color:var(--green);">🟢 Available this week</span></div>
+                            <div class="mdesc">"I help new sisters build confidence in prayer and reading Quran."</div>
+                            <div class="mactions">
+                                <button class="btn-view">View Profile</button>
+                                <button class="btn-req">Request Connect</button>
+                            </div>
+                        </div>
+                        <div class="match-badge">🤖 92% match</div>
+                    </div>
+
+                    <div class="match-result">
+                        <div class="match-avatar">ZM</div>
+                        <div class="match-body">
+                            <div class="mname">Zainab M. <span class="stars">★★★★☆</span></div>
+                            <div class="mmeta">Islamic Studies Teacher <span class="dot">•</span> 📍 Online only <span class="dot">•</span> <span style="color:var(--gold);">🟡 Busy this week</span></div>
+                            <div class="mdesc">"Specializing in Islamic basics &amp; aqeedah."</div>
+                            <div class="mactions">
+                                <button class="btn-view">View Profile</button>
+                                <button class="btn-req">Request Connect</button>
+                            </div>
+                        </div>
+                        <div class="match-badge">🤖 85% match</div>
+                    </div>
+
+                    <div class="match-result">
+                        <div class="match-avatar">OA</div>
+                        <div class="match-body">
+                            <div class="mname">Omar A. <span class="stars">★★★★★</span></div>
+                            <div class="mmeta">Quran Teacher · 8 years <span class="dot">•</span> 📍 2 miles away <span class="dot">•</span> <span style="color:var(--green);">🟢 Available</span></div>
+                            <div class="mdesc">"Focus on tajweed and memorization with a gentle approach."</div>
+                            <div class="mactions">
+                                <button class="btn-view">View Profile</button>
+                                <button class="btn-req">Request Connect</button>
+                            </div>
+                        </div>
+                        <div class="match-badge">🤖 88% match</div>
+                    </div>
+
+                    <div class="notify-cta">
+                        Not seeing who you're looking for? We'll notify you when new mentors join.
+                        <br />
+                        <button><i class="fas fa-bell"></i> Notify Me</button>
+                    </div>
+                </div>
+
+                <!-- DISCOVER -->
+                <div class="screen" id="screen-discover">
+                    <div style="margin-bottom:16px;">
+                        <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">📍 Discover Near You</h2>
+                    </div>
+
+                    <div class="disco-tabs">
+                        <button class="tab active">📋 List View</button>
+                        <button class="tab">🗺️ Map View</button>
+                    </div>
+
+                    <div class="disco-search">
+                        <input type="text" placeholder="🔍 Search events, classes, mosques..." />
+                        <div class="filter-chips">
+                            <button class="chip active">📍 Near me</button>
+                            <button class="chip">📅 This week</button>
+                            <button class="chip">🎯 All</button>
+                        </div>
+                    </div>
+
+                    <div style="font-weight:600;color:var(--charcoal);margin-bottom:12px;font-size:15px;">
+                        ═══ UPCOMING EVENTS ═══
+                    </div>
+
+                    <div class="event-card">
+                        <div class="ev-left">
+                            <div class="ev-icon">📖</div>
+                            <div class="ev-info">
+                                <h4>New Muslim Essentials</h4>
+                                <div class="ev-loc">Islamic Center of Chicago</div>
+                                <div class="ev-meta">
+                                    <span>🗓 Wed 7PM</span>
+                                    <span>🏷️ Free</span>
+                                    <span class="tag">👥 12 attending · 8 spots left</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ev-right">
+                            <button class="btn-rsvp">RSVP</button>
+                            <button class="btn-share"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="ev-left">
+                            <div class="ev-icon">🤝</div>
+                            <div class="ev-info">
+                                <h4>Community Iftar &amp; Dinner</h4>
+                                <div class="ev-loc">Masjid Al-Noor</div>
+                                <div class="ev-meta">
+                                    <span>🗓 Fri 6:30PM</span>
+                                    <span>🏷️ $5 donation</span>
+                                    <span class="tag">👥 45 attending</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ev-right">
+                            <button class="btn-rsvp">RSVP</button>
+                            <button class="btn-share"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+
+                    <div style="font-weight:600;color:var(--charcoal);margin:20px 0 12px;font-size:15px;">
+                        ═══ MOSQUES NEAR YOU ═══
+                    </div>
+
+                    <div id="mosqueList">
+                        <div class="mosque-row" id="mosqueLoading">
+                            <div class="mq-icon">⏳</div>
+                            <div class="mq-info">
+                                <h4>Loading mosques...</h4>
+                                <div class="mq-detail">Please wait while we find mosques near you.</div>
+                            </div>
+                        </div>
+                        <div class="mosque-row" id="mosqueError" style="display:none;">
+                            <div class="mq-icon">⚠️</div>
+                            <div class="mq-info">
+                                <h4>Unable to load mosques</h4>
+                                <div class="mq-detail">Could not fetch mosque data. Please try again later.</div>
+                            </div>
+                        </div>
+                        <div class="mosque-row" id="mosqueNoResults" style="display:none;">
+                            <div class="mq-icon">🕌</div>
+                            <div class="mq-info">
+                                <h4>No mosques found nearby</h4>
+                                <div class="mq-detail">Try expanding your search radius or check back later.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FEED -->
+                <div class="screen" id="screen-feed">
+                    <div style="margin-bottom:16px;">
+                        <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">💬 Community Feed</h2>
+                        <p style="color:var(--gray-500);font-size:14px;">All posts are AI-moderated to ensure a safe, supportive environment.</p>
+                    </div>
+
+                    <div class="feed-post-box">
+                        <div class="post-input">
+                            <div class="pa" id="feedUserAvatar">SA</div>
+                            <input type="text" id="postInput" placeholder="What's on your mind?" />
+                        </div>
+                        <div class="post-tools">
+                            <button><i class="fas fa-image"></i> Photo</button>
+                            <button><i class="fas fa-link"></i> Link</button>
+                            <button><i class="fas fa-location-dot"></i> Location</button>
+                            <button style="margin-left:auto;background:var(--green);color:#fff;padding:4px 18px;border-radius:20px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;" id="postSubmitBtn">Post</button>
+                        </div>
+                        <div style="margin-top:10px;font-size:12px;color:var(--gray-400);display:flex;align-items:center;gap:6px;">
+                            <i class="fas fa-shield-alt" style="color:var(--green);"></i>
+                            <span>AI moderation is active on all posts</span>
+                        </div>
+                    </div>
+
+                    <div id="feedContainer">
+                        <div style="text-align:center;padding:40px;color:var(--gray-500);">
+                            <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i>
+                            <p style="margin-top:10px;">Loading posts...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILE -->
+                <div class="screen" id="screen-profile">
+                    <div class="profile-header">
+                        <div class="big-avatar" id="profileAvatar">SA</div>
+                        <h2 id="profileName">Sarah Ahmed</h2>
+                        <div class="p-badge">🌱 New Muslim · 6 months</div>
+                        <div class="p-loc" id="profileLoc">📍 Chicago, IL</div>
+                        <button class="p-edit">✎ Edit Profile</button>
+                    </div>
+
+                    <div class="profile-grid">
+                        <div>
+                            <div class="dash-card">
+                                <div class="card-header"><h3>🏆 My Journey</h3></div>
+                                <div class="milestone-item done"><i class="fas fa-check-circle"></i> Said Shahada</div>
+                                <div class="milestone-item done"><i class="fas fa-check-circle"></i> Attended first Jummah</div>
+                                <div class="milestone-item"><i class="far fa-circle"></i> Memorized 5 short surahs</div>
+                                <div class="milestone-item"><i class="far fa-circle"></i> Completed beginner class</div>
+                                <div style="margin-top:10px;"><a href="#" style="color:var(--green);font-weight:500;font-size:14px;text-decoration:none;">View All →</a></div>
+                            </div>
+
+                            <div class="dash-card">
+                                <div class="card-header"><h3>⭐ My Mentor</h3></div>
+                                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                                    <div style="width:44px;height:44px;border-radius:50%;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--gold);">FH</div>
+                                    <div>
+                                        <div style="font-weight:600;">Fatima H. <span style="color:var(--gold);">★</span></div>
+                                        <div style="font-size:13px;color:var(--gray-500);">Next session: Tomorrow 7PM</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+                                    <button style="padding:6px 18px;border-radius:var(--radius-full);border:none;background:var(--gray-100);font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Message</button>
+                                    <button style="padding:6px 18px;border-radius:var(--radius-full);border:none;background:var(--green);color:#fff;font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Reschedule</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="dash-card">
+                                <div class="card-header"><h3>🤝 My Community</h3></div>
+                                <div style="font-size:14px;padding:4px 0;border-bottom:1px solid var(--gray-100);padding-bottom:8px;">
+                                    🕌 <strong>Islamic Center of Chicago</strong>
+                                </div>
+                                <div style="font-size:14px;padding:4px 0;border-bottom:1px solid var(--gray-100);padding-bottom:8px;margin-top:4px;">
+                                    🤝 <strong>Sister's Halaqa Circle</strong>
+                                </div>
+                                <div style="font-size:14px;padding:4px 0;margin-top:4px;">
+                                    📅 <strong>3 events</strong> attended this month
+                                </div>
+                            </div>
+
+                            <div class="dash-card">
+                                <div class="card-header"><h3>⚙️ Settings Quick</h3></div>
+                                <div class="profile-setting-row">
+                                    <span class="ps-left"><i class="fas fa-moon"></i> Ramadan Mode</span>
+                                    <div class="toggle" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
+                                </div>
+                                <div class="profile-setting-row">
+                                    <span class="ps-left"><i class="fas fa-bell"></i> Daily Duas Reminder</span>
+                                    <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
+                                </div>
+                                <div class="profile-setting-row">
+                                    <span class="ps-left"><i class="fas fa-envelope"></i> Community Digest</span>
+                                    <span style="font-size:13px;color:var(--gray-500);">Weekly</span>
+                                </div>
+                                <button class="btn-logout" id="logoutBtn"><i class="fas fa-arrow-right-from-bracket"></i> Log Out</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /screen-container -->
+
+            <!-- BOTTOM NAV (mobile) -->
+            <nav class="bottom-nav" id="bottomNav">
+                <button class="bn-item active" data-screen="dashboard"><i class="fas fa-home"></i> Home</button>
+                <button class="bn-item" data-screen="mentor"><i class="fas fa-handshake"></i> Mentor</button>
+                <button class="bn-item" data-screen="discover"><i class="fas fa-compass"></i> Discover</button>
+                <button class="bn-item" data-screen="feed"><i class="fas fa-comments"></i> Feed</button>
+                <button class="bn-item" data-screen="profile"><i class="fas fa-user"></i> Profile</button>
+            </nav>
+
+        </div><!-- /main -->
+    </div><!-- /app -->
+
+    <script>
+        // ============================================================
+        // ========== AI MODERATION CONFIGURATION ==========
+        // ============================================================
+        const OPENAI_API_KEY = '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';
+        const USE_OPENAI = true;
+
+        // ============================================================
+        // ========== SUPABASE SETUP ==========
+        // ============================================================
+        const SUPABASE_URL = 'https://bjwvijrtlqripfmaaxie.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_unxr5JhStwZ4xB14LaFcsg_jINQ15Dk';
+        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ========== GLOBAL STATE ==========
+        let currentUser = null;
+        let currentProfile = null;
+
+        // ============================================================
+        // ========== AI MODERATION FUNCTIONS ==========
+        // ============================================================
+
+        function showModerationToast(message, type = 'info', duration = 5000) {
+            const toast = document.getElementById('moderationToast');
+            toast.textContent = message;
+            toast.className = 'moderation-toast';
+            if (type === 'success') toast.classList.add('success');
+            else if (type === 'error') toast.classList.add('error');
+            else if (type === 'warning') toast.classList.add('warning');
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        function quickModerationCheck(content) {
+            const lowerContent = content.toLowerCase();
+
+            const blockedWords = [
+                'fuck', 'shit', 'damn', 'bitch', 'bastard', 'asshole',
+                'nigger', 'faggot', 'tranny', 'retard', 'cunt',
+                'kike', 'spic', 'chink', 'gook', 'raghead',
+                'terrorist', 'jihadist', 'extremist', 'radical',
+                'kill', 'murder', 'suicide', 'bomb', 'explode',
+                'rape', 'molest', 'pedophile'
+            ];
+
+            for (const word of blockedWords) {
+                if (lowerContent.includes(word)) {
+                    return `Content contains inappropriate language: "${word}"`;
+                }
+            }
+
+            return null;
+        }
+
+        async function moderateWithOpenAI(content) {
+            try {
+                const response = await fetch('https://api.openai.com/v1/moderations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${OPENAI_API_KEY}`
+                    },
+                    body: JSON.stringify({ input: content })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    console.warn('OpenAI API error:', error);
+                    return null;
+                }
+
+                const data = await response.json();
+                const result = data.results[0];
+
+                if (result.flagged) {
+                    const categories = result.categories;
+                    const flaggedCategories = Object.keys(categories).filter(key => categories[key] === true);
+                    return {
+                        approved: false,
+                        reason: `Content flagged for: ${flaggedCategories.join(', ')}`
+                    };
+                }
+
+                return { approved: true, reason: 'Content approved' };
+
+            } catch (error) {
+                console.warn('OpenAI moderation failed:', error);
+                return null;
+            }
+        }
+
+        async function moderateContent(content) {
+            // Step 1: Quick keyword check
+            const quickResult = quickModerationCheck(content);
+            if (quickResult) {
+                return { approved: false, reason: quickResult };
+            }
+
+            // Step 2: OpenAI moderation (if enabled)
+            if (USE_OPENAI && OPENAI_API_KEY && OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY_HERE') {
+                const openAIResult = await moderateWithOpenAI(content);
+                if (openAIResult && !openAIResult.approved) {
+                    return openAIResult;
+                }
+                if (openAIResult && openAIResult.approved) {
+                    return { approved: true, reason: 'Content approved by OpenAI' };
+                }
+            }
+
+            // Step 3: Fallback - additional checks
+            const lowerContent = content.toLowerCase();
+
+            // Check for anti-Islamic content
+            const unIslamicPatterns = [
+                'islam is false', 'prophet muhammad is', 'quran is wrong',
+                'drinking wine', 'eating pork', 'gambling is fun',
+                'zina is okay', 'adultery is fine'
+            ];
+
+            for (const pattern of unIslamicPatterns) {
+                if (lowerContent.includes(pattern)) {
+                    return {
+                        approved: false,
+                        reason: 'Content does not align with Islamic values'
+                    };
+                }
+            }
+
+            // Check content length
+            if (content.trim().length < 3) {
+                return {
+                    approved: false,
+                    reason: 'Content is too short to be meaningful'
+                };
+            }
+
+            return { approved: true, reason: 'Content passed moderation' };
+        }
+
+        // ============================================================
+        // ========== NAVIGATION ==========
+        // ============================================================
+        const screens = {
+            dashboard: document.getElementById('screen-dashboard'),
+            mentor: document.getElementById('screen-mentor'),
+            discover: document.getElementById('screen-discover'),
+            feed: document.getElementById('screen-feed'),
+            profile: document.getElementById('screen-profile'),
+        };
+
+        const navItems = document.querySelectorAll('.nav-item');
+        const bottomNavItems = document.querySelectorAll('.bn-item');
+
+        function navigateTo(screenId) {
+            Object.values(screens).forEach(s => s.classList.remove('active'));
+            const target = screens[screenId];
+            if (target) {
+                target.classList.add('active');
+                target.style.animation = 'none';
+                requestAnimationFrame(() => {
+                    target.style.animation = 'fadeUp 0.4s ease';
+                });
+            }
+            navItems.forEach(n => n.classList.remove('active'));
+            navItems.forEach(n => {
+                if (n.dataset.screen === screenId) n.classList.add('active');
+            });
+            bottomNavItems.forEach(n => n.classList.remove('active'));
+            bottomNavItems.forEach(n => {
+                if (n.dataset.screen === screenId) n.classList.add('active');
+            });
+            document.getElementById('screenContainer').scrollTop = 0;
+        }
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const screen = item.dataset.screen;
+                if (screen) navigateTo(screen);
+            });
+        });
+
+        bottomNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const screen = item.dataset.screen;
+                if (screen) navigateTo(screen);
+            });
+        });
+
+        // ========== ONBOARDING INTERACTIONS ==========
+        document.querySelectorAll('.radio-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                const parent = this.closest('.radio-grid');
+                parent.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        document.querySelectorAll('.checkbox-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+        });
+
+        // ========== AUTH FUNCTIONS ==========
+        const authScreen = document.getElementById('authScreen');
+        const authStep = document.getElementById('authStep');
+        const onboardingStep = document.getElementById('onboardingStep');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authForms = {
+            signin: document.getElementById('signInForm'),
+            register: document.getElementById('registerForm'),
+        };
+        const authError = document.getElementById('authError');
+
+        function showAuthTab(which) {
+            authError.classList.remove('show');
+            authError.textContent = '';
+            authTabs.forEach(t => t.classList.toggle('active', t.dataset.auth === which));
+            Object.entries(authForms).forEach(([key, form]) => form.classList.toggle('active', key === which));
+        }
+
+        function showAuthStep() {
+            authStep.classList.add('active');
+            onboardingStep.classList.remove('active');
+        }
+
+        function showOnboardingStep() {
+            authStep.classList.remove('active');
+            onboardingStep.classList.add('active');
+        }
+
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => showAuthTab(tab.dataset.auth));
+        });
+
+        document.querySelectorAll('.auth-switch a[data-auth]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showAuthTab(link.dataset.auth);
+            });
+        });
+
+        function getInitials(name) {
+            const parts = name.trim().split(/\s+/).filter(Boolean);
+            if (parts.length === 0) return '?';
+            if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+            return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        }
+
+        function applyProfileToUI(profile) {
+            const name = profile.full_name || 'Friend';
+            const initials = getInitials(name);
+            const firstName = name.split(/\s+/)[0];
+            document.getElementById('greetingName').textContent = firstName;
+            document.getElementById('dashName').textContent = firstName;
+            document.getElementById('topbarAvatar').textContent = initials;
+            document.getElementById('profileAvatar').textContent = initials;
+            document.getElementById('profileName').textContent = name;
+            document.getElementById('feedUserAvatar').textContent = initials;
+            if (profile.location) {
+                document.getElementById('profileLoc').textContent = profile.location;
+            }
+            currentProfile = profile;
+        }
+
+        function enterApp() {
+            document.body.classList.add('authenticated');
+            navigateTo('dashboard');
+            loadFeed();
+        }
+
+        function showAuthError(message) {
+            authError.textContent = message;
+            authError.classList.add('show');
+        }
+
+        let pendingUserId = null;
+
+        // Sign In
+        async function handleSignIn() {
+            const email = document.getElementById('signInEmail').value.trim();
+            const password = document.getElementById('signInPassword').value;
+            if (!email || !password) {
+                showAuthError('Please enter your email and password.');
+                return;
+            }
+
+            const { data, error } = await sb.auth.signInWithPassword({ email, password });
+            if (error) {
+                showAuthError(error.message);
+                return;
+            }
+
+            currentUser = data.user;
+            const { data: profile } = await sb
+                .from('profiles')
+                .select('*')
+                .eq('id', data.user.id)
+                .single();
+
+            if (profile) {
+                applyProfileToUI(profile);
+                currentProfile = profile;
+            }
+            enterApp();
+        }
+        document.getElementById('signInSubmit').addEventListener('click', handleSignIn);
+        ['signInEmail', 'signInPassword'].forEach(id => {
+            document.getElementById(id).addEventListener('keydown', e => {
+                if (e.key === 'Enter') { e.preventDefault(); handleSignIn(); }
+            });
+        });
+
+        // Register
+        async function handleRegisterContinue() {
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+
+            if (!name || !email || !password) {
+                showAuthError('Please fill in your name, email, and password.');
+                return;
+            }
+
+            const { data, error } = await sb.auth.signUp({ email, password });
+            if (error) {
+                showAuthError(error.message);
+                return;
+            }
+
+            pendingUserId = data.user.id;
+            currentUser = data.user;
+            window.__pendingName = name;
+            showOnboardingStep();
+        }
+        document.getElementById('registerContinue').addEventListener('click', handleRegisterContinue);
+        ['regName', 'regEmail', 'regPassword'].forEach(id => {
+            document.getElementById(id).addEventListener('keydown', e => {
+                if (e.key === 'Enter') { e.preventDefault(); handleRegisterContinue(); }
+            });
+        });
+
+        // Onboarding Finish
+        document.getElementById('onboardingFinish').addEventListener('click', async function() {
+            const name = window.__pendingName || 'Friend';
+            const purposeEl = document.querySelector('#purposeGroup .radio-option.selected');
+            const purpose = purposeEl ? purposeEl.dataset.value : null;
+            const locationSelect = document.getElementById('regLocation');
+            const locationText = locationSelect.options[locationSelect.selectedIndex].textContent.trim();
+            const interests = [];
+            document.querySelectorAll('#interestsGroup .checkbox-option.selected').forEach(el => {
+                interests.push(el.textContent.trim());
+            });
+
+            const btn = this;
+            const origLabel = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = 'Saving…';
+
+            const { error } = await sb.from('profiles').upsert({
+                id: pendingUserId,
+                full_name: name,
+                location: locationText,
+                purpose: purpose,
+                interests: interests,
+            });
+
+            btn.disabled = false;
+            btn.innerHTML = origLabel;
+
+            if (error) {
+                showAuthStep();
+                showAuthTab('register');
+                showAuthError('Account created, but saving your profile failed: ' + error.message);
+                return;
+            }
+
+            const profile = { full_name: name, location: locationText };
+            applyProfileToUI(profile);
+            currentProfile = profile;
+            enterApp();
+        });
+
+        // Log Out
+        document.getElementById('logoutBtn').addEventListener('click', async function() {
+            await sb.auth.signOut();
+            currentUser = null;
+            currentProfile = null;
+            document.body.classList.remove('authenticated');
+            showAuthStep();
+            showAuthTab('signin');
+            document.getElementById('signInEmail').value = '';
+            document.getElementById('signInPassword').value = '';
+        });
+
+        // Auto sign-in
+        (async function restoreSession() {
+            const { data } = await sb.auth.getSession();
+            if (data.session) {
+                currentUser = data.session.user;
+                const { data: profile } = await sb
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', data.session.user.id)
+                    .single();
+                if (profile) {
+                    applyProfileToUI(profile);
+                    currentProfile = profile;
+                }
+                enterApp();
+            }
+        })();
+
+        // ========== TOGGLE SWITCH ==========
+        function toggleSwitch(el) {
+            el.classList.toggle('on');
+        }
+
+        // ========== TAB SWITCHING (Discover) ==========
+        document.querySelectorAll('.disco-tabs .tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const parent = this.closest('.disco-tabs');
+                parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // ========== CHIP TOGGLE (Discover) ==========
+        document.querySelectorAll('.filter-chips .chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                const parent = this.closest('.filter-chips');
+                parent.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // ========== RSVP / JOIN BUTTON FEEDBACK ==========
+        document.querySelectorAll('.btn-rsvp, .btn-join').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const orig = this.textContent;
+                this.textContent = '✅ Done!';
+                this.style.background = 'var(--teal)';
+                setTimeout(() => {
+                    this.textContent = orig;
+                    this.style.background = '';
+                }, 1200);
+            });
+        });
+
+        // ========== SAVE BUTTON ==========
+        document.querySelectorAll('.btn-save').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const orig = this.textContent;
+                this.textContent = '⭐ Saved';
+                this.style.background = 'var(--gold-pale)';
+                this.style.color = 'var(--gold)';
+                setTimeout(() => {
+                    this.textContent = orig;
+                    this.style.background = '';
+                    this.style.color = '';
+                }, 1200);
+            });
+        });
+
+        // ========== REQUEST CONNECT ==========
+        document.querySelectorAll('.btn-req').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const orig = this.textContent;
+                this.textContent = '✓ Requested';
+                this.style.background = 'var(--teal)';
+                setTimeout(() => {
+                    this.textContent = orig;
+                    this.style.background = '';
+                }, 1400);
+            });
+        });
+
+        // ========== NOTIFY ME ==========
+        document.querySelector('.notify-cta button')?.addEventListener('click', function() {
+            const orig = this.innerHTML;
+            this.innerHTML = '✅ Subscribed!';
+            this.style.background = 'var(--teal)';
+            setTimeout(() => {
+                this.innerHTML = orig;
+                this.style.background = '';
+            }, 1500);
+        });
+
+        // ========== KEYBOARD SHORTCUT ==========
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                navigateTo('dashboard');
+            }
+        });
+
+        // ========== RESPONSIVE ==========
+        function checkBottomNav() {
+            const bottomNav = document.getElementById('bottomNav');
+            if (window.innerWidth <= 1024) {
+                bottomNav.style.display = 'flex';
+            } else {
+                bottomNav.style.display = 'none';
+            }
+        }
+        checkBottomNav();
+        window.addEventListener('resize', checkBottomNav);
+
+        // ========== INIT ==========
+        navigateTo('dashboard');
+
+        // ========== FETCH MOSQUES ==========
+        async function fetchMosques(lat, lon) {
+            const loadingEl = document.getElementById('mosqueLoading');
+            const errorEl = document.getElementById('mosqueError');
+            const noResultsEl = document.getElementById('mosqueNoResults');
+            const mosqueList = document.getElementById('mosqueList');
+
+            loadingEl.style.display = 'flex';
+            errorEl.style.display = 'none';
+            noResultsEl.style.display = 'none';
+
+            const existingRows = mosqueList.querySelectorAll('.mosque-row.dynamic');
+            existingRows.forEach(row => row.remove());
+
+            try {
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const apiUrl = `https://time.now/mosques/api/mosques?lat=${lat}&lon=${lon}&radius=30&limit=5`;
+                const url = proxyUrl + encodeURIComponent(apiUrl);
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                loadingEl.style.display = 'none';
+
+                if (!data || !data.data || data.data.length === 0) {
+                    noResultsEl.style.display = 'flex';
+                    return;
+                }
+
+                const mosques = data.data;
+
+                mosques.forEach((mosque) => {
+                    const row = document.createElement('div');
+                    row.className = 'mosque-row dynamic';
+
+                    const name = mosque.name || 'Unnamed Mosque';
+                    const address = mosque.address || 'Address not available';
+                    const distance = mosque.distance ? `${mosque.distance.toFixed(1)} mi` : 'Distance unknown';
+                    const rating = mosque.rating || 0;
+                    const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+                    const openStatus = mosque.open_now ? '🟢 Open now' : '🔴 Closed';
+
+                    row.innerHTML = `
+                        <div class="mq-icon">🕌</div>
+                        <div class="mq-info">
+                            <h4>${name}</h4>
+                            <div class="mq-detail">
+                                <span class="stars">${stars}</span> ${rating.toFixed(1)} · ${distance} · ${openStatus}
+                                <br><span style="font-size:12px;color:var(--gray-400);">${address}</span>
+                            </div>
+                        </div>
+                        <div class="mq-actions">
+                            <button onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}', '_blank')">Directions</button>
+                            <button onclick="alert('More details for ${name}')">Details</button>
+                        </div>
+                    `;
+
+                    mosqueList.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error('Error fetching mosques:', error);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'flex';
+            }
+        }
+
+        function getUserLocationAndFetchMosques() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        fetchMosques(latitude, longitude);
+                    },
+                    (error) => {
+                        console.warn('Geolocation error:', error);
+                        fetchMosques(41.8781, -87.6298);
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+                );
+            } else {
+                fetchMosques(41.8781, -87.6298);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            getUserLocationAndFetchMosques();
+        });
+
+        const discoverScreen = document.getElementById('screen-discover');
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    if (discoverScreen.classList.contains('active')) {
+                        getUserLocationAndFetchMosques();
+                    }
+                }
+            });
+        });
+        observer.observe(discoverScreen, { attributes: true });
+
+        // ============================================================
+        // ========== COMMUNITY FEED - SUPABASE FUNCTIONS ==========
+        // ============================================================
+
+        async function loadFeed() {
+            const feedContainer = document.getElementById('feedContainer');
+            feedContainer.innerHTML = `
+                <div style="text-align:center;padding:40px;color:var(--gray-500);">
+                    <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i>
+                    <p style="margin-top:10px;">Loading posts...</p>
+                </div>
+            `;
+
+            try {
+                const { data: posts, error } = await sb
+                    .from('posts')
+                    .select(`
+                        *,
+                        profiles:user_id (full_name),
+                        likes (user_id),
+                        comments (
+                            id,
+                            content,
+                            created_at,
+                            user_id,
+                            profiles:user_id (full_name)
+                        )
+                    `)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (!posts || posts.length === 0) {
+                    feedContainer.innerHTML = `
+                        <div style="text-align:center;padding:40px;color:var(--gray-500);">
+                            <i class="fas fa-comments" style="font-size:32px;color:var(--gray-300);"></i>
+                            <p style="margin-top:10px;">No posts yet. Be the first to share!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const { data: userLikes } = await sb
+                    .from('likes')
+                    .select('post_id')
+                    .eq('user_id', currentUser?.id);
+
+                const likedPostIds = new Set(userLikes?.map(l => l.post_id) || []);
+
+                feedContainer.innerHTML = '';
+                posts.forEach(post => {
+                    const postId = post.id;
+                    const authorName = post.profiles?.full_name || 'Unknown User';
+                    const authorInitials = getInitials(authorName);
+                    const likeCount = post.likes?.length || 0;
+                    const isLiked = likedPostIds.has(postId);
+                    const commentCount = post.comments?.length || 0;
+                    const timeAgo = getTimeAgo(post.created_at);
+
+                    let commentsHtml = '';
+                    if (post.comments && post.comments.length > 0) {
+                        post.comments.forEach(comment => {
+                            const commentAuthor = comment.profiles?.full_name || 'Unknown';
+                            commentsHtml += `
+                                <div class="comment">
+                                    <strong>${commentAuthor}:</strong> ${comment.content}
+                                </div>
+                            `;
+                        });
+                    }
+
+                    const feedItem = document.createElement('div');
+                    feedItem.className = 'feed-item';
+                    feedItem.dataset.postId = postId;
+                    feedItem.innerHTML = `
+                        <div class="feed-head">
+                            <div class="fh-left">
+                                <div class="fa">${authorInitials}</div>
+                                <div>
+                                    <div class="fname">${authorName}</div>
+                                    <div class="ftime">${timeAgo}</div>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="moderation-badge approved">✓ Moderated</span>
+                            </div>
+                        </div>
+                        <div class="feed-body">${post.content}</div>
+                        <div class="feed-actions">
+                            <button class="like-btn" data-post-id="${postId}">
+                                <i class="${isLiked ? 'fas' : 'far'} fa-heart" style="${isLiked ? 'color:#e74c3c;' : ''}"></i>
+                                <span class="count">${likeCount}</span>
+                            </button>
+                            <button class="comment-toggle" data-post-id="${postId}">
+                                <i class="fas fa-comment"></i>
+                                <span class="count">${commentCount}</span>
+                            </button>
+                            <button><i class="fas fa-share"></i> <span class="count">0</span></button>
+                        </div>
+                        <div class="feed-comments" id="comments-${postId}" style="${post.comments && post.comments.length > 0 ? '' : 'display:none;'}">
+                            ${commentsHtml}
+                            <div class="comment-input-wrap">
+                                <input type="text" placeholder="Write a comment..." class="comment-input" data-post-id="${postId}" />
+                                <button class="comment-submit" data-post-id="${postId}">Post</button>
+                            </div>
+                        </div>
+                    `;
+
+                    feedContainer.appendChild(feedItem);
+                });
+
+                attachFeedEventListeners();
+
+            } catch (error) {
+                console.error('Error loading feed:', error);
+                feedContainer.innerHTML = `
+                    <div style="text-align:center;padding:40px;color:var(--gray-500);">
+                        <i class="fas fa-exclamation-circle" style="font-size:32px;color:#e74c3c;"></i>
+                        <p style="margin-top:10px;">Failed to load posts. Please try again.</p>
+                        <button onclick="loadFeed()" style="margin-top:10px;padding:8px 24px;background:var(--green);color:#fff;border:none;border-radius:20px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;">Retry</button>
+                    </div>
+                `;
+            }
+        }
+
+        function attachFeedEventListeners() {
+            document.querySelectorAll('.like-btn').forEach(btn => {
+                btn.removeEventListener('click', handleLike);
+                btn.addEventListener('click', handleLike);
+            });
+
+            document.querySelectorAll('.comment-toggle').forEach(btn => {
+                btn.removeEventListener('click', toggleComments);
+                btn.addEventListener('click', toggleComments);
+            });
+
+            document.querySelectorAll('.comment-submit').forEach(btn => {
+                btn.removeEventListener('click', handleCommentSubmit);
+                btn.addEventListener('click', handleCommentSubmit);
+            });
+
+            document.querySelectorAll('.comment-input').forEach(input => {
+                input.removeEventListener('keydown', handleCommentKeydown);
+                input.addEventListener('keydown', handleCommentKeydown);
+            });
+        }
+
+        async function handleLike(e) {
+            const btn = e.currentTarget;
+            const postId = btn.dataset.postId;
+            const icon = btn.querySelector('i');
+            const countSpan = btn.querySelector('.count');
+            const isLiked = icon.classList.contains('fas');
+
+            if (!currentUser) {
+                showModerationToast('Please sign in to like posts.', 'warning');
+                return;
+            }
+
+            try {
+                if (isLiked) {
+                    const { error } = await sb
+                        .from('likes')
+                        .delete()
+                        .eq('post_id', postId)
+                        .eq('user_id', currentUser.id);
+
+                    if (error) throw error;
+
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    icon.style.color = '';
+                    countSpan.textContent = parseInt(countSpan.textContent) - 1;
+
+                } else {
+                    const { error } = await sb
+                        .from('likes')
+                        .insert({ post_id: postId, user_id: currentUser.id });
+
+                    if (error) throw error;
+
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    icon.style.color = '#e74c3c';
+                    countSpan.textContent = parseInt(countSpan.textContent) + 1;
+                }
+            } catch (error) {
+                console.error('Error toggling like:', error);
+                showModerationToast('Failed to update like. Please try again.', 'error');
+            }
+        }
+
+        function toggleComments(e) {
+            const btn = e.currentTarget;
+            const postId = btn.dataset.postId;
+            const commentsDiv = document.getElementById(`comments-${postId}`);
+            if (commentsDiv) {
+                commentsDiv.style.display = commentsDiv.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        async function handleCommentSubmit(e) {
+            const btn = e.currentTarget;
+            const postId = btn.dataset.postId;
+            const input = document.querySelector(`.comment-input[data-post-id="${postId}"]`);
+            const content = input?.value?.trim();
+
+            if (!content) {
+                showModerationToast('Please write a comment.', 'warning');
+                return;
+            }
+
+            if (!currentUser) {
+                showModerationToast('Please sign in to comment.', 'warning');
+                return;
+            }
+
+            const moderationResult = await moderateContent(content);
+            if (!moderationResult.approved) {
+                showModerationToast(`Comment not approved: ${moderationResult.reason}`, 'error', 5000);
+                return;
+            }
+
+            try {
+                const { data, error } = await sb
+                    .from('comments')
+                    .insert({
+                        post_id: postId,
+                        user_id: currentUser.id,
+                        content: content
+                    })
+                    .select(`
+                        *,
+                        profiles:user_id (full_name)
+                    `)
+                    .single();
+
+                if (error) throw error;
+
+                const commentToggle = document.querySelector(`.comment-toggle[data-post-id="${postId}"]`);
+                const countSpan = commentToggle?.querySelector('.count');
+                if (countSpan) {
+                    countSpan.textContent = parseInt(countSpan.textContent) + 1;
+                }
+
+                const commentsDiv = document.getElementById(`comments-${postId}`);
+                if (commentsDiv) {
+                    const commentAuthor = data.profiles?.full_name || 'Unknown';
+                    const commentHtml = `
+                        <div class="comment">
+                            <strong>${commentAuthor}:</strong> ${data.content}
+                        </div>
+                    `;
+                    const inputWrap = commentsDiv.querySelector('.comment-input-wrap');
+                    if (inputWrap) {
+                        inputWrap.insertAdjacentHTML('beforebegin', commentHtml);
+                    } else {
+                        commentsDiv.insertAdjacentHTML('beforeend', commentHtml);
+                    }
+
+                    commentsDiv.style.display = 'block';
+                    input.value = '';
+                    showModerationToast('Comment posted successfully!', 'success');
+                }
+
+            } catch (error) {
+                console.error('Error posting comment:', error);
+                showModerationToast('Failed to post comment. Please try again.', 'error');
+            }
+        }
+
+        function handleCommentKeydown(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const postId = e.currentTarget.dataset.postId;
+                const submitBtn = document.querySelector(`.comment-submit[data-post-id="${postId}"]`);
+                if (submitBtn) {
+                    submitBtn.click();
+                }
+            }
+        }
+
+        // ===== POST NEW POST =====
+        document.getElementById('postSubmitBtn').addEventListener('click', async function() {
+            const input = document.getElementById('postInput');
+            const content = input.value.trim();
+
+            if (!content) {
+                showModerationToast('Please write something to post.', 'warning');
+                return;
+            }
+
+            if (!currentUser) {
+                showModerationToast('Please sign in to post.', 'warning');
+                return;
+            }
+
+            const moderationResult = await moderateContent(content);
+
+            if (!moderationResult.approved) {
+                showModerationToast(`Your post was not approved: ${moderationResult.reason}`, 'error', 6000);
+                return;
+            }
+
+            const btn = this;
+            const origLabel = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Posting...';
+
+            try {
+                const { data, error } = await sb
+                    .from('posts')
+                    .insert({
+                        user_id: currentUser.id,
+                        content: content
+                    })
+                    .select(`
+                        *,
+                        profiles:user_id (full_name)
+                    `)
+                    .single();
+
+                if (error) throw error;
+
+                input.value = '';
+                await loadFeed();
+
+                showModerationToast('Your post has been published! ✓', 'success');
+
+                btn.textContent = '✅ Posted!';
+                btn.style.background = 'var(--teal)';
+                setTimeout(() => {
+                    btn.textContent = origLabel;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error posting:', error);
+                showModerationToast('Failed to post. Please try again.', 'error');
+                btn.textContent = origLabel;
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById('postInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                document.getElementById('postSubmitBtn').click();
+            }
+        });
+
+        function getTimeAgo(timestamp) {
+            const now = new Date();
+            const past = new Date(timestamp);
+            const diffMs = now - past;
+            const diffSec = Math.floor(diffMs / 1000);
+            const diffMin = Math.floor(diffSec / 60);
+            const diffHour = Math.floor(diffMin / 60);
+            const diffDay = Math.floor(diffHour / 24);
+
+            if (diffDay > 0) return `${diffDay}d ago`;
+            if (diffHour > 0) return `${diffHour}h ago`;
+            if (diffMin > 0) return `${diffMin}m ago`;
+            return 'Just now';
+        }
+
+        const feedScreen = document.getElementById('screen-feed');
+        const feedObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    if (feedScreen.classList.contains('active')) {
+                        loadFeed();
+                    }
+                }
+            });
+        });
+        feedObserver.observe(feedScreen, { attributes: true });
+
+        console.log('🌙 Silah — AI-Powered Community Platform loaded.');
+        console.log('AI Moderation:', USE_OPENAI ? 'Enabled (OpenAI)' : 'Disabled');
+        if (USE_OPENAI) {
+            console.log('OpenAI API Key:', OPENAI_API_KEY && OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY_HERE' ? '✓ Configured' : '✗ Not configured');
+        }
+    </script>
+
+</body>
+</html>
