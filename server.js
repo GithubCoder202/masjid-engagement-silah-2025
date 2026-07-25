@@ -1,54 +1,72 @@
-// server.js — tiny local proxy for the mosque finder API
-//
-// Why this exists: the browser blocks direct calls from your page to
-// https://time.now/... because that API doesn't send CORS headers.
-// This server calls the API for you (server-to-server calls aren't
-// subject to CORS) and re-sends the JSON to your page with a
-// permissive CORS header attached.
-//
-// Run it with:  node server.js
-// It listens on http://localhost:3001
+// server.js
+// Silah AI Backend – Uses Google Gemini API
 
-const http = require('http');
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-const PORT = 3001;
-const UPSTREAM = 'https://time.now/mosques/api/mosques';
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-const server = http.createServer(async (req, res) => {
-    const url = new URL(req.url, `http://localhost:${PORT}`);
+// Initialize Gemini with your API key from .env
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-    // Always allow the page to call this server from any origin (incl. file://)
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-    if (req.method === 'OPTIONS') {
-        res.writeHead(204);
-        res.end();
-        return;
-    }
-
-    if (url.pathname !== '/api/mosques') {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Not found' }));
-        return;
-    }
-
+/**
+ * POST /api/chat
+ * Accepts messages and a model type, returns Gemini's response.
+ */
+app.post('/api/chat', async (req, res) => {
     try {
-        const upstreamUrl = `${UPSTREAM}${url.search}`;
-        const upstreamRes = await fetch(upstreamUrl);
-        const body = await upstreamRes.text();
+        const { messages, model } = req.body;
 
-        res.writeHead(upstreamRes.status, { 'Content-Type': 'application/json' });
-        res.end(body);
-    } catch (err) {
-        console.error('Proxy error:', err);
-        res.writeHead(502, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Failed to reach mosque API', details: String(err) }));
+        // Build system prompt based on selected model
+        let systemPrompt = 'You are a helpful Islamic learning assistant.';
+        if (model === 'Quranic Arabic Tutor') {
+            systemPrompt = 'You are an expert tutor in Quranic Arabic. Help users understand grammar, vocabulary, and tafsir.';
+        } else if (model === 'Hadith Expert') {
+            systemPrompt = 'You are a scholar specialising in Hadith. Provide context, authenticity, and explanations.';
+        } else if (model === 'Islamic History Guide') {
+            systemPrompt = 'You are a guide to Islamic history. Offer detailed historical context and timelines.';
+        }
+
+        // Use the Gemini 1.5 Flash model (fast and capable)
+        const geminiModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+        // Convert message history to Gemini's format
+        const history = messages.map(msg => ({
+            role: msg.role === 'user' ? 'user' : 'model',
+            parts: [{ text: msg.content }]
+        }));
+
+        // Start a chat with system instruction embedded in history
+        const chat = geminiModel.startChat({
+            history: [
+                { role: 'user', parts: [{ text: systemPrompt }] },
+                { role: 'model', parts: [{ text: 'Understood. I will follow that guidance.' }] },
+                ...history
+            ],
+            generationConfig: {
+                maxOutputTokens: 800,
+                temperature: 0.7,
+            },
+        });
+
+        // Get the last user message and send it
+        const lastUserMessage = messages[messages.length - 1];
+        const result = await chat.sendMessage(lastUserMessage.content);
+        const responseText = result.response.text();
+
+        res.json({ response: responseText });
+    } catch (error) {
+        console.error('Gemini API error:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 
-server.listen(PORT, () => {
-    console.log(`Mosque API proxy running at http://localhost:${PORT}`);
-    console.log(`Try it: http://localhost:${PORT}/api/mosques?lat=39.174674&lon=-77.149983&radius=30&limit=5`);
+// Start the server
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`✅ Silah AI backend running on port ${PORT}`);
 });
