@@ -1804,6 +1804,7 @@
             background: var(--gray-200);
         }
 
+        /* ========== MOSQUE LIST ========== */
         .mosque-row {
             display: flex;
             align-items: center;
@@ -3340,16 +3341,18 @@
                         </div>
                     </div>
 
-                    <div style="font-weight:600;color:var(--text-primary);margin:20px 0 12px;font-size:15px;">
-                        ═══ MOSQUES NEAR YOU ═══
+                    <!-- MOSQUE SECTION -->
+                    <div style="font-weight:600;color:var(--text-primary);margin:20px 0 12px;font-size:15px;display:flex;align-items:center;justify-content:space-between;">
+                        <span>═══ MOSQUES NEAR YOU ═══</span>
+                        <span id="mosqueLocLabel" style="font-weight:400;font-size:12px;color:var(--text-secondary);"></span>
                     </div>
 
                     <div id="mosqueList">
                         <div class="mosque-row" id="mosqueLoading">
                             <div class="mq-icon">⏳</div>
                             <div class="mq-info">
-                                <h4>Loading mosques...</h4>
-                                <div class="mq-detail">Please wait while we find mosques near you.</div>
+                                <h4>Finding mosques near you…</h4>
+                                <div class="mq-detail">Looking up your location</div>
                             </div>
                         </div>
                         <div class="mosque-row" id="mosqueError" style="display:none;">
@@ -4009,6 +4012,11 @@
 
             if (screenId === 'dashboard') {
                 setTimeout(displayQuranVerse, 200);
+            }
+
+            // Load mosque data if Discover is opened
+            if (screenId === 'discover') {
+                loadMosques();
             }
         }
 
@@ -4953,89 +4961,119 @@
         feedObserver.observe(feedScreen, { attributes: true });
 
         // ============================================================
-        // ========== FETCH MOSQUES ==========
+        // ========== MOSQUE FINDER (via allorigins proxy) ==========
         // ============================================================
-        async function fetchMosques(lat, lon) {
+        const MOSQUE_FALLBACK_LAT = 41.8781;
+        const MOSQUE_FALLBACK_LON = -87.6298;
+
+        function renderMosques(mosques, usedFallback) {
+            const list = document.getElementById('mosqueList');
+            const locLabel = document.getElementById('mosqueLocLabel');
             const loadingEl = document.getElementById('mosqueLoading');
             const errorEl = document.getElementById('mosqueError');
             const noResultsEl = document.getElementById('mosqueNoResults');
-            const mosqueList = document.getElementById('mosqueList');
+
+            if (loadingEl) loadingEl.style.display = 'none';
+            if (errorEl) errorEl.style.display = 'none';
+            if (noResultsEl) noResultsEl.style.display = 'none';
+
+            if (locLabel) {
+                locLabel.textContent = usedFallback ? '📍 Showing results near Chicago, IL' : '📍 Using your location';
+            }
+
+            if (!mosques || mosques.length === 0) {
+                if (noResultsEl) noResultsEl.style.display = 'flex';
+                return;
+            }
+
+            // Remove static loading/error/no-results rows, keep only dynamic ones
+            const dynamicRows = list.querySelectorAll('.mosque-row.dynamic');
+            dynamicRows.forEach(row => row.remove());
+
+            mosques.forEach(m => {
+                const name = (m.name || 'Unnamed mosque').replace(/</g, '&lt;');
+                const address = (m.address || '').replace(/</g, '&lt;');
+                const distance = typeof m.distance_km === 'number' ? `${m.distance_km.toFixed(1)} km away` :
+                    '';
+                const mapsQuery = address ? `${name} ${address}` : name;
+                const directionsUrl =
+                    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
+
+                const row = document.createElement('div');
+                row.className = 'mosque-row dynamic';
+                row.innerHTML = `
+                    <div class="mq-icon">🕌</div>
+                    <div class="mq-info">
+                        <h4>${name}</h4>
+                        <div class="mq-detail">${distance}${distance && address ? ' · ' : ''}${address}</div>
+                    </div>
+                    <div class="mq-actions">
+                        <button onclick="window.open('${directionsUrl}', '_blank')">Directions</button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function renderMosqueError() {
+            const list = document.getElementById('mosqueList');
+            const loadingEl = document.getElementById('mosqueLoading');
+            const errorEl = document.getElementById('mosqueError');
+            const noResultsEl = document.getElementById('mosqueNoResults');
+
+            if (loadingEl) loadingEl.style.display = 'none';
+            if (errorEl) errorEl.style.display = 'flex';
+            if (noResultsEl) noResultsEl.style.display = 'none';
+
+            // Remove any existing dynamic rows
+            const dynamicRows = list.querySelectorAll('.mosque-row.dynamic');
+            dynamicRows.forEach(row => row.remove());
+        }
+
+        async function fetchMosques(lat, lon) {
+            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+            const apiUrl =
+                `https://time.now/mosques/api/mosques?lat=${lat}&lon=${lon}&radius=30&limit=5`;
+            const url = proxyUrl + encodeURIComponent(apiUrl);
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const data = await response.json();
+            return data.data || [];
+        }
+
+        let mosquesLoaded = false;
+
+        function loadMosques() {
+            if (mosquesLoaded) return;
+            mosquesLoaded = true;
+
+            const loadingEl = document.getElementById('mosqueLoading');
+            const errorEl = document.getElementById('mosqueError');
+            const noResultsEl = document.getElementById('mosqueNoResults');
 
             if (loadingEl) loadingEl.style.display = 'flex';
             if (errorEl) errorEl.style.display = 'none';
             if (noResultsEl) noResultsEl.style.display = 'none';
 
-            if (mosqueList) {
-                const existingRows = mosqueList.querySelectorAll('.mosque-row.dynamic');
-                existingRows.forEach(row => row.remove());
-            }
+            const runFetch = (lat, lon, usedFallback) => {
+                fetchMosques(lat, lon)
+                    .then(data => {
+                        renderMosques(data, usedFallback);
+                    })
+                    .catch(err => {
+                        console.error('Mosque fetch error:', err);
+                        renderMosqueError();
+                    });
+            };
 
-            try {
-                const proxyUrl = 'https://api.allorigins.win/raw?url=';
-                const apiUrl =
-                    `https://time.now/mosques/api/mosques?lat=${lat}&lon=${lon}&radius=30&limit=5`;
-                const url = proxyUrl + encodeURIComponent(apiUrl);
-                const response = await fetch(url);
-
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-                const data = await response.json();
-                if (loadingEl) loadingEl.style.display = 'none';
-
-                if (!data || !data.data || data.data.length === 0) {
-                    if (noResultsEl) noResultsEl.style.display = 'flex';
-                    return;
-                }
-
-                const mosques = data.data;
-                mosques.forEach((mosque) => {
-                    if (!mosqueList) return;
-                    const row = document.createElement('div');
-                    row.className = 'mosque-row dynamic';
-                    const name = mosque.name || 'Unnamed Mosque';
-                    const address = mosque.address || 'Address not available';
-                    const distance = mosque.distance ? `${mosque.distance.toFixed(1)} mi` :
-                        'Distance unknown';
-                    const rating = mosque.rating || 0;
-                    const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(
-                    rating));
-                    const openStatus = mosque.open_now ? '🟢 Open now' : '🔴 Closed';
-
-                    row.innerHTML = `
-                                <div class="mq-icon">🕌</div>
-                                <div class="mq-info">
-                                    <h4>${name}</h4>
-                                    <div class="mq-detail">
-                                        <span class="stars">${stars}</span> ${rating.toFixed(1)} · ${distance} · ${openStatus}
-                                        <br><span style="font-size:12px;color:var(--gray-400);">${address}</span>
-                                    </div>
-                                </div>
-                                <div class="mq-actions">
-                                    <button onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}', '_blank')">Directions</button>
-                                    <button onclick="alert('More details for ${name.replace(/'/g, "\\'")}')">Details</button>
-                                </div>
-                            `;
-                    mosqueList.appendChild(row);
-                });
-            } catch (error) {
-                console.error('Error fetching mosques:', error);
-                if (loadingEl) loadingEl.style.display = 'none';
-                if (errorEl) errorEl.style.display = 'flex';
-            }
-        }
-
-        function getUserLocationAndFetchMosques() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        fetchMosques(position.coords.latitude, position.coords.longitude);
-                    },
-                    () => {
-                        fetchMosques(41.8781, -87.6298);
-                    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+                    pos => runFetch(pos.coords.latitude, pos.coords.longitude, false),
+                    () => runFetch(MOSQUE_FALLBACK_LAT, MOSQUE_FALLBACK_LON, true),
+                    { timeout: 6000 }
                 );
             } else {
-                fetchMosques(41.8781, -87.6298);
+                runFetch(MOSQUE_FALLBACK_LAT, MOSQUE_FALLBACK_LON, true);
             }
         }
 
@@ -5062,24 +5100,6 @@
                 btn.style.transform = 'scale(1.2) rotate(90deg)';
                 setTimeout(() => { btn.style.transform = 'scale(1) rotate(0deg)'; }, 300);
             });
-
-            // Fetch mosques on Discover screen activation
-            const discoverScreen = document.getElementById('screen-discover');
-            if (discoverScreen) {
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                            if (discoverScreen.classList.contains('active')) {
-                                getUserLocationAndFetchMosques();
-                            }
-                        }
-                    });
-                });
-                observer.observe(discoverScreen, { attributes: true });
-            }
-
-            // Initial mosque fetch
-            getUserLocationAndFetchMosques();
 
             navigateTo('dashboard');
 
