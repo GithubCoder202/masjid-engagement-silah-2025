@@ -1,4 +1,4 @@
-// server.js – Gemini Chat + Mosque Proxy + Test Route
+// server.js – Gemini AI Only
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -8,21 +8,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Log all requests for debugging
-app.use((req, res, next) => {
-    console.log(`📨 ${req.method} ${req.url}`);
-    next();
-});
-
 // ============================================================
-// TEST ROUTE – to verify server is responding
+// TEST ROUTE – to verify server is running
 // ============================================================
 app.get('/ping', (req, res) => {
-    res.json({ message: 'pong', routes: ['/ping', '/api/chat', '/api/mosques'] });
+    res.json({ message: 'pong', status: 'Gemini server is running' });
 });
 
 // ============================================================
-// GEMINI AI CHAT
+// GEMINI CHAT ENDPOINT
 // ============================================================
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -30,6 +24,7 @@ app.post('/api/chat', async (req, res) => {
     try {
         const { messages, model } = req.body;
 
+        // System prompt based on selected model
         let systemPrompt = 'You are a helpful Islamic learning assistant.';
         if (model === 'Quranic Arabic Tutor') {
             systemPrompt = 'You are an expert tutor in Quranic Arabic. Help users understand grammar, vocabulary, and tafsir.';
@@ -41,6 +36,7 @@ app.post('/api/chat', async (req, res) => {
 
         const geminiModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
+        // Convert message history to Gemini format
         const history = messages.map(msg => ({
             role: msg.role === 'user' ? 'user' : 'model',
             parts: [{ text: msg.content }]
@@ -70,38 +66,11 @@ app.post('/api/chat', async (req, res) => {
 });
 
 // ============================================================
-// MOSQUE PROXY (optional)
-// ============================================================
-app.get('/api/mosques', async (req, res) => {
-    try {
-        const { lat, lon, radius = 30, limit = 5 } = req.query;
-
-        if (!lat || !lon) {
-            return res.status(400).json({ error: 'Missing lat or lon parameters' });
-        }
-
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
-        const apiUrl = `https://time.now/mosques/api/mosques?lat=${lat}&lon=${lon}&radius=${radius}&limit=${limit}`;
-        const url = proxyUrl + encodeURIComponent(apiUrl);
-
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-        const data = await response.json();
-        res.json(data);
-    } catch (error) {
-        console.error('Mosque API error:', error);
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// ============================================================
 // START SERVER
 // ============================================================
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`✅ Silah backend running on port ${PORT}`);
-    console.log(`   📌 GET  /ping          (test)`);
-    console.log(`   📌 POST /api/chat      (Gemini AI)`);
-    console.log(`   📌 GET  /api/mosques   (Mosque finder)`);
+    console.log(`✅ Gemini AI server running on port ${PORT}`);
+    console.log(`   📌 GET  /ping      (test)`);
+    console.log(`   📌 POST /api/chat  (Gemini AI)`);
 });
