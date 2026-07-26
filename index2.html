@@ -5643,11 +5643,8 @@
         // The OpenAI API key lives server-side only (server.js reads it from
         // process.env.OPENAI_API_KEY). The client just calls our own
         // /api/moderate endpoint, same pattern as the mosque proxy below.
-        const MODERATION_ENDPOINT = 'http://localhost:3001/api/moderate';
-
-        // The Learn page "Ask Silah AI" box talks to our own /api/chat
-        // endpoint (server.js -> Gemini), same pattern as moderation/mosques.
-        const AI_CHAT_ENDPOINT = 'http://localhost:3001/api/chat';
+        const MODERATION_ENDPOINT = '/api/moderate';
+        const AI_CHAT_ENDPOINT = '/api/chat';
 
         // ============================================================
         // ========== SUPABASE SETUP ==========
@@ -7265,7 +7262,7 @@
         }
 
         // ========== MOSQUE FINDER (with map) ==========
-        const LOCAL_PROXY = 'http://localhost:3001/api/mosques';
+        const LOCAL_PROXY = '/api/mosques';
         const FALLBACK_PROXY = 'https://api.allorigins.win/raw?url=';
         const UPSTREAM_API = 'https://time.now/mosques/api/mosques';
         const MOSQUE_FALLBACK_LAT = 41.8781;
