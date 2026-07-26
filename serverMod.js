@@ -2,17 +2,26 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from root directory
+app.use(express.static(__dirname));
+
+// Serve index2.html at root route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index2.html'));
+});
+
 // ============================================================
-// TEST ROUTE – to verify server is running
+// UPTIME ROBOT HEALTH CHECK ENDPOINT
 // ============================================================
-app.get('/ping', (req, res) => {
-    res.json({ message: 'pong', status: 'Server is running (Gemini + Mosque proxy)' });
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
 });
 
 // ============================================================
@@ -256,9 +265,10 @@ app.get('/api/mosques', async (req, res) => {
 // ============================================================
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`✅ Merged server running on port ${PORT}`);
-    console.log(`   📌 GET  /ping          (test)`);
-    console.log(`   📌 POST /api/chat      (Gemini AI)`);
-    console.log(`   📌 POST /api/moderate  (OpenAI Moderation proxy)`);
-    console.log(`   📌 GET  /api/mosques   (Mosque proxy with geocoding)`);
+    console.log(`✅ Merged server running on http://localhost:${PORT}`);
+    console.log(`   📌 Web App:    http://localhost:${PORT}`);
+    console.log(`   📌 GET  /api/health   (Uptime Robot)`);
+    console.log(`   📌 POST /api/chat     (Gemini AI)`);
+    console.log(`   📌 POST /api/moderate (OpenAI Moderation)`);
+    console.log(`   📌 GET  /api/mosques  (Mosque proxy)`);
 });
