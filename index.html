@@ -614,6 +614,155 @@
             position: relative;
         }
 
+        /* ===== SEARCH BAR ===== */
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-wrapper .search-icon {
+            position: absolute;
+            left: 14px;
+            color: var(--gray-400);
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .search-wrapper input {
+            padding: 8px 16px 8px 40px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+            transition: var(--transition);
+            width: 200px;
+            outline: none;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1;
+        }
+        .search-wrapper input:focus {
+            border-color: var(--green);
+            background: var(--input-bg);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.1);
+            width: 260px;
+        }
+        .search-wrapper input::placeholder {
+            color: var(--gray-400);
+        }
+
+        /* Search Popup */
+        .search-popup {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            left: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            max-height: 420px;
+            overflow-y: auto;
+            z-index: 200;
+            display: none;
+            animation: fadeUp 0.25s ease;
+            transition: background var(--transition-theme), border-color var(--transition-theme);
+            min-width: 320px;
+        }
+        .search-popup.show {
+            display: block;
+        }
+        .search-popup::-webkit-scrollbar {
+            width: 4px;
+        }
+        .search-popup::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 10px;
+        }
+
+        .search-popup .search-result-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: background 0.15s ease;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        .search-popup .search-result-item:last-child {
+            border-bottom: none;
+        }
+        .search-popup .search-result-item:hover {
+            background: var(--gray-50);
+        }
+        [data-theme="dark"] .search-popup .search-result-item:hover {
+            background: var(--gray-100);
+        }
+        .search-popup .search-result-item .result-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .search-popup .search-result-item .result-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .search-popup .search-result-item .result-info .result-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .search-popup .search-result-item .result-info .result-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .search-popup .search-result-item .result-badge {
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            background: var(--gray-100);
+            color: var(--text-secondary);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .search-popup .search-result-item .result-badge {
+            background: var(--gray-200);
+        }
+        .search-popup .search-empty {
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .search-popup .search-empty i {
+            font-size: 28px;
+            color: var(--gray-300);
+            display: block;
+            margin-bottom: 8px;
+        }
+        .search-popup .search-section-header {
+            padding: 8px 16px 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-400);
+            border-bottom: 1px solid var(--border-light);
+        }
+
         .topbar-right .icon-btn {
             width: 40px;
             height: 40px;
@@ -3487,6 +3636,15 @@
             .topbar {
                 padding: 14px 20px;
             }
+            .search-wrapper input {
+                width: 140px;
+            }
+            .search-wrapper input:focus {
+                width: 180px;
+            }
+            .search-popup {
+                min-width: 260px;
+            }
             .screen-container {
                 padding: 20px;
             }
@@ -3613,6 +3771,23 @@
             .topbar-left .greeting small {
                 font-size: 12px;
                 display: block;
+            }
+            .search-wrapper input {
+                width: 100px;
+                font-size: 12px;
+                padding: 6px 12px 6px 32px;
+            }
+            .search-wrapper input:focus {
+                width: 140px;
+            }
+            .search-wrapper .search-icon {
+                left: 10px;
+                font-size: 12px;
+            }
+            .search-popup {
+                min-width: 220px;
+                right: -10px;
+                left: -10px;
             }
             .topbar-right .icon-btn {
                 width: 32px;
@@ -3831,6 +4006,23 @@
                 font-size: 8px;
                 top: 2px;
                 right: 2px;
+            }
+            .search-wrapper input {
+                width: 70px;
+                font-size: 11px;
+                padding: 4px 8px 4px 28px;
+            }
+            .search-wrapper input:focus {
+                width: 100px;
+            }
+            .search-wrapper .search-icon {
+                left: 8px;
+                font-size: 11px;
+            }
+            .search-popup {
+                min-width: 180px;
+                right: -20px;
+                left: -20px;
             }
             .bottom-nav .bn-item {
                 font-size: 7px;
@@ -4135,6 +4327,17 @@
                     </div>
                 </div>
                 <div class="topbar-right">
+                    <!-- ===== SEARCH BAR ===== -->
+                    <div class="search-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="globalSearchInput" placeholder="Search Silah..." autocomplete="off" />
+                        <div class="search-popup" id="globalSearchPopup">
+                            <div id="searchResultsContainer">
+                                <!-- Results rendered by JS -->
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Bell -->
                     <div style="position:relative;">
                         <button class="icon-btn" id="bellBtn" title="Notifications">
@@ -4175,6 +4378,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Profile avatar -->
                     <div class="profile-avatar-wrapper" id="profileAvatarWrapper">
                         <div class="avatar" id="topbarAvatar">SA</div>
@@ -4830,18 +5034,7 @@
                                 <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
                             </div>
                         </div>
-                        <div class="settings-row">
-                            <div class="sr-left">
-                                <i class="fas fa-database"></i>
-                                <div class="sr-info">
-                                    <h4>Data Usage</h4>
-                                    <p>Manage how your data is used for recommendations.</p>
-                                </div>
-                            </div>
-                            <div class="sr-right">
-                                <button class="btn-sm">Manage</button>
-                            </div>
-                        </div>
+                        <!-- Data Usage row removed as requested -->
                     </div>
 
                     <!-- Language -->
@@ -5091,8 +5284,11 @@
         let allMentors = [];
         let isMentorRegistered = false;
         let currentUserMentorData = null;
+        let searchIndex = [];
 
+        // ============================================================
         // ========== QURAN VERSES ==========
+        // ============================================================
         const quranVerses = [{
             arabic: 'وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ',
             translation: 'And We have certainly made the Quran easy for remembrance, so is there any who will remember?',
@@ -5434,6 +5630,15 @@
                 e.preventDefault();
                 toggleDarkMode();
             }
+            // Cmd+K or Ctrl+K to focus search
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                const searchInput = document.getElementById('globalSearchInput');
+                if (searchInput) {
+                    searchInput.focus();
+                    searchInput.select();
+                }
+            }
         });
 
         // ========== RESPONSIVE BOTTOM NAV ==========
@@ -5504,6 +5709,411 @@
                 if (count === 0) notifBadge.style.display = 'none';
             });
         });
+
+        // ========== SEARCH FUNCTIONALITY ==========
+        function buildSearchIndex() {
+            const index = [];
+
+            // Screen definitions with content to search
+            const screenContent = {
+                dashboard: {
+                    title: 'Dashboard',
+                    icon: 'fa-home',
+                    keywords: ['home', 'welcome', 'assalamu alaikum', 'personalized path', 'for you', 'upcoming',
+                        'quick dua', 'prayer', 'class', 'halaqa', 'mosque', 'mentor'
+                    ],
+                    content: 'Dashboard Home Welcome Assalamu alaikum Personalized path For You Upcoming Quick Dua Prayer Class Halaqa Mosque Mentor'
+                },
+                mentor: {
+                    title: 'My Mentor',
+                    icon: 'fa-handshake',
+                    keywords: ['mentor', 'scholar', 'community', 'find mentor', 'guidance', 'connect', 'fatima',
+                        'omar', 'zainab', 'aisha', 'yusuf', 'sarah', 'quran', 'tajweed', 'arabic', 'fiqh', 'hadith',
+                        'seerah', 'dua', 'family'
+                    ],
+                    content: 'My Mentor Find a Mentor Scholar Community Guidance Connect Fatima Omar Zainab Aisha Yusuf Sarah Quran Tajweed Arabic Fiqh Hadith Seerah Dua Family'
+                },
+                discover: {
+                    title: 'Discover',
+                    icon: 'fa-compass',
+                    keywords: ['discover', 'events', 'mosques', 'near you', 'new muslim essentials', 'community iftar',
+                        'islamic center', 'masjid al-noor', 'chicago'
+                    ],
+                    content: 'Discover Events Mosques Near You New Muslim Essentials Community Iftar Islamic Center Masjid Al-Noor Chicago'
+                },
+                feed: {
+                    title: 'Community',
+                    icon: 'fa-comments',
+                    keywords: ['feed', 'community', 'posts', 'discussion', 'share', 'thoughts', 'ai moderation'],
+                    content: 'Community Feed Posts Discussion Share Thoughts AI Moderation'
+                },
+                learn: {
+                    title: 'Learn',
+                    icon: 'fa-graduation-cap',
+                    keywords: ['learn', 'islam', 'ask', 'question', 'shahada', 'wudu', 'salah', 'ramadan', 'patience',
+                        'articles', 'quran', 'five pillars'
+                    ],
+                    content: 'Learn Islam Ask Question Shahada Wudu Salah Ramadan Patience Articles Quran Five Pillars'
+                },
+                profile: {
+                    title: 'Profile',
+                    icon: 'fa-user',
+                    keywords: ['profile', 'journey', 'milestones', 'shahada', 'jummah', 'surahs', 'mentor',
+                        'community', 'settings'
+                    ],
+                    content: 'Profile Journey Milestones Shahada Jummah Surahs Mentor Community Settings'
+                },
+                settings: {
+                    title: 'Settings',
+                    icon: 'fa-cog',
+                    keywords: ['settings', 'appearance', 'dark mode', 'notifications', 'privacy', 'language',
+                        'account', 'password', 'download data', 'delete account'
+                    ],
+                    content: 'Settings Appearance Dark Mode Notifications Privacy Language Account Password Download Data Delete Account'
+                },
+                pillars: {
+                    title: 'Five Pillars',
+                    icon: 'fa-star',
+                    keywords: ['pillars', 'shahada', 'salah', 'zakat', 'sawm', 'hajj', 'faith', 'prayer', 'charity',
+                        'fasting', 'pilgrimage', 'islam'
+                    ],
+                    content: 'Five Pillars Shahada Salah Zakat Sawm Hajj Faith Prayer Charity Fasting Pilgrimage Islam'
+                },
+                'ai-model': {
+                    title: 'AI Model Hub',
+                    icon: 'fa-robot',
+                    keywords: ['ai', 'model', 'tutor', 'assistant', 'quranic arabic', 'hadith', 'history',
+                        'conversation', 'chat'
+                    ],
+                    content: 'AI Model Hub Tutor Assistant Quranic Arabic Hadith History Conversation Chat'
+                }
+            };
+
+            // Add static screen content
+            for (const [screenId, data] of Object.entries(screenContent)) {
+                index.push({
+                    id: screenId,
+                    title: data.title,
+                    icon: data.icon,
+                    screen: screenId,
+                    type: 'page',
+                    keywords: data.keywords.join(' '),
+                    content: data.content,
+                    score: 0
+                });
+            }
+
+            // Add mentors (will be updated dynamically)
+            allMentors.forEach(mentor => {
+                const name = mentor.full_name || 'Unknown';
+                const bio = mentor.bio || '';
+                const expertise = mentor.expertise || '';
+                const credentials = mentor.credentials || '';
+                const location = mentor.location || '';
+                const isVerified = mentor.verified ? 'verified scholar' : 'community member';
+                index.push({
+                    id: 'mentor-' + (mentor.id || Math.random().toString(36).substr(2, 6)),
+                    title: name,
+                    icon: 'fa-user-graduate',
+                    screen: 'mentor',
+                    type: 'mentor',
+                    keywords: `${name} ${bio} ${expertise} ${credentials} ${location} ${isVerified}`,
+                    content: `${bio} ${credentials} ${expertise} ${location}`,
+                    score: 0,
+                    mentorData: mentor
+                });
+            });
+
+            // Add articles (will be updated dynamically)
+            const articleData = [
+                { title: 'Understanding the Meaning of Shahada', source: 'Islamic Center of America',
+                    excerpt: 'The Shahada is the declaration of faith that distinguishes a Muslim.', tags: ['Shahada',
+                        'Faith', 'Belief'
+                    ] },
+                { title: 'Step-by-Step Guide to Performing Wudu', source: 'Islamic Relief',
+                    excerpt: 'Learn the proper way to perform Wudu (ablution).', tags: ['Wudu', 'Purification',
+                        'Prayer'
+                    ] },
+                { title: 'The Importance of Salah in Daily Life', source: 'Yaqeen Institute',
+                    excerpt: 'Discover how the five daily prayers can transform your life.', tags: ['Salah', 'Prayer',
+                        'Spirituality'
+                    ] },
+                { title: 'Zakat: Purifying Your Wealth', source: 'Muslim Hands',
+                    excerpt: 'Zakat is not just charity—it\'s a right of the poor.', tags: ['Zakat', 'Charity',
+                        'Wealth'
+                    ] },
+                { title: 'Fasting in Ramadan: A Spiritual Journey', source: 'Islamic Relief',
+                    excerpt: 'Fasting in Ramadan is a time of spiritual reflection.', tags: ['Ramadan', 'Fasting',
+                        'Sawm'
+                    ] },
+                { title: 'The Rituals of Hajj: A Guide for Pilgrims', source: 'Ministry of Hajj',
+                    excerpt: 'Hajj is the pilgrimage to Mecca, required of every able Muslim.', tags: ['Hajj',
+                        'Pilgrimage', 'Mecca'
+                    ] }
+            ];
+
+            articleData.forEach((article, i) => {
+                const tagString = article.tags.join(' ');
+                index.push({
+                    id: 'article-' + (i + 1),
+                    title: article.title,
+                    icon: 'fa-book-open',
+                    screen: 'learn',
+                    type: 'article',
+                    keywords: `${article.title} ${article.excerpt} ${tagString} ${article.source}`,
+                    content: `${article.excerpt} ${tagString} ${article.source}`,
+                    score: 0,
+                    articleData: article
+                });
+            });
+
+            // Add events
+            const eventData = [
+                { name: 'New Muslim Essentials', location: 'Islamic Center of Chicago', time: 'Wed 7PM',
+                    description: 'Beginner class for new Muslims' },
+                { name: 'Community Iftar & Dinner', location: 'Masjid Al-Noor', time: 'Fri 6:30PM',
+                    description: 'Community dinner during Ramadan' },
+                { name: 'Sister\'s Halaqa Circle', location: 'Weekly', time: 'Sat 10AM',
+                    description: 'Women\'s study circle' },
+                { name: 'Open Mosque Day', location: 'Various locations', time: 'This Sunday 2PM',
+                    description: 'Open house at local mosques' }
+            ];
+
+            eventData.forEach((event, i) => {
+                index.push({
+                    id: 'event-' + (i + 1),
+                    title: event.name,
+                    icon: 'fa-calendar-check',
+                    screen: 'discover',
+                    type: 'event',
+                    keywords: `${event.name} ${event.location} ${event.time} ${event.description}`,
+                    content: `${event.location} ${event.time} ${event.description}`,
+                    score: 0,
+                    eventData: event
+                });
+            });
+
+            // Add pillars
+            const pillarData = [
+                { name: 'Shahada', desc: 'Declaration of faith' },
+                { name: 'Salah', desc: 'Five daily prayers' },
+                { name: 'Zakat', desc: 'Obligatory charity' },
+                { name: 'Sawm', desc: 'Fasting during Ramadan' },
+                { name: 'Hajj', desc: 'Pilgrimage to Mecca' }
+            ];
+
+            pillarData.forEach((pillar, i) => {
+                index.push({
+                    id: 'pillar-' + (i + 1),
+                    title: pillar.name,
+                    icon: 'fa-star',
+                    screen: 'pillars',
+                    type: 'pillar',
+                    keywords: `${pillar.name} ${pillar.desc} pillar islam`,
+                    content: pillar.desc,
+                    score: 0,
+                    pillarData: pillar
+                });
+            });
+
+            return index;
+        }
+
+        function performSearch(query) {
+            if (!query || query.trim().length < 1) {
+                return [];
+            }
+
+            const q = query.trim().toLowerCase();
+            const results = searchIndex.map(item => {
+                let score = 0;
+                const titleLower = item.title.toLowerCase();
+                const contentLower = item.content.toLowerCase();
+                const keywordsLower = item.keywords.toLowerCase();
+
+                // Exact title match is weighted highest
+                if (titleLower.includes(q)) {
+                    score += 10;
+                    if (titleLower === q) score += 5;
+                }
+
+                // Partial title match
+                if (q.split(' ').every(word => titleLower.includes(word))) {
+                    score += 6;
+                }
+
+                // Keyword matches
+                if (keywordsLower.includes(q)) {
+                    score += 4;
+                }
+
+                // Content matches
+                if (contentLower.includes(q)) {
+                    score += 2;
+                }
+
+                // Individual word matches in content
+                const words = q.split(' ');
+                for (const word of words) {
+                    if (word.length > 1) {
+                        if (contentLower.includes(word)) score += 1;
+                        if (titleLower.includes(word)) score += 2;
+                    }
+                }
+
+                // Boost for exact phrase match in content
+                if (contentLower.includes(q)) {
+                    score += 1;
+                }
+
+                item.score = score;
+                return item;
+            });
+
+            // Filter and sort by score
+            return results
+                .filter(item => item.score > 0)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 12);
+        }
+
+        function renderSearchResults(results) {
+            const container = document.getElementById('searchResultsContainer');
+            const popup = document.getElementById('globalSearchPopup');
+
+            if (!container) return;
+
+            if (results.length === 0) {
+                container.innerHTML = `
+                    <div class="search-empty">
+                        <i class="fas fa-search"></i>
+                        <p>No results found. Try a different search term.</p>
+                        <p style="font-size:12px;margin-top:4px;color:var(--gray-400);">Press ⌘K to search</p>
+                    </div>
+                `;
+                popup.classList.add('show');
+                return;
+            }
+
+            // Group by type
+            const grouped = {};
+            results.forEach(item => {
+                const type = item.type || 'page';
+                if (!grouped[type]) grouped[type] = [];
+                grouped[type].push(item);
+            });
+
+            const typeLabels = {
+                page: 'Pages',
+                mentor: 'Mentors',
+                article: 'Articles',
+                event: 'Events',
+                pillar: 'Pillars'
+            };
+
+            let html = '';
+            for (const [type, items] of Object.entries(grouped)) {
+                const label = typeLabels[type] || type.charAt(0).toUpperCase() + type.slice(1);
+                html += `<div class="search-section-header">${label}</div>`;
+                items.forEach(item => {
+                    const icon = item.icon || 'fa-file';
+                    let desc = '';
+                    if (item.type === 'mentor' && item.mentorData) {
+                        desc = item.mentorData.expertise || 'Mentor';
+                    } else if (item.type === 'article' && item.articleData) {
+                        desc = item.articleData.source || '';
+                    } else if (item.type === 'event' && item.eventData) {
+                        desc = item.eventData.location || '';
+                    } else if (item.type === 'pillar' && item.pillarData) {
+                        desc = item.pillarData.desc || '';
+                    } else {
+                        desc = 'Navigate to ' + item.title;
+                    }
+
+                    html += `
+                        <div class="search-result-item" data-screen="${item.screen}" data-id="${item.id}">
+                            <div class="result-icon"><i class="fas ${icon}"></i></div>
+                            <div class="result-info">
+                                <div class="result-title">${item.title}</div>
+                                <div class="result-desc">${desc}</div>
+                            </div>
+                            <div class="result-badge">${item.screen}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            container.innerHTML = html;
+            popup.classList.add('show');
+
+            // Add click handlers
+            container.querySelectorAll('.search-result-item').forEach(el => {
+                el.addEventListener('click', function() {
+                    const screen = this.dataset.screen;
+                    if (screen && screens[screen]) {
+                        navigateTo(screen);
+                        const popup = document.getElementById('globalSearchPopup');
+                        popup.classList.remove('show');
+                        document.getElementById('globalSearchInput').value = '';
+                    }
+                });
+            });
+        }
+
+        function setupSearch() {
+            const input = document.getElementById('globalSearchInput');
+            const popup = document.getElementById('globalSearchPopup');
+
+            if (!input) return;
+
+            // Build initial search index
+            searchIndex = buildSearchIndex();
+
+            input.addEventListener('input', function(e) {
+                const query = this.value.trim();
+                if (query.length === 0) {
+                    popup.classList.remove('show');
+                    return;
+                }
+                const results = performSearch(query);
+                renderSearchResults(results);
+            });
+
+            input.addEventListener('focus', function() {
+                const query = this.value.trim();
+                if (query.length > 0) {
+                    const results = performSearch(query);
+                    renderSearchResults(results);
+                } else {
+                    // Show some popular results on focus
+                    const results = performSearch('mentor');
+                    if (results.length > 0) {
+                        renderSearchResults(results);
+                    }
+                }
+            });
+
+            // Close popup on outside click
+            document.addEventListener('click', function(e) {
+                const wrapper = e.target.closest('.search-wrapper');
+                if (!wrapper) {
+                    popup.classList.remove('show');
+                }
+            });
+
+            // Close on Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    popup.classList.remove('show');
+                    input.blur();
+                }
+            });
+        }
+
+        // Rebuild search index when mentors load
+        function rebuildSearchIndex() {
+            searchIndex = buildSearchIndex();
+        }
 
         // ========== AI MODERATION FUNCTIONS ==========
         function showModerationToast(message, type = 'info', duration = 5000) {
@@ -5884,6 +6494,7 @@
             if (document.getElementById('screen-feed').classList.contains('active')) {
                 loadFeed();
             }
+            setupSearch();
         }
 
         // ========== CHECK MENTOR STATUS ==========
@@ -5918,6 +6529,7 @@
                     currentUserMentorData = null;
                 }
                 renderMyMentorProfile();
+                rebuildSearchIndex();
             } catch (e) {
                 console.warn('Error checking mentor status:', e);
             }
@@ -6139,6 +6751,7 @@
             allMentors = mentors;
             applyMentorFilters();
             checkMentorStatus();
+            rebuildSearchIndex();
         }
 
         function applyMentorFilters() {
@@ -7829,6 +8442,7 @@
 
             console.log('🌙 Silah — AI-Powered Community Platform loaded.');
             console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
+            console.log('💡 Tip: Press ⌘K (or Ctrl+K) to focus the search bar!');
             console.log('💡 Click the Silah logo to see the about modal!');
             console.log('AI Moderation:', USE_OPENAI ? 'Enabled (OpenAI)' : 'Disabled');
             if (USE_OPENAI) {
