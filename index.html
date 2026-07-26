@@ -17,6 +17,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
 
+    <!-- Leaflet (mosque map view) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
     <style>
         /* ========== DESIGN SYSTEM ========== */
         :root {
@@ -1825,6 +1829,126 @@
             background: var(--gray-200);
         }
 
+        /* ========== MOSQUE MAP VIEW ========== */
+        #mosqueMapContainer {
+            position: relative;
+            width: 100%;
+            height: 360px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            background: var(--gray-100);
+            transition: background var(--transition-theme);
+        }
+        .mosque-map {
+            width: 100%;
+            height: 100%;
+        }
+        .mosque-map-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+            padding: 24px;
+            background: var(--card-bg);
+            transition: background var(--transition-theme);
+        }
+        .mosque-map-overlay .mq-icon {
+            font-size: 26px;
+            color: var(--gold);
+        }
+        .mosque-map-overlay h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .mosque-map-overlay .mq-detail {
+            font-size: 13px;
+            color: var(--text-secondary);
+            max-width: 240px;
+        }
+
+        /* Custom marker pins */
+        .marker-pin {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--gold);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            line-height: 1;
+        }
+        .marker-pin.user-pin {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #fff;
+            background: var(--green);
+            box-shadow: 0 0 0 5px rgba(26, 107, 79, 0.22), var(--shadow-md);
+        }
+
+        /* Popup styling to match app look */
+        .leaflet-popup-content-wrapper {
+            border-radius: var(--radius-sm);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-md);
+        }
+        .leaflet-popup-tip {
+            background: var(--card-bg);
+        }
+        .mq-popup h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+        .mq-popup .mq-detail {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .mq-popup button {
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            background: var(--green);
+            color: #fff;
+        }
+
+        .mosque-map-banner {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 500;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-md);
+            white-space: nowrap;
+        }
+
+        /* Dim the tile layer a touch in dark mode so it doesn't glare */
+        [data-theme="dark"] .mosque-map .leaflet-tile-pane {
+            filter: brightness(0.8) invert(1) contrast(0.9) hue-rotate(180deg) saturate(0.6);
+        }
+
         /* ========== SCREEN: COMMUNITY FEED ========== */
         .feed-post-box {
             background: var(--card-bg);
@@ -2521,7 +2645,7 @@
             padding-left: 14px;
         }
 
-        /* ========== SCREEN: AI MODEL HUB (TutorHub Inspired) ========== */
+        /* ========== SCREEN: AI MODEL HUB ========== */
         .ai-container {
             display: flex;
             gap: 24px;
@@ -3705,6 +3829,7 @@
                         <span id="mosqueLocLabel" style="font-weight:400;font-size:12px;color:var(--text-secondary);"></span>
                     </div>
 
+                    <!-- List View -->
                     <div id="mosqueList">
                         <div class="mosque-row" id="mosqueLoading">
                             <div class="mq-icon">⏳</div>
@@ -3726,6 +3851,23 @@
                                 <h4>No mosques found nearby</h4>
                                 <div class="mq-detail">Try expanding your search radius or check back later.</div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Map View -->
+                    <div id="mosqueMapContainer" style="display:none;">
+                        <div id="mosqueMap" class="mosque-map"></div>
+                        <div class="mosque-map-overlay" id="mosqueMapLoading">
+                            <div class="mq-icon">⏳</div>
+                            <h4>Finding mosques near you…</h4>
+                        </div>
+                        <div class="mosque-map-overlay" id="mosqueMapError" style="display:none;">
+                            <div class="mq-icon">⚠️</div>
+                            <h4>Unable to load mosques</h4>
+                            <div class="mq-detail">Could not fetch mosque data. Please try again later.</div>
+                        </div>
+                        <div class="mosque-map-banner" id="mosqueMapNoResultsBanner" style="display:none;">
+                            🕌 No mosques found nearby — showing your location
                         </div>
                     </div>
                 </div>
@@ -4465,7 +4607,7 @@
             });
         });
 
-        // Tab switching (Discover)
+        // Tab switching (Discover: List View / Map View)
         document.querySelectorAll('.disco-tabs .tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 const parent = this.closest('.disco-tabs');
@@ -4473,6 +4615,20 @@
                     parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 }
                 this.classList.add('active');
+
+                const isMapView = this.textContent.includes('Map');
+                const listEl = document.getElementById('mosqueList');
+                const mapContainerEl = document.getElementById('mosqueMapContainer');
+                if (!listEl || !mapContainerEl) return;
+
+                if (isMapView) {
+                    listEl.style.display = 'none';
+                    mapContainerEl.style.display = 'block';
+                    showMosqueMapView();
+                } else {
+                    listEl.style.display = '';
+                    mapContainerEl.style.display = 'none';
+                }
             });
         });
 
@@ -5581,22 +5737,18 @@
         feedObserver.observe(feedScreen, { attributes: true });
 
         // ============================================================
-        // ========== MOSQUE FINDER — unified proxy approach ==========
-        // ============================================================
-        // We use a local Node.js proxy (server.js) that adds geocoding enrichment.
-        // If the local proxy is not running, we gracefully fall back to the
-        // allorigins.win proxy (which lacks geocoding but still works).
+        // ========== MOSQUE FINDER (via local proxy + fallback) ==========
         // ============================================================
         const LOCAL_PROXY = 'http://localhost:3001/api/mosques';
         const FALLBACK_PROXY = 'https://api.allorigins.win/raw?url=';
         const UPSTREAM_API = 'https://time.now/mosques/api/mosques';
-        const MOSQUE_FALLBACK_LAT = 41.8781;
-        const MOSQUE_FALLBACK_LON = -87.6298;
+        const MOSQUE_FALLBACK_LAT = 39.174674;
+        const MOSQUE_FALLBACK_LON = -77.149983;
 
+        let useLocalProxy = true;
         let mosquesLoaded = false;
-        let useLocalProxy = true; // start by trying local
 
-        function renderMosques(mosques, usedFallback) {
+        function renderMosques(mosques, usedFallback, lat, lon) {
             const list = document.getElementById('mosqueList');
             const locLabel = document.getElementById('mosqueLocLabel');
             const loadingEl = document.getElementById('mosqueLoading');
@@ -5608,11 +5760,12 @@
             if (noResultsEl) noResultsEl.style.display = 'none';
 
             if (locLabel) {
-                locLabel.textContent = usedFallback ? '📍 Showing results near Chicago, IL' : '📍 Using your location';
+                locLabel.textContent = usedFallback ? '📍 Showing results near Gaithersburg, MD' : '📍 Using your location';
             }
 
             if (!mosques || mosques.length === 0) {
                 if (noResultsEl) noResultsEl.style.display = 'flex';
+                updateMosqueMap('empty', [], usedFallback, lat, lon);
                 return;
             }
 
@@ -5643,6 +5796,8 @@
                 `;
                 list.appendChild(row);
             });
+
+            updateMosqueMap('success', mosques, usedFallback, lat, lon);
         }
 
         function renderMosqueError() {
@@ -5657,11 +5812,12 @@
 
             const dynamicRows = list.querySelectorAll('.mosque-row.dynamic');
             dynamicRows.forEach(row => row.remove());
+
+            updateMosqueMap('error');
         }
 
         async function fetchMosquesViaLocalProxy(lat, lon) {
-            const url =
-                `${LOCAL_PROXY}?lat=${lat}&lon=${lon}&radius=30&limit=5`;
+            const url = `${LOCAL_PROXY}?lat=${lat}&lon=${lon}&radius=30&limit=5`;
             const res = await fetch(url);
             if (!res.ok) throw new Error(`Local proxy HTTP ${res.status}`);
             const data = await res.json();
@@ -5669,8 +5825,7 @@
         }
 
         async function fetchMosquesViaFallback(lat, lon) {
-            const apiUrl =
-                `${UPSTREAM_API}?lat=${lat}&lon=${lon}&radius=30&limit=5`;
+            const apiUrl = `${UPSTREAM_API}?lat=${lat}&lon=${lon}&radius=30&limit=5`;
             const proxyUrl = FALLBACK_PROXY + encodeURIComponent(apiUrl);
             const res = await fetch(proxyUrl);
             if (!res.ok) throw new Error(`Fallback proxy HTTP ${res.status}`);
@@ -5692,30 +5847,30 @@
             const dynamicRows = list.querySelectorAll('.mosque-row.dynamic');
             dynamicRows.forEach(row => row.remove());
 
+            updateMosqueMap('loading');
+
             const runFetch = async (lat, lon, usedFallback) => {
                 try {
                     let mosques;
                     if (useLocalProxy && !usedFallback) {
                         try {
                             mosques = await fetchMosquesViaLocalProxy(lat, lon);
-                            // If we got data, keep using local proxy
                             if (mosques && mosques.length > 0) {
-                                renderMosques(mosques, false);
+                                renderMosques(mosques, false, lat, lon);
                                 return;
                             }
-                            // If no data from local, fall back immediately
                             useLocalProxy = false;
                             mosques = await fetchMosquesViaFallback(lat, lon);
-                            renderMosques(mosques, true);
+                            renderMosques(mosques, true, lat, lon);
                         } catch (localErr) {
                             console.warn('Local proxy failed, falling back to allorigins:', localErr);
                             useLocalProxy = false;
                             mosques = await fetchMosquesViaFallback(lat, lon);
-                            renderMosques(mosques, true);
+                            renderMosques(mosques, true, lat, lon);
                         }
                     } else {
                         mosques = await fetchMosquesViaFallback(lat, lon);
-                        renderMosques(mosques, true);
+                        renderMosques(mosques, true, lat, lon);
                     }
                 } catch (err) {
                     console.error('Mosque fetch error:', err);
@@ -5738,6 +5893,137 @@
             if (mosquesLoaded) return;
             mosquesLoaded = true;
             loadMosquesWithProxy();
+        }
+
+        // ============================================================
+        // ========== MOSQUE MAP VIEW (Leaflet) ==========
+        // ============================================================
+        let leafletMap = null;
+        let mosqueMarkersLayer = null;
+        let mosqueMapReady = false;
+
+        let mosqueMapState = { status: 'loading', mosques: [], usedFallback: false, lat: null, lon: null };
+
+        function getMosqueCoords(m) {
+            const lat = m.lat ?? m.latitude ?? m.location?.lat ?? m.coords?.lat ?? m.coordinates?.lat;
+            const lon = m.lon ?? m.lng ?? m.longitude ?? m.location?.lon ?? m.location?.lng ??
+                m.coords?.lon ?? m.coords?.lng ?? m.coordinates?.lon ?? m.coordinates?.lng;
+            if (typeof lat === 'number' && typeof lon === 'number') return { lat, lon };
+            return null;
+        }
+
+        function ensureLeafletMap() {
+            if (mosqueMapReady) return;
+            mosqueMapReady = true;
+
+            leafletMap = L.map('mosqueMap', { attributionControl: true }).setView(
+                [MOSQUE_FALLBACK_LAT, MOSQUE_FALLBACK_LON], 12
+            );
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(leafletMap);
+            mosqueMarkersLayer = L.layerGroup().addTo(leafletMap);
+        }
+
+        function setMosqueMapOverlay(which) {
+            const loadingEl = document.getElementById('mosqueMapLoading');
+            const errorEl = document.getElementById('mosqueMapError');
+            const banner = document.getElementById('mosqueMapNoResultsBanner');
+
+            if (loadingEl) loadingEl.style.display = which === 'loading' ? 'flex' : 'none';
+            if (errorEl) errorEl.style.display = which === 'error' ? 'flex' : 'none';
+            if (banner) banner.style.display = which === 'empty' ? 'block' : 'none';
+        }
+
+        function updateMosqueMap(status, mosques, usedFallback, lat, lon) {
+            mosqueMapState = {
+                status,
+                mosques: mosques || mosqueMapState.mosques,
+                usedFallback: usedFallback ?? mosqueMapState.usedFallback,
+                lat: lat ?? mosqueMapState.lat,
+                lon: lon ?? mosqueMapState.lon
+            };
+
+            if (mosqueMapReady) {
+                drawMosqueMap();
+            }
+        }
+
+        function drawMosqueMap() {
+            const { status, mosques, usedFallback, lat, lon } = mosqueMapState;
+
+            if (status === 'loading') {
+                setMosqueMapOverlay('loading');
+                return;
+            }
+            if (status === 'error') {
+                setMosqueMapOverlay('error');
+                return;
+            }
+            if (lat == null || lon == null) return;
+
+            setMosqueMapOverlay(mosques && mosques.length ? null : 'empty');
+            mosqueMarkersLayer.clearLayers();
+
+            const bounds = [[lat, lon]];
+
+            L.marker([lat, lon], {
+                icon: L.divIcon({
+                    className: 'user-marker-icon',
+                    html: '<div class="marker-pin user-pin"></div>',
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 10]
+                })
+            })
+                .addTo(mosqueMarkersLayer)
+                .bindPopup(usedFallback ? 'Approximate location (Gaithersburg, MD)' : 'Your location');
+
+            (mosques || []).forEach(m => {
+                const coords = getMosqueCoords(m);
+                if (!coords) {
+                    console.warn('[mosque debug] no coordinates found for mosque, skipping pin:', m);
+                    return;
+                }
+
+                const name = (m.name || 'Unnamed mosque').replace(/</g, '&lt;');
+                const address = (m.address || '').replace(/</g, '&lt;');
+                const distance = typeof m.distance_km === 'number' ? `${m.distance_km.toFixed(1)} km away` : '';
+                const mapsQuery = address ? `${name} ${address}` : name;
+                const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
+
+                L.marker([coords.lat, coords.lon], {
+                    icon: L.divIcon({
+                        className: 'mosque-marker-icon',
+                        html: '<div class="marker-pin mosque-pin">🕌</div>',
+                        iconSize: [34, 34],
+                        iconAnchor: [17, 34],
+                        popupAnchor: [0, -30]
+                    })
+                })
+                    .addTo(mosqueMarkersLayer)
+                    .bindPopup(`
+                        <div class="mq-popup">
+                            <h4>${name}</h4>
+                            <div class="mq-detail">${distance}${distance && address ? ' · ' : ''}${address}</div>
+                            <button onclick="window.open('${directionsUrl}', '_blank')">Directions</button>
+                        </div>
+                    `);
+
+                bounds.push([coords.lat, coords.lon]);
+            });
+
+            if (bounds.length > 1) {
+                leafletMap.fitBounds(bounds, { padding: [40, 40], maxZoom: 15 });
+            } else {
+                leafletMap.setView([lat, lon], 13);
+            }
+        }
+
+        function showMosqueMapView() {
+            ensureLeafletMap();
+            drawMosqueMap();
+            setTimeout(() => leafletMap && leafletMap.invalidateSize(), 50);
         }
 
         // ============================================================
