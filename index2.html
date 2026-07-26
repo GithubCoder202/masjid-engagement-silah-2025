@@ -1301,9 +1301,10 @@
             position: relative;
             z-index: 1;
             display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            flex-wrap: wrap;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center;    /* Center everything horizontally */
+            justify-content: center;
+            gap: 14px;
         }
 
         .quran-verse-widget .qv-icon-col {
@@ -1327,16 +1328,21 @@
 
         .quran-verse-widget .qv-content {
             flex: 1;
-            min-width: 200px;
+            width: 100%;
+            max-width: 650px; /* Constrains the width so text wraps beautifully */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .quran-verse-widget .qv-arabic {
             font-family: 'Amiri', 'Traditional Arabic', serif;
-            font-size: 26px;
+            font-size: 28px; /* Slightly larger for emphasis */
             line-height: 1.8;
             color: #3d2e0a;
             margin-bottom: 8px;
             direction: rtl;
+            text-align: center; /* Force center alignment */
             font-weight: 700;
             letter-spacing: 1px;
             transition: color var(--transition-theme);
@@ -1351,7 +1357,8 @@
             color: var(--charcoal);
             line-height: 1.6;
             font-style: italic;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            text-align: center; /* Force center alignment */
             transition: color var(--transition-theme);
         }
 
@@ -1364,6 +1371,7 @@
             color: var(--gold);
             font-weight: 600;
             letter-spacing: 0.5px;
+            text-align: center; /* Force center alignment */
         }
 
         .quran-verse-widget .qv-refresh {
@@ -1389,6 +1397,136 @@
             background: var(--gold-pale);
             border-color: var(--gold);
             transform: rotate(60deg);
+        }
+
+        /* ========== PRAYER TRACKER ========== */
+        .prayer-tracker-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .prayer-box {
+            flex: 1;
+            min-width: 60px;
+            background: var(--gray-50);
+            border: 2px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            padding: 16px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+        [data-theme="dark"] .prayer-box {
+            background: var(--input-bg);
+            border-color: var(--border-light);
+        }
+        .prayer-box:hover {
+            border-color: var(--green-light);
+            transform: translateY(-2px);
+        }
+        .prayer-box.completed {
+            background: var(--green-pale);
+            border-color: var(--green);
+            color: var(--green-dark);
+        }
+        [data-theme="dark"] .prayer-box.completed {
+            background: var(--green-dark);
+            border-color: var(--green);
+            color: #fff;
+        }
+        .prayer-box .prayer-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .prayer-box .prayer-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .prayer-box.completed .prayer-time {
+            color: inherit;
+            opacity: 0.8;
+        }
+        .prayer-box .prayer-check {
+            width: 24px; 
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--gray-300);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 12px; 
+            color: transparent;
+            transition: all var(--transition);
+            margin-top: 4px;
+        }
+        .prayer-box.completed .prayer-check {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+
+        /* ========== DAILY INSPIRATION ========== */
+        .name-of-allah {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--border-medium);
+            margin-bottom: 20px;
+        }
+        .name-of-allah h4 {
+            font-family: 'Amiri', 'Traditional Arabic', serif;
+            font-size: 36px;
+            color: var(--gold);
+            font-weight: bold;
+            line-height: 1.2;
+        }
+        .name-of-allah .transliteration {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 8px 0 4px;
+            letter-spacing: 0.5px;
+        }
+        .name-of-allah .meaning {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .daily-hadith-box {
+            position: relative;
+        }
+        .daily-hadith-box::before {
+            content: '"';
+            position: absolute;
+            top: -15px;
+            left: -10px;
+            font-size: 40px;
+            color: var(--green-pale);
+            font-family: serif;
+            z-index: 0;
+        }
+        [data-theme="dark"] .daily-hadith-box::before {
+            color: var(--gray-200);
+        }
+        .daily-hadith-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1;
+        }
+        .daily-hadith-ref {
+            font-size: 12px;
+            color: var(--green);
+            font-weight: 600;
+            margin-top: 12px;
+            text-align: right;
+            letter-spacing: 0.5px;
         }
 
         [data-theme="dark"] .quran-verse-widget .qv-refresh:hover {
@@ -2882,7 +3020,7 @@
             gap: 20px;
         }
         .profile-grid .dash-card {
-            margin-bottom: 0;
+            margin-bottom: 20px; /* Changed from 0 to 20px to add spacing */
         }
 
         .milestone-item {
@@ -4133,6 +4271,118 @@
                 overflow-y: auto;
             }
         }
+
+        /* ========== DIRECT MESSAGING WIDGET ========== */
+        .dm-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 340px;
+            height: 480px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            z-index: 5000;
+            overflow: hidden;
+            border: 1px solid var(--border-medium);
+            animation: fadeUp 0.3s ease;
+        }
+        .dm-header {
+            background: var(--green);
+            color: #fff;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dm-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+        .dm-body {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            background: var(--gray-50);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        [data-theme="dark"] .dm-body {
+            background: var(--card-bg);
+        }
+        .dm-message {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .dm-message.sent {
+            background: var(--green-pale);
+            color: var(--green-dark);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        [data-theme="dark"] .dm-message.sent {
+            background: var(--green-dark);
+            color: #fff;
+        }
+        .dm-message.received {
+            background: #fff;
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        [data-theme="dark"] .dm-message.received {
+            background: var(--gray-100);
+            border-color: var(--border-medium);
+        }
+        .dm-footer {
+            padding: 14px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            gap: 10px;
+        }
+        .dm-footer input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-full);
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+        }
+        .dm-footer input:focus {
+            border-color: var(--green);
+        }
+        .dm-footer button {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .dm-footer button:hover {
+            background: var(--green-dark);
+        }
+        @media (max-width: 600px) {
+            .dm-widget {
+                bottom: 0; right: 0; left: 0;
+                width: 100%; height: 100vh; height: 100dvh;
+                border-radius: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -4212,6 +4462,12 @@
                 <label>Credentials (Optional)</label>
                 <textarea id="mentorCredentials" placeholder="e.g., Ijazah certification, Islamic Studies degree, years of teaching experience..." rows="3"></textarea>
                 <div class="helper">Providing credentials helps our team verify you as a scholar.</div>
+            </div>
+
+            <div class="form-group">
+                <label>Scheduling Link (Optional)</label>
+                <input type="url" id="mentorBookingUrl" class="form-input" placeholder="https://calendly.com/your-link" style="width:100%;padding:10px 14px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);background:var(--input-bg);color:var(--text-primary);outline:none;">
+                <div class="helper">Calendly or Cal.com link for mentees to schedule check-ins with you.</div>
             </div>
 
             <div class="modal-actions">
@@ -4349,6 +4605,16 @@
         </div>
     </div>
 
+    <!-- ========== MENTOR PROFILE MODAL ========== -->
+    <div class="about-overlay" id="mentorProfileOverlay" style="z-index: 4000;">
+        <div class="about-modal" style="max-width: 550px;">
+            <button class="about-close" id="mentorProfileClose">✕</button>
+            <div id="mentorProfileContent">
+                <!-- Dynamic content injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
     <!-- ========== APP ========== -->
     <div class="app" id="app">
 
@@ -4478,19 +4744,24 @@
 
                 <!-- ===== DASHBOARD ===== -->
                 <div class="screen active" id="screen-dashboard">
-                    <div class="dash-welcome">
-                        <h2>👋 Assalamu alaikum, <span id="dashName">Sarah</span>!</h2>
-                        <p>Here's your personalized path for today.</p>
+                    <div class="dash-welcome" style="display:flex; justify-content:space-between; align-items:flex-end;">
+                        <div>
+                            <p id="hijriDateDisplay" style="color:var(--gold); font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Loading date...</p>
+                            <h2>👋 Assalamu alaikum, <span id="dashName">Sarah</span>!</h2>
+                        </div>
                     </div>
 
                     <!-- QURAN VERSE WIDGET -->
-                    <div class="quran-verse-widget" id="quranVerseWidget">
+                    <div class="quran-verse-widget" id="quranVerseWidget" style="display: block !important;">
+                        <div style="text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 10px;">
+                            <i class="fas fa-book-open" style="margin-right: 4px;"></i> Quran Verse of the Day
+                        </div>
                         <div class="qv-inner">
                             <div class="qv-icon-col">📖</div>
                             <div class="qv-content">
-                                <div class="qv-arabic" id="qvArabic">...جاري تحميل الآية</div>
-                                <div class="qv-translation" id="qvTranslation">Loading verse...</div>
-                                <div class="qv-reference" id="qvReference">—</div>
+                                <div class="qv-arabic" id="qvArabic">وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ</div>
+                                <div class="qv-translation" id="qvTranslation">And We have certainly made the Quran easy for remembrance, so is there any who will remember?</div>
+                                <div class="qv-reference" id="qvReference">— Surah Al-Qamar 54:17</div>
                             </div>
                         </div>
                         <button class="qv-refresh" id="qvRefreshBtn" title="Show another verse">
@@ -4498,104 +4769,57 @@
                         </button>
                     </div>
 
-                    <div class="dash-progress">
-                        <div class="prog-left">
-                            <span class="emoji-big">🌱</span>
-                            <div class="prog-text">
-                                <strong>Beginner</strong> · 📍 Chicago · 🎯 8/15 goals
-                            </div>
+                    <!-- PRAYER TRACKER -->
+                    <div class="dash-progress" style="flex-direction: column; align-items: stretch; padding: 24px;">
+                        <div style="display:flex; justify-content: space-between; margin-bottom: 14px;">
+                            <span class="prog-text"><strong id="prayerProgressText">0/5 Prayers Completed</strong></span>
+                            <span class="prog-pct" id="prayerProgressPct">0%</span>
                         </div>
-                        <div class="prog-bar"><div class="fill" style="width:45%"></div></div>
-                        <span class="prog-pct">45%</span>
+                        <div class="prog-bar" style="background:var(--gray-100); height:10px;"><div class="fill" id="prayerProgressBar" style="width:0%"></div></div>
+                        
+                        <div class="prayer-tracker-grid" id="prayerTrackerGrid">
+                            <div style="text-align:center; width:100%; color:var(--gray-400); font-size:13px; padding:10px;"><i class="fas fa-spinner fa-spin"></i> Loading prayer times...</div>
+                        </div>
                     </div>
 
                     <div class="dash-grid">
-                        <div>
-                            <div class="dash-card">
+                        <!-- LEFT COLUMN -->
+                        <div style="display:flex; flex-direction:column; gap:20px;">
+                            <!-- ACTIVE MENTOR COMPONENT (From previous step) -->
+                            <div class="dash-card" id="dashMentorCardPlaceholder">
                                 <div class="card-header">
-                                    <h3>📖 For You</h3>
-                                    <a href="#" onclick="navigateTo('discover');return false;">See all →</a>
+                                    <h3>⭐ Your Active Mentor</h3>
                                 </div>
-
-                                <div class="recommend-item">
-                                    <div class="rec-icon">📖</div>
-                                    <div class="rec-info">
-                                        <h4>Understanding Prayer</h4>
-                                        <p>Beginner Class · Tomorrow 6PM</p>
-                                        <div class="rec-actions">
-                                            <button class="btn-join">Join</button>
-                                            <button class="btn-save">Save</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="recommend-item">
-                                    <div class="rec-icon">🤝</div>
-                                    <div class="rec-info">
-                                        <h4>Sister's Halaqa Circle</h4>
-                                        <p>Weekly · Sat 10AM · 3 spots left</p>
-                                        <div class="rec-actions">
-                                            <button class="btn-join">RSVP</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="recommend-item">
-                                    <div class="rec-icon">🕌</div>
-                                    <div class="rec-info">
-                                        <h4>Open Mosque Day</h4>
-                                        <p>This Sunday · 2PM–6PM</p>
-                                        <div class="rec-actions">
-                                            <button class="btn-join" style="background:var(--teal);color:#fff">Learn More</button>
-                                        </div>
+                                <div class="mentor-card" id="dashMentorCard" style="border:none; padding:0;">
+                                    <div style="width:100%;text-align:center;padding:10px;color:var(--text-secondary);font-size:14px;">
+                                        No active mentorships. <a href="#" onclick="navigateTo('mentor');return false;" style="color:var(--green);font-weight:600;text-decoration:none;">Find a mentor →</a>
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- HADITH OF THE DAY CARD -->
                             <div class="dash-card">
-                                <div class="card-header">
-                                    <h3>⭐ Your Mentor Match</h3>
-                                    <a href="#" onclick="navigateTo('mentor');return false;">Find more →</a>
+                                <div class="card-header" style="border-bottom:1px solid var(--border-light); padding-bottom:12px; margin-bottom:16px;">
+                                    <h3>📜 Hadith of the Day</h3>
+                                    <span style="font-size:11px; background:var(--green-pale); color:var(--green-dark); font-weight:600; padding:3px 8px; border-radius:12px; border:1px solid var(--green-light);">Daily Wisdom</span>
                                 </div>
-
-                                <div class="mentor-card" id="dashMentorCard">
-                                    <div style="width:100%;text-align:center;padding:10px;color:var(--text-secondary);font-size:14px;">
-                                        <i class="fas fa-spinner fa-spin"></i> Loading mentors...
-                                    </div>
-                                </div>
-
-                                <div class="ai-tip">
-                                    <i class="fas fa-robot"></i>
-                                    Based on your goals, I recommend starting with the <strong>"Daily Duas"</strong> class.
+                                <div id="hadithCardContent" style="padding:4px 0;">
+                                    <div style="text-align:center; color:var(--gray-400);"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- RIGHT COLUMN -->
                         <div>
+                            <!-- NAME OF ALLAH CARD -->
                             <div class="dash-card">
-                                <div class="card-header">
-                                    <h3>📅 Upcoming</h3>
-                                    <a href="#" onclick="navigateTo('discover');return false;">View all →</a>
+                                <div class="card-header" style="border-bottom:1px solid var(--border-light); padding-bottom:12px; margin-bottom:16px;">
+                                    <h3>ﷻ Name of Allah</h3>
+                                    <span style="font-size:11px; background:var(--gold-pale); color:var(--gold); font-weight:600; padding:3px 8px; border-radius:12px; border:1px solid var(--gold-light);">99 Names</span>
                                 </div>
-                                <div style="font-size:14px;padding:4px 0;color:var(--text-secondary);border-bottom:1px solid var(--border-light);padding-bottom:10px;">
-                                    <strong style="color:var(--text-primary);">Wed 7PM</strong> — Essentials Class
+                                <div id="allahNameCardContent" style="text-align:center; padding:4px 0;">
+                                    <div style="text-align:center; color:var(--gray-400);"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
                                 </div>
-                                <div style="font-size:14px;padding:4px 0;color:var(--text-secondary);border-bottom:1px solid var(--border-light);padding-bottom:10px;margin-top:6px;">
-                                    <strong style="color:var(--text-primary);">Fri 6PM</strong> — Community Iftar
-                                </div>
-                                <div style="font-size:14px;padding:4px 0;color:var(--text-secondary);margin-top:6px;">
-                                    <strong style="color:var(--text-primary);">Sat 10AM</strong> — Halaqa Circle
-                                </div>
-                            </div>
-
-                            <div class="dash-card">
-                                <div class="card-header">
-                                    <h3>🤲 Quick Dua</h3>
-                                </div>
-                                <div style="font-size:15px;color:var(--text-primary);font-style:italic;line-height:1.8;">
-                                    "Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan waqina azaban-nar."
-                                </div>
-                                <div style="font-size:12px;color:var(--gray-400);margin-top:6px;">— Surah Al-Baqarah 2:201</div>
                             </div>
                         </div>
                     </div>
@@ -4610,6 +4834,33 @@
 
                     <!-- My Mentor Profile (if user is a mentor) -->
                     <div id="myMentorProfileContainer"></div>
+
+                    <!-- 1. Active Mentorship (For Mentees) -->
+                    <div id="activeMentorshipContainer" style="display: none; margin-bottom: 32px;">
+                        <div class="mentor-section-title">
+                            <i class="fas fa-star" style="color:var(--gold);"></i>
+                            Your Active Mentor
+                        </div>
+                        <div id="activeMentorshipCard"></div>
+                    </div>
+
+                    <!-- 2. Pending Requests (For Mentors) -->
+                    <div id="pendingRequestsContainer" style="display: none; margin-bottom: 24px;">
+                        <div class="mentor-section-title">
+                            <i class="fas fa-inbox" style="color:var(--teal);"></i>
+                            Incoming Requests
+                        </div>
+                        <div id="pendingRequestsList"></div>
+                    </div>
+
+                    <!-- 3. Active Mentees (For Mentors) -->
+                    <div id="activeMenteesContainer" style="display: none; margin-bottom: 24px;">
+                        <div class="mentor-section-title">
+                            <i class="fas fa-users" style="color:var(--green);"></i>
+                            My Active Mentees
+                        </div>
+                        <div id="activeMenteesList" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                    </div>
 
                     <!-- Become a Mentor CTA (if user is NOT a mentor) -->
                     <div class="become-mentor-box" id="becomeMentorBox">
@@ -4672,6 +4923,7 @@
                     <div class="mentor-section-desc">
                         These scholars have been verified by our team. They have provided credentials and have demonstrated knowledge in their field.
                     </div>
+
                     <div id="scholarMentorsContainer">
                         <div style="text-align:center;padding:20px;color:var(--text-secondary);">
                             <i class="fas fa-spinner fa-spin"></i> Loading scholars...
@@ -4720,15 +4972,6 @@
                         <button class="tab">🗺️ Map View</button>
                     </div>
 
-                    <div class="disco-search">
-                        <input type="text" placeholder="🔍 Search events, classes, mosques..." />
-                        <div class="filter-chips">
-                            <button class="chip active">📍 Near me</button>
-                            <button class="chip">📅 This week</button>
-                            <button class="chip">🎯 All</button>
-                        </div>
-                    </div>
-
                     <div style="font-weight:600;color:var(--text-primary);margin-bottom:12px;font-size:15px;">
                         ═══ UPCOMING EVENTS ═══
                     </div>
@@ -4737,12 +4980,11 @@
                         <div class="ev-left">
                             <div class="ev-icon">📖</div>
                             <div class="ev-info">
-                                <h4>New Muslim Essentials</h4>
-                                <div class="ev-loc">Islamic Center of Chicago</div>
+                                <h4>Men's Halaqa</h4>
+                                <div class="ev-loc">The Noor Center</div>
                                 <div class="ev-meta">
-                                    <span>🗓 Wed 7PM</span>
+                                    <span>🗓 Aug 4, 7PM</span>
                                     <span>🏷️ Free</span>
-                                    <span class="tag">👥 12 attending · 8 spots left</span>
                                 </div>
                                 <div class="ev-significance">
                                     <i class="fas fa-info-circle"></i>
@@ -4751,7 +4993,7 @@
                             </div>
                         </div>
                         <div class="ev-right">
-                            <button class="btn-rsvp" data-event-id="1">RSVP</button>
+                            <button class="btn-rsvp" data-event-id="1">Attend</button>
                             <button class="btn-share"><i class="fas fa-share-alt"></i></button>
                         </div>
                     </div>
@@ -4760,12 +5002,11 @@
                         <div class="ev-left">
                             <div class="ev-icon">🤝</div>
                             <div class="ev-info">
-                                <h4>Community Iftar &amp; Dinner</h4>
-                                <div class="ev-loc">Masjid Al-Noor</div>
+                                <h4>International Food Festival</h4>
+                                <div class="ev-loc">Islamic Center of Maryland</div>
                                 <div class="ev-meta">
-                                    <span>🗓 Fri 6:30PM</span>
-                                    <span>🏷️ $5 donation</span>
-                                    <span class="tag">👥 45 attending</span>
+                                    <span>🗓 Sept 26, 12PM</span>
+                                    <span>🏷️ Free</span>
                                 </div>
                                 <div class="ev-significance">
                                     <i class="fas fa-info-circle"></i>
@@ -4774,7 +5015,7 @@
                             </div>
                         </div>
                         <div class="ev-right">
-                            <button class="btn-rsvp" data-event-id="2">RSVP</button>
+                            <button class="btn-rsvp" data-event-id="2">Attend</button>
                             <button class="btn-share"><i class="fas fa-share-alt"></i></button>
                         </div>
                     </div>
@@ -5016,18 +5257,11 @@
                                 <div style="margin-top:10px;"><a href="#" style="color:var(--green);font-weight:500;font-size:14px;text-decoration:none;">View All →</a></div>
                             </div>
 
-                            <div class="dash-card">
+                            <!-- Replace the existing "My Mentor" dash-card in the Profile grid with this: -->
+                            <div class="dash-card" id="profileActiveMentorContainer" style="display: none;">
                                 <div class="card-header"><h3>⭐ My Mentor</h3></div>
-                                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-                                    <div style="width:44px;height:44px;border-radius:50%;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--gold);">FH</div>
-                                    <div>
-                                        <div style="font-weight:600;">Fatima H. <span style="color:var(--gold);">★</span></div>
-                                        <div style="font-size:13px;color:var(--text-secondary);">Next session: Tomorrow 7PM</div>
-                                    </div>
-                                </div>
-                                <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
-                                    <button style="padding:6px 18px;border-radius:var(--radius-full);border:none;background:var(--gray-100);font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Message</button>
-                                    <button style="padding:6px 18px;border-radius:var(--radius-full);border:none;background:var(--green);color:#fff;font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Reschedule</button>
+                                <div id="profileActiveMentorContent">
+                                    <!-- Injected via JavaScript -->
                                 </div>
                             </div>
                         </div>
@@ -5488,20 +5722,181 @@
             const translationEl = document.getElementById('qvTranslation');
             const referenceEl = document.getElementById('qvReference');
 
-            if (!arabicEl) return;
+            if (!arabicEl || !verse) return;
 
-            arabicEl.style.opacity = '0';
-            translationEl.style.opacity = '0';
-            referenceEl.style.opacity = '0';
+            arabicEl.textContent = verse.arabic;
+            translationEl.textContent = verse.translation;
+            referenceEl.textContent = verse.reference;
+            arabicEl.style.opacity = '1';
+            translationEl.style.opacity = '1';
+            referenceEl.style.opacity = '1';
+        }
 
-            setTimeout(() => {
-                arabicEl.textContent = verse.arabic;
-                translationEl.textContent = verse.translation;
-                referenceEl.textContent = verse.reference;
-                arabicEl.style.opacity = '1';
-                translationEl.style.opacity = '1';
-                referenceEl.style.opacity = '1';
-            }, 300);
+        // ========== DASHBOARD WIDGETS LOGIC ==========
+        async function loadDashboardWidgets() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            
+            // 1. Fetch Prayer Times & Hijri Date (Aladhan API)
+            try {
+                const adhanRes = await fetch('https://api.aladhan.com/v1/timings/today?latitude=39.174671&longitude=-77.149970&method=2');
+                const adhanData = await adhanRes.json();
+                
+                if (adhanData && adhanData.data) {
+                    const timings = adhanData.data.timings;
+                    const hijri = adhanData.data.date.hijri;
+                    
+                    // Format and render Date
+                    const hijriEl = document.getElementById('hijriDateDisplay');
+                    if (hijriEl) hijriEl.textContent = `${hijri.month.en} ${hijri.day}, ${hijri.year} AH`;
+                    
+                    const prayers = [
+                        { id: 'Fajr', name: 'Fajr', time: timings.Fajr },
+                        { id: 'Dhuhr', name: 'Dhuhr', time: timings.Dhuhr },
+                        { id: 'Asr', name: 'Asr', time: timings.Asr },
+                        { id: 'Maghrib', name: 'Maghrib', time: timings.Maghrib },
+                        { id: 'Isha', name: 'Isha', time: timings.Isha }
+                    ];
+                    
+                    const savedState = JSON.parse(localStorage.getItem(`silah_prayers_${todayStr}`)) || {};
+                    const grid = document.getElementById('prayerTrackerGrid');
+                    
+                    // Render the grid
+                    if (grid) {
+                        grid.innerHTML = prayers.map(p => `
+                            <div class="prayer-box ${savedState[p.id] ? 'completed' : ''}" data-prayer="${p.id}">
+                                <div class="prayer-name">${p.name}</div>
+                                <div class="prayer-time">${formatTime(p.time)}</div>
+                                <div class="prayer-check"><i class="fas fa-check"></i></div>
+                            </div>
+                        `).join('');
+                        
+                        updatePrayerProgress(todayStr);
+                        
+                        // Reactive event listeners for checkboxes
+                        grid.querySelectorAll('.prayer-box').forEach(box => {
+                            box.addEventListener('click', function() {
+                                this.classList.toggle('completed');
+                                const pId = this.dataset.prayer;
+                                const currentState = JSON.parse(localStorage.getItem(`silah_prayers_${todayStr}`)) || {};
+                                currentState[pId] = this.classList.contains('completed');
+                                localStorage.setItem(`silah_prayers_${todayStr}`, JSON.stringify(currentState));
+                                updatePrayerProgress(todayStr);
+                            });
+                        });
+                    }
+                }
+            } catch(err) {
+                console.error("Prayer times error:", err);
+                const grid = document.getElementById('prayerTrackerGrid');
+                if (grid) grid.innerHTML = `<div style="text-align:center; width:100%; color:var(--red);">Failed to load prayer times.</div>`;
+            }
+            
+            // 2. Fetch Daily Inspiration (Reminder.dev API)
+            try {
+                const allahContainer = document.getElementById('allahNameCardContent');
+                const hadithContainer = document.getElementById('hadithCardContent');
+
+                let nameArabic = 'الرَّحْمَنُ';
+                let nameTranslit = 'Ar-Rahman';
+                let nameMeaning = 'The Most Gracious';
+                let nameExplanation = 'The One who has plenty of mercy for His believers and disbelievers in this world.';
+
+                let hadithText = 'The Messenger of Allah (ﷺ) said: "The best among you are those who have the best manners and character."';
+                let hadithRef = 'Sahih al-Bukhari 6035';
+
+                try {
+                    const inspRes = await fetch('https://reminder.dev/api/daily');
+                    const inspData = await inspRes.json();
+                    
+                    if (inspData) {
+                        // Parse Name of Allah
+                        if (typeof inspData.name === 'string') {
+                            const lines = inspData.name.split('\n\n');
+                            const firstLine = lines[0] || '';
+                            const parts = firstLine.split('-').map(s => s.trim());
+                            if (parts.length >= 3) {
+                                nameTranslit = parts[0];
+                                nameArabic = parts[1];
+                                nameMeaning = parts[2];
+                            } else if (parts.length === 2) {
+                                nameTranslit = parts[0];
+                                nameArabic = parts[1];
+                            } else if (firstLine) {
+                                nameTranslit = firstLine;
+                            }
+                            if (lines[1]) {
+                                nameExplanation = lines[1];
+                            }
+                        }
+
+                        // Parse Hadith / Reflection
+                        if (typeof inspData.hadith === 'string') {
+                            const lines = inspData.hadith.split('\n\n');
+                            const header = lines[0] || '';
+                            const body = lines.slice(1).join('\n\n') || header;
+                            hadithText = body;
+                            hadithRef = header.split('-')[0]?.trim() || 'Hadith Collection';
+                        } else if (inspData.hadith && inspData.hadith.english) {
+                            hadithText = inspData.hadith.english;
+                            hadithRef = inspData.hadith.reference || hadithRef;
+                        } else if (inspData.message) {
+                            hadithText = inspData.message;
+                            hadithRef = 'Daily Reflection';
+                        }
+                    }
+                } catch (e) {
+                    console.warn('API fetch warning, using fallback inspiration:', e);
+                }
+
+                // Render Name of Allah Card
+                if (allahContainer) {
+                    allahContainer.innerHTML = `
+                        <div class="name-of-allah" style="border:none; margin:0; padding:0;">
+                            <h4 style="font-size:38px; margin-bottom:4px; color:var(--gold); font-family:'Amiri', serif;">${nameArabic}</h4>
+                            <div class="transliteration" style="font-size:18px; font-weight:700; color:var(--text-primary); margin-bottom:2px;">${nameTranslit}</div>
+                            <div class="meaning" style="font-size:14px; color:var(--text-secondary); font-style:italic; margin-bottom:12px;">"${nameMeaning}"</div>
+                            ${nameExplanation ? `<div style="font-size:13px; color:var(--text-secondary); line-height:1.6; text-align:left; background:var(--gray-50); padding:12px 14px; border-radius:var(--radius-sm); border-left:3px solid var(--gold);">${nameExplanation}</div>` : ''}
+                        </div>
+                    `;
+                }
+
+                // Render Hadith Card
+                if (hadithContainer) {
+                    hadithContainer.innerHTML = `
+                        <div class="daily-hadith-box" style="max-height: 260px; overflow-y: auto; padding-right: 6px;">
+                            <div class="daily-hadith-text" style="font-size: 14px; line-height: 1.8; color: var(--text-primary); white-space: pre-line;">${hadithText}</div>
+                        </div>
+                        <div class="daily-hadith-ref" style="margin-top:12px; text-align:right; font-size:12px; color:var(--green); font-weight:600;">— ${hadithRef}</div>
+                    `;
+                }
+            } catch(err) {
+                console.error("Daily inspiration error:", err);
+            }
+        }
+
+        // Helper: Calculate streak progress bar
+        function updatePrayerProgress(dateStr) {
+            const state = JSON.parse(localStorage.getItem(`silah_prayers_${dateStr}`)) || {};
+            const completed = Object.values(state).filter(Boolean).length;
+            const pct = (completed / 5) * 100;
+            
+            const textEl = document.getElementById('prayerProgressText');
+            const pctEl = document.getElementById('prayerProgressPct');
+            const barEl = document.getElementById('prayerProgressBar');
+
+            if (textEl) textEl.textContent = `${completed}/5 Prayers Completed`;
+            if (pctEl) pctEl.textContent = `${pct}%`;
+            if (barEl) barEl.style.width = `${pct}%`;
+        }
+
+        // Helper: Convert 24hr API string to 12hr format
+        function formatTime(time24) {
+            if (!time24) return '';
+            const [h, m] = time24.split(':');
+            let hours = parseInt(h, 10);
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            return `${hours}:${m} ${ampm}`;
         }
 
         // ========== DARK MODE ==========
@@ -5617,7 +6012,8 @@
             if (container) container.scrollTop = 0;
 
             if (screenId === 'dashboard') {
-                setTimeout(displayQuranVerse, 200);
+                displayQuranVerse();
+                loadDashboardWidgets();
                 loadMentorsForDashboard();
             }
 
@@ -6707,7 +7103,7 @@
             if (noResultsEl) noResultsEl.style.display = 'none';
 
             if (locLabel) {
-                locLabel.textContent = usedFallback ? '📍 Showing results near Chicago, IL' : '📍 Using your location';
+                locLabel.textContent = usedFallback ? '📍 Showing results near Germantown, MD' : '📍 Using your location';
             }
 
             // Store all mosques for later use
@@ -7024,11 +7420,440 @@
                     isMentorRegistered = false;
                     currentUserMentorData = null;
                 }
+                
                 renderMyMentorProfile();
+                
+                // Execute the dashboard loaders
+                await loadPendingRequests();
+                await loadActiveMentees();
+                
             } catch (e) {
                 console.warn('Error checking mentor status:', e);
             }
+            
+            // Check if they are a mentee with an active connection
+            await loadActiveMentor();
         }
+
+        // ========== ACTIVE MENTEES LOGIC (FOR MENTORS) ==========
+        async function loadActiveMentees() {
+            console.log('--- loadActiveMentees triggered ---');
+            console.log('Is User Registered Mentor?:', isMentorRegistered);
+
+            // Only run if the current user is a registered mentor
+            if (!currentUser || !isMentorRegistered || !currentUserMentorData) {
+                console.log('Exiting early: User is not recognized as a mentor.');
+                return;
+            }
+
+            const container = document.getElementById('activeMenteesContainer');
+            const list = document.getElementById('activeMenteesList');
+
+            if (!container || !list) {
+                console.error('HTML Elements missing! Cannot render mentees.');
+                return;
+            }
+
+            try {
+                console.log('Fetching active mentees for mentor ID:', currentUserMentorData.id);
+                
+                // Fetch accepted requests where the user is the mentor
+                const { data: mentees, error } = await sb
+                    .from('mentor_requests')
+                    .select(`
+                        id,
+                        created_at,
+                        mentee:profiles (
+                            id,
+                            full_name,
+                            location
+                        )
+                    `)
+                    .eq('mentor_id', currentUserMentorData.id)
+                    .eq('status', 'accepted')
+                    .order('updated_at', { ascending: false });
+
+                if (error) throw error;
+                
+                console.log('Fetched Mentee Data:', mentees);
+
+                if (!mentees || mentees.length === 0) {
+                    container.style.display = 'none';
+                    return;
+                }
+
+                container.style.display = 'block';
+                list.innerHTML = mentees.map(req => {
+                    const menteeId = req.mentee?.id;
+                    const menteeName = req.mentee?.full_name || 'Anonymous User';
+                    const initials = getInitials(menteeName);
+                    const location = req.mentee?.location || 'Location unknown';
+                    
+                    return `
+                        <div class="match-result" style="border-left: 4px solid var(--green); margin-bottom: 0;">
+                            <div class="match-avatar">${initials}</div>
+                            <div class="match-body">
+                                <div class="mname">${menteeName}</div>
+                                <div class="mmeta">📍 ${location} <span class="dot">•</span> Connected ${getTimeAgo(req.created_at)}</div>
+                                <div class="mactions" style="margin-top: 12px;">
+                                    <button class="btn-req" onclick="openChat('${menteeId}', '${menteeName}')" style="background: var(--green); color: #fff;">
+                                        <i class="fas fa-envelope"></i> Message
+                                    </button>
+                                    <button class="btn-view" onclick="endMentorship('${req.id}')" style="color: var(--red); background: var(--red-light); border: none;">
+                                        End Mentorship
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error('Error loading active mentees:', err);
+            }
+        }
+
+        async function loadPendingRequests() {
+            if (!currentUser || !isMentorRegistered || !currentUserMentorData) return;
+
+            const container = document.getElementById('pendingRequestsContainer');
+            const list = document.getElementById('pendingRequestsList');
+
+            try {
+                // Fetch pending requests specifically for this mentor
+                const { data: requests, error } = await sb
+                            .from('mentor_requests')
+                            .select(`
+                                id,
+                                status,
+                                created_at,
+                                mentee:profiles (
+                                    full_name,
+                                    location,
+                                    interests
+                                )
+                            `)
+                            .eq('mentor_id', currentUserMentorData.id)
+                            .eq('status', 'pending')
+                            .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (!requests || requests.length === 0) {
+                    container.style.display = 'none';
+                    return;
+                }
+
+                container.style.display = 'block';
+                list.innerHTML = requests.map(req => {
+                    const menteeName = req.mentee?.full_name || 'Anonymous User';
+                    const initials = getInitials(menteeName);
+                    const location = req.mentee?.location || 'Location unknown';
+                    
+                    return `
+                        <div class="match-result" id="request-${req.id}" style="border-color: var(--teal);">
+                            <div class="match-avatar" style="background: var(--teal-light); color: #fff;">${initials}</div>
+                            <div class="match-body">
+                                <div class="mname">${menteeName} <span class="mentor-community-badge">Mentee</span></div>
+                                <div class="mmeta">📍 ${location} <span class="dot">•</span> Requested ${getTimeAgo(req.created_at)}</div>
+                                <div class="mactions" style="margin-top: 12px;">
+                                    <button class="btn-req" onclick="handleRequestAction('${req.id}', 'accepted')" style="background: var(--green); color: #fff;">Accept</button>
+                                    <button class="btn-view" onclick="handleRequestAction('${req.id}', 'declined')">Decline</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error('Error loading requests:', err);
+            }
+        }
+
+        // Handle Accept/Decline
+        window.handleRequestAction = async function(requestId, action) {
+            const card = document.getElementById(`request-${requestId}`);
+            if (card) card.style.opacity = '0.5';
+
+            try {
+                const { error } = await sb
+                    .from('mentor_requests')
+                    .update({ status: action, updated_at: new Date().toISOString() })
+                    .eq('id', requestId);
+
+                if (error) throw error;
+
+                showModerationToast(`Request ${action}.`, 'success', 2000);
+                
+                // Remove the card from the UI
+                if (card) card.remove();
+                
+                // Hide the container if no requests are left
+                if (document.getElementById('pendingRequestsList').children.length === 0) {
+                    document.getElementById('pendingRequestsContainer').style.display = 'none';
+                }
+
+            } catch (err) {
+                console.error(`Error updating request to ${action}:`, err);
+                showModerationToast('Failed to update request.', 'error', 3000);
+                if (card) card.style.opacity = '1';
+            }
+        };
+
+        // ========== ACTIVE MENTORSHIP LOGIC ==========
+        async function loadActiveMentor() {
+            if (!currentUser) return;
+
+            try {
+                // Fetch accepted requests where the user is the mentee
+                const { data: activeRequests, error } = await sb
+                    .from('mentor_requests')
+                    .select(`
+                        id,
+                        status,
+                        mentors (
+                            id,
+                            user_id,
+                            full_name,
+                            expertise,
+                            bio,
+                            avatar,
+                            booking_url,
+                            verified
+                        )
+                    `)
+                    .eq('mentee_id', currentUser.id)
+                    .eq('status', 'accepted')
+                    .limit(1);
+
+                if (error) throw error;
+
+                // Container references
+                const activeContainer = document.getElementById('activeMentorshipContainer');
+                const activeCard = document.getElementById('activeMentorshipCard');
+                const dashMentorCard = document.getElementById('dashMentorCard');
+                
+                // Profile references
+                const profileMentorContainer = document.getElementById('profileActiveMentorContainer');
+                const profileMentorContent = document.getElementById('profileActiveMentorContent');
+
+                if (activeRequests && activeRequests.length > 0) {
+                    const reqId = activeRequests[0].id;
+                    const mentor = activeRequests[0].mentors;
+                    const initials = mentor.avatar || getInitials(mentor.full_name);
+                    const isScholar = mentor.verified;
+                    
+                    // 1. Render in the Mentor Page
+                    if (activeContainer && activeCard) {
+                        activeContainer.style.display = 'block';
+                        activeCard.innerHTML = `
+                            <div class="my-mentor-profile" style="border-color: var(--gold); background: var(--gold-pale);">
+                                <div class="profile-header-simple">
+                                    <div class="avatar-large" style="color: var(--gold); background: #fff; border-color: var(--gold);">${initials}</div>
+                                    <div class="info">
+                                        <h3>${mentor.full_name} ${isScholar ? '<span class="mentor-scholar-badge"><i class="fas fa-graduation-cap"></i> Scholar</span>' : '<span class="mentor-community-badge"><i class="fas fa-user"></i> Community</span>'}</h3>
+                                        <p>${mentor.expertise || 'General Guidance'}</p>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap;">
+                                    <button class="btn-primary" onclick="openChat('${mentor.user_id}', '${mentor.full_name}')" style="width: auto; padding: 10px 24px;">
+                                        <i class="fas fa-envelope"></i> Message
+                                    </button>
+                                    <button class="btn-secondary" onclick="openBooking('${mentor.booking_url}', '${mentor.full_name}')" style="background: #fff; border-color: var(--gold);">
+                                        <i class="fas fa-calendar-alt"></i> Schedule Check-in
+                                    </button>
+                                    <button class="btn-secondary" onclick="endMentorship('${reqId}')" style="color: var(--red); border-color: var(--red-light); background: var(--red-light); margin-left: auto;">
+                                        End Mentorship
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // 2. Render in the Dashboard (Overrides the default recommendation)
+                    if (dashMentorCard) {
+                        dashMentorCard.innerHTML = `
+                            <div class="mentor-avatar" style="color: var(--gold); background: var(--gold-pale); border-color: var(--gold);">${initials}</div>
+                            <div class="mentor-info">
+                                <div class="name">${mentor.full_name} <span class="stars">★★★★★</span></div>
+                                <div class="title" style="color: var(--gold); font-weight: 600;">Your Active Mentor</div>
+                                <div class="msg">Don't forget to schedule your next check-in!</div>
+                            </div>
+                            <div class="mentor-actions">
+                                <button class="btn-msg" onclick="openChat('${mentor.user_id}', '${mentor.full_name}')"><i class="fas fa-envelope"></i> Message</button>
+                                <button class="btn-sched" onclick="openBooking('${mentor.booking_url}', '${mentor.full_name}')">Schedule</button>
+                            </div>
+                        `;
+                    }
+
+                    // 3. Render in the Profile Page
+                    if (profileMentorContainer && profileMentorContent) {
+                        profileMentorContainer.style.display = 'block';
+                        profileMentorContent.innerHTML = `
+                            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                                <div style="width:44px;height:44px;border-radius:50%;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--gold); border: 2px solid var(--gold);">${initials}</div>
+                                <div>
+                                    <div style="font-weight:600;">${mentor.full_name} <span style="color:var(--gold);">★</span></div>
+                                    <div style="font-size:13px;color:var(--text-secondary);">${mentor.expertise || 'General Guidance'}</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+                                <button onclick="openChat('${mentor.user_id}', '${mentor.full_name}')" style="padding:6px 18px;border-radius:var(--radius-full);border:none;background:var(--gray-100);font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Message</button>
+                                <button onclick="openBooking('${mentor.booking_url}', '${mentor.full_name}')" style="padding:6px 18px;border-radius:var(--radius-full);border:none;background:var(--green);color:#fff;font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Schedule</button>
+                            </div>
+                        `;
+                    }
+                } else {
+                    // Hide everything if there is no active mentor
+                    if (activeContainer) activeContainer.style.display = 'none';
+                    if (profileMentorContainer) profileMentorContainer.style.display = 'none';
+                }
+
+            } catch (err) {
+                console.error('Error loading active mentor:', err);
+            }
+        }
+
+        // Helper to open booking links safely
+        window.openBooking = function(url, name) {
+            if (url && url !== 'undefined') {
+                window.open(url, '_blank');
+            } else {
+                showModerationToast(`${name} hasn't added a scheduling link yet. Send them a message!`, 'info', 4000);
+            }
+        };
+
+        // Helper to end a mentorship connection
+        window.endMentorship = async function(requestId) {
+            if (!confirm('Are you sure you want to end this mentorship?')) return;
+            
+            try {
+                const { error } = await sb
+                    .from('mentor_requests')
+                    .delete() // Alternatively, you could update status to 'ended' for historical tracking
+                    .eq('id', requestId);
+                
+                if (error) throw error;
+                
+                showModerationToast('Mentorship connection ended.', 'info');
+                
+                // Refresh the UI state
+                await loadActiveMentor();
+                await loadMentorsForDashboard(); // Re-render the default suggestions
+                
+            } catch (err) {
+                console.error('Error ending mentorship:', err);
+                showModerationToast('Failed to end mentorship.', 'error');
+            }
+        };
+
+        // ========== MENTOR PROFILE MODAL LOGIC ==========
+        const mentorProfileOverlay = document.getElementById('mentorProfileOverlay');
+        const mentorProfileClose = document.getElementById('mentorProfileClose');
+
+        // Close modal handlers
+        mentorProfileClose?.addEventListener('click', () => {
+            mentorProfileOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        });
+
+        mentorProfileOverlay?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                mentorProfileOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Open modal and populate data
+        window.openMentorProfile = function(mentorId) {
+            // Find mentor from your cached array
+            const mentor = allMentors.find(m => m.id === mentorId);
+            if (!mentor) return;
+
+            const name = mentor.full_name || 'Unknown';
+            const initials = mentor.avatar || getInitials(name);
+            const isScholar = mentor.verified === true;
+            const ratingStars = mentor.rating ? '★'.repeat(mentor.rating) + '☆'.repeat(5 - mentor.rating) : '★★★★★';
+            
+            // Formatting helpers
+            const expertiseMap = {
+                'quran': 'Quran & Tajweed', 'islamic-basics': 'Islamic Basics',
+                'arabic': 'Arabic Language', 'mental-wellness': 'Mental Wellness',
+                'fiqh': 'Fiqh & Jurisprudence', 'hadith': 'Hadith Studies',
+                'seerah': 'Seerah', 'dua': 'Dua & Spiritual Guidance',
+                'family': 'Family & Marriage', 'other': 'Other'
+            };
+            const expertiseDisplay = expertiseMap[mentor.expertise] || mentor.expertise || 'General';
+
+            const content = document.getElementById('mentorProfileContent');
+            content.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                    <div style="width: 72px; height: 72px; border-radius: 50%; background: var(--green-pale); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: bold; border: 3px solid var(--gold-light); flex-shrink: 0;">
+                        ${initials}
+                    </div>
+                    <div>
+                        <h2 style="font-family: 'Poppins', sans-serif; font-size: 22px; color: var(--text-primary); margin-bottom: 4px;">
+                            ${name}
+                        </h2>
+                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                            ${isScholar ? '<span class="mentor-scholar-badge" style="margin:0;"><i class="fas fa-graduation-cap"></i> Verified Scholar</span>' : '<span class="mentor-community-badge" style="margin:0;"><i class="fas fa-user"></i> Community</span>'}
+                            <span style="color: var(--gold); font-size: 13px;">${ratingStars}</span>
+                        </div>
+                        <div style="color: var(--text-secondary); font-size: 13px; margin-top: 6px;">
+                            📍 ${mentor.location || 'Location unknown'}
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h4 style="font-size: 14px; color: var(--text-primary); margin-bottom: 8px; font-weight: 600;">About</h4>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin: 0;">${mentor.bio || 'No bio provided yet.'}</p>
+                </div>
+
+                ${mentor.credentials ? `
+                <div style="margin-bottom: 24px;">
+                    <h4 style="font-size: 14px; color: var(--text-primary); margin-bottom: 8px; font-weight: 600;">Credentials</h4>
+                    <div style="background: var(--gray-50); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 13px; color: var(--text-secondary); border-left: 3px solid var(--gold);">
+                        <i class="fas fa-certificate" style="color: var(--gold); margin-right: 6px;"></i> ${mentor.credentials}
+                    </div>
+                </div>` : ''}
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; padding-top: 16px; border-top: 1px solid var(--border-light);">
+            <div>
+                <div style="font-size: 12px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px;">Focus Area</div>
+                <div style="font-size: 14px; color: var(--text-primary); margin-top: 4px; font-weight: 500;">${expertiseDisplay}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px;">Meeting Pref</div>
+                <div style="font-size: 14px; color: var(--text-primary); margin-top: 4px; font-weight: 500; text-transform: capitalize;">${mentor.meeting_preference || 'Any'}</div>
+            </div>
+        </div>
+
+        <button class="btn-primary" onclick="triggerMentorRequest('${mentor.id}')" style="width: 100%;">
+            <span class="btn-shimmer"></span>
+            <span>Request Connection</span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    `;
+
+    mentorProfileOverlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+};
+
+// Helper function to trigger the request from inside the modal
+window.triggerMentorRequest = function(mentorId) {
+    // Hide the modal
+    mentorProfileOverlay.classList.remove('show');
+    document.body.style.overflow = '';
+    
+    // Find the corresponding button on the page and click it to trigger your existing Supabase logic
+    const pageButton = document.querySelector(`.btn-req[data-mentor-id="${mentorId}"]`);
+    if (pageButton) {
+        pageButton.click();
+    } else {
+        showModerationToast('Could not find request button.', 'error');
+    }
+};
 
         // ========== MY MENTOR PROFILE ==========
         function renderMyMentorProfile() {
@@ -7355,8 +8180,8 @@
                         <div class="mdesc">${mentor.bio || 'No bio provided yet.'}</div>
                         ${mentor.credentials ? `<div style="font-size:12px;color:var(--gray-400);margin-bottom:8px;"><i class="fas fa-graduation-cap"></i> ${mentor.credentials}</div>` : ''}
                         <div class="mactions">
-                            <button class="btn-view">View Profile</button>
-                            <button class="btn-req">Request Connect</button>
+                            <button class="btn-view" onclick="openMentorProfile('${mentor.id}')">View Profile</button>
+                            <button class="btn-req" data-mentor-id="${mentor.id}">Request Connect</button>
                         </div>
                     </div>
                     <div class="match-badge">${isScholar ? '✓ Verified Scholar' : '🤝 Community Member'}</div>
@@ -7364,22 +8189,47 @@
 
                 container.appendChild(card);
 
-                const viewBtn = card.querySelector('.btn-view');
                 const reqBtn = card.querySelector('.btn-req');
 
-                viewBtn?.addEventListener('click', function() {
-                    showModerationToast(`Viewing ${name}'s profile...`, 'info', 2000);
-                });
+                reqBtn?.addEventListener('click', async function() {
+                    if (!currentUser) {
+                        showModerationToast('Please sign in to request a mentor.', 'warning');
+                        return;
+                    }
 
-                reqBtn?.addEventListener('click', function() {
-                    const orig = this.textContent;
-                    this.textContent = '✓ Requested';
-                    this.style.background = 'var(--teal)';
-                    setTimeout(() => {
-                        this.textContent = orig;
-                        this.style.background = '';
-                    }, 1400);
-                    showModerationToast(`Request sent to ${name}!`, 'success', 2000);
+                    const btn = this;
+                    const orig = btn.textContent;
+                    btn.textContent = 'Sending...';
+                    btn.disabled = true;
+
+                    try {
+                        // Insert the request into Supabase
+                        const { error } = await sb
+                            .from('mentor_requests')
+                            .insert({
+                                mentee_id: currentUser.id,
+                                mentor_id: mentor.id, // Pulled from the current mentor object in your loop
+                                status: 'pending'
+                            });
+
+                        if (error) {
+                            // Handle the unique constraint violation if they already requested this mentor
+                            if (error.code === '23505') {
+                                throw new Error('You already have a pending request with this mentor.');
+                            }
+                            throw error;
+                        }
+
+                        btn.textContent = '✓ Requested';
+                        btn.style.background = 'var(--teal)';
+                        showModerationToast(`Request sent to ${name}!`, 'success', 2000);
+                        
+                    } catch (err) {
+                        console.error('Request error:', err);
+                        btn.textContent = orig;
+                        btn.disabled = false;
+                        showModerationToast(err.message || 'Failed to send request. Please try again.', 'error', 3000);
+                    }
                 });
             });
         }
@@ -7448,13 +8298,179 @@
             const schedBtn = container.querySelector('.btn-sched');
 
             msgBtn?.addEventListener('click', function() {
-                showModerationToast(`Message ${name}`, 'info', 2000);
+                // Pass the Auth User ID and Name to the chat function
+                openChat(displayMentor.user_id, displayMentor.full_name);
             });
 
             schedBtn?.addEventListener('click', function() {
-                showModerationToast(`Schedule session with ${name}`, 'success', 2000);
+                if (displayMentor.booking_url) {
+                    window.open(displayMentor.booking_url, '_blank');
+                } else {
+                    showModerationToast(`${displayMentor.full_name} hasn't added a scheduling link yet. Send them a message!`, 'info', 4000);
+                }
             });
         }
+
+        // ========== DIRECT MESSAGING LOGIC ==========
+        let activeConversationId = null;
+        let chatSubscription = null; // Store the active subscription
+
+        // Opens the chat widget and loads the conversation
+        window.openChat = async function(recipientUserId, recipientName) {
+            if (!currentUser) return showModerationToast('Sign in to message.', 'warning');
+            
+            document.getElementById('dmRecipientName').textContent = recipientName;
+            document.getElementById('dmWidget').style.display = 'flex';
+            const messagesContainer = document.getElementById('dmMessages');
+            messagesContainer.innerHTML = '<div style="text-align:center; color:var(--text-secondary); margin-top: 20px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+
+            try {
+                // 1. Check if a conversation already exists
+                let { data: convs, error } = await sb
+                    .from('conversations')
+                    .select('*')
+                    .or(`and(user1.eq.${currentUser.id},user2.eq.${recipientUserId}),and(user1.eq.${recipientUserId},user2.eq.${currentUser.id})`)
+                    .limit(1);
+
+                let convId;
+                if (convs && convs.length > 0) {
+                    convId = convs[0].id;
+                } else {
+                    // 2. Create one if it doesn't exist
+                    const { data: newConv, error: createErr } = await sb
+                        .from('conversations')
+                        .insert({ user1: currentUser.id, user2: recipientUserId })
+                        .select()
+                        .single();
+                        
+                    if (createErr) throw createErr;
+                    convId = newConv.id;
+                }
+
+                activeConversationId = convId;
+                await loadMessages(); // Fetch the history
+
+                // 3. Set up the Realtime Subscription
+                // Clean up any old subscription first
+                if (chatSubscription) {
+                    sb.removeChannel(chatSubscription);
+                }
+
+                // Subscribe to inserts on the messages table for this specific conversation
+                chatSubscription = sb.channel(`chat-${activeConversationId}`)
+                    .on(
+                        'postgres_changes',
+                        {
+                            event: 'INSERT',
+                            schema: 'public',
+                            table: 'messages',
+                            filter: `conversation_id=eq.${activeConversationId}`
+                        },
+                        (payload) => {
+                            const newMessage = payload.new;
+                            
+                            // Skip if we sent it (our UI already optimistically rendered it)
+                            if (newMessage.sender_id === currentUser.id) return;
+                            
+                            const container = document.getElementById('dmMessages');
+                            if (container.innerHTML.includes('No messages yet')) container.innerHTML = '';
+                            
+                            // Inject the received message
+                            container.insertAdjacentHTML('beforeend', `<div class="dm-message received">${newMessage.content}</div>`);
+                            container.scrollTop = container.scrollHeight;
+                        }
+                    )
+                    .subscribe();
+
+            } catch (err) {
+                console.error('Chat error:', err);
+                messagesContainer.innerHTML = '<div style="text-align:center; color:var(--red);">Error loading chat.</div>';
+            }
+        };
+
+        // Fetch messages for the active conversation
+        async function loadMessages() {
+            if (!activeConversationId) return;
+            
+            const { data: msgs, error } = await sb
+                .from('messages')
+                .select('*')
+                .eq('conversation_id', activeConversationId)
+                .order('created_at', { ascending: true });
+
+            const container = document.getElementById('dmMessages');
+            
+            if (error || !msgs || msgs.length === 0) {
+                container.innerHTML = '<div style="text-align:center; font-size:13px; color:var(--gray-400); margin-top:20px;">No messages yet. Say Assalamu alaikum!</div>';
+                return;
+            }
+
+            container.innerHTML = msgs.map(m => {
+                const isSent = m.sender_id === currentUser.id;
+                return `<div class="dm-message ${isSent ? 'sent' : 'received'}">${m.content}</div>`;
+            }).join('');
+            
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Function to handle sending the message
+        async function handleSendMessage() {
+            const input = document.getElementById('dmInput');
+            const text = input?.value.trim();
+            
+            if (!text || !activeConversationId) {
+                console.warn("Could not send. Text missing or no active conversation.");
+                return;
+            }
+            
+            // Clear input immediately
+            input.value = '';
+            
+            // Optimistic UI update
+            const container = document.getElementById('dmMessages');
+            if (container.innerHTML.includes('No messages yet')) container.innerHTML = '';
+            container.insertAdjacentHTML('beforeend', `<div class="dm-message sent">${text}</div>`);
+            container.scrollTop = container.scrollHeight;
+
+            // Save to database
+            try {
+                const { error } = await sb.from('messages').insert({
+                    conversation_id: activeConversationId,
+                    sender_id: currentUser.id,
+                    content: text
+                });
+
+                if (error) throw error;
+            } catch (err) {
+                console.error("Failed to send message:", err);
+                showModerationToast('Message failed to send.', 'error');
+            }
+        }
+
+        // Global click listener for the send button
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#dmSendBtn')) {
+                handleSendMessage();
+            }
+        });
+
+        // Global keydown listener for the Enter key in the input
+        document.addEventListener('keydown', (e) => {
+            if (e.target.id === 'dmInput' && e.key === 'Enter') {
+                e.preventDefault();
+                handleSendMessage();
+            }
+        });
+
+        // Close widget
+        document.getElementById('dmCloseBtn')?.addEventListener('click', () => {
+            document.getElementById('dmWidget').style.display = 'none';
+            activeConversationId = null;
+            if (chatSubscription) {
+                sb.removeChannel(chatSubscription);
+                chatSubscription = null;
+            }
+        });
 
         // ========== MENTOR REGISTRATION MODAL ==========
         const mentorModalOverlay = document.getElementById('mentorModalOverlay');
@@ -7498,6 +8514,7 @@
             const availability = document.getElementById('mentorAvailability')?.value || 'flexible';
             const meetingPref = document.getElementById('mentorMeetingPref')?.value || 'online';
             const credentials = document.getElementById('mentorCredentials')?.value.trim() || '';
+            const bookingUrl = document.getElementById('mentorBookingUrl')?.value.trim() || '';
 
             if (!bio) {
                 showModerationToast('Please tell us about yourself.', 'warning');
@@ -7538,6 +8555,7 @@
                         availability: availability,
                         meeting_preference: meetingPref,
                         credentials: credentials || '',
+                        booking_url: bookingUrl || null,
                         verified: false,
                         location: location,
                         rating: 0,
@@ -8245,49 +9263,48 @@
             },
         };
 
-        const sampleArticles = [{
-            id: 1,
-            title: 'Understanding the Meaning of Shahada',
-            source: 'Islamic Center of America',
-            excerpt: 'The Shahada is the declaration of faith that distinguishes a Muslim. This article explores its deep meaning and significance in a Muslim\'s life.',
-            tags: ['Shahada', 'Faith', 'Belief'],
-            url: '#'
-        }, {
-            id: 2,
-            title: 'Step-by-Step Guide to Performing Wudu',
-            source: 'Islamic Relief',
-            excerpt: 'Learn the proper way to perform Wudu (ablution) with this comprehensive guide, including the spiritual significance of each step.',
-            tags: ['Wudu', 'Purification', 'Prayer'],
-            url: '#'
-        }, {
-            id: 3,
-            title: 'The Importance of Salah in Daily Life',
-            source: 'Yaqeen Institute',
-            excerpt: 'Discover how the five daily prayers can transform your life, bringing peace, discipline, and spiritual connection to Allah.',
-            tags: ['Salah', 'Prayer', 'Spirituality'],
-            url: '#'
-        }, {
-            id: 4,
-            title: 'Zakat: Purifying Your Wealth',
-            source: 'Muslim Hands',
-            excerpt: 'Zakat is not just charity—it\'s a right of the poor. This article explains the calculation, distribution, and spiritual benefits of Zakat.',
-            tags: ['Zakat', 'Charity', 'Wealth'],
-            url: '#'
-        }, {
-            id: 5,
-            title: 'Fasting in Ramadan: A Spiritual Journey',
-            source: 'Islamic Relief',
-            excerpt: 'Fasting in Ramadan is a time of spiritual reflection, self-improvement, and heightened devotion. Learn how to make the most of this blessed month.',
-            tags: ['Ramadan', 'Fasting', 'Sawm'],
-            url: '#'
-        }, {
-            id: 6,
-            title: 'The Rituals of Hajj: A Guide for Pilgrims',
-            source: 'Ministry of Hajj, Saudi Arabia',
-            excerpt: 'Hajj is the pilgrimage to Mecca, required of every able Muslim. This guide explains the rituals, their meanings, and practical tips for pilgrims.',
-            tags: ['Hajj', 'Pilgrimage', 'Mecca'],
-            url: '#'
-        }, ];
+        const sampleArticles = [
+            {
+                id: 1,
+                title: "How to Make Wudu, Step by Step",
+                source: 'MyMasjid.ca',
+                excerpt: 'A beginner-friendly guide that explains the essentials of Wudu, including its purpose, importance, prerequisites, and how new Muslims can begin establishing the five daily prayers with confidence.',
+                tags: ['Wudu', 'Ablution', 'Beginners'],
+                url: 'https://www.mymasjid.ca/beginners-guide-learn-pray-salah/chapter-2/'
+            },
+            {
+                id: 2,
+                title: '5 Pillars Made Plain',
+                source: 'Yaqeen Institute',
+                excerpt: "A comprehensive series explaining each of the Five Pillars of Islam through short, easy-to-understand lessons. Designed especially for new Muslims, those rediscovering their faith, and anyone wanting to strengthen their understanding of Islam's foundations.",
+                tags: ['Five Pillars', 'Islam', 'Foundations'],
+                url: 'https://yaqeeninstitute.org/series/five-pillars-of-islam'
+            },
+            {
+                id: 3,
+                title: 'Step-by-Step Guide to Hajj',
+                source: 'Islamic Relief',
+                excerpt: "Follow the journey of Hajj from beginning to end with this practical guide, covering the major rituals, their meanings, and essential preparations for one of Islam's greatest acts of worship.",
+                tags: ['Hajj', 'Pilgrimage', 'Worship'],
+                url: 'https://www.islamic-relief.org.uk/resources/knowledge-base/five-pillars-of-islam/hajj/step-by-step-guide-to-hajj/'
+            },
+            {
+                id: 4,
+                title: 'Basics of Islam',
+                source: 'Yaqeen Institute',
+                excerpt: "Explore the core beliefs and practices of Islam, including the Five Pillars, the Articles of Faith, and the teachings that form the foundation of a Muslim's daily life.",
+                tags: ['Islam', 'Beliefs', 'Basics'],
+                url: 'https://app.yaqeen.io/what-islam-says-about/basics-of-islam'
+            },
+            {
+                id: 5,
+                title: 'Building Your Knowledge as a New Muslim',
+                source: 'SeekersGuidance',
+                excerpt: 'Practical advice for recent converts on how to gradually build authentic Islamic knowledge, prioritize essential learning, and establish a lifelong path of seeking knowledge from trusted scholars.',
+                tags: ['New Muslims', 'Seeking Knowledge', 'Learning Islam'],
+                url: 'https://seekersguidance.org/answers/seeking-knowledge/how-should-a-recent-convert-build-their-knowledge-of-islam/'
+            }
+        ];
 
         document.getElementById('chatSubmitBtn')?.addEventListener('click', handleChatSubmit);
 
@@ -8462,7 +9479,11 @@
                     </div>
                 `;
                 card.addEventListener('click', () => {
-                    showModerationToast(`Opening: ${article.title}`, 'info', 2000);
+                    if (article.url && article.url !== '#') {
+                        window.open(article.url, '_blank', 'noopener,noreferrer');
+                    } else {
+                        showModerationToast(`Opening: ${article.title}`, 'info', 2000);
+                    }
                 });
                 container.appendChild(card);
             });
@@ -8493,6 +9514,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadDarkModePreference();
             displayQuranVerse();
+            
+            // Add this to load the APIs immediately
+            loadDashboardWidgets();
 
             setInterval(() => {
                 const dash = document.getElementById('screen-dashboard');
@@ -8525,6 +9549,24 @@
             // This is already called in enterApp
         }
     </script>
+
+<!-- ========== DIRECT MESSAGING WIDGET ========== -->
+<div id="dmWidget" class="dm-widget">
+    <div class="dm-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <i class="fas fa-user-circle" style="font-size:20px;"></i>
+            <h4 id="dmRecipientName">Chat</h4>
+        </div>
+        <button id="dmCloseBtn" style="background:none;border:none;color:#fff;cursor:pointer;font-size:18px;">✕</button>
+    </div>
+    <div class="dm-body" id="dmMessages">
+        <!-- Messages loaded here -->
+    </div>
+    <div class="dm-footer">
+        <input type="text" id="dmInput" placeholder="Type a message..." autocomplete="off" />
+        <button id="dmSendBtn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
 
 </body>
 </html>
