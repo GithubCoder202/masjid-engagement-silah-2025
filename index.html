@@ -2979,6 +2979,28 @@
         .mentor-modal .modal-actions .btn-secondary:hover {
             background: var(--gray-200);
         }
+        /* make dropdowns in mentor modal look nice */
+        .mentor-modal select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            appearance: auto;
+            cursor: pointer;
+        }
+        .mentor-modal select:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
+        }
+        .mentor-modal select option {
+            padding: 8px;
+        }
 
         /* ========== DISCOVER ========== */
         .disco-tabs {
@@ -4877,8 +4899,8 @@
         }
 
         /* ============================================================
-               NEW: RULES PAGE
-            ============================================================ */
+           NEW: RULES PAGE
+        ============================================================ */
         #screen-rules .rules-hero {
             background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
             border-radius: var(--radius);
@@ -5005,8 +5027,8 @@
         }
 
         /* ============================================================
-               NEW: COMMUNITY DIRECTORY (in Profile tab)
-            ============================================================ */
+           NEW: COMMUNITY DIRECTORY (in Profile tab)
+        ============================================================ */
         .directory-section {
             margin-top: 28px;
             background: var(--card-bg);
@@ -5227,8 +5249,8 @@
         }
 
         /* ============================================================
-               FEED — Rules Button
-            ============================================================ */
+           FEED — Rules Button
+        ============================================================ */
         .feed-rules-bar {
             margin-top: 20px;
             padding: 16px 20px;
@@ -5279,6 +5301,215 @@
             background: var(--green-dark);
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
+        }
+
+        /* ============================================================
+           NEW: FEEDBACK PAGE
+        ============================================================ */
+        #screen-feedback .feedback-hero {
+            background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+            margin-bottom: 28px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+        }
+        [data-theme="dark"] #screen-feedback .feedback-hero {
+            background: linear-gradient(135deg, #1a2f26 0%, #2a2418 100%);
+            border-color: var(--border-light);
+        }
+        #screen-feedback .feedback-hero .feedback-icon {
+            font-size: 56px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        #screen-feedback .feedback-hero h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            color: var(--text-primary);
+        }
+        #screen-feedback .feedback-hero p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 6px auto 0;
+        }
+        #screen-feedback .feedback-form {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 28px 32px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        #screen-feedback .feedback-form .form-group {
+            margin-bottom: 20px;
+        }
+        #screen-feedback .feedback-form .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        #screen-feedback .feedback-form .form-group input,
+        #screen-feedback .feedback-form .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: var(--transition);
+            background: var(--input-bg);
+            color: var(--text-primary);
+        }
+        #screen-feedback .feedback-form .form-group input:focus,
+        #screen-feedback .feedback-form .form-group textarea:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
+        }
+        #screen-feedback .feedback-form .form-group textarea {
+            min-height: 160px;
+            resize: vertical;
+        }
+        #screen-feedback .feedback-form .form-group .helper {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        #screen-feedback .feedback-form .feedback-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(26, 107, 79, 0.25);
+        }
+        #screen-feedback .feedback-form .feedback-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(26, 107, 79, 0.35);
+        }
+        #screen-feedback .feedback-form .feedback-submit:active {
+            transform: translateY(0);
+        }
+
+        /* ============================================================
+           NEW: MOSQUE COMMUNITY PAGE
+        ============================================================ */
+        #screen-mosque-community .mc-hero {
+            background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+            margin-bottom: 28px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+        }
+        [data-theme="dark"] #screen-mosque-community .mc-hero {
+            background: linear-gradient(135deg, #1a2f26 0%, #2a2418 100%);
+            border-color: var(--border-light);
+        }
+        #screen-mosque-community .mc-hero .mc-icon {
+            font-size: 56px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        #screen-mosque-community .mc-hero h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            color: var(--text-primary);
+        }
+        #screen-mosque-community .mc-hero p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 700px;
+            margin: 6px auto 0;
+        }
+        #screen-mosque-community .mc-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 28px 32px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+        }
+        #screen-mosque-community .mc-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            color: var(--text-primary);
+            margin-top: 24px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        #screen-mosque-community .mc-content h3 i {
+            color: var(--gold);
+        }
+        #screen-mosque-community .mc-content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        #screen-mosque-community .mc-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 20px;
+        }
+        #screen-mosque-community .mc-content ul li {
+            padding: 8px 0 8px 28px;
+            position: relative;
+            font-size: 15px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-light);
+        }
+        #screen-mosque-community .mc-content ul li:last-child {
+            border-bottom: none;
+        }
+        #screen-mosque-community .mc-content ul li::before {
+            content: '🕌';
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+        #screen-mosque-community .mc-content .mc-quote {
+            background: var(--gold-pale);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            margin: 16px 0;
+            border-left: 4px solid var(--gold);
+            font-style: italic;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+        [data-theme="dark"] #screen-mosque-community .mc-content .mc-quote {
+            background: #2a2418;
+        }
+        #screen-mosque-community .mc-footer {
+            text-align: center;
+            margin-top: 28px;
+        }
+        #screen-mosque-community .mc-footer .btn-primary {
+            max-width: 300px;
+            margin: 0 auto;
         }
 
         /* ========== RESPONSIVE OVERRIDES ========== */
@@ -5439,6 +5670,19 @@
             #screen-rules .rules-hero h2 {
                 font-size: 24px;
             }
+            /* Feedback & Mosque Community responsive */
+            #screen-feedback .feedback-hero,
+            #screen-mosque-community .mc-hero {
+                padding: 24px 20px;
+            }
+            #screen-feedback .feedback-hero h2,
+            #screen-mosque-community .mc-hero h2 {
+                font-size: 24px;
+            }
+            #screen-feedback .feedback-form,
+            #screen-mosque-community .mc-content {
+                padding: 20px 18px;
+            }
         }
 
         @media (max-width: 700px) {
@@ -5563,6 +5807,22 @@
             #screen-rules .rule-card .rule-content .rule-hadith {
                 text-align: left;
             }
+            /* feedback & mosque community */
+            #screen-feedback .feedback-hero .feedback-icon,
+            #screen-mosque-community .mc-hero .mc-icon {
+                font-size: 40px;
+            }
+            #screen-feedback .feedback-hero h2,
+            #screen-mosque-community .mc-hero h2 {
+                font-size: 22px;
+            }
+            #screen-feedback .feedback-form,
+            #screen-mosque-community .mc-content {
+                padding: 16px;
+            }
+            #screen-mosque-community .mc-content h3 {
+                font-size: 19px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -5615,6 +5875,11 @@
             }
             .directory-section .dir-search-wrap .dir-filter-btns {
                 justify-content: center;
+            }
+            /* settings feedback button */
+            .settings-row .sr-right .btn-sm {
+                font-size: 12px;
+                padding: 5px 12px;
             }
         }
 
@@ -5674,6 +5939,11 @@
         [data-theme="dark"] .directory-grid::-webkit-scrollbar-thumb {
             background: var(--gray-400);
         }
+
+        /* ========== AUTH MODAL BUTTON SPACING ========== */
+        .auth-form .btn-primary {
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body>
@@ -5698,7 +5968,7 @@
             <div class="about-credit">
                 <div class="credit-label">✨ Website inspired by <span>Cobalt Coders</span> ✨</div>
             </div>
-            <div class="about-version">v1.5.0 · © 2026 Silah Foundation</div>
+            <div class="about-version">v1.6.0 · © 2026 Silah Foundation</div>
         </div>
     </div>
 
@@ -6721,7 +6991,7 @@
                         </div>
                     </div>
 
-                    <!-- NEW: Rules bar -->
+                    <!-- Rules bar -->
                     <div class="feed-rules-bar">
                         <div class="rules-bar-left">
                             <i class="fas fa-scroll"></i>
@@ -6735,7 +7005,7 @@
                     </div>
                 </div>
 
-                <!-- ===== RULES SCREEN (NEW) ===== -->
+                <!-- ===== RULES SCREEN ===== -->
                 <div class="screen" id="screen-rules">
                     <button class="back-to-learn" id="backToFeedBtn" style="display:inline-flex;align-items:center;gap:8px;color:var(--green);cursor:pointer;font-weight:600;font-size:15px;margin-bottom:20px;transition:var(--transition);border:none;background:none;font-family:'Inter',sans-serif;">
                         <i class="fas fa-arrow-left"></i> Back to Feed
@@ -6876,6 +7146,60 @@
                             <div style="text-align:center;padding:20px;color:var(--text-secondary);">
                                 <i class="fas fa-spinner fa-spin"></i> Loading mosques...
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== NEW: Mosque Community Button ===== -->
+                    <div style="margin-top:30px;padding:16px 20px;background:var(--card-bg);border-radius:var(--radius-sm);border:1px solid var(--border-light);box-shadow:var(--shadow-sm);transition:all var(--transition-theme);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <i class="fas fa-mosque" style="font-size:28px;color:var(--gold);"></i>
+                                <div>
+                                    <div style="font-weight:600;color:var(--text-primary);">🕌 The Importance of Mosque Community</div>
+                                    <div style="font-size:13px;color:var(--text-secondary);">Learn why joining a masjid community is essential for your faith.</div>
+                                </div>
+                            </div>
+                            <button class="btn-primary" id="mosqueCommunityBtn" style="width:auto;padding:10px 28px;">
+                                <span>Learn More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== MOSQUE COMMUNITY PAGE (NEW) ===== -->
+                <div class="screen" id="screen-mosque-community">
+                    <button class="back-to-learn" id="backToCommunityBtn" style="display:inline-flex;align-items:center;gap:8px;color:var(--green);cursor:pointer;font-weight:600;font-size:15px;margin-bottom:20px;transition:var(--transition);border:none;background:none;font-family:'Inter',sans-serif;">
+                        <i class="fas fa-arrow-left"></i> Back to Community
+                    </button>
+
+                    <div class="mc-hero">
+                        <span class="mc-icon">🕌</span>
+                        <h2>The Blessings of Mosque Community</h2>
+                        <p>Discover why the masjid is the heart of Muslim life and how being part of a mosque community strengthens your faith, builds brotherhood/sisterhood, and brings you closer to Allah.</p>
+                    </div>
+
+                    <div class="mc-content">
+                        <h3><i class="fas fa-hand-holding-heart"></i> Why Join a Masjid?</h3>
+                        <p>The mosque is more than a place of prayer — it is the center of the Muslim community. The Prophet Muhammad (peace be upon him) said:</p>
+                        <div class="mc-quote">
+                            "Whoever goes to the mosque in the morning and evening, Allah will prepare for him a place in Paradise for every morning and evening." — Bukhari &amp; Muslim
+                        </div>
+                        <p>Being part of a mosque community brings countless benefits:</p>
+                        <ul>
+                            <li><strong>Spiritual Growth:</strong> Regular attendance at the mosque helps maintain your connection to Allah through congregational prayers, Quran recitation, and Islamic classes.</li>
+                            <li><strong>Brotherhood/Sisterhood:</strong> The mosque is a place to meet fellow Muslims, build lasting friendships, and support one another in times of need.</li>
+                            <li><strong>Learning Opportunities:</strong> Mosques offer classes, halaqas, and lectures that deepen your understanding of Islam.</li>
+                            <li><strong>Community Service:</strong> Engage in charitable activities, food drives, and other initiatives that benefit the local community.</li>
+                            <li><strong>Support for New Muslims:</strong> Converts find a welcoming environment to learn and integrate into the Muslim community.</li>
+                            <li><strong>Family Involvement:</strong> Mosques provide activities for children and youth, fostering a strong Islamic identity from a young age.</li>
+                        </ul>
+                        <p>By joining a mosque community, you not only earn immense rewards but also contribute to the unity and strength of the Ummah. Take the step today — your local masjid is waiting for you!</p>
+                        <div style="margin-top:20px;text-align:center;">
+                            <button class="btn-primary" id="joinMosqueFromMCBtn" style="max-width:300px;margin:0 auto;">
+                                <span>🕌 Find Your Local Mosque</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -7022,7 +7346,7 @@
                         </div>
                     </div>
 
-                    <!-- ===== NEW: COMMUNITY DIRECTORY ===== -->
+                    <!-- Community Directory -->
                     <div class="directory-section" id="directorySection">
                         <div class="dir-header">
                             <h3><i class="fas fa-users"></i> Community Directory</h3>
@@ -7248,13 +7572,63 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- ===== NEW: Feedback Button ===== -->
+                    <div class="settings-section">
+                        <div class="section-title"><i class="fas fa-comment-dots"></i> Feedback</div>
+                        <div class="section-desc">We value your input! Share your suggestions, ideas, or report issues.</div>
+                        <div class="settings-row">
+                            <div class="sr-left">
+                                <i class="fas fa-pen-fancy"></i>
+                                <div class="sr-info">
+                                    <h4>Send Feedback</h4>
+                                    <p>Help us improve Silah by sharing your thoughts.</p>
+                                </div>
+                            </div>
+                            <div class="sr-right">
+                                <button class="btn-sm" id="feedbackBtn" style="background:var(--green);color:#fff;border-color:var(--green);">
+                                    <i class="fas fa-paper-plane"></i> Give Feedback
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="settings-section">
                         <div class="section-title"><i class="fas fa-info-circle"></i> About Silah</div>
                         <div class="settings-about">
-                            <strong>Silah</strong> v1.5.0 · AI-Powered Community Platform<br />
+                            <strong>Silah</strong> v1.6.0 · AI-Powered Community Platform<br />
                             Built with ❤️ for the global Muslim community.<br />
                             <span style="font-size:11px;color:var(--gray-400);">© 2026 Silah Foundation · All rights reserved.</span>
                         </div>
+                    </div>
+                </div>
+
+                <!-- ===== FEEDBACK SCREEN (NEW) ===== -->
+                <div class="screen" id="screen-feedback">
+                    <button class="back-to-learn" id="backToSettingsBtn" style="display:inline-flex;align-items:center;gap:8px;color:var(--green);cursor:pointer;font-weight:600;font-size:15px;margin-bottom:20px;transition:var(--transition);border:none;background:none;font-family:'Inter',sans-serif;">
+                        <i class="fas fa-arrow-left"></i> Back to Settings
+                    </button>
+
+                    <div class="feedback-hero">
+                        <span class="feedback-icon">💬</span>
+                        <h2>We'd Love Your Feedback</h2>
+                        <p>Your suggestions help us make Silah better for everyone. Share your ideas, feature requests, or any issues you've encountered.</p>
+                    </div>
+
+                    <div class="feedback-form">
+                        <div class="form-group">
+                            <label for="feedbackEmail">📧 Your Email</label>
+                            <input type="email" id="feedbackEmail" placeholder="your-email@example.com" />
+                            <div class="helper">We'll use this to follow up if needed. You can also use your registered email.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedbackMessage">💭 Your Feedback</label>
+                            <textarea id="feedbackMessage" placeholder="Tell us what you think about Silah... What features would you like to see? Any bugs to report?"></textarea>
+                            <div class="helper">Be as detailed as you like — we read every submission!</div>
+                        </div>
+                        <button class="feedback-submit" id="feedbackSubmitBtn">
+                            <i class="fas fa-paper-plane"></i> Send Feedback
+                        </button>
                     </div>
                 </div>
 
@@ -7786,10 +8160,12 @@
             feed: document.getElementById('screen-feed'),
             rules: document.getElementById('screen-rules'),
             community: document.getElementById('screen-community'),
+            'mosque-community': document.getElementById('screen-mosque-community'),
             learn: document.getElementById('screen-learn'),
             'all-articles': document.getElementById('screen-all-articles'),
             profile: document.getElementById('screen-profile'),
             settings: document.getElementById('screen-settings'),
+            feedback: document.getElementById('screen-feedback'),
             pillars: document.getElementById('screen-pillars'),
             'ai-model': document.getElementById('screen-ai-model'),
         };
@@ -7805,19 +8181,33 @@
                 target.style.animation = 'none';
                 requestAnimationFrame(() => { target.style.animation = 'fadeUp 0.4s ease'; });
             }
-            if (screenId !== 'all-articles' && screenId !== 'rules') {
+            // Update nav highlights only for main screens
+            if (['dashboard', 'mentor', 'discover', 'feed', 'community', 'learn', 'profile', 'settings', 'pillars', 'ai-model']
+                .includes(screenId)) {
                 navItems.forEach(n => n.classList.remove('active'));
                 navItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
                 bottomNavItems.forEach(n => n.classList.remove('active'));
                 bottomNavItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
-            } else if (screenId === 'rules') {
-                navItems.forEach(n => n.classList.remove('active'));
-                bottomNavItems.forEach(n => n.classList.remove('active'));
             } else {
-                navItems.forEach(n => n.classList.remove('active'));
-                navItems.forEach(n => { if (n.dataset.screen === 'learn') n.classList.add('active'); });
-                bottomNavItems.forEach(n => n.classList.remove('active'));
-                bottomNavItems.forEach(n => { if (n.dataset.screen === 'learn') n.classList.add('active'); });
+                // for sub-pages, keep parent active if needed
+                if (screenId === 'rules') {
+                    // keep feed active? We'll just remove all highlights
+                    navItems.forEach(n => n.classList.remove('active'));
+                    bottomNavItems.forEach(n => n.classList.remove('active'));
+                } else if (screenId === 'feedback') {
+                    navItems.forEach(n => n.classList.remove('active'));
+                    navItems.forEach(n => { if (n.dataset.screen === 'settings') n.classList.add('active'); });
+                    bottomNavItems.forEach(n => n.classList.remove('active'));
+                    bottomNavItems.forEach(n => { if (n.dataset.screen === 'settings') n.classList.add('active'); });
+                } else if (screenId === 'mosque-community') {
+                    navItems.forEach(n => n.classList.remove('active'));
+                    navItems.forEach(n => { if (n.dataset.screen === 'community') n.classList.add('active'); });
+                    bottomNavItems.forEach(n => n.classList.remove('active'));
+                    bottomNavItems.forEach(n => { if (n.dataset.screen === 'community') n.classList.add('active'); });
+                } else {
+                    navItems.forEach(n => n.classList.remove('active'));
+                    bottomNavItems.forEach(n => n.classList.remove('active'));
+                }
             }
             const container = document.getElementById('screenContainer');
             if (container) container.scrollTop = 0;
@@ -7852,6 +8242,9 @@
             if (screenId === 'profile') {
                 loadDirectory();
             }
+            if (screenId === 'feedback') {
+                prefillFeedbackEmail();
+            }
         }
 
         navItems.forEach(item => {
@@ -7872,6 +8265,15 @@
         document.getElementById('readRulesBtn')?.addEventListener('click', () => navigateTo('rules'));
         document.getElementById('backToFeedBtn')?.addEventListener('click', () => navigateTo('feed'));
         document.getElementById('backToFeedBtn2')?.addEventListener('click', () => navigateTo('feed'));
+
+        // ========== MOSQUE COMMUNITY NAVIGATION ==========
+        document.getElementById('mosqueCommunityBtn')?.addEventListener('click', () => navigateTo('mosque-community'));
+        document.getElementById('backToCommunityBtn')?.addEventListener('click', () => navigateTo('community'));
+        document.getElementById('joinMosqueFromMCBtn')?.addEventListener('click', () => navigateTo('community'));
+
+        // ========== FEEDBACK NAVIGATION ==========
+        document.getElementById('feedbackBtn')?.addEventListener('click', () => navigateTo('feedback'));
+        document.getElementById('backToSettingsBtn')?.addEventListener('click', () => navigateTo('settings'));
 
         // ========== TOGGLE SWITCH ==========
         function toggleSwitch(el) {
@@ -8009,6 +8411,14 @@
                 }
                 if (document.getElementById('screen-rules').classList.contains('active')) {
                     navigateTo('feed');
+                    return;
+                }
+                if (document.getElementById('screen-feedback').classList.contains('active')) {
+                    navigateTo('settings');
+                    return;
+                }
+                if (document.getElementById('screen-mosque-community').classList.contains('active')) {
+                    navigateTo('community');
                     return;
                 }
                 navigateTo('dashboard');
@@ -10804,6 +11214,12 @@
                     keywords: ['community', 'members', 'imams', 'converts', 'events', 'mosques'],
                     content: 'Community Members Imams Converts Events Mosques'
                 },
+                'mosque-community': {
+                    title: 'Mosque Community',
+                    icon: 'fa-mosque',
+                    keywords: ['mosque', 'masjid', 'community', 'importance', 'benefits'],
+                    content: 'Mosque Community Importance Benefits Joining Masjid'
+                },
                 learn: {
                     title: 'Learn',
                     icon: 'fa-graduation-cap',
@@ -10820,9 +11236,15 @@
                     title: 'Settings',
                     icon: 'fa-cog',
                     keywords: ['settings', 'appearance', 'dark mode', 'notifications', 'privacy', 'language',
-                        'account'
+                        'account', 'feedback'
                     ],
-                    content: 'Settings Appearance Dark Mode Notifications Privacy Language Account'
+                    content: 'Settings Appearance Dark Mode Notifications Privacy Language Account Feedback'
+                },
+                feedback: {
+                    title: 'Feedback',
+                    icon: 'fa-comment-dots',
+                    keywords: ['feedback', 'suggestions', 'issues', 'ideas', 'improve'],
+                    content: 'Feedback Suggestions Issues Ideas Improve'
                 },
                 pillars: {
                     title: 'Five Pillars',
@@ -11271,7 +11693,42 @@
         });
         profileObserver.observe(profileScreen, { attributes: true });
 
+        // ============================================================
+        // ========== FEEDBACK PAGE ==========
+        // ============================================================
+        function prefillFeedbackEmail() {
+            const emailInput = document.getElementById('feedbackEmail');
+            if (emailInput && currentUser?.email) {
+                emailInput.value = currentUser.email;
+            } else if (emailInput) {
+                emailInput.value = '';
+            }
+        }
+
+        document.getElementById('feedbackSubmitBtn')?.addEventListener('click', function() {
+            const email = document.getElementById('feedbackEmail')?.value.trim() || '';
+            const message = document.getElementById('feedbackMessage')?.value.trim() || '';
+
+            if (!message) {
+                showModerationToast('Please write your feedback before submitting.', 'warning');
+                return;
+            }
+
+            if (!email) {
+                showModerationToast('Please provide an email so we can follow up.', 'warning');
+                return;
+            }
+
+            // In a real app, send to server. For demo, show success.
+            showModerationToast('✅ Thank you for your feedback! We\'ll review it soon.', 'success', 4000);
+            document.getElementById('feedbackMessage').value = '';
+            // Optionally navigate back to settings
+            setTimeout(() => navigateTo('settings'), 1500);
+        });
+
+        // ============================================================
         // ========== INIT ==========
+        // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             loadDarkModePreference();
             displayQuranVerse();
@@ -11302,12 +11759,14 @@
 
             loadArticles();
 
-            console.log('🌙 Silah — AI-Powered Community Platform loaded. (v1.5.0)');
+            console.log('🌙 Silah — AI-Powered Community Platform loaded. (v1.6.0)');
             console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
             console.log('💡 Tip: Press ⌘K (or Ctrl+K) to focus the search bar!');
             console.log('💡 Click the Silah logo to see the about modal!');
             console.log('📋 New: Community Directory in Profile tab!');
             console.log('📜 New: Rules & Guidelines page accessible from Feed!');
+            console.log('💬 New: Feedback page in Settings!');
+            console.log('🕌 New: Mosque Community page in Community tab!');
             console.log('AI Moderation:', USE_OPENAI ? 'Enabled (OpenAI)' : 'Disabled');
             if (USE_OPENAI) {
                 console.log('OpenAI API Key:', OPENAI_API_KEY && OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY_HERE' ? '✓ Configured' :
