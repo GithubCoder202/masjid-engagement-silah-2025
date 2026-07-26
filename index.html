@@ -65,6 +65,8 @@
             --blue-light: #eaf4fb;
             --purple: #8e44ad;
             --purple-light: #f4ecf7;
+            --accent-glow: #C9A84C;
+            --accent-rotate: #C9A84C;
         }
 
         /* ========== DARK MODE VARIABLES ========== */
@@ -101,6 +103,8 @@
             --blue-light: #1a2a38;
             --purple: #a569bd;
             --purple-light: #2a1a38;
+            --accent-glow: #d4b55c;
+            --accent-rotate: #d4b55c;
         }
 
         /* ========== RESET & BASE ========== */
@@ -1066,6 +1070,165 @@
         @media (max-width: 600px) {
             .landing-footer {
                 padding: 16px;
+                font-size: 12px;
+            }
+        }
+
+        /* ============================================================
+           NEW LANDING SECTIONS: Scholar Quote & Movable Graphics
+        ============================================================ */
+        #section-scholar-quote {
+            background: linear-gradient(160deg, var(--gold-pale) 0%, var(--cream) 100%);
+            padding: 60px 32px;
+            text-align: center;
+        }
+        [data-theme="dark"] #section-scholar-quote {
+            background: linear-gradient(160deg, #2a2418 0%, #181a1d 100%);
+        }
+        #section-scholar-quote .quote-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        #section-scholar-quote .quote-icon {
+            font-size: 48px;
+            color: var(--gold);
+            margin-bottom: 12px;
+            display: block;
+        }
+        #section-scholar-quote blockquote {
+            font-family: 'Amiri', serif;
+            font-size: 28px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            font-weight: 400;
+            position: relative;
+            padding: 0 20px;
+        }
+        #section-scholar-quote blockquote::before {
+            content: '"';
+            font-size: 60px;
+            color: var(--gold);
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            opacity: 0.3;
+            font-family: 'Georgia', serif;
+        }
+        #section-scholar-quote blockquote::after {
+            content: '"';
+            font-size: 60px;
+            color: var(--gold);
+            position: absolute;
+            bottom: -30px;
+            right: -10px;
+            opacity: 0.3;
+            font-family: 'Georgia', serif;
+        }
+        #section-scholar-quote .quote-author {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--green);
+            margin-top: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+        #section-scholar-quote .quote-author span {
+            color: var(--gold);
+            font-weight: 400;
+        }
+        @media (max-width: 700px) {
+            #section-scholar-quote blockquote {
+                font-size: 22px;
+                padding: 0 10px;
+            }
+            #section-scholar-quote blockquote::before,
+            #section-scholar-quote blockquote::after {
+                font-size: 40px;
+            }
+            #section-scholar-quote .quote-author {
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 480px) {
+            #section-scholar-quote blockquote {
+                font-size: 18px;
+            }
+        }
+
+        /* Movable Graphics Section */
+        #section-movable-graphics {
+            padding: 40px 32px 60px;
+            background: var(--cream);
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+        }
+        [data-theme="dark"] #section-movable-graphics {
+            background: #181a1d;
+        }
+        #section-movable-graphics .mg-container {
+            position: relative;
+            width: 100%;
+            height: 460px;
+            max-width: 1100px;
+            margin: 0 auto;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, var(--green-pale) 0%, var(--cream) 100%);
+            box-shadow: inset 0 0 60px rgba(26, 107, 79, 0.08);
+        }
+        [data-theme="dark"] #section-movable-graphics .mg-container {
+            background: radial-gradient(ellipse at center, #1a2f26 0%, #181a1d 100%);
+            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.3);
+        }
+        #section-movable-graphics .mg-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        #section-movable-graphics .mg-overlay-text {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            pointer-events: none;
+            z-index: 5;
+        }
+        #section-movable-graphics .mg-overlay-text h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            opacity: 0.7;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+        #section-movable-graphics .mg-overlay-text p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+        [data-theme="dark"] #section-movable-graphics .mg-overlay-text h3 {
+            color: #e0e3e8;
+        }
+        [data-theme="dark"] #section-movable-graphics .mg-overlay-text p {
+            color: #9a9fa8;
+        }
+        @media (max-width: 700px) {
+            #section-movable-graphics .mg-container {
+                height: 320px;
+            }
+            #section-movable-graphics .mg-overlay-text h3 {
+                font-size: 18px;
+            }
+        }
+        @media (max-width: 480px) {
+            #section-movable-graphics .mg-container {
+                height: 260px;
+            }
+            #section-movable-graphics .mg-overlay-text h3 {
+                font-size: 15px;
+            }
+            #section-movable-graphics .mg-overlay-text p {
                 font-size: 12px;
             }
         }
@@ -4018,20 +4181,54 @@
             font-size: 15px;
             transition: color var(--transition-theme);
         }
+
+        /* ===== PILLAR CARD WITH ROTATING BORDER HOVER ===== */
         .pillar-card {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
             padding: 22px 26px;
             box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-light);
+            border: 2px solid var(--border-light);
             margin-bottom: 20px;
-            transition: all var(--transition-theme);
+            transition: all var(--transition-theme), border-color 0.4s ease;
             display: flex;
             gap: 20px;
             align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+        }
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: var(--radius-sm);
+            padding: 2px;
+            background: transparent;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            transition: all 0.6s ease;
+            z-index: 1;
+        }
+        .pillar-card:hover::before {
+            background: conic-gradient(from var(--angle, 0deg), var(--gold), var(--green-light), var(--gold-light), var(--gold));
+            animation: rotateBorder 2s linear infinite;
+        }
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+        @keyframes rotateBorder {
+            to {
+                --angle: 360deg;
+            }
         }
         .pillar-card:hover {
-            box-shadow: var(--shadow-md);
+            border-color: var(--gold);
+            box-shadow: 0 8px 32px rgba(201, 168, 76, 0.2);
+            transform: translateY(-4px);
         }
         .pillar-card .pillar-icon {
             font-size: 28px;
@@ -4040,6 +4237,11 @@
             width: 48px;
             text-align: center;
             margin-top: 2px;
+            z-index: 2;
+        }
+        .pillar-card .pillar-content {
+            flex: 1;
+            z-index: 2;
         }
         .pillar-card .pillar-content h3 {
             font-size: 18px;
@@ -4068,6 +4270,468 @@
             margin-top: 8px;
             border-left: 3px solid var(--gold);
             padding-left: 14px;
+        }
+        .pillar-card .pillar-learn-more {
+            margin-top: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: var(--radius-full);
+            border: 2px solid var(--gold);
+            background: transparent;
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .pillar-card .pillar-learn-more:hover {
+            background: var(--gold);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        [data-theme="dark"] .pillar-card .pillar-learn-more:hover {
+            background: #d4b55c;
+            color: #0d1f17;
+        }
+
+        /* ===== PILLAR DETAIL SCREEN ===== */
+        #screen-pillar-detail .pd-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
+        }
+        #screen-pillar-detail .pd-back:hover {
+            transform: translateX(-4px);
+            color: var(--green-dark);
+        }
+        #screen-pillar-detail .pd-hero {
+            background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+            margin-bottom: 28px;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+        }
+        [data-theme="dark"] #screen-pillar-detail .pd-hero {
+            background: linear-gradient(135deg, #1a2f26 0%, #2a2418 100%);
+            border-color: var(--border-light);
+        }
+        #screen-pillar-detail .pd-hero .pd-icon {
+            font-size: 56px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        #screen-pillar-detail .pd-hero h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            color: var(--text-primary);
+        }
+        #screen-pillar-detail .pd-hero .pd-arabic {
+            font-family: 'Amiri', serif;
+            font-size: 26px;
+            color: var(--green);
+            margin-top: 4px;
+        }
+        #screen-pillar-detail .pd-body {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 28px 32px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        #screen-pillar-detail .pd-body h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            color: var(--text-primary);
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+        #screen-pillar-detail .pd-body p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        #screen-pillar-detail .pd-body .pd-quote {
+            background: var(--gold-pale);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            margin: 16px 0;
+            border-left: 4px solid var(--gold);
+            font-style: italic;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+        [data-theme="dark"] #screen-pillar-detail .pd-body .pd-quote {
+            background: #2a2418;
+        }
+        #screen-pillar-detail .pd-body ul {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 20px;
+        }
+        #screen-pillar-detail .pd-body ul li {
+            padding: 8px 0 8px 28px;
+            position: relative;
+            font-size: 15px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-light);
+        }
+        #screen-pillar-detail .pd-body ul li:last-child {
+            border-bottom: none;
+        }
+        #screen-pillar-detail .pd-body ul li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            color: var(--gold);
+        }
+        @media (max-width: 700px) {
+            #screen-pillar-detail .pd-hero {
+                padding: 24px 20px;
+            }
+            #screen-pillar-detail .pd-hero h2 {
+                font-size: 24px;
+            }
+            #screen-pillar-detail .pd-body {
+                padding: 20px 18px;
+            }
+            #screen-pillar-detail .pd-body h3 {
+                font-size: 19px;
+            }
+        }
+
+        /* ============================================================
+           NEW: EXAMPLE FORUMS SCREEN
+        ============================================================ */
+        #screen-example-forums .ef-hero {
+            background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
+            border-radius: var(--radius);
+            padding: 30px 36px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+            text-align: center;
+        }
+        [data-theme="dark"] #screen-example-forums .ef-hero {
+            background: linear-gradient(135deg, #1a2f26 0%, #2a2418 100%);
+            border-color: var(--border-light);
+        }
+        #screen-example-forums .ef-hero h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            color: var(--text-primary);
+        }
+        #screen-example-forums .ef-hero p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+        #screen-example-forums .ef-forum-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        #screen-example-forums .ef-forum-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+        }
+        #screen-example-forums .ef-forum-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        #screen-example-forums .ef-forum-card .ef-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #screen-example-forums .ef-forum-card .ef-title .ef-tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: var(--radius-full);
+            background: var(--green-pale);
+            color: var(--green);
+        }
+        #screen-example-forums .ef-forum-card .ef-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 4px 0 10px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        #screen-example-forums .ef-forum-card .ef-excerpt {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        #screen-example-forums .ef-forum-card .ef-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        #screen-example-forums .ef-forum-card .ef-actions button {
+            padding: 6px 18px;
+            border-radius: var(--radius-full);
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        #screen-example-forums .ef-forum-card .ef-actions .ef-view {
+            background: var(--green);
+            color: #fff;
+        }
+        #screen-example-forums .ef-forum-card .ef-actions .ef-view:hover {
+            background: var(--green-dark);
+        }
+        #screen-example-forums .ef-forum-card .ef-actions .ef-like {
+            background: var(--gray-100);
+            color: var(--text-secondary);
+        }
+        #screen-example-forums .ef-forum-card .ef-actions .ef-like:hover {
+            background: var(--gray-200);
+        }
+        #screen-example-forums .ef-forum-card .ef-actions .ef-like.liked {
+            background: var(--red-light);
+            color: var(--red);
+        }
+        #screen-example-forums .ef-rules-bar {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+        }
+        #screen-example-forums .ef-rules-bar .ef-rules-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        #screen-example-forums .ef-rules-bar .ef-rules-left i {
+            font-size: 24px;
+            color: var(--gold);
+        }
+        #screen-example-forums .ef-rules-bar .ef-rules-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        #screen-example-forums .ef-rules-bar .ef-rules-text strong {
+            color: var(--text-primary);
+        }
+        #screen-example-forums .ef-rules-bar .btn-rules {
+            padding: 8px 24px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--green);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #screen-example-forums .ef-rules-bar .btn-rules:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        #screen-example-forums .ef-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
+        }
+        #screen-example-forums .ef-back:hover {
+            transform: translateX(-4px);
+            color: var(--green-dark);
+        }
+        @media (max-width: 700px) {
+            #screen-example-forums .ef-hero h2 {
+                font-size: 22px;
+            }
+            #screen-example-forums .ef-forum-card {
+                padding: 16px 18px;
+            }
+            #screen-example-forums .ef-rules-bar {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            #screen-example-forums .ef-rules-bar .ef-rules-left {
+                justify-content: center;
+            }
+            #screen-example-forums .ef-rules-bar .btn-rules {
+                justify-content: center;
+            }
+        }
+
+        /* ============================================================
+           NEW: IMPORTANT MASJIDS (Chicago) SCREEN
+        ============================================================ */
+        #screen-masjids .ms-hero {
+            background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
+            border-radius: var(--radius);
+            padding: 30px 36px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+            text-align: center;
+        }
+        [data-theme="dark"] #screen-masjids .ms-hero {
+            background: linear-gradient(135deg, #1a2f26 0%, #2a2418 100%);
+            border-color: var(--border-light);
+        }
+        #screen-masjids .ms-hero h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            color: var(--text-primary);
+        }
+        #screen-masjids .ms-hero p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+        #screen-masjids .ms-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        @media (max-width: 700px) {
+            #screen-masjids .ms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        #screen-masjids .ms-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 20px 22px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        #screen-masjids .ms-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+        #screen-masjids .ms-card .ms-icon {
+            font-size: 32px;
+            color: var(--gold);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        #screen-masjids .ms-card .ms-info h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        #screen-masjids .ms-card .ms-info .ms-addr {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 2px 0 6px;
+        }
+        #screen-masjids .ms-card .ms-info .ms-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        #screen-masjids .ms-card .ms-info .ms-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 16px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--green);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+        }
+        #screen-masjids .ms-card .ms-info .ms-link:hover {
+            background: var(--green-dark);
+        }
+        #screen-masjids .ms-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
+        }
+        #screen-masjids .ms-back:hover {
+            transform: translateX(-4px);
+            color: var(--green-dark);
+        }
+        @media (max-width: 700px) {
+            #screen-masjids .ms-hero h2 {
+                font-size: 22px;
+            }
+            #screen-masjids .ms-card {
+                padding: 16px 18px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
         }
 
         /* ========== COMMUNITY PAGE ========== */
@@ -4899,7 +5563,7 @@
         }
 
         /* ============================================================
-           NEW: RULES PAGE
+           RULES PAGE (existing)
         ============================================================ */
         #screen-rules .rules-hero {
             background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
@@ -5027,7 +5691,7 @@
         }
 
         /* ============================================================
-           NEW: COMMUNITY DIRECTORY (in Profile tab)
+           COMMUNITY DIRECTORY (in Profile tab)
         ============================================================ */
         .directory-section {
             margin-top: 28px;
@@ -5304,7 +5968,118 @@
         }
 
         /* ============================================================
-           NEW: FEEDBACK PAGE
+           FEED — Example Forums Button (NEW)
+        ============================================================ */
+        .feed-forums-bar {
+            margin-top: 12px;
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+        }
+        .feed-forums-bar .forums-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feed-forums-bar .forums-left i {
+            font-size: 24px;
+            color: var(--gold);
+        }
+        .feed-forums-bar .forums-left .forums-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .feed-forums-bar .forums-left .forums-text strong {
+            color: var(--text-primary);
+        }
+        .feed-forums-bar .btn-forums {
+            padding: 8px 24px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--teal);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .feed-forums-bar .btn-forums:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ============================================================
+           COMMUNITY — Important Masjids Button (NEW)
+        ============================================================ */
+        .community-masjids-bar {
+            margin-top: 16px;
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+        }
+        .community-masjids-bar .masjids-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .community-masjids-bar .masjids-left i {
+            font-size: 28px;
+            color: var(--gold);
+        }
+        .community-masjids-bar .masjids-left .masjids-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .community-masjids-bar .masjids-left .masjids-text strong {
+            color: var(--text-primary);
+        }
+        .community-masjids-bar .btn-masjids {
+            padding: 8px 24px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--purple);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .community-masjids-bar .btn-masjids:hover {
+            background: #6c3483;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        [data-theme="dark"] .community-masjids-bar .btn-masjids:hover {
+            background: #7d3c98;
+        }
+
+        /* ============================================================
+           FEEDBACK PAGE
         ============================================================ */
         #screen-feedback .feedback-hero {
             background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
@@ -5409,7 +6184,7 @@
         }
 
         /* ============================================================
-           NEW: MOSQUE COMMUNITY PAGE
+           MOSQUE COMMUNITY PAGE
         ============================================================ */
         #screen-mosque-community .mc-hero {
             background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
@@ -5683,6 +6458,34 @@
             #screen-mosque-community .mc-content {
                 padding: 20px 18px;
             }
+            /* Example forums & Masjids responsive */
+            #screen-example-forums .ef-hero,
+            #screen-masjids .ms-hero {
+                padding: 24px 20px;
+            }
+            #screen-example-forums .ef-hero h2,
+            #screen-masjids .ms-hero h2 {
+                font-size: 22px;
+            }
+            #screen-example-forums .ef-forum-card {
+                padding: 16px 18px;
+            }
+            #screen-masjids .ms-grid {
+                gap: 12px;
+            }
+            #screen-masjids .ms-card {
+                padding: 16px 18px;
+            }
+            /* Pillar detail */
+            #screen-pillar-detail .pd-hero {
+                padding: 24px 20px;
+            }
+            #screen-pillar-detail .pd-hero h2 {
+                font-size: 24px;
+            }
+            #screen-pillar-detail .pd-body {
+                padding: 20px 18px;
+            }
         }
 
         @media (max-width: 700px) {
@@ -5781,15 +6584,18 @@
                 font-size: 12px;
             }
             /* feed rules bar */
-            .feed-rules-bar {
+            .feed-rules-bar,
+            .feed-forums-bar {
                 flex-direction: column;
                 align-items: stretch;
                 text-align: center;
             }
-            .feed-rules-bar .rules-bar-left {
+            .feed-rules-bar .rules-bar-left,
+            .feed-forums-bar .forums-left {
                 justify-content: center;
             }
-            .feed-rules-bar .btn-rules {
+            .feed-rules-bar .btn-rules,
+            .feed-forums-bar .btn-forums {
                 justify-content: center;
             }
             /* rules page */
@@ -5822,6 +6628,33 @@
             }
             #screen-mosque-community .mc-content h3 {
                 font-size: 19px;
+            }
+            /* example forums & masjids */
+            #screen-example-forums .ef-hero h2,
+            #screen-masjids .ms-hero h2 {
+                font-size: 20px;
+            }
+            #screen-example-forums .ef-rules-bar {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            #screen-example-forums .ef-rules-bar .ef-rules-left {
+                justify-content: center;
+            }
+            #screen-example-forums .ef-rules-bar .btn-rules {
+                justify-content: center;
+            }
+            .community-masjids-bar {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .community-masjids-bar .masjids-left {
+                justify-content: center;
+            }
+            .community-masjids-bar .btn-masjids {
+                justify-content: center;
             }
         }
 
@@ -5880,6 +6713,9 @@
             .settings-row .sr-right .btn-sm {
                 font-size: 12px;
                 padding: 5px 12px;
+            }
+            #screen-masjids .ms-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -5968,7 +6804,7 @@
             <div class="about-credit">
                 <div class="credit-label">✨ Website inspired by <span>Cobalt Coders</span> ✨</div>
             </div>
-            <div class="about-version">v1.6.0 · © 2026 Silah Foundation</div>
+            <div class="about-version">v1.7.0 · © 2026 Silah Foundation</div>
         </div>
     </div>
 
@@ -6064,6 +6900,15 @@
                 <i class="fas fa-heart"></i> <span class="sidebar-label">Motivations</span>
                 <span class="sidebar-icon-only"><i class="fas fa-heart"></i></span>
             </a>
+            <!-- NEW: Scholar Quote & Movable Graphics links -->
+            <a href="#section-scholar-quote" data-section="section-scholar-quote">
+                <i class="fas fa-quote-right"></i> <span class="sidebar-label">Scholar Quote</span>
+                <span class="sidebar-icon-only"><i class="fas fa-quote-right"></i></span>
+            </a>
+            <a href="#section-movable-graphics" data-section="section-movable-graphics">
+                <i class="fas fa-star-and-crescent"></i> <span class="sidebar-label">Islamic Art</span>
+                <span class="sidebar-icon-only"><i class="fas fa-star-and-crescent"></i></span>
+            </a>
             <button class="sidebar-toggle-btn" id="sidebarToggleBtn">
                 <i class="fas fa-chevron-left" id="sidebarToggleIcon"></i>
                 <span>Collapse</span>
@@ -6082,6 +6927,8 @@
                 <a href="#section-reviews" class="nav-link nav-link-text" data-section="section-reviews">Reviews</a>
                 <a href="#section-hackathon" class="nav-link nav-link-text" data-section="section-hackathon">Hackathon</a>
                 <a href="#section-motivations" class="nav-link nav-link-text" data-section="section-motivations">Motivations</a>
+                <a href="#section-scholar-quote" class="nav-link nav-link-text" data-section="section-scholar-quote">Scholar Quote</a>
+                <a href="#section-movable-graphics" class="nav-link nav-link-text" data-section="section-movable-graphics">Islamic Art</a>
                 <button class="dark-toggle-nav" id="landingDarkToggle" title="Toggle dark mode">
                     <i class="fas fa-moon" id="landingDarkIcon"></i>
                     <span class="toggle-label">Dark</span>
@@ -6134,7 +6981,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Decorative elements -->
             <div class="decoration-star" style="top:10%;left:5%;font-size:80px;">✦</div>
             <div class="decoration-star" style="bottom:15%;right:3%;font-size:60px;">✦</div>
             <div class="decoration-crescent" style="bottom:5%;left:10%;font-size:140px;">☾</div>
@@ -6372,6 +7218,36 @@
             </div>
         </section>
 
+        <!-- ===== NEW: Scholar Quote Section ===== -->
+        <section class="landing-section" id="section-scholar-quote">
+            <div class="quote-inner">
+                <span class="quote-icon">📜</span>
+                <blockquote>
+                    The religion of Islam is the religion of truth, mercy, and justice. It calls to the oneness of God, the nobility of character, and the service of humanity. It is not a religion of coercion or hardship, but of ease and compassion.
+                </blockquote>
+                <div class="quote-author">— Imam Al-Ghazali <span>(1058–1111 CE)</span></div>
+                <p style="margin-top:16px;color:var(--text-secondary);font-size:15px;max-width:700px;margin-left:auto;margin-right:auto;">
+                    "Islam is a religion that teaches us to love one another, to care for the orphan, the widow, the poor, and to stand for justice. It is a complete way of life that brings peace to the heart and harmony to society."
+                </p>
+            </div>
+            <div class="decoration-star" style="bottom:10%;left:5%;font-size:60px;">✦</div>
+            <div class="decoration-crescent" style="top:10%;right:5%;font-size:100px;">☾</div>
+        </section>
+
+        <!-- ===== NEW: Movable Graphics Section ===== -->
+        <section class="landing-section" id="section-movable-graphics">
+            <div class="mg-container">
+                <canvas id="mgCanvas" class="mg-canvas"></canvas>
+                <div class="mg-overlay-text">
+                    <h3>✦ Islamic Geometric Patterns ✦</h3>
+                    <p>Infinite beauty in the mathematics of faith</p>
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:16px;font-size:13px;color:var(--text-secondary);">
+                <i class="fas fa-sync-alt" style="margin-right:6px;"></i> Move your mouse or touch to interact
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer class="landing-footer">
             &copy; 2026 <strong>Silah</strong> Foundation · Built with ❤️ for the global Muslim community
@@ -6384,7 +7260,6 @@
         <div class="auth-card" id="authCard">
             <button class="auth-close" id="authCloseBtn">✕</button>
 
-            <!-- Auth content (full existing auth flow) -->
             <div class="auth-brand" id="authBrand">
                 <div class="logo-icon">ص</div>
                 <h1>Silah<span>.</span></h1>
@@ -7003,6 +7878,122 @@
                             <i class="fas fa-book-open"></i> Read Rules
                         </button>
                     </div>
+
+                    <!-- NEW: Example Forums bar -->
+                    <div class="feed-forums-bar">
+                        <div class="forums-left">
+                            <i class="fas fa-comments"></i>
+                            <div class="forums-text">
+                                <strong>📌 Example Forums</strong> — See respectful discussions in action.
+                            </div>
+                        </div>
+                        <button class="btn-forums" id="exampleForumsBtn">
+                            <i class="fas fa-eye"></i> View Forums
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ===== EXAMPLE FORUMS SCREEN (NEW) ===== -->
+                <div class="screen" id="screen-example-forums">
+                    <button class="ef-back" id="efBackBtn">
+                        <i class="fas fa-arrow-left"></i> Back to Feed
+                    </button>
+
+                    <div class="ef-hero">
+                        <h2>💬 Example Forums</h2>
+                        <p>Respectful discussions from the Silah community. Read and learn from these examples.</p>
+                    </div>
+
+                    <div class="ef-forum-list">
+                        <div class="ef-forum-card">
+                            <div class="ef-title">
+                                <span>🤲 Seeking Guidance on Daily Prayers</span>
+                                <span class="ef-tag">New Muslim</span>
+                            </div>
+                            <div class="ef-meta">
+                                <span>👤 Aisha K. · 2 hours ago</span>
+                                <span>💬 12 replies</span>
+                                <span>❤️ 8 likes</span>
+                            </div>
+                            <div class="ef-excerpt">
+                                "Assalamu alaikum! I'm a new Muslim and I'm struggling to keep up with all five daily prayers. Does anyone have tips on how to build the habit? Jazakallah khair."
+                            </div>
+                            <div class="ef-actions">
+                                <button class="ef-view">View Discussion</button>
+                                <button class="ef-like"><i class="far fa-heart"></i> Like</button>
+                            </div>
+                        </div>
+
+                        <div class="ef-forum-card">
+                            <div class="ef-title">
+                                <span>📖 Understanding Surah Al-Fatihah</span>
+                                <span class="ef-tag">Quran Study</span>
+                            </div>
+                            <div class="ef-meta">
+                                <span>👤 Omar H. · 5 hours ago</span>
+                                <span>💬 8 replies</span>
+                                <span>❤️ 15 likes</span>
+                            </div>
+                            <div class="ef-excerpt">
+                                "I've been reading Surah Al-Fatihah every day, but I want to understand its deeper meanings. Can someone explain the significance of each verse? Barakallahu feek."
+                            </div>
+                            <div class="ef-actions">
+                                <button class="ef-view">View Discussion</button>
+                                <button class="ef-like"><i class="far fa-heart"></i> Like</button>
+                            </div>
+                        </div>
+
+                        <div class="ef-forum-card">
+                            <div class="ef-title">
+                                <span>🕌 How to Connect with My Local Mosque</span>
+                                <span class="ef-tag">Community</span>
+                            </div>
+                            <div class="ef-meta">
+                                <span>👤 Sarah M. · 1 day ago</span>
+                                <span>💬 6 replies</span>
+                                <span>❤️ 10 likes</span>
+                            </div>
+                            <div class="ef-excerpt">
+                                "I moved to a new city and I'm not sure how to get involved at the local masjid. What's the best way to introduce myself and get involved? Any advice is appreciated."
+                            </div>
+                            <div class="ef-actions">
+                                <button class="ef-view">View Discussion</button>
+                                <button class="ef-like"><i class="far fa-heart"></i> Like</button>
+                            </div>
+                        </div>
+
+                        <div class="ef-forum-card">
+                            <div class="ef-title">
+                                <span>🤝 Supporting a Fellow Muslim in Need</span>
+                                <span class="ef-tag">Community Service</span>
+                            </div>
+                            <div class="ef-meta">
+                                <span>👤 Fatima H. · 2 days ago</span>
+                                <span>💬 4 replies</span>
+                                <span>❤️ 20 likes</span>
+                            </div>
+                            <div class="ef-excerpt">
+                                "I know a sister in our community who is going through a difficult time. What are some Islamic ways we can support her? Let's come together as an Ummah."
+                            </div>
+                            <div class="ef-actions">
+                                <button class="ef-view">View Discussion</button>
+                                <button class="ef-like"><i class="far fa-heart"></i> Like</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rules bar (again) -->
+                    <div class="ef-rules-bar">
+                        <div class="ef-rules-left">
+                            <i class="fas fa-scroll"></i>
+                            <div class="ef-rules-text">
+                                <strong>📋 Community Guidelines</strong> — Ensure a safe &amp; respectful space for all.
+                            </div>
+                        </div>
+                        <button class="btn-rules" id="efRulesBtn">
+                            <i class="fas fa-book-open"></i> Read Rules
+                        </button>
+                    </div>
                 </div>
 
                 <!-- ===== RULES SCREEN ===== -->
@@ -7149,7 +8140,7 @@
                         </div>
                     </div>
 
-                    <!-- ===== NEW: Mosque Community Button ===== -->
+                    <!-- Mosque Community button -->
                     <div style="margin-top:30px;padding:16px 20px;background:var(--card-bg);border-radius:var(--radius-sm);border:1px solid var(--border-light);box-shadow:var(--shadow-sm);transition:all var(--transition-theme);">
                         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
                             <div style="display:flex;align-items:center;gap:12px;">
@@ -7165,9 +8156,22 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- NEW: Important Masjids in Chicago button -->
+                    <div class="community-masjids-bar">
+                        <div class="masjids-left">
+                            <i class="fas fa-city"></i>
+                            <div class="masjids-text">
+                                <strong>🏙️ Important Masjids in Chicago</strong> — Discover key mosques in the Chicago metropolitan area.
+                            </div>
+                        </div>
+                        <button class="btn-masjids" id="masjidsBtn">
+                            <i class="fas fa-map-marked-alt"></i> View Masjids
+                        </button>
+                    </div>
                 </div>
 
-                <!-- ===== MOSQUE COMMUNITY PAGE (NEW) ===== -->
+                <!-- ===== MOSQUE COMMUNITY PAGE ===== -->
                 <div class="screen" id="screen-mosque-community">
                     <button class="back-to-learn" id="backToCommunityBtn" style="display:inline-flex;align-items:center;gap:8px;color:var(--green);cursor:pointer;font-weight:600;font-size:15px;margin-bottom:20px;transition:var(--transition);border:none;background:none;font-family:'Inter',sans-serif;">
                         <i class="fas fa-arrow-left"></i> Back to Community
@@ -7200,6 +8204,75 @@
                                 <span>🕌 Find Your Local Mosque</span>
                                 <i class="fas fa-arrow-right"></i>
                             </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== IMPORTANT MASJIDS (Chicago) SCREEN (NEW) ===== -->
+                <div class="screen" id="screen-masjids">
+                    <button class="ms-back" id="msBackBtn">
+                        <i class="fas fa-arrow-left"></i> Back to Community
+                    </button>
+
+                    <div class="ms-hero">
+                        <h2>🏙️ Important Masjids in the Chicago Metropolitan Area</h2>
+                        <p>Explore some of the most significant mosques serving the Muslim community in and around Chicago.</p>
+                    </div>
+
+                    <div class="ms-grid">
+                        <div class="ms-card">
+                            <div class="ms-icon">🕌</div>
+                            <div class="ms-info">
+                                <h4>Islamic Center of Chicago</h4>
+                                <div class="ms-addr">📍 1234 W. 63rd St, Chicago, IL</div>
+                                <div class="ms-desc">One of the oldest and most established Islamic centers in Chicago, offering daily prayers, Jummah, Quran classes, and community events.</div>
+                                <a href="#" class="ms-link" onclick="showModerationToast('Directions to Islamic Center of Chicago', 'info', 2000);return false;">Get Directions</a>
+                            </div>
+                        </div>
+                        <div class="ms-card">
+                            <div class="ms-icon">🕌</div>
+                            <div class="ms-info">
+                                <h4>Masjid Al-Noor</h4>
+                                <div class="ms-addr">📍 456 N. Harlem Ave, Chicago, IL</div>
+                                <div class="ms-desc">A vibrant community mosque known for its youth programs, interfaith outreach, and beautiful architectural design.</div>
+                                <a href="#" class="ms-link" onclick="showModerationToast('Directions to Masjid Al-Noor', 'info', 2000);return false;">Get Directions</a>
+                            </div>
+                        </div>
+                        <div class="ms-card">
+                            <div class="ms-icon">🕌</div>
+                            <div class="ms-info">
+                                <h4>Downtown Islamic Center</h4>
+                                <div class="ms-addr">📍 789 S. Michigan Ave, Chicago, IL</div>
+                                <div class="ms-desc">Located in the heart of the city, this mosque serves professionals, students, and visitors with convenient prayer times and community services.</div>
+                                <a href="#" class="ms-link" onclick="showModerationToast('Directions to Downtown Islamic Center', 'info', 2000);return false;">Get Directions</a>
+                            </div>
+                        </div>
+                        <div class="ms-card">
+                            <div class="ms-icon">🕌</div>
+                            <div class="ms-info">
+                                <h4>Islamic Foundation of Chicago</h4>
+                                <div class="ms-addr">📍 101 W. Devon Ave, Chicago, IL</div>
+                                <div class="ms-desc">A comprehensive Islamic center offering religious education, social services, and a full-time Islamic school.</div>
+                                <a href="#" class="ms-link" onclick="showModerationToast('Directions to Islamic Foundation of Chicago', 'info', 2000);return false;">Get Directions</a>
+                            </div>
+                        </div>
+                        <div class="ms-card">
+                            <div class="ms-icon">🕌</div>
+                            <div class="ms-info">
+                                <h4>Masjid Al-Huda</h4>
+                                <div class="ms-addr">📍 222 E. 87th St, Chicago, IL</div>
+                                <div class="ms-desc">A welcoming community mosque with a strong focus on new Muslim support, family counseling, and community dinners.</div>
+                                <a href="#" class="ms-link" onclick="showModerationToast('Directions to Masjid Al-Huda', 'info', 2000);return false;">Get Directions</a>
+                            </div>
+                        </div>
+                        <div class="ms-card">
+                            <div class="ms-icon">🕌</div>
+                            <div class="ms-info">
+                                <h4>Bridgeview Mosque Foundation</h4>
+                                <div class="ms-addr">📍 444 W. 159th St, Bridgeview, IL</div>
+                                <div class="ms-desc">One of the largest Islamic centers in the Midwest, featuring a masjid, school, gymnasium, and community hall.</div>
+                                <a href="#" class="ms-link" onclick="showModerationToast('Directions to Bridgeview Mosque Foundation', 'info', 2000);return false;">Get Directions</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -7573,7 +8646,7 @@
                         </div>
                     </div>
 
-                    <!-- ===== NEW: Feedback Button ===== -->
+                    <!-- Feedback Button -->
                     <div class="settings-section">
                         <div class="section-title"><i class="fas fa-comment-dots"></i> Feedback</div>
                         <div class="section-desc">We value your input! Share your suggestions, ideas, or report issues.</div>
@@ -7596,14 +8669,14 @@
                     <div class="settings-section">
                         <div class="section-title"><i class="fas fa-info-circle"></i> About Silah</div>
                         <div class="settings-about">
-                            <strong>Silah</strong> v1.6.0 · AI-Powered Community Platform<br />
+                            <strong>Silah</strong> v1.7.0 · AI-Powered Community Platform<br />
                             Built with ❤️ for the global Muslim community.<br />
                             <span style="font-size:11px;color:var(--gray-400);">© 2026 Silah Foundation · All rights reserved.</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- ===== FEEDBACK SCREEN (NEW) ===== -->
+                <!-- ===== FEEDBACK SCREEN ===== -->
                 <div class="screen" id="screen-feedback">
                     <button class="back-to-learn" id="backToSettingsBtn" style="display:inline-flex;align-items:center;gap:8px;color:var(--green);cursor:pointer;font-weight:600;font-size:15px;margin-bottom:20px;transition:var(--transition);border:none;background:none;font-family:'Inter',sans-serif;">
                         <i class="fas fa-arrow-left"></i> Back to Settings
@@ -7636,47 +8709,79 @@
                 <div class="screen" id="screen-pillars">
                     <div class="pillars-header">
                         <h2>🕌 Five Pillars of Islam</h2>
-                        <p>The foundation of a Muslim's faith and practice.</p>
+                        <p>The foundation of a Muslim's faith and practice. Hover over each pillar to see the border glow!</p>
                     </div>
-                    <div class="pillar-card">
+
+                    <!-- Pillar 1: Shahada -->
+                    <div class="pillar-card" data-pillar="shahada">
                         <div class="pillar-icon">☝️</div>
                         <div class="pillar-content">
                             <h3>1. Shahada <span class="arabic">الشهادة</span></h3>
-                            <p>The declaration of faith: <em>"Lā ilāha illā Allāh, Muḥammadun rasūlu Allāh"</em> — "There is no god but Allah, and Muhammad is the Messenger of Allah." This is the core belief that distinguishes a Muslim. It affirms the oneness of God and the prophethood of Muhammad (peace be upon him).</p>
+                            <p>The declaration of faith: <em>"Lā ilāha illā Allāh, Muḥammadun rasūlu Allāh"</em> — "There is no god but Allah, and Muhammad is the Messenger of Allah." This is the core belief that distinguishes a Muslim.</p>
                             <div class="pillar-quote">"Whoever says 'Lā ilāha illā Allāh' sincerely from his heart will enter Paradise." — Bukhari</div>
+                            <button class="pillar-learn-more" data-pillar="shahada">Learn More <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
-                    <div class="pillar-card">
+
+                    <!-- Pillar 2: Salah -->
+                    <div class="pillar-card" data-pillar="salah">
                         <div class="pillar-icon">🧎</div>
                         <div class="pillar-content">
                             <h3>2. Salah <span class="arabic">الصلاة</span></h3>
-                            <p>Performing the five daily prayers (Fajr, Dhuhr, Asr, Maghrib, Isha) at prescribed times. Prayer is a direct connection between the believer and Allah, fostering discipline, humility, and spiritual awareness. It includes recitation of Quranic verses, bowing, and prostration.</p>
+                            <p>Performing the five daily prayers (Fajr, Dhuhr, Asr, Maghrib, Isha) at prescribed times. Prayer is a direct connection between the believer and Allah.</p>
                             <div class="pillar-quote">"The first thing a person will be judged for on the Day of Judgment is prayer." — An-Nasa'i</div>
+                            <button class="pillar-learn-more" data-pillar="salah">Learn More <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
-                    <div class="pillar-card">
+
+                    <!-- Pillar 3: Zakat -->
+                    <div class="pillar-card" data-pillar="zakat">
                         <div class="pillar-icon">💰</div>
                         <div class="pillar-content">
                             <h3>3. Zakat <span class="arabic">الزكاة</span></h3>
-                            <p>Obligatory charity given annually on surplus wealth above a minimum threshold (nisab). Zakat purifies one's wealth and helps the poor, the needy, and those in debt. It is a means of social solidarity and economic justice.</p>
+                            <p>Obligatory charity given annually on surplus wealth above a minimum threshold (nisab). Zakat purifies one's wealth and helps the poor, the needy, and those in debt.</p>
                             <div class="pillar-quote">"Zakat is not a tax; it is a right of the poor in the wealth of the rich."</div>
+                            <button class="pillar-learn-more" data-pillar="zakat">Learn More <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
-                    <div class="pillar-card">
+
+                    <!-- Pillar 4: Sawm -->
+                    <div class="pillar-card" data-pillar="sawm">
                         <div class="pillar-icon">🌙</div>
                         <div class="pillar-content">
                             <h3>4. Sawm <span class="arabic">الصوم</span></h3>
-                            <p>Fasting from dawn to sunset during the month of Ramadan. Muslims abstain from food, drink, and other physical needs during the day. Fasting teaches self-restraint, empathy for the hungry, and spiritual reflection. It is a time for increased prayer and Quran recitation.</p>
+                            <p>Fasting from dawn to sunset during the month of Ramadan. Muslims abstain from food, drink, and other physical needs during the day. Fasting teaches self-restraint and empathy.</p>
                             <div class="pillar-quote">"Fasting is a shield; when one of you is fasting, let him not behave foolishly." — Bukhari & Muslim</div>
+                            <button class="pillar-learn-more" data-pillar="sawm">Learn More <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
-                    <div class="pillar-card">
+
+                    <!-- Pillar 5: Hajj -->
+                    <div class="pillar-card" data-pillar="hajj">
                         <div class="pillar-icon">🕋</div>
                         <div class="pillar-content">
                             <h3>5. Hajj <span class="arabic">الحج</span></h3>
-                            <p>Pilgrimage to the holy city of Mecca in Saudi Arabia, required once in a lifetime for those who are physically and financially able. Hajj takes place during the Islamic month of Dhul-Hijjah and involves a series of rituals that commemorate the actions of Prophet Ibrahim and his family.</p>
-                            <div class="pillar-quote">"Whoever performs Hajj for the sake of Allah and avoids obscenity and wrongdoing will return sinless as the day his mother gave birth to him." — Bukhari</div>
+                            <p>Pilgrimage to the holy city of Mecca in Saudi Arabia, required once in a lifetime for those who are physically and financially able. Hajj commemorates the actions of Prophet Ibrahim.</p>
+                            <div class="pillar-quote">"Whoever performs Hajj for the sake of Allah and avoids obscenity and wrongdoing will return sinless." — Bukhari</div>
+                            <button class="pillar-learn-more" data-pillar="hajj">Learn More <i class="fas fa-arrow-right"></i></button>
                         </div>
+                    </div>
+                </div>
+
+                <!-- ===== PILLAR DETAIL SCREEN (NEW) ===== -->
+                <div class="screen" id="screen-pillar-detail">
+                    <button class="pd-back" id="pdBackBtn">
+                        <i class="fas fa-arrow-left"></i> Back to Five Pillars
+                    </button>
+
+                    <div class="pd-hero" id="pdHero">
+                        <span class="pd-icon" id="pdIcon">☝️</span>
+                        <h2 id="pdTitle">Shahada</h2>
+                        <div class="pd-arabic" id="pdArabic">الشهادة</div>
+                    </div>
+
+                    <div class="pd-body" id="pdBody">
+                        <!-- Content dynamically inserted by JS -->
                     </div>
                 </div>
 
@@ -7737,7 +8842,6 @@
         // ========== LANDING PAGE SIDEBAR & NAVIGATION ==========
         // ============================================================
 
-        // Collapsible sidebar
         const sidebar = document.getElementById('landingSidebar');
         const toggleBtn = document.getElementById('sidebarToggleBtn');
         const toggleIcon = document.getElementById('sidebarToggleIcon');
@@ -7765,24 +8869,24 @@
             updateSidebar();
         });
 
-        // Section navigation
         const sections = {
             hero: document.getElementById('section-hero'),
             about: document.getElementById('section-about'),
             team: document.getElementById('section-team'),
             reviews: document.getElementById('section-reviews'),
             hackathon: document.getElementById('section-hackathon'),
-            motivations: document.getElementById('section-motivations')
+            motivations: document.getElementById('section-motivations'),
+            'scholar-quote': document.getElementById('section-scholar-quote'),
+            'movable-graphics': document.getElementById('section-movable-graphics')
         };
 
         const sidebarLinks = sidebar.querySelectorAll('a[data-section]');
         const navLinks = document.querySelectorAll('.landing-nav .nav-link[data-section]');
 
         function navigateToLandingSection(sectionId) {
-            Object.values(sections).forEach(s => s.classList.remove('active'));
+            Object.values(sections).forEach(s => { if (s) s.classList.remove('active'); });
             const target = document.getElementById(sectionId);
             if (target) target.classList.add('active');
-            const id = sectionId.replace('section-', '');
             sidebarLinks.forEach(a => {
                 a.classList.toggle('active', a.dataset.section === sectionId);
             });
@@ -7790,6 +8894,10 @@
                 a.classList.toggle('active', a.dataset.section === sectionId);
             });
             document.getElementById('landingPage').scrollTop = 0;
+            // If we're navigating to the movable graphics section, initialize the canvas after a small delay
+            if (sectionId === 'section-movable-graphics') {
+                setTimeout(initMovableGraphics, 300);
+            }
         }
 
         sidebarLinks.forEach(link => {
@@ -7819,10 +8927,281 @@
             const hash = window.location.hash.substring(1);
             if (hash && document.getElementById(hash)) {
                 navigateToLandingSection(hash);
+            } else {
+                navigateToLandingSection('section-hero');
             }
+            // Initialize movable graphics if that section is active
+            setTimeout(initMovableGraphics, 500);
         });
 
-        // ========== LANDING PAGE DARK TOGGLE ==========
+        // ========== MOVABLE GRAPHICS (Canvas Animation) ==========
+        function initMovableGraphics() {
+            const canvas = document.getElementById('mgCanvas');
+            if (!canvas) return;
+            const container = canvas.parentElement;
+            const rect = container.getBoundingClientRect();
+            canvas.width = rect.width || container.offsetWidth || 1100;
+            canvas.height = rect.height || container.offsetHeight || 460;
+            const ctx = canvas.getContext('2d');
+
+            // Islamic geometric pattern - stars, crescents, and geometric shapes
+            const shapes = [];
+            const numShapes = 40 + Math.floor(Math.random() * 20);
+
+            // Colors based on theme
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const colors = isDark ?
+                ['#d4b55c', '#2ea87a', '#a569bd', '#5b9bd5', '#e8d48a', '#c9a84c'] :
+                ['#C9A84C', '#1A6B4F', '#8e44ad', '#3498db', '#E8D48A', '#2A9D8F'];
+
+            for (let i = 0; i < numShapes; i++) {
+                const type = Math.random() > 0.6 ? 'crescent' : (Math.random() > 0.5 ? 'star' : 'geometric');
+                shapes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: 10 + Math.random() * 30,
+                    speedX: (Math.random() - 0.5) * 0.6,
+                    speedY: (Math.random() - 0.5) * 0.6,
+                    rotation: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.02,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    type: type,
+                    alpha: 0.4 + Math.random() * 0.5,
+                    points: type === 'star' ? 5 + Math.floor(Math.random() * 3) * 2 : 0,
+                    phase: Math.random() * Math.PI * 2
+                });
+            }
+
+            let mouseX = canvas.width / 2;
+            let mouseY = canvas.height / 2;
+            let mouseActive = false;
+
+            canvas.addEventListener('mousemove', function(e) {
+                const rect = canvas.getBoundingClientRect();
+                mouseX = e.clientX - rect.left;
+                mouseY = e.clientY - rect.top;
+                mouseActive = true;
+            });
+
+            canvas.addEventListener('mouseleave', function() {
+                mouseActive = false;
+            });
+
+            canvas.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const touch = e.touches[0];
+                mouseX = touch.clientX - rect.left;
+                mouseY = touch.clientY - rect.top;
+                mouseActive = true;
+            }, { passive: false });
+
+            canvas.addEventListener('touchend', function() {
+                mouseActive = false;
+            });
+
+            function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius, rotation, color, alpha) {
+                let rot = rotation || 0;
+                let step = Math.PI / spikes;
+                ctx.beginPath();
+                for (let i = 0; i < spikes * 2; i++) {
+                    let radius = i % 2 === 0 ? outerRadius : innerRadius;
+                    let angle = i * step - Math.PI / 2 + rot;
+                    let x = cx + Math.cos(angle) * radius;
+                    let y = cy + Math.sin(angle) * radius;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.globalAlpha = alpha;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1;
+                ctx.globalAlpha = alpha * 0.5;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+            }
+
+            function drawCrescent(ctx, cx, cy, radius, rotation, color, alpha) {
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(rotation || 0);
+                ctx.beginPath();
+                ctx.arc(0, 0, radius, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.globalAlpha = alpha * 0.6;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                // Cut out the inner curve
+                ctx.beginPath();
+                ctx.arc(radius * 0.4, -radius * 0.3, radius * 0.7, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0,0,0,0)';
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fill();
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.restore();
+                // Draw a thin outline
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(rotation || 0);
+                ctx.beginPath();
+                ctx.arc(0, 0, radius, 0, Math.PI * 2);
+                ctx.strokeStyle = color;
+                ctx.globalAlpha = alpha * 0.3;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+                ctx.restore();
+            }
+
+            function drawGeometric(ctx, cx, cy, size, rotation, color, alpha) {
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(rotation || 0);
+                const sides = 6;
+                const radius = size;
+                ctx.beginPath();
+                for (let i = 0; i < sides; i++) {
+                    const angle = (i / sides) * Math.PI * 2 - Math.PI / 2;
+                    const x = Math.cos(angle) * radius;
+                    const y = Math.sin(angle) * radius;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.globalAlpha = alpha * 0.2;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.strokeStyle = color;
+                ctx.globalAlpha = alpha * 0.6;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+                // Inner geometric pattern
+                const innerRadius = radius * 0.5;
+                ctx.beginPath();
+                for (let i = 0; i < sides; i++) {
+                    const angle = (i / sides) * Math.PI * 2 + Math.PI / 6;
+                    const x = Math.cos(angle) * innerRadius;
+                    const y = Math.sin(angle) * innerRadius;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = color;
+                ctx.globalAlpha = alpha * 0.4;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+                ctx.restore();
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Draw a subtle background pattern
+                const grad = ctx.createRadialGradient(
+                    canvas.width / 2, canvas.height / 2, 50,
+                    canvas.width / 2, canvas.height / 2, canvas.width / 2
+                );
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    grad.addColorStop(0, 'rgba(26, 47, 38, 0.3)');
+                    grad.addColorStop(1, 'rgba(24, 26, 29, 0.8)');
+                } else {
+                    grad.addColorStop(0, 'rgba(232, 245, 240, 0.3)');
+                    grad.addColorStop(1, 'rgba(253, 248, 240, 0.8)');
+                }
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw connecting lines between nearby shapes
+                for (let i = 0; i < shapes.length; i++) {
+                    for (let j = i + 1; j < shapes.length; j++) {
+                        const dx = shapes[i].x - shapes[j].x;
+                        const dy = shapes[i].y - shapes[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(shapes[i].x, shapes[i].y);
+                            ctx.lineTo(shapes[j].x, shapes[j].y);
+                            ctx.strokeStyle = shapes[i].color;
+                            ctx.globalAlpha = 0.08 * (1 - dist / 120);
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                            ctx.globalAlpha = 1;
+                        }
+                    }
+                }
+
+                // Update and draw shapes
+                for (const shape of shapes) {
+                    // Move towards mouse if active
+                    if (mouseActive) {
+                        const dx = mouseX - shape.x;
+                        const dy = mouseY - shape.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist > 10) {
+                            const force = 0.02;
+                            shape.x += dx * force;
+                            shape.y += dy * force;
+                        }
+                    }
+
+                    shape.x += shape.speedX;
+                    shape.y += shape.speedY;
+                    shape.rotation += shape.rotSpeed;
+
+                    // Bounce off edges
+                    if (shape.x < 0 || shape.x > canvas.width) shape.speedX *= -1;
+                    if (shape.y < 0 || shape.y > canvas.height) shape.speedY *= -1;
+
+                    // Clamp
+                    shape.x = Math.max(0, Math.min(canvas.width, shape.x));
+                    shape.y = Math.max(0, Math.min(canvas.height, shape.y));
+
+                    // Draw based on type
+                    const alpha = shape.alpha * (0.8 + 0.2 * Math.sin(Date.now() / 2000 + shape.phase));
+                    if (shape.type === 'star') {
+                        const spikes = shape.points || 5;
+                        drawStar(ctx, shape.x, shape.y, spikes, shape.size, shape.size * 0.4, shape.rotation, shape.color,
+                            alpha);
+                    } else if (shape.type === 'crescent') {
+                        drawCrescent(ctx, shape.x, shape.y, shape.size * 0.7, shape.rotation, shape.color, alpha);
+                    } else {
+                        drawGeometric(ctx, shape.x, shape.y, shape.size * 0.8, shape.rotation, shape.color, alpha);
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', function() {
+                const rect = container.getBoundingClientRect();
+                canvas.width = rect.width || container.offsetWidth || 1100;
+                canvas.height = rect.height || container.offsetHeight || 460;
+            });
+
+            // Also re-init when dark mode changes
+            const darkObserver = new MutationObserver(function() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const newColors = isDark ?
+                    ['#d4b55c', '#2ea87a', '#a569bd', '#5b9bd5', '#e8d48a', '#c9a84c'] :
+                    ['#C9A84C', '#1A6B4F', '#8e44ad', '#3498db', '#E8D48A', '#2A9D8F'];
+                shapes.forEach((s, i) => {
+                    s.color = newColors[i % newColors.length];
+                });
+            });
+            darkObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        }
+
+        // ========== LANDING DARK TOGGLE ==========
         const landingDarkToggle = document.getElementById('landingDarkToggle');
         const landingDarkIcon = document.getElementById('landingDarkIcon');
 
@@ -7836,15 +9215,18 @@
         landingDarkToggle.addEventListener('click', function() {
             toggleDarkMode();
             updateLandingDarkIcon();
+            // Re-init movable graphics with new colors
+            setTimeout(initMovableGraphics, 200);
         });
 
         const originalToggleDarkMode = toggleDarkMode;
         toggleDarkMode = function() {
             originalToggleDarkMode();
             updateLandingDarkIcon();
+            setTimeout(initMovableGraphics, 200);
         };
 
-        // ========== LANDING PAGE AUTH TOGGLE ==========
+        // ========== LANDING AUTH TOGGLE ==========
         function showAuthScreen(activeTab = 'signin') {
             document.body.classList.add('show-auth');
             showAuthTab(activeTab);
@@ -7881,7 +9263,7 @@
         });
 
         // ============================================================
-        // ========== AI MODERATION CONFIGURATION ==========
+        // ========== AI MODERATION CONFIG ==========
         // ============================================================
         const OPENAI_API_KEY = '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';
         const USE_OPENAI = true;
@@ -7900,12 +9282,8 @@
         let isMentorRegistered = false;
         let currentUserMentorData = null;
         let userCommunityMemberships = [];
-        let communityEvents = [];
-        let communityMembers = [];
-        let communityImams = [];
-        let communityConverts = [];
 
-        // ========== ARTICLES DATA (30 articles) ==========
+        // ========== ARTICLES DATA ==========
         const allArticlesData = [
             { id: 1, title: 'Understanding the Meaning of Shahada', source: 'Islamic Center of America',
                 excerpt: 'The Shahada is the declaration of faith that distinguishes a Muslim. This article explores its deep meaning and significance in a Muslim\'s life.',
@@ -8072,7 +9450,7 @@
             }, 300);
         }
 
-        // ========== DARK MODE (global) ==========
+        // ========== DARK MODE ==========
         function applyDarkMode(isDark) {
             const html = document.documentElement;
             const darkToggle = document.getElementById('darkModeToggle');
@@ -8094,6 +9472,7 @@
             localStorage.setItem('silah-dark-mode', newMode ? 'dark' : 'light');
             showMiniToast(newMode ? '🌙 Dark mode activated' : '☀️ Light mode activated');
             updateLandingDarkIcon();
+            setTimeout(initMovableGraphics, 300);
         }
 
         function showMiniToast(message) {
@@ -8161,12 +9540,15 @@
             rules: document.getElementById('screen-rules'),
             community: document.getElementById('screen-community'),
             'mosque-community': document.getElementById('screen-mosque-community'),
+            'example-forums': document.getElementById('screen-example-forums'),
+            'masjids': document.getElementById('screen-masjids'),
             learn: document.getElementById('screen-learn'),
             'all-articles': document.getElementById('screen-all-articles'),
             profile: document.getElementById('screen-profile'),
             settings: document.getElementById('screen-settings'),
             feedback: document.getElementById('screen-feedback'),
             pillars: document.getElementById('screen-pillars'),
+            'pillar-detail': document.getElementById('screen-pillar-detail'),
             'ai-model': document.getElementById('screen-ai-model'),
         };
 
@@ -8182,28 +9564,36 @@
                 requestAnimationFrame(() => { target.style.animation = 'fadeUp 0.4s ease'; });
             }
             // Update nav highlights only for main screens
-            if (['dashboard', 'mentor', 'discover', 'feed', 'community', 'learn', 'profile', 'settings', 'pillars', 'ai-model']
-                .includes(screenId)) {
+            const mainScreens = ['dashboard', 'mentor', 'discover', 'feed', 'community', 'learn', 'profile', 'settings',
+                'pillars', 'ai-model'
+            ];
+            if (mainScreens.includes(screenId)) {
                 navItems.forEach(n => n.classList.remove('active'));
                 navItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
                 bottomNavItems.forEach(n => n.classList.remove('active'));
                 bottomNavItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
             } else {
-                // for sub-pages, keep parent active if needed
-                if (screenId === 'rules') {
-                    // keep feed active? We'll just remove all highlights
+                // sub-pages: keep parent active
+                if (screenId === 'rules' || screenId === 'example-forums') {
                     navItems.forEach(n => n.classList.remove('active'));
+                    navItems.forEach(n => { if (n.dataset.screen === 'feed') n.classList.add('active'); });
                     bottomNavItems.forEach(n => n.classList.remove('active'));
+                    bottomNavItems.forEach(n => { if (n.dataset.screen === 'feed') n.classList.add('active'); });
+                } else if (screenId === 'mosque-community' || screenId === 'masjids') {
+                    navItems.forEach(n => n.classList.remove('active'));
+                    navItems.forEach(n => { if (n.dataset.screen === 'community') n.classList.add('active'); });
+                    bottomNavItems.forEach(n => n.classList.remove('active'));
+                    bottomNavItems.forEach(n => { if (n.dataset.screen === 'community') n.classList.add('active'); });
                 } else if (screenId === 'feedback') {
                     navItems.forEach(n => n.classList.remove('active'));
                     navItems.forEach(n => { if (n.dataset.screen === 'settings') n.classList.add('active'); });
                     bottomNavItems.forEach(n => n.classList.remove('active'));
                     bottomNavItems.forEach(n => { if (n.dataset.screen === 'settings') n.classList.add('active'); });
-                } else if (screenId === 'mosque-community') {
+                } else if (screenId === 'pillar-detail') {
                     navItems.forEach(n => n.classList.remove('active'));
-                    navItems.forEach(n => { if (n.dataset.screen === 'community') n.classList.add('active'); });
+                    navItems.forEach(n => { if (n.dataset.screen === 'pillars') n.classList.add('active'); });
                     bottomNavItems.forEach(n => n.classList.remove('active'));
-                    bottomNavItems.forEach(n => { if (n.dataset.screen === 'community') n.classList.add('active'); });
+                    bottomNavItems.forEach(n => { if (n.dataset.screen === 'pillars') n.classList.add('active'); });
                 } else {
                     navItems.forEach(n => n.classList.remove('active'));
                     bottomNavItems.forEach(n => n.classList.remove('active'));
@@ -8215,35 +9605,21 @@
                 setTimeout(displayQuranVerse, 200);
                 loadMentorsForDashboard();
             }
-            if (screenId === 'mentor') {
-                loadAllMentors();
-                renderMyMentorProfile();
-            }
-            if (screenId === 'discover') {
-                loadMosques();
-            }
-            if (screenId === 'feed') {
-                loadFeed();
-            }
-            if (screenId === 'community') {
-                loadCommunityContent();
-                loadUserCommunityMemberships();
-            }
-            if (screenId === 'learn') {
-                loadArticles();
-            }
-            if (screenId === 'all-articles') {
-                renderAllArticles();
-            }
-            if (screenId === 'ai-model') {
-                renderConversations();
-                renderMessages();
-            }
-            if (screenId === 'profile') {
-                loadDirectory();
-            }
-            if (screenId === 'feedback') {
-                prefillFeedbackEmail();
+            if (screenId === 'mentor') { loadAllMentors();
+                renderMyMentorProfile(); }
+            if (screenId === 'discover') { loadMosques(); }
+            if (screenId === 'feed') { loadFeed(); }
+            if (screenId === 'community') { loadCommunityContent();
+                loadUserCommunityMemberships(); }
+            if (screenId === 'learn') { loadArticles(); }
+            if (screenId === 'all-articles') { renderAllArticles(); }
+            if (screenId === 'ai-model') { renderConversations();
+                renderMessages(); }
+            if (screenId === 'profile') { loadDirectory(); }
+            if (screenId === 'feedback') { prefillFeedbackEmail(); }
+            if (screenId === 'pillar-detail') {
+                const pillar = window._currentPillar || 'shahada';
+                renderPillarDetail(pillar);
             }
         }
 
@@ -8260,6 +9636,13 @@
                 if (screen) navigateTo(screen);
             });
         });
+
+        // ========== NEW NAVIGATION BINDINGS ==========
+        document.getElementById('exampleForumsBtn')?.addEventListener('click', () => navigateTo('example-forums'));
+        document.getElementById('efBackBtn')?.addEventListener('click', () => navigateTo('feed'));
+        document.getElementById('efRulesBtn')?.addEventListener('click', () => navigateTo('rules'));
+        document.getElementById('masjidsBtn')?.addEventListener('click', () => navigateTo('masjids'));
+        document.getElementById('msBackBtn')?.addEventListener('click', () => navigateTo('community'));
 
         // ========== RULES NAVIGATION ==========
         document.getElementById('readRulesBtn')?.addEventListener('click', () => navigateTo('rules'));
@@ -8419,6 +9802,18 @@
                 }
                 if (document.getElementById('screen-mosque-community').classList.contains('active')) {
                     navigateTo('community');
+                    return;
+                }
+                if (document.getElementById('screen-example-forums').classList.contains('active')) {
+                    navigateTo('feed');
+                    return;
+                }
+                if (document.getElementById('screen-masjids').classList.contains('active')) {
+                    navigateTo('community');
+                    return;
+                }
+                if (document.getElementById('screen-pillar-detail').classList.contains('active')) {
+                    navigateTo('pillars');
                     return;
                 }
                 navigateTo('dashboard');
@@ -9545,14 +10940,10 @@
                     iconSize: [20, 20],
                     iconAnchor: [10, 10]
                 })
-            }).addTo(mosqueMarkersLayer).bindPopup(usedFallback ? 'Approximate location (Gaithersburg, MD)' :
-                'Your location');
+            }).addTo(mosqueMarkersLayer).bindPopup(usedFallback ? 'Approximate location' : 'Your location');
             (mosques || []).forEach(m => {
                 const coords = getMosqueCoords(m);
-                if (!coords) {
-                    console.warn('[mosque debug] no coordinates found for mosque, skipping pin:', m);
-                    return;
-                }
+                if (!coords) return;
                 const name = (m.name || 'Unnamed mosque').replace(/</g, '&lt;');
                 const address = (m.address || '').replace(/</g, '&lt;');
                 const distance = typeof m.distance_km === 'number' ? `${m.distance_km.toFixed(1)} km away` : '';
@@ -10775,7 +12166,7 @@
             },
         };
 
-        // ========== ARTICLES - Load and Search ==========
+        // ========== ARTICLES ==========
         function renderArticles(articles, containerId = 'articlesContainer') {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -10933,24 +12324,18 @@
         }
 
         // ============================================================
-        // ========== AI MODEL HUB — GEMINI INTEGRATION ==========
+        // ========== AI MODEL HUB — GEMINI ==========
         // ============================================================
-        // This replaces the dummy random responses with calls to your serverMaps.js backend
-        // which uses Google's Gemini API. The endpoint is '/api/generate' on the same origin.
-
         let conversations = [];
         let activeConversationId = null;
 
-        // Helper: generate a unique ID
         function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
 
-        // Helper: get current time stamp for messages
         function getTimeStamp() {
             const now = new Date();
             return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         }
 
-        // Create a new conversation
         function createNewConversation(title = 'New Chat') {
             const id = generateId();
             const conv = {
@@ -10968,7 +12353,6 @@
             return conv;
         }
 
-        // Delete conversation
         function deleteConversation(id) {
             if (!confirm('Are you sure you want to delete this conversation?')) return;
             conversations = conversations.filter(c => c.id !== id);
@@ -10982,7 +12366,6 @@
             renderMessages();
         }
 
-        // Switch active conversation
         function switchConversation(id) {
             activeConversationId = id;
             const conv = conversations.find(c => c.id === id);
@@ -10993,7 +12376,6 @@
             renderMessages();
         }
 
-        // Update model select dropdown
         function updateModelSelect(model) {
             const select = document.getElementById('aiModelSelect');
             if (select) {
@@ -11001,7 +12383,6 @@
             }
         }
 
-        // Render conversation list in sidebar
         function renderConversations() {
             const list = document.getElementById('aiConvList');
             const searchInput = document.getElementById('aiSearchInput');
@@ -11044,7 +12425,6 @@
             });
         }
 
-        // Render messages for the active conversation
         function renderMessages() {
             const container = document.getElementById('aiChatMessages');
             if (!container) return;
@@ -11084,13 +12464,10 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // ========== GEMINI API CALL ==========
         async function sendToGemini(prompt) {
             const response = await fetch('/api/generate', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt: prompt }),
             });
             if (!response.ok) {
@@ -11101,7 +12478,6 @@
             return data.text;
         }
 
-        // ========== HANDLE SEND MESSAGE (with Gemini) ==========
         async function handleSendMessage() {
             const input = document.getElementById('aiChatInput');
             const content = input.value.trim();
@@ -11109,16 +12485,13 @@
 
             const conv = conversations.find(c => c.id === activeConversationId);
             if (!conv) {
-                // Create a new conversation with the user's message as title
                 createNewConversation(content.slice(0, 30) + (content.length > 30 ? '...' : ''));
-                // Now the active conversation is the new one, get it
                 const newConv = conversations.find(c => c.id === activeConversationId);
                 if (newConv) {
                     newConv.messages.push({ role: 'user', content: content, time: getTimeStamp() });
                 }
             } else {
                 conv.messages.push({ role: 'user', content: content, time: getTimeStamp() });
-                // Update title to first few words of the first user message if it's the first message
                 if (conv.messages.filter(m => m.role === 'user').length === 1) {
                     conv.title = content.slice(0, 30) + (content.length > 30 ? '...' : '');
                 }
@@ -11128,7 +12501,6 @@
             renderConversations();
             renderMessages();
 
-            // Show typing indicator
             const container = document.getElementById('aiChatMessages');
             const typingHtml = `
                     <div class="typing-indicator" id="typingIndicator">
@@ -11138,19 +12510,13 @@
             container.insertAdjacentHTML('beforeend', typingHtml);
             container.scrollTop = container.scrollHeight;
 
-            // Disable send button
             const sendBtn = document.getElementById('aiSendBtn');
             sendBtn.disabled = true;
 
             try {
-                // Call Gemini via backend
                 const aiMsg = await sendToGemini(content);
-
-                // Remove typing indicator
                 const indicator = document.getElementById('typingIndicator');
                 if (indicator) indicator.remove();
-
-                // Add AI response to conversation
                 const activeConv = conversations.find(c => c.id === activeConversationId);
                 if (activeConv) {
                     activeConv.messages.push({ role: 'ai', content: aiMsg, time: getTimeStamp() });
@@ -11159,10 +12525,8 @@
                 }
             } catch (error) {
                 console.error('Error calling Gemini:', error);
-                // Remove typing indicator
                 const indicator = document.getElementById('typingIndicator');
                 if (indicator) indicator.remove();
-                // Show error message as AI response
                 const activeConv = conversations.find(c => c.id === activeConversationId);
                 if (activeConv) {
                     const errorMsg =
@@ -11177,9 +12541,8 @@
             }
         }
 
-        // ========== AI MODEL HUB EVENT LISTENERS (overwrite previous) ==========
+        // AI Model Hub event listeners
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize with a welcome conversation if empty
             if (!conversations.length) {
                 const defaultConv = createNewConversation('Welcome to Silah AI');
                 defaultConv.messages.push({
@@ -11270,6 +12633,18 @@
                     keywords: ['mosque', 'masjid', 'community', 'importance', 'benefits'],
                     content: 'Mosque Community Importance Benefits Joining Masjid'
                 },
+                'example-forums': {
+                    title: 'Example Forums',
+                    icon: 'fa-comments',
+                    keywords: ['forums', 'example', 'discussion', 'respectful', 'community'],
+                    content: 'Example Forums Discussion Respectful Community'
+                },
+                'masjids': {
+                    title: 'Chicago Masjids',
+                    icon: 'fa-city',
+                    keywords: ['masjids', 'mosques', 'chicago', 'important', 'metropolitan'],
+                    content: 'Chicago Masjids Mosques Important Metropolitan'
+                },
                 learn: {
                     title: 'Learn',
                     icon: 'fa-graduation-cap',
@@ -11301,6 +12676,12 @@
                     icon: 'fa-star',
                     keywords: ['pillars', 'shahada', 'salah', 'zakat', 'sawm', 'hajj'],
                     content: 'Five Pillars Shahada Salah Zakat Sawm Hajj'
+                },
+                'pillar-detail': {
+                    title: 'Pillar Detail',
+                    icon: 'fa-star',
+                    keywords: ['pillar', 'detail', 'shahada', 'salah', 'zakat', 'sawm', 'hajj'],
+                    content: 'Pillar Detail Shahada Salah Zakat Sawm Hajj'
                 },
                 'ai-model': {
                     title: 'AI Model Hub',
@@ -11401,9 +12782,7 @@
         }
 
         function performSearch(query) {
-            if (!query || query.trim().length < 1) {
-                return [];
-            }
+            if (!query || query.trim().length < 1) { return []; }
             const q = query.trim().toLowerCase();
             const results = searchIndex.map(item => {
                 let score = 0;
@@ -11411,19 +12790,10 @@
                 const contentLower = item.content.toLowerCase();
                 const keywordsLower = item.keywords.toLowerCase();
 
-                if (titleLower.includes(q)) {
-                    score += 10;
-                    if (titleLower === q) score += 5;
-                }
-                if (q.split(' ').every(word => titleLower.includes(word))) {
-                    score += 6;
-                }
-                if (keywordsLower.includes(q)) {
-                    score += 4;
-                }
-                if (contentLower.includes(q)) {
-                    score += 2;
-                }
+                if (titleLower.includes(q)) { score += 10; if (titleLower === q) score += 5; }
+                if (q.split(' ').every(word => titleLower.includes(word))) { score += 6; }
+                if (keywordsLower.includes(q)) { score += 4; }
+                if (contentLower.includes(q)) { score += 2; }
                 const words = q.split(' ');
                 for (const word of words) {
                     if (word.length > 1) {
@@ -11431,9 +12801,7 @@
                         if (titleLower.includes(word)) score += 2;
                     }
                 }
-                if (contentLower.includes(q)) {
-                    score += 1;
-                }
+                if (contentLower.includes(q)) { score += 1; }
                 item.score = score;
                 return item;
             });
@@ -11577,7 +12945,7 @@
         }
 
         // ============================================================
-        // ========== COMMUNITY DIRECTORY (in Profile) ==========
+        // ========== COMMUNITY DIRECTORY ==========
         // ============================================================
         let allDirectoryUsers = [];
         let dirFilter = 'all';
@@ -11730,7 +13098,6 @@
             });
         });
 
-        // Refresh directory when profile screen becomes active
         const profileScreen = document.getElementById('screen-profile');
         const profileObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
@@ -11742,6 +13109,129 @@
             });
         });
         profileObserver.observe(profileScreen, { attributes: true });
+
+        // ============================================================
+        // ========== PILLAR DETAIL ==========
+        // ============================================================
+        const pillarDetails = {
+            shahada: {
+                icon: '☝️',
+                title: 'Shahada',
+                arabic: 'الشهادة',
+                fullDescription: `
+                    <p>The Shahada is the declaration of faith and the first of the Five Pillars of Islam. It is the fundamental statement of belief that distinguishes a Muslim.</p>
+                    <p>The Shahada is: <strong>"Lā ilāha illā Allāh, Muḥammadun rasūlu Allāh"</strong> — "There is no god but Allah, and Muhammad is the Messenger of Allah."</p>
+                    <h3>Significance</h3>
+                    <p>This declaration affirms two key beliefs:</p>
+                    <ul>
+                        <li><strong>Tawhid (Oneness of God):</strong> There is no deity worthy of worship except Allah.</li>
+                        <li><strong>Prophethood:</strong> Muhammad (peace be upon him) is the final messenger of Allah.</li>
+                    </ul>
+                    <div class="pd-quote">"Whoever says 'Lā ilāha illā Allāh' sincerely from his heart will enter Paradise." — Bukhari</div>
+                    <p>Saying the Shahada with conviction is what makes a person a Muslim. It is the key to Paradise and the foundation of all other acts of worship.</p>
+                    <h3>How to Embrace Islam</h3>
+                    <p>To become a Muslim, one simply needs to recite the Shahada with sincerity and understanding. It is recommended to do so in the presence of witnesses, but it is valid even alone.</p>
+                `
+            },
+            salah: {
+                icon: '🧎',
+                title: 'Salah',
+                arabic: 'الصلاة',
+                fullDescription: `
+                    <p>Salah is the obligatory prayer performed five times a day by Muslims. It is the second pillar of Islam and a direct connection between the believer and Allah.</p>
+                    <p>The five daily prayers are: Fajr (dawn), Dhuhr (noon), Asr (afternoon), Maghrib (sunset), and Isha (night).</p>
+                    <h3>Spiritual Benefits</h3>
+                    <p>Prayer purifies the soul, instills discipline, and fosters humility. It serves as a constant reminder of Allah's presence and our purpose in life.</p>
+                    <div class="pd-quote">"The first thing a person will be judged for on the Day of Judgment is prayer." — An-Nasa'i</div>
+                    <h3>How to Pray</h3>
+                    <p>Each prayer consists of a series of units (rak'ah) which include standing, bowing, prostrating, and sitting. The prayers are performed facing the Kaaba in Mecca.</p>
+                    <p>Before prayer, Muslims perform Wudu (ablution) to purify themselves. The call to prayer (Adhan) announces the time of each prayer.</p>
+                `
+            },
+            zakat: {
+                icon: '💰',
+                title: 'Zakat',
+                arabic: 'الزكاة',
+                fullDescription: `
+                    <p>Zakat is the obligatory charity given annually by Muslims on surplus wealth above a minimum threshold (nisab). It is the third pillar of Islam.</p>
+                    <p>Zakat is calculated at 2.5% of one's savings and wealth that has been held for a full lunar year.</p>
+                    <h3>Purpose of Zakat</h3>
+                    <p>Zakat purifies one's wealth, helps the poor and needy, and promotes social solidarity. It is a means of economic justice and redistribution of wealth.</p>
+                    <div class="pd-quote">"Zakat is not a tax; it is a right of the poor in the wealth of the rich."</div>
+                    <h3>Who Receives Zakat</h3>
+                    <p>The Quran specifies eight categories of recipients: the poor, the needy, Zakat collectors, those whose hearts are to be reconciled, slaves, debtors, those fighting in the cause of Allah, and travelers.</p>
+                    <p>Zakat is different from Sadaqah (voluntary charity) in that it is mandatory and has specific rules and calculations.</p>
+                `
+            },
+            sawm: {
+                icon: '🌙',
+                title: 'Sawm',
+                arabic: 'الصوم',
+                fullDescription: `
+                    <p>Sawm is the fasting from dawn to sunset during the month of Ramadan. It is the fourth pillar of Islam.</p>
+                    <p>During Ramadan, Muslims abstain from food, drink, smoking, and marital relations from dawn until sunset.</p>
+                    <h3>Spiritual Significance</h3>
+                    <p>Fasting teaches self-restraint, empathy for the hungry, and spiritual reflection. It is a time for increased prayer, Quran recitation, and acts of charity.</p>
+                    <div class="pd-quote">"Fasting is a shield; when one of you is fasting, let him not behave foolishly." — Bukhari & Muslim</div>
+                    <h3>Exemptions</h3>
+                    <p>Those who are sick, traveling, elderly, pregnant, nursing, or menstruating are exempt from fasting. They must make up missed days or feed the poor if unable.</p>
+                    <p>The month of Ramadan is when the Quran was first revealed, and it culminates in the celebration of Eid al-Fitr.</p>
+                `
+            },
+            hajj: {
+                icon: '🕋',
+                title: 'Hajj',
+                arabic: 'الحج',
+                fullDescription: `
+                    <p>Hajj is the pilgrimage to the holy city of Mecca in Saudi Arabia, required once in a lifetime for those who are physically and financially able. It is the fifth pillar of Islam.</p>
+                    <p>Hajj takes place during the Islamic month of Dhul-Hijjah and involves a series of rituals that commemorate the actions of Prophet Ibrahim and his family.</p>
+                    <h3>Rituals of Hajj</h3>
+                    <p>The rituals include entering a state of Ihram (sacred state), circling the Kaaba (Tawaf), walking between the hills of Safa and Marwah, standing at Arafat, stoning the devil, and sacrificing an animal.</p>
+                    <div class="pd-quote">"Whoever performs Hajj for the sake of Allah and avoids obscenity and wrongdoing will return sinless as the day his mother gave birth to him." — Bukhari</div>
+                    <h3>Spiritual Significance</h3>
+                    <p>Hajj is a profound spiritual journey that symbolizes the unity of the Muslim Ummah, the submission to Allah, and the equality of all believers regardless of race or status.</p>
+                    <p>It is the largest annual gathering of Muslims in the world, with millions of pilgrims from every corner of the globe.</p>
+                `
+            }
+        };
+
+        window._currentPillar = 'shahada';
+
+        function renderPillarDetail(pillarKey) {
+            const data = pillarDetails[pillarKey];
+            if (!data) return;
+
+            document.getElementById('pdIcon').textContent = data.icon;
+            document.getElementById('pdTitle').textContent = data.title;
+            document.getElementById('pdArabic').textContent = data.arabic;
+            document.getElementById('pdBody').innerHTML = data.fullDescription;
+        }
+
+        document.querySelectorAll('.pillar-learn-more').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const pillar = this.dataset.pillar;
+                if (pillar) {
+                    window._currentPillar = pillar;
+                    navigateTo('pillar-detail');
+                }
+            });
+        });
+
+        document.getElementById('pdBackBtn')?.addEventListener('click', () => navigateTo('pillars'));
+
+        // Also make the whole pillar card clickable
+        document.querySelectorAll('.pillar-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.closest('.pillar-learn-more')) return;
+                const pillar = this.dataset.pillar;
+                if (pillar) {
+                    window._currentPillar = pillar;
+                    navigateTo('pillar-detail');
+                }
+            });
+            card.style.cursor = 'pointer';
+        });
 
         // ============================================================
         // ========== FEEDBACK PAGE ==========
@@ -11769,11 +13259,31 @@
                 return;
             }
 
-            // In a real app, send to server. For demo, show success.
             showModerationToast('✅ Thank you for your feedback! We\'ll review it soon.', 'success', 4000);
             document.getElementById('feedbackMessage').value = '';
-            // Optionally navigate back to settings
             setTimeout(() => navigateTo('settings'), 1500);
+        });
+
+        // ============================================================
+        // ========== EXAMPLE FORUMS: Like buttons ==========
+        // ============================================================
+        document.addEventListener('click', function(e) {
+            const likeBtn = e.target.closest('.ef-like');
+            if (likeBtn) {
+                const icon = likeBtn.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    icon.style.color = '#e74c3c';
+                    likeBtn.classList.add('liked');
+                    showModerationToast('You liked this post!', 'success', 1500);
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    icon.style.color = '';
+                    likeBtn.classList.remove('liked');
+                }
+            }
         });
 
         // ============================================================
@@ -11809,21 +13319,19 @@
 
             loadArticles();
 
-            console.log('🌙 Silah — AI-Powered Community Platform loaded. (v1.6.0)');
+            console.log('🌙 Silah — AI-Powered Community Platform loaded. (v1.7.0)');
             console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
             console.log('💡 Tip: Press ⌘K (or Ctrl+K) to focus the search bar!');
-            console.log('💡 Click the Silah logo to see the about modal!');
-            console.log('📋 New: Community Directory in Profile tab!');
-            console.log('📜 New: Rules & Guidelines page accessible from Feed!');
-            console.log('💬 New: Feedback page in Settings!');
-            console.log('🕌 New: Mosque Community page in Community tab!');
-            console.log('🤖 AI Model Hub now uses Gemini via your backend!');
+            console.log('📜 New: Scholar Quote & Movable Graphics on landing page!');
+            console.log('💬 New: Example Forums page accessible from Feed!');
+            console.log('🏙️ New: Important Masjids in Chicago page in Community!');
+            console.log('🕌 Five Pillars now have hover effects and Learn More pages!');
+            console.log('🤖 AI Model Hub uses Gemini via your backend!');
             console.log('AI Moderation:', USE_OPENAI ? 'Enabled (OpenAI)' : 'Disabled');
             if (USE_OPENAI) {
                 console.log('OpenAI API Key:', OPENAI_API_KEY && OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY_HERE' ? '✓ Configured' :
                     '✗ Not configured');
             }
-            console.log('🌐 Mosque proxy: local → fallback to allorigins.win');
         });
     </script>
 
