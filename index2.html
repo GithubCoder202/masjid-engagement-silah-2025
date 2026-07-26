@@ -877,6 +877,25 @@
         .profile-popup .pp-logout:hover {
             color: #c0392b;
         }
+        .profile-popup .pp-edit {
+            width: 100%;
+            padding: 8px 0;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .profile-popup .pp-edit:hover {
+            color: var(--green);
+        }
 
         .notification-popup {
             position: absolute;
@@ -4481,6 +4500,32 @@
         </div>
     </div>
 
+    <!-- ========== EDIT PROFILE MODAL ========== -->
+    <div class="mentor-modal-overlay" id="editProfileModalOverlay">
+        <div class="mentor-modal">
+            <h2>✎ Edit Profile</h2>
+            <p class="modal-sub">Update your name and location.</p>
+
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="editProfileName" class="form-input" placeholder="Your full name" style="width:100%;padding:10px 14px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);background:var(--input-bg);color:var(--text-primary);outline:none;">
+            </div>
+
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" id="editProfileLocation" class="form-input" placeholder="e.g., Chicago, IL" style="width:100%;padding:10px 14px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);background:var(--input-bg);color:var(--text-primary);outline:none;">
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-primary" id="editProfileSaveBtn">
+                    <span>Save Changes</span>
+                    <i class="fas fa-check"></i>
+                </button>
+                <button class="btn-secondary" id="editProfileModalClose">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ========== AUTH SCREEN ========== -->
     <div class="auth-screen" id="authScreen">
         <div class="auth-card">
@@ -4644,9 +4689,6 @@
                 <button class="nav-item" data-screen="learn">
                     <i class="fas fa-graduation-cap"></i> Learn
                 </button>
-                <button class="nav-item" data-screen="profile">
-                    <i class="fas fa-user"></i> Profile
-                </button>
                 <button class="nav-item" data-screen="settings">
                     <i class="fas fa-cog"></i> Settings
                 </button>
@@ -4733,6 +4775,7 @@
                             <div class="pp-email" id="ppEmail">sarah@example.com</div>
                             <div class="pp-location" id="ppLocation">📍 Chicago, IL</div>
                             <hr class="pp-divider" />
+                            <button class="pp-edit" id="ppEditProfileBtn"><i class="fas fa-pen"></i> Edit Profile</button>
                             <button class="pp-logout" id="ppLogoutBtn"><i class="fas fa-arrow-right-from-bracket"></i> Log Out</button>
                         </div>
                     </div>
@@ -5236,70 +5279,6 @@
                     </div>
                 </div>
 
-                <!-- ===== PROFILE ===== -->
-                <div class="screen" id="screen-profile">
-                    <div class="profile-header">
-                        <div class="big-avatar" id="profileAvatar">SA</div>
-                        <h2 id="profileName">Sarah Ahmed</h2>
-                        <div class="p-badge">🌱 New Muslim · 6 months</div>
-                        <div class="p-loc" id="profileLoc">📍 Chicago, IL</div>
-                        <button class="p-edit">✎ Edit Profile</button>
-                    </div>
-
-                    <div class="profile-grid">
-                        <div>
-                            <div class="dash-card">
-                                <div class="card-header"><h3>🏆 My Journey</h3></div>
-                                <div class="milestone-item done"><i class="fas fa-check-circle"></i> Said Shahada</div>
-                                <div class="milestone-item done"><i class="fas fa-check-circle"></i> Attended first Jummah</div>
-                                <div class="milestone-item"><i class="far fa-circle"></i> Memorized 5 short surahs</div>
-                                <div class="milestone-item"><i class="far fa-circle"></i> Completed beginner class</div>
-                                <div style="margin-top:10px;"><a href="#" style="color:var(--green);font-weight:500;font-size:14px;text-decoration:none;">View All →</a></div>
-                            </div>
-
-                            <!-- Replace the existing "My Mentor" dash-card in the Profile grid with this: -->
-                            <div class="dash-card" id="profileActiveMentorContainer" style="display: none;">
-                                <div class="card-header"><h3>⭐ My Mentor</h3></div>
-                                <div id="profileActiveMentorContent">
-                                    <!-- Injected via JavaScript -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="dash-card">
-                                <div class="card-header"><h3>🤝 My Community</h3></div>
-                                <div style="font-size:14px;padding:4px 0;border-bottom:1px solid var(--border-light);padding-bottom:8px;">
-                                    🕌 <strong>Islamic Center of Chicago</strong>
-                                </div>
-                                <div style="font-size:14px;padding:4px 0;border-bottom:1px solid var(--border-light);padding-bottom:8px;margin-top:4px;">
-                                    🤝 <strong>Sister's Halaqa Circle</strong>
-                                </div>
-                                <div style="font-size:14px;padding:4px 0;margin-top:4px;">
-                                    📅 <strong>3 events</strong> attended this month
-                                </div>
-                            </div>
-
-                            <div class="dash-card">
-                                <div class="card-header"><h3>⚙️ Settings Quick</h3></div>
-                                <div class="profile-setting-row">
-                                    <span class="ps-left"><i class="fas fa-moon"></i> Ramadan Mode</span>
-                                    <div class="toggle" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
-                                </div>
-                                <div class="profile-setting-row">
-                                    <span class="ps-left"><i class="fas fa-bell"></i> Daily Duas Reminder</span>
-                                    <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
-                                </div>
-                                <div class="profile-setting-row">
-                                    <span class="ps-left"><i class="fas fa-envelope"></i> Community Digest</span>
-                                    <span style="font-size:13px;color:var(--text-secondary);">Weekly</span>
-                                </div>
-                                <button class="btn-logout" id="logoutBtn"><i class="fas fa-arrow-right-from-bracket"></i> Log Out</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- ===== SETTINGS ===== -->
                 <div class="screen" id="screen-settings">
                     <div class="settings-header">
@@ -5619,7 +5598,6 @@
                 <button class="bn-item" data-screen="feed"><i class="fas fa-comments"></i> Feed</button>
                 <button class="bn-item" data-screen="community"><i class="fas fa-users"></i> Community</button>
                 <button class="bn-item" data-screen="learn"><i class="fas fa-graduation-cap"></i> Learn</button>
-                <button class="bn-item" data-screen="profile"><i class="fas fa-user"></i> Profile</button>
                 <button class="bn-item" data-screen="settings"><i class="fas fa-cog"></i> Settings</button>
                 <button class="bn-item" data-screen="pillars"><i class="fas fa-star"></i> Pillars</button>
             </nav>
@@ -5984,7 +5962,6 @@
             feed: document.getElementById('screen-feed'),
             community: document.getElementById('screen-community'),
             learn: document.getElementById('screen-learn'),
-            profile: document.getElementById('screen-profile'),
             settings: document.getElementById('screen-settings'),
             pillars: document.getElementById('screen-pillars'),
         };
@@ -6317,6 +6294,7 @@
         const profileAvatarWrapper = document.getElementById('profileAvatarWrapper');
         const profilePopup = document.getElementById('profilePopup');
         const ppLogoutBtn = document.getElementById('ppLogoutBtn');
+        const ppEditProfileBtn = document.getElementById('ppEditProfileBtn');
 
         if (profileAvatarWrapper) {
             profileAvatarWrapper.addEventListener('click', function(e) {
@@ -6328,6 +6306,80 @@
         document.addEventListener('click', function(e) {
             if (profilePopup && !profilePopup.contains(e.target) && !profileAvatarWrapper.contains(e.target)) {
                 profilePopup.classList.remove('show');
+            }
+        });
+
+        // ========== EDIT PROFILE MODAL ==========
+        const editProfileModalOverlay = document.getElementById('editProfileModalOverlay');
+        const editProfileModalClose = document.getElementById('editProfileModalClose');
+        const editProfileSaveBtn = document.getElementById('editProfileSaveBtn');
+        const editProfileNameInput = document.getElementById('editProfileName');
+        const editProfileLocationInput = document.getElementById('editProfileLocation');
+
+        ppEditProfileBtn?.addEventListener('click', function() {
+            if (!currentUser) {
+                showModerationToast('Please sign in to edit your profile.', 'warning');
+                return;
+            }
+            profilePopup?.classList.remove('show');
+            editProfileNameInput.value = currentProfile?.full_name || '';
+            editProfileLocationInput.value = currentProfile?.location || '';
+            editProfileModalOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        });
+
+        editProfileModalClose?.addEventListener('click', function() {
+            editProfileModalOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        });
+
+        editProfileModalOverlay?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                editProfileModalOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        });
+
+        editProfileSaveBtn?.addEventListener('click', async function() {
+            if (!currentUser) {
+                showModerationToast('Please sign in to edit your profile.', 'warning');
+                return;
+            }
+
+            const name = editProfileNameInput.value.trim();
+            const location = editProfileLocationInput.value.trim();
+
+            if (!name) {
+                showModerationToast('Please enter your name.', 'warning');
+                return;
+            }
+
+            const btn = this;
+            const origLabel = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = 'Saving…';
+
+            try {
+                const { error } = await sb.from('profiles').upsert({
+                    id: currentUser.id,
+                    full_name: name,
+                    location: location,
+                });
+
+                if (error) throw error;
+
+                const updatedProfile = { ...(currentProfile || {}), full_name: name, location: location };
+                applyProfileToUI(updatedProfile, currentUser.email);
+
+                editProfileModalOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+                showModerationToast('✅ Profile updated!', 'success');
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showModerationToast('Failed to update profile. Please try again.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = origLabel;
             }
         });
 
