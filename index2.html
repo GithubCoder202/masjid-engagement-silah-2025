@@ -3509,6 +3509,66 @@
             line-height: 1.8;
             color: var(--text-primary);
         }
+        .chat-response .response-text p {
+            margin: 0 0 10px;
+        }
+        .chat-response .response-text p:last-child {
+            margin-bottom: 0;
+        }
+        .chat-response .response-text ul,
+        .chat-response .response-text ol {
+            margin: 0 0 10px;
+            padding-left: 22px;
+        }
+        .chat-response .response-text li {
+            margin-bottom: 4px;
+        }
+        .chat-response .response-text strong {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .chat-response .response-text em {
+            font-style: italic;
+        }
+        .chat-response .response-text h1,
+        .chat-response .response-text h2,
+        .chat-response .response-text h3,
+        .chat-response .response-text h4,
+        .chat-response .response-text h5,
+        .chat-response .response-text h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.4;
+            margin: 14px 0 8px;
+        }
+        .chat-response .response-text h1:first-child,
+        .chat-response .response-text h2:first-child,
+        .chat-response .response-text h3:first-child,
+        .chat-response .response-text h4:first-child,
+        .chat-response .response-text h5:first-child,
+        .chat-response .response-text h6:first-child {
+            margin-top: 0;
+        }
+        .chat-response .response-text h1 { font-size: 20px; }
+        .chat-response .response-text h2 { font-size: 18px; }
+        .chat-response .response-text h3 { font-size: 16px; }
+        .chat-response .response-text h4,
+        .chat-response .response-text h5,
+        .chat-response .response-text h6 { font-size: 15px; }
+        .chat-response .response-text blockquote {
+            margin: 0 0 10px;
+            padding: 4px 14px;
+            border-left: 3px solid var(--border-medium);
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .chat-response .response-text blockquote p {
+            margin: 0 0 4px;
+        }
+        .chat-response .response-text blockquote p:last-child {
+            margin-bottom: 0;
+        }
         .chat-response .response-sources {
             margin-top: 12px;
             padding-top: 12px;
@@ -3683,253 +3743,6 @@
             margin-bottom: 10px;
         }
 
-        /* ========== AI MODEL HUB ========== */
-        .ai-container {
-            display: flex;
-            gap: 24px;
-            height: calc(100% - 80px);
-            min-height: 500px;
-        }
-        .ai-sidebar {
-            width: 260px;
-            min-width: 200px;
-            background: var(--card-bg);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            border: 1px solid var(--border-light);
-            display: flex;
-            flex-direction: column;
-            transition: all var(--transition-theme);
-        }
-        .ai-sidebar .ai-new-btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--green);
-            color: #fff;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 16px;
-            font-family: 'Inter', sans-serif;
-        }
-        .ai-sidebar .ai-new-btn:hover {
-            background: var(--green-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        .ai-sidebar .ai-search {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-full);
-            font-size: 13px;
-            font-family: 'Inter', sans-serif;
-            background: var(--input-bg);
-            color: var(--text-primary);
-            outline: none;
-            margin-bottom: 16px;
-            transition: var(--transition);
-        }
-        .ai-sidebar .ai-search:focus {
-            border-color: var(--green);
-            box-shadow: 0 0 0 3px rgba(26, 107, 79, 0.1);
-        }
-        .ai-sidebar .ai-conv-list {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .ai-sidebar .ai-conv-list .conv-item {
-            padding: 10px 12px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--text-secondary);
-            font-size: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid transparent;
-        }
-        .ai-sidebar .ai-conv-list .conv-item:hover {
-            background: var(--gray-100);
-            color: var(--text-primary);
-        }
-        .ai-sidebar .ai-conv-list .conv-item.active {
-            background: var(--green-pale);
-            color: var(--green-dark);
-            border-color: var(--green-light);
-            font-weight: 500;
-        }
-        .ai-sidebar .ai-conv-list .conv-item .conv-time {
-            font-size: 11px;
-            color: var(--gray-400);
-        }
-
-        .ai-chat {
-            flex: 1;
-            background: var(--card-bg);
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-light);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: all var(--transition-theme);
-        }
-        .ai-chat .ai-chat-header {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border-light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .ai-chat .ai-chat-header .ai-model-select {
-            padding: 6px 12px;
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-full);
-            font-size: 13px;
-            font-family: 'Inter', sans-serif;
-            background: var(--input-bg);
-            color: var(--text-primary);
-            outline: none;
-            cursor: pointer;
-        }
-        .ai-chat .ai-chat-header .ai-model-select:focus {
-            border-color: var(--green);
-        }
-        .ai-chat .ai-chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .ai-chat .ai-chat-messages .message {
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            max-width: 80%;
-            animation: fadeUp 0.3s ease;
-            line-height: 1.6;
-            font-size: 15px;
-        }
-        .ai-chat .ai-chat-messages .message.user {
-            background: var(--green-pale);
-            color: var(--green-dark);
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        .ai-chat .ai-chat-messages .message.ai {
-            background: var(--gray-100);
-            color: var(--text-primary);
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-        .ai-chat .ai-chat-messages .message .msg-time {
-            font-size: 10px;
-            color: var(--gray-400);
-            margin-top: 4px;
-            text-align: right;
-        }
-        .ai-chat .ai-chat-messages .typing-indicator {
-            padding: 10px 16px;
-            background: var(--gray-100);
-            border-radius: var(--radius-sm);
-            align-self: flex-start;
-            display: flex;
-            gap: 4px;
-            align-items: center;
-        }
-        .ai-chat .ai-chat-messages .typing-indicator span {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: var(--gray-400);
-            border-radius: 50%;
-            animation: typingBounce 1.4s infinite both;
-        }
-        .ai-chat .ai-chat-messages .typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .ai-chat .ai-chat-messages .typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        @keyframes typingBounce {
-            0%,
-            80%,
-            100% {
-                transform: scale(0.6);
-                opacity: 0.4;
-            }
-            40% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .ai-chat .ai-chat-input {
-            padding: 16px 24px;
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            background: var(--card-bg);
-            border-bottom-left-radius: var(--radius-sm);
-            border-bottom-right-radius: var(--radius-sm);
-        }
-        .ai-chat .ai-chat-input input {
-            flex: 1;
-            padding: 10px 16px;
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-full);
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-            outline: none;
-            background: var(--input-bg);
-            color: var(--text-primary);
-            transition: var(--transition);
-        }
-        .ai-chat .ai-chat-input input:focus {
-            border-color: var(--green);
-            box-shadow: 0 0 0 3px rgba(26, 107, 79, 0.1);
-        }
-        .ai-chat .ai-chat-input button {
-            padding: 10px 20px;
-            background: var(--green);
-            color: #fff;
-            border: none;
-            border-radius: var(--radius-full);
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-        }
-        .ai-chat .ai-chat-input button:hover {
-            background: var(--green-dark);
-            box-shadow: var(--shadow-md);
-        }
-        .ai-chat .ai-chat-input button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
         /* ========== BOTTOM NAV ========== */
         .bottom-nav {
             display: none;
@@ -4057,47 +3870,6 @@
             }
             .chat-input-wrap input {
                 width: 100%;
-            }
-            .ai-container {
-                flex-direction: column;
-                height: auto;
-                min-height: 500px;
-            }
-            .ai-sidebar {
-                width: 100%;
-                min-width: unset;
-                flex-direction: row;
-                flex-wrap: wrap;
-                padding: 16px;
-                gap: 12px;
-            }
-            .ai-sidebar .ai-new-btn {
-                width: auto;
-                margin-bottom: 0;
-                padding: 8px 16px;
-            }
-            .ai-sidebar .ai-search {
-                flex: 1;
-                margin-bottom: 0;
-                min-width: 120px;
-            }
-            .ai-sidebar .ai-conv-list {
-                flex-direction: row;
-                flex-wrap: wrap;
-                flex: none;
-                width: 100%;
-                max-height: 120px;
-                overflow-y: auto;
-            }
-            .ai-sidebar .ai-conv-list .conv-item {
-                white-space: nowrap;
-                padding: 6px 12px;
-            }
-            .ai-chat {
-                min-height: 400px;
-            }
-            .ai-chat .ai-chat-messages .message {
-                max-width: 90%;
             }
             .community-events-grid {
                 grid-template-columns: 1fr;
@@ -4288,47 +4060,6 @@
             }
             .articles-section .section-header .article-search input {
                 font-size: 13px;
-            }
-            .ai-sidebar {
-                flex-direction: column;
-                gap: 8px;
-            }
-            .ai-sidebar .ai-new-btn {
-                width: 100%;
-            }
-            .ai-sidebar .ai-search {
-                width: 100%;
-                min-width: unset;
-            }
-            .ai-sidebar .ai-conv-list {
-                flex-wrap: nowrap;
-                flex-direction: column;
-                max-height: 100px;
-                overflow-x: hidden;
-            }
-            .ai-chat .ai-chat-messages .message {
-                max-width: 95%;
-                font-size: 14px;
-            }
-            .ai-chat .ai-chat-input {
-                flex-wrap: wrap;
-                padding: 12px 16px;
-            }
-            .ai-chat .ai-chat-input input {
-                width: 100%;
-            }
-            .ai-chat .ai-chat-input button {
-                width: 100%;
-                justify-content: center;
-                padding: 10px;
-            }
-            .ai-chat .ai-chat-header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-            .ai-chat .ai-chat-header .ai-model-select {
-                width: 100%;
             }
             .community-tabs {
                 flex-wrap: nowrap;
@@ -4656,17 +4387,7 @@
                 <button class="nav-item" data-screen="pillars">
                     <i class="fas fa-star"></i> Five Pillars
                 </button>
-                <button class="nav-item" data-screen="ai-model">
-                    <i class="fas fa-robot"></i> AI Model
-                </button>
             </nav>
-
-            <div class="sidebar-stats">
-                <div class="stat-row"><span>📖 Classes</span><span>6</span></div>
-                <div class="stat-row"><span>🤝 Sessions</span><span>2</span></div>
-                <div class="stat-row"><span>🕌 Events</span><span>4</span></div>
-                <div class="stat-row"><span>❤️ Connections</span><span>15</span></div>
-            </div>
 
             <div class="sidebar-hadith">
                 "The example of believers in their affection and mercy is like the body..."
@@ -5654,47 +5375,6 @@
 
                 </div>
 
-                <!-- ===== AI MODEL HUB ===== -->
-                <div class="screen" id="screen-ai-model">
-                    <div style="margin-bottom:20px;">
-                        <h2 style="font-family:'Poppins',sans-serif;font-size:24px;color:var(--text-primary);">🤖 AI Model Hub</h2>
-                        <p style="color:var(--text-secondary);font-size:15px;">Your personal AI tutor for Islamic learning and community support.</p>
-                    </div>
-
-                    <div class="ai-container">
-                        <!-- Sidebar -->
-                        <div class="ai-sidebar">
-                            <button class="ai-new-btn" id="aiNewChatBtn">
-                                <i class="fas fa-plus-circle"></i> New Conversation
-                            </button>
-                            <input type="text" class="ai-search" placeholder="Search conversations..." id="aiSearchInput" />
-                            <div class="ai-conv-list" id="aiConvList">
-                                <!-- Conversation items will be injected here -->
-                            </div>
-                        </div>
-
-                        <!-- Chat Area -->
-                        <div class="ai-chat">
-                            <div class="ai-chat-header">
-                                <span style="font-weight:600;color:var(--text-primary);" id="aiActiveTitle">General Assistant</span>
-                                <select class="ai-model-select" id="aiModelSelect">
-                                    <option value="General Assistant" selected>General Assistant</option>
-                                    <option value="Quranic Arabic Tutor">Quranic Arabic Tutor</option>
-                                    <option value="Hadith Expert">Hadith Expert</option>
-                                    <option value="Islamic History Guide">Islamic History Guide</option>
-                                </select>
-                            </div>
-                            <div class="ai-chat-messages" id="aiChatMessages">
-                                <!-- Messages will be injected here -->
-                            </div>
-                            <div class="ai-chat-input">
-                                <input type="text" placeholder="Ask me anything..." id="aiChatInput" />
-                                <button id="aiSendBtn"><i class="fas fa-paper-plane"></i> Send</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div><!-- /screen-container -->
 
             <!-- BOTTOM NAV -->
@@ -5708,7 +5388,6 @@
                 <button class="bn-item" data-screen="profile"><i class="fas fa-user"></i> Profile</button>
                 <button class="bn-item" data-screen="settings"><i class="fas fa-cog"></i> Settings</button>
                 <button class="bn-item" data-screen="pillars"><i class="fas fa-star"></i> Pillars</button>
-                <button class="bn-item" data-screen="ai-model"><i class="fas fa-robot"></i> AI</button>
             </nav>
 
         </div><!-- /main -->
@@ -5722,6 +5401,10 @@
         // process.env.OPENAI_API_KEY). The client just calls our own
         // /api/moderate endpoint, same pattern as the mosque proxy below.
         const MODERATION_ENDPOINT = 'http://localhost:3001/api/moderate';
+
+        // The Learn page "Ask Silah AI" box talks to our own /api/chat
+        // endpoint (server.js -> Gemini), same pattern as moderation/mosques.
+        const AI_CHAT_ENDPOINT = 'http://localhost:3001/api/chat';
 
         // ============================================================
         // ========== SUPABASE SETUP ==========
@@ -5909,7 +5592,6 @@
             profile: document.getElementById('screen-profile'),
             settings: document.getElementById('screen-settings'),
             pillars: document.getElementById('screen-pillars'),
-            'ai-model': document.getElementById('screen-ai-model'),
         };
 
         const navItems = document.querySelectorAll('.nav-item');
@@ -5959,11 +5641,6 @@
 
             if (screenId === 'learn') {
                 loadArticles();
-            }
-
-            if (screenId === 'ai-model') {
-                renderConversations();
-                renderMessages();
             }
         }
 
@@ -8467,6 +8144,64 @@
         feedObserver.observe(feedScreen, { attributes: true });
 
         // ========== LEARN PAGE: AI CHATBOT ==========
+
+        // Converts simple Markdown (as returned by Gemini) into safe HTML.
+        // Escapes HTML first so the AI's raw text can never inject markup,
+        // then supports **bold**, *italic*, bullet lists, numbered lists,
+        // and paragraph breaks.
+        function formatAIResponse(text) {
+            const escapeHtml = (s) => s
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            const inlineFormat = (s) => escapeHtml(s)
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+            const lines = text.split('\n');
+            let html = '';
+            let openBlock = null; // 'ul' | 'ol' | 'blockquote' | null
+
+            const closeBlock = () => {
+                if (openBlock) {
+                    html += `</${openBlock}>`;
+                    openBlock = null;
+                }
+            };
+
+            lines.forEach(rawLine => {
+                const line = rawLine.trim();
+                const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
+                const bulletMatch = line.match(/^[-*]\s+(.*)/);
+                const numberedMatch = line.match(/^\d+[.)]\s+(.*)/);
+                const quoteMatch = line.match(/^>\s?(.*)/);
+
+                if (headingMatch) {
+                    closeBlock();
+                    const level = headingMatch[1].length;
+                    html += `<h${level}>${inlineFormat(headingMatch[2])}</h${level}>`;
+                } else if (bulletMatch) {
+                    if (openBlock !== 'ul') { closeBlock(); html += '<ul>'; openBlock = 'ul'; }
+                    html += `<li>${inlineFormat(bulletMatch[1])}</li>`;
+                } else if (numberedMatch) {
+                    if (openBlock !== 'ol') { closeBlock(); html += '<ol>'; openBlock = 'ol'; }
+                    html += `<li>${inlineFormat(numberedMatch[1])}</li>`;
+                } else if (quoteMatch) {
+                    if (openBlock !== 'blockquote') { closeBlock(); html += '<blockquote>'; openBlock = 'blockquote'; }
+                    html += `<p>${inlineFormat(quoteMatch[1])}</p>`;
+                } else if (line === '') {
+                    closeBlock();
+                } else {
+                    closeBlock();
+                    html += `<p>${inlineFormat(line)}</p>`;
+                }
+            });
+            closeBlock();
+
+            return html;
+        }
+
         const islamicKnowledge = {
             'what is shahada': {
                 answer: 'Shahada is the Islamic declaration of faith, stating "Lā ilāha illā Allāh, Muḥammadun rasūlu Allāh" — "There is no god but Allah, and Muhammad is the Messenger of Allah." It is the first of the Five Pillars of Islam and the foundation of a Muslim\'s belief.',
@@ -8571,7 +8306,7 @@
             });
         });
 
-        function handleChatSubmit() {
+        async function handleChatSubmit() {
             const input = document.getElementById('chatInput');
             const question = input.value.trim();
 
@@ -8582,47 +8317,75 @@
 
             const responseDiv = document.getElementById('chatResponse');
             const responseText = document.getElementById('responseText');
+            const sourcesBlock = document.getElementById('responseSources');
             const sourcesList = document.getElementById('sourcesList');
             const loadingDiv = document.getElementById('chatLoading');
 
             loadingDiv.style.display = 'block';
             responseDiv.classList.remove('show');
 
-            setTimeout(() => {
-                loadingDiv.style.display = 'none';
-
-                const lowerQuestion = question.toLowerCase();
-                let answer = null;
-                let sources = [];
-
-                for (const [key, value] of Object.entries(islamicKnowledge)) {
-                    if (lowerQuestion.includes(key) || key.includes(lowerQuestion)) {
-                        answer = value.answer;
-                        sources = value.sources;
-                        break;
-                    }
+            // Fast path: if we have a curated, source-cited answer for this
+            // question, use it instantly instead of calling the AI.
+            const lowerQuestion = question.toLowerCase();
+            let answer = null;
+            let sources = [];
+            for (const [key, value] of Object.entries(islamicKnowledge)) {
+                if (lowerQuestion.includes(key) || key.includes(lowerQuestion)) {
+                    answer = value.answer;
+                    sources = value.sources;
+                    break;
                 }
+            }
 
-                if (!answer) {
+            if (!answer) {
+                // No curated match — ask the real AI via server.js (Gemini).
+                try {
+                    const res = await fetch(AI_CHAT_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            messages: [{ role: 'user', content: question }]
+                        })
+                    });
+
+                    if (!res.ok) {
+                        const err = await res.json().catch(() => ({}));
+                        throw new Error(err.error || `Server responded ${res.status}`);
+                    }
+
+                    const data = await res.json();
+                    answer = data.response;
+                    sources = [];
+                } catch (error) {
+                    console.warn('AI chat request failed:', error);
+                    loadingDiv.style.display = 'none';
+                    showModerationToast(
+                        'Could not reach the AI server. Make sure server.js is running on port 3001.',
+                        'error'
+                    );
                     answer =
-                        `I'm still learning about "${question}". For a reliable answer, I recommend checking with a local scholar or visiting trustworthy Islamic websites like IslamQA.org or Yaqeen Institute. Remember, always verify Islamic knowledge with qualified scholars.`;
+                        `I'm having trouble reaching the AI right now. For a reliable answer, I recommend checking with a local scholar or visiting trustworthy Islamic websites like IslamQA.org or Yaqeen Institute.`;
                     sources = ['IslamQA.org', 'Yaqeen Institute'];
                 }
+            }
 
-                responseText.textContent = answer;
-                sourcesList.innerHTML = '';
-                sources.forEach(src => {
-                    const li = document.createElement('li');
-                    li.textContent = src;
-                    sourcesList.appendChild(li);
-                });
+            loadingDiv.style.display = 'none';
 
-                responseDiv.classList.add('show');
-                input.value = '';
+            responseText.innerHTML = formatAIResponse(answer);
+            sourcesList.innerHTML = '';
+            sources.forEach(src => {
+                const li = document.createElement('li');
+                li.textContent = src;
+                sourcesList.appendChild(li);
+            });
+            // Only show the sources box when we actually have sources to show
+            // (curated answers do; live AI answers don't have citations).
+            sourcesBlock.style.display = sources.length ? '' : 'none';
 
-                trackQuestion(question);
+            responseDiv.classList.add('show');
+            input.value = '';
 
-            }, 1500 + Math.random() * 1000);
+            trackQuestion(question);
         }
 
         let askedQuestions = [];
@@ -8711,244 +8474,6 @@
                 e.preventDefault();
                 loadArticles();
             }
-        });
-
-        // ========== AI MODEL HUB LOGIC ==========
-        let conversations = [];
-        let activeConversationId = null;
-        let aiResponses = [
-            "That's a great question! Let me think about that for a moment...",
-            "Alhamdulillah, I'm here to help. Could you tell me more about what you're looking for?",
-            "Based on my knowledge, the answer lies in understanding the context better.",
-            "Mashallah, that's a wonderful topic to explore. Let's dive into it.",
-            "I appreciate your curiosity! Here's what I can share regarding that...",
-            "Barakallahu feek for asking. I'd recommend looking into this further.",
-            "That's an interesting perspective. Let's break it down step by step.",
-            "I'm still learning, but here's what I know so far about this subject."
-        ];
-
-        function getRandomAIResponse() {
-            return aiResponses[Math.floor(Math.random() * aiResponses.length)];
-        }
-
-        function getTimeStamp() {
-            const now = new Date();
-            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        }
-
-        function createNewConversation(title = 'New Chat') {
-            const id = Date.now().toString();
-            const conv = {
-                id: id,
-                title: title,
-                messages: [],
-                model: 'General Assistant',
-                created_at: new Date().toISOString()
-            };
-            conversations.unshift(conv);
-            activeConversationId = id;
-            renderConversations();
-            renderMessages();
-            updateModelSelect(conv.model);
-            return conv;
-        }
-
-        function deleteConversation(id) {
-            if (!confirm('Are you sure you want to delete this conversation?')) return;
-            conversations = conversations.filter(c => c.id !== id);
-            if (activeConversationId === id) {
-                activeConversationId = conversations.length > 0 ? conversations[0].id : null;
-                if (conversations.length === 0) {
-                    createNewConversation('Welcome Chat');
-                }
-            }
-            renderConversations();
-            renderMessages();
-        }
-
-        function switchConversation(id) {
-            activeConversationId = id;
-            const conv = conversations.find(c => c.id === id);
-            if (conv) {
-                updateModelSelect(conv.model);
-            }
-            renderConversations();
-            renderMessages();
-        }
-
-        function updateModelSelect(model) {
-            const select = document.getElementById('aiModelSelect');
-            if (select) {
-                select.value = model || 'General Assistant';
-            }
-        }
-
-        function renderConversations() {
-            const list = document.getElementById('aiConvList');
-            const searchInput = document.getElementById('aiSearchInput');
-            if (!list) return;
-
-            const searchTerm = searchInput?.value?.toLowerCase() || '';
-            let filtered = conversations;
-            if (searchTerm) {
-                filtered = conversations.filter(c => c.title.toLowerCase().includes(searchTerm));
-            }
-
-            if (filtered.length === 0) {
-                list.innerHTML =
-                    `<div style="padding:20px;text-align:center;color:var(--text-secondary);font-size:13px;">No conversations found. Start a new one!</div>`;
-                return;
-            }
-
-            list.innerHTML = filtered.map(conv => `
-                    <div class="conv-item ${activeConversationId === conv.id ? 'active' : ''}" data-id="${conv.id}">
-                        <span>${conv.title}</span>
-                        <span class="conv-time">${getTimeAgo(conv.created_at)}</span>
-                        <button class="delete-conv" data-id="${conv.id}" style="background:none;border:none;color:var(--gray-400);cursor:pointer;padding:2px 6px;border-radius:4px;font-size:12px;">✕</button>
-                    </div>
-                `).join('');
-
-            list.querySelectorAll('.conv-item').forEach(item => {
-                item.addEventListener('click', (e) => {
-                    if (e.target.closest('.delete-conv')) return;
-                    const id = item.dataset.id;
-                    if (id) switchConversation(id);
-                });
-                const deleteBtn = item.querySelector('.delete-conv');
-                if (deleteBtn) {
-                    deleteBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const id = deleteBtn.dataset.id;
-                        if (id) deleteConversation(id);
-                    });
-                }
-            });
-        }
-
-        function renderMessages() {
-            const container = document.getElementById('aiChatMessages');
-            if (!container) return;
-
-            const conv = conversations.find(c => c.id === activeConversationId);
-            if (!conv) {
-                container.innerHTML = `
-                        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text-secondary);text-align:center;padding:20px;">
-                            <i class="fas fa-robot" style="font-size:48px;color:var(--gray-300);margin-bottom:16px;"></i>
-                            <h3 style="font-weight:600;color:var(--text-primary);">Welcome to Silah AI</h3>
-                            <p style="max-width:400px;">Start a new conversation or select an existing one to continue learning.</p>
-                            <button class="ai-new-btn" style="margin-top:16px;width:auto;padding:10px 24px;" onclick="document.getElementById('aiNewChatBtn').click();">
-                                <i class="fas fa-plus-circle"></i> New Conversation
-                            </button>
-                        </div>
-                    `;
-                return;
-            }
-
-            if (conv.messages.length === 0) {
-                container.innerHTML = `
-                        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text-secondary);text-align:center;padding:20px;">
-                            <i class="fas fa-comment-dots" style="font-size:36px;color:var(--gray-300);margin-bottom:12px;"></i>
-                            <p>No messages yet. Start the conversation!</p>
-                        </div>
-                    `;
-                return;
-            }
-
-            container.innerHTML = conv.messages.map(msg => `
-                    <div class="message ${msg.role}">
-                        ${msg.content}
-                        <div class="msg-time">${msg.time || 'Just now'}</div>
-                    </div>
-                `).join('');
-
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function handleSendMessage() {
-            const input = document.getElementById('aiChatInput');
-            const content = input.value.trim();
-            if (!content) return;
-
-            const conv = conversations.find(c => c.id === activeConversationId);
-            if (!conv) {
-                createNewConversation('New Chat');
-                const newConv = conversations.find(c => c.id === activeConversationId);
-                if (newConv) {
-                    newConv.messages.push({ role: 'user', content: content, time: getTimeStamp() });
-                    newConv.title = content.slice(0, 30) + (content.length > 30 ? '...' : '');
-                }
-            } else {
-                conv.messages.push({ role: 'user', content: content, time: getTimeStamp() });
-                conv.title = content.slice(0, 30) + (content.length > 30 ? '...' : '');
-            }
-
-            input.value = '';
-            renderConversations();
-            renderMessages();
-
-            const container = document.getElementById('aiChatMessages');
-            const typingHtml = `
-                    <div class="typing-indicator">
-                        <span></span><span></span><span></span>
-                    </div>
-                `;
-            container.insertAdjacentHTML('beforeend', typingHtml);
-            container.scrollTop = container.scrollHeight;
-
-            setTimeout(() => {
-                const indicator = container.querySelector('.typing-indicator');
-                if (indicator) indicator.remove();
-
-                const activeConv = conversations.find(c => c.id === activeConversationId);
-                if (activeConv) {
-                    const aiMsg = getRandomAIResponse();
-                    activeConv.messages.push({ role: 'ai', content: aiMsg, time: getTimeStamp() });
-                    renderMessages();
-                    renderConversations();
-                }
-            }, 1200 + Math.random() * 1500);
-        }
-
-        // ========== AI MODEL HUB EVENT LISTENERS ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            if (!conversations.length) {
-                const defaultConv = createNewConversation('Welcome to Silah AI');
-                defaultConv.messages.push({
-                    role: 'ai',
-                    content: 'Assalamu alaikum! I\'m your AI assistant. How can I help you with your Islamic learning journey today?',
-                    time: getTimeStamp()
-                });
-                renderConversations();
-                renderMessages();
-            }
-
-            document.getElementById('aiNewChatBtn')?.addEventListener('click', function() {
-                createNewConversation('New Conversation');
-                renderConversations();
-                renderMessages();
-                document.getElementById('aiChatInput')?.focus();
-            });
-
-            document.getElementById('aiSendBtn')?.addEventListener('click', handleSendMessage);
-
-            document.getElementById('aiChatInput')?.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSendMessage();
-                }
-            });
-
-            document.getElementById('aiModelSelect')?.addEventListener('change', function() {
-                const conv = conversations.find(c => c.id === activeConversationId);
-                if (conv) {
-                    conv.model = this.value;
-                    document.getElementById('aiActiveTitle').textContent = this.value;
-                }
-            });
-
-            document.getElementById('aiSearchInput')?.addEventListener('input', function() {
-                renderConversations();
-            });
         });
 
         // ========== SEARCH FUNCTIONALITY ==========
