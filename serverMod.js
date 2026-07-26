@@ -20,8 +20,18 @@ app.get('/ping', (req, res) => {
 // ============================================================
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+if (!process.env.GEMINI_API_KEY) {
+    console.warn('⚠️  GEMINI_API_KEY is not set — /api/chat will fail until you add it to your .env file.');
+} else {
+    console.log(`✅ GEMINI_API_KEY loaded (starts with "${process.env.GEMINI_API_KEY.slice(0, 4)}...", length ${process.env.GEMINI_API_KEY.length})`);
+}
+
 app.post('/api/chat', async (req, res) => {
     try {
+        if (!process.env.GEMINI_API_KEY) {
+            return res.status(500).json({ error: 'GEMINI_API_KEY is not configured on the server' });
+        }
+
         const { messages, model } = req.body;
 
         // System prompt based on selected model
@@ -34,7 +44,7 @@ app.post('/api/chat', async (req, res) => {
             systemPrompt = 'You are a guide to Islamic history. Offer detailed historical context and timelines.';
         }
 
-        const geminiModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const geminiModel = genAI.getGenerativeModel({ model: 'gemini-flash-latest' });
 
         // Convert message history to Gemini format
         const history = messages.map(msg => ({
@@ -49,7 +59,7 @@ app.post('/api/chat', async (req, res) => {
                 ...history
             ],
             generationConfig: {
-                maxOutputTokens: 800,
+                maxOutputTokens: 2048,
                 temperature: 0.7,
             },
         });
