@@ -7684,7 +7684,7 @@
                 <div class="screen" id="screen-ai-model">
                     <div style="margin-bottom:20px;">
                         <h2 style="font-family:'Poppins',sans-serif;font-size:24px;color:var(--text-primary);">🤖 AI Model Hub</h2>
-                        <p style="color:var(--text-secondary);font-size:15px;">Your personal AI tutor for Islamic learning and community support.</p>
+                        <p style="color:var(--text-secondary);font-size:15px;">Your personal AI tutor for Islamic learning and community support. Powered by Gemini.</p>
                     </div>
                     <div class="ai-container">
                         <div class="ai-sidebar">
@@ -10932,31 +10932,27 @@
             loadArticles();
         }
 
-        // ========== AI MODEL HUB LOGIC ==========
+        // ============================================================
+        // ========== AI MODEL HUB — GEMINI INTEGRATION ==========
+        // ============================================================
+        // This replaces the dummy random responses with calls to your serverMaps.js backend
+        // which uses Google's Gemini API. The endpoint is '/api/generate' on the same origin.
+
         let conversations = [];
         let activeConversationId = null;
-        let aiResponses = [
-            "That's a great question! Let me think about that for a moment...",
-            "Alhamdulillah, I'm here to help. Could you tell me more about what you're looking for?",
-            "Based on my knowledge, the answer lies in understanding the context better.",
-            "Mashallah, that's a wonderful topic to explore. Let's dive into it.",
-            "I appreciate your curiosity! Here's what I can share regarding that...",
-            "Barakallahu feek for asking. I'd recommend looking into this further.",
-            "That's an interesting perspective. Let's break it down step by step.",
-            "I'm still learning, but here's what I know so far about this subject."
-        ];
 
-        function getRandomAIResponse() {
-            return aiResponses[Math.floor(Math.random() * aiResponses.length)];
-        }
+        // Helper: generate a unique ID
+        function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
 
+        // Helper: get current time stamp for messages
         function getTimeStamp() {
             const now = new Date();
             return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         }
 
+        // Create a new conversation
         function createNewConversation(title = 'New Chat') {
-            const id = Date.now().toString();
+            const id = generateId();
             const conv = {
                 id: id,
                 title: title,
@@ -10972,6 +10968,7 @@
             return conv;
         }
 
+        // Delete conversation
         function deleteConversation(id) {
             if (!confirm('Are you sure you want to delete this conversation?')) return;
             conversations = conversations.filter(c => c.id !== id);
@@ -10985,6 +10982,7 @@
             renderMessages();
         }
 
+        // Switch active conversation
         function switchConversation(id) {
             activeConversationId = id;
             const conv = conversations.find(c => c.id === id);
@@ -10995,6 +10993,7 @@
             renderMessages();
         }
 
+        // Update model select dropdown
         function updateModelSelect(model) {
             const select = document.getElementById('aiModelSelect');
             if (select) {
@@ -11002,6 +11001,7 @@
             }
         }
 
+        // Render conversation list in sidebar
         function renderConversations() {
             const list = document.getElementById('aiConvList');
             const searchInput = document.getElementById('aiSearchInput');
@@ -11044,6 +11044,7 @@
             });
         }
 
+        // Render messages for the active conversation
         function renderMessages() {
             const container = document.getElementById('aiChatMessages');
             if (!container) return;
@@ -11083,58 +11084,107 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        function handleSendMessage() {
+        // ========== GEMINI API CALL ==========
+        async function sendToGemini(prompt) {
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt: prompt }),
+            });
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.error || `HTTP ${response.status}`);
+            }
+            const data = await response.json();
+            return data.text;
+        }
+
+        // ========== HANDLE SEND MESSAGE (with Gemini) ==========
+        async function handleSendMessage() {
             const input = document.getElementById('aiChatInput');
             const content = input.value.trim();
             if (!content) return;
 
             const conv = conversations.find(c => c.id === activeConversationId);
             if (!conv) {
-                createNewConversation('New Chat');
+                // Create a new conversation with the user's message as title
+                createNewConversation(content.slice(0, 30) + (content.length > 30 ? '...' : ''));
+                // Now the active conversation is the new one, get it
                 const newConv = conversations.find(c => c.id === activeConversationId);
                 if (newConv) {
                     newConv.messages.push({ role: 'user', content: content, time: getTimeStamp() });
-                    newConv.title = content.slice(0, 30) + (content.length > 30 ? '...' : '');
                 }
             } else {
                 conv.messages.push({ role: 'user', content: content, time: getTimeStamp() });
-                conv.title = content.slice(0, 30) + (content.length > 30 ? '...' : '');
+                // Update title to first few words of the first user message if it's the first message
+                if (conv.messages.filter(m => m.role === 'user').length === 1) {
+                    conv.title = content.slice(0, 30) + (content.length > 30 ? '...' : '');
+                }
             }
 
             input.value = '';
             renderConversations();
             renderMessages();
 
+            // Show typing indicator
             const container = document.getElementById('aiChatMessages');
             const typingHtml = `
-                    <div class="typing-indicator">
+                    <div class="typing-indicator" id="typingIndicator">
                         <span></span><span></span><span></span>
                     </div>
                 `;
             container.insertAdjacentHTML('beforeend', typingHtml);
             container.scrollTop = container.scrollHeight;
 
-            setTimeout(() => {
-                const indicator = container.querySelector('.typing-indicator');
+            // Disable send button
+            const sendBtn = document.getElementById('aiSendBtn');
+            sendBtn.disabled = true;
+
+            try {
+                // Call Gemini via backend
+                const aiMsg = await sendToGemini(content);
+
+                // Remove typing indicator
+                const indicator = document.getElementById('typingIndicator');
                 if (indicator) indicator.remove();
 
+                // Add AI response to conversation
                 const activeConv = conversations.find(c => c.id === activeConversationId);
                 if (activeConv) {
-                    const aiMsg = getRandomAIResponse();
                     activeConv.messages.push({ role: 'ai', content: aiMsg, time: getTimeStamp() });
                     renderMessages();
                     renderConversations();
                 }
-            }, 1200 + Math.random() * 1500);
+            } catch (error) {
+                console.error('Error calling Gemini:', error);
+                // Remove typing indicator
+                const indicator = document.getElementById('typingIndicator');
+                if (indicator) indicator.remove();
+                // Show error message as AI response
+                const activeConv = conversations.find(c => c.id === activeConversationId);
+                if (activeConv) {
+                    const errorMsg =
+                        `⚠️ Sorry, I'm having trouble connecting to the AI service. Please try again later. Error: ${error.message || 'Unknown error'}`;
+                    activeConv.messages.push({ role: 'ai', content: errorMsg, time: getTimeStamp() });
+                    renderMessages();
+                    renderConversations();
+                }
+                showModerationToast('Failed to get AI response. Please try again.', 'error', 4000);
+            } finally {
+                sendBtn.disabled = false;
+            }
         }
 
-        // ========== AI MODEL HUB EVENT LISTENERS ==========
+        // ========== AI MODEL HUB EVENT LISTENERS (overwrite previous) ==========
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize with a welcome conversation if empty
             if (!conversations.length) {
                 const defaultConv = createNewConversation('Welcome to Silah AI');
                 defaultConv.messages.push({
                     role: 'ai',
-                    content: 'Assalamu alaikum! I\'m your AI assistant. How can I help you with your Islamic learning journey today?',
+                    content: 'Assalamu alaikum! I\'m your AI assistant, powered by Google Gemini. How can I help you with your Islamic learning journey today?',
                     time: getTimeStamp()
                 });
                 renderConversations();
@@ -11255,8 +11305,8 @@
                 'ai-model': {
                     title: 'AI Model Hub',
                     icon: 'fa-robot',
-                    keywords: ['ai', 'model', 'tutor', 'assistant', 'chat'],
-                    content: 'AI Model Hub Tutor Assistant Conversation Chat'
+                    keywords: ['ai', 'model', 'tutor', 'assistant', 'chat', 'gemini'],
+                    content: 'AI Model Hub Tutor Assistant Conversation Chat Gemini'
                 }
             };
 
@@ -11767,6 +11817,7 @@
             console.log('📜 New: Rules & Guidelines page accessible from Feed!');
             console.log('💬 New: Feedback page in Settings!');
             console.log('🕌 New: Mosque Community page in Community tab!');
+            console.log('🤖 AI Model Hub now uses Gemini via your backend!');
             console.log('AI Moderation:', USE_OPENAI ? 'Enabled (OpenAI)' : 'Disabled');
             if (USE_OPENAI) {
                 console.log('OpenAI API Key:', OPENAI_API_KEY && OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY_HERE' ? '✓ Configured' :
