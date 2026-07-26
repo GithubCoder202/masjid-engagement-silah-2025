@@ -5581,10 +5581,20 @@
         feedObserver.observe(feedScreen, { attributes: true });
 
         // ============================================================
-        // ========== MOSQUE FINDER (via allorigins proxy) ==========
+        // ========== MOSQUE FINDER — unified proxy approach ==========
         // ============================================================
+        // We use a local Node.js proxy (server.js) that adds geocoding enrichment.
+        // If the local proxy is not running, we gracefully fall back to the
+        // allorigins.win proxy (which lacks geocoding but still works).
+        // ============================================================
+        const LOCAL_PROXY = 'http://localhost:3001/api/mosques';
+        const FALLBACK_PROXY = 'https://api.allorigins.win/raw?url=';
+        const UPSTREAM_API = 'https://time.now/mosques/api/mosques';
         const MOSQUE_FALLBACK_LAT = 41.8781;
         const MOSQUE_FALLBACK_LON = -87.6298;
+
+        let mosquesLoaded = false;
+        let useLocalProxy = true; // start by trying local
 
         function renderMosques(mosques, usedFallback) {
             const list = document.getElementById('mosqueList');
@@ -5606,7 +5616,7 @@
                 return;
             }
 
-            // Remove static loading/error/no-results rows, keep only dynamic ones
+            // Remove existing dynamic rows
             const dynamicRows = list.querySelectorAll('.mosque-row.dynamic');
             dynamicRows.forEach(row => row.remove());
 
@@ -5645,28 +5655,30 @@
             if (errorEl) errorEl.style.display = 'flex';
             if (noResultsEl) noResultsEl.style.display = 'none';
 
-            // Remove any existing dynamic rows
             const dynamicRows = list.querySelectorAll('.mosque-row.dynamic');
             dynamicRows.forEach(row => row.remove());
         }
 
-        async function fetchMosques(lat, lon) {
-            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        async function fetchMosquesViaLocalProxy(lat, lon) {
+            const url =
+                `${LOCAL_PROXY}?lat=${lat}&lon=${lon}&radius=30&limit=5`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`Local proxy HTTP ${res.status}`);
+            const data = await res.json();
+            return Array.isArray(data) ? data : data.data || [];
+        }
+
+        async function fetchMosquesViaFallback(lat, lon) {
             const apiUrl =
-                `https://time.now/mosques/api/mosques?lat=${lat}&lon=${lon}&radius=30&limit=5`;
-            const url = proxyUrl + encodeURIComponent(apiUrl);
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            const data = await response.json();
+                `${UPSTREAM_API}?lat=${lat}&lon=${lon}&radius=30&limit=5`;
+            const proxyUrl = FALLBACK_PROXY + encodeURIComponent(apiUrl);
+            const res = await fetch(proxyUrl);
+            if (!res.ok) throw new Error(`Fallback proxy HTTP ${res.status}`);
+            const data = await res.json();
             return data.data || [];
         }
 
-        let mosquesLoaded = false;
-
-        function loadMosques() {
-            if (mosquesLoaded) return;
-            mosquesLoaded = true;
-
+        async function loadMosquesWithProxy() {
             const loadingEl = document.getElementById('mosqueLoading');
             const errorEl = document.getElementById('mosqueError');
             const noResultsEl = document.getElementById('mosqueNoResults');
@@ -5675,15 +5687,40 @@
             if (errorEl) errorEl.style.display = 'none';
             if (noResultsEl) noResultsEl.style.display = 'none';
 
-            const runFetch = (lat, lon, usedFallback) => {
-                fetchMosques(lat, lon)
-                    .then(data => {
-                        renderMosques(data, usedFallback);
-                    })
-                    .catch(err => {
-                        console.error('Mosque fetch error:', err);
-                        renderMosqueError();
-                    });
+            // Remove stale dynamic rows
+            const list = document.getElementById('mosqueList');
+            const dynamicRows = list.querySelectorAll('.mosque-row.dynamic');
+            dynamicRows.forEach(row => row.remove());
+
+            const runFetch = async (lat, lon, usedFallback) => {
+                try {
+                    let mosques;
+                    if (useLocalProxy && !usedFallback) {
+                        try {
+                            mosques = await fetchMosquesViaLocalProxy(lat, lon);
+                            // If we got data, keep using local proxy
+                            if (mosques && mosques.length > 0) {
+                                renderMosques(mosques, false);
+                                return;
+                            }
+                            // If no data from local, fall back immediately
+                            useLocalProxy = false;
+                            mosques = await fetchMosquesViaFallback(lat, lon);
+                            renderMosques(mosques, true);
+                        } catch (localErr) {
+                            console.warn('Local proxy failed, falling back to allorigins:', localErr);
+                            useLocalProxy = false;
+                            mosques = await fetchMosquesViaFallback(lat, lon);
+                            renderMosques(mosques, true);
+                        }
+                    } else {
+                        mosques = await fetchMosquesViaFallback(lat, lon);
+                        renderMosques(mosques, true);
+                    }
+                } catch (err) {
+                    console.error('Mosque fetch error:', err);
+                    renderMosqueError();
+                }
             };
 
             if (navigator.geolocation) {
@@ -5695,6 +5732,12 @@
             } else {
                 runFetch(MOSQUE_FALLBACK_LAT, MOSQUE_FALLBACK_LON, true);
             }
+        }
+
+        function loadMosques() {
+            if (mosquesLoaded) return;
+            mosquesLoaded = true;
+            loadMosquesWithProxy();
         }
 
         // ============================================================
@@ -5859,7 +5902,6 @@
             const conv = conversations.find(c => c.id === activeConversationId);
             if (!conv) {
                 createNewConversation('New Chat');
-                // Re-fetch the conversation
                 const newConv = conversations.find(c => c.id === activeConversationId);
                 if (newConv) {
                     newConv.messages.push({ role: 'user', content: content, time: getTimeStamp() });
@@ -5886,7 +5928,6 @@
 
             // Simulate AI response after delay
             setTimeout(() => {
-                // Remove typing indicator
                 const indicator = container.querySelector('.typing-indicator');
                 if (indicator) indicator.remove();
 
@@ -5984,6 +6025,7 @@
                 console.log('OpenAI API Key:', OPENAI_API_KEY && OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY_HERE' ? '✓ Configured' :
                     '✗ Not configured');
             }
+            console.log('🌐 Mosque proxy: local → fallback to allorigins.win');
         });
     </script>
 
