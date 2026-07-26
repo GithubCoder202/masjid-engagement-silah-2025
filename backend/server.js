@@ -154,7 +154,12 @@ async function enrichWithCoords(mosques) {
 
 app.get('/api/mosques', async (req, res) => {
     try {
-        const upstreamUrl = `${UPSTREAM}${req.url.search || ''}`;
+        // req.url is a plain string here, not a URL object — build the
+        // upstream query string from req.query (parsed by Express) instead
+        // of reaching for req.url.search, which resolves to the built-in
+        // String.prototype.search method rather than a query string.
+        const qs = new URLSearchParams(req.query).toString();
+        const upstreamUrl = `${UPSTREAM}${qs ? `?${qs}` : ''}`;
         const upstreamRes = await fetch(upstreamUrl);
         const body = await upstreamRes.text();
 
