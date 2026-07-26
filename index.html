@@ -112,6 +112,10 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         html,
         body {
             height: 100%;
@@ -129,6 +133,712 @@
             transition: background var(--transition-theme), color var(--transition-theme);
         }
 
+        /* ========== LANDING PAGE ========== */
+        .landing-page {
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            overflow-y: auto;
+            transition: background var(--transition-theme);
+            display: flex;
+            flex-direction: column;
+        }
+        .landing-page::-webkit-scrollbar {
+            width: 6px;
+        }
+        .landing-page::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .landing-page::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 10px;
+        }
+        body.authenticated .landing-page {
+            display: none;
+        }
+        body:not(.authenticated) .app {
+            display: none;
+        }
+        body:not(.authenticated) .auth-screen {
+            display: none;
+        }
+        body.show-auth .landing-page {
+            filter: blur(4px) brightness(0.7);
+            pointer-events: none;
+        }
+        body.show-auth .auth-screen {
+            display: flex;
+        }
+
+        /* ========== LANDING NAVBAR ========== */
+        .landing-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            transition: background var(--transition-theme), border-color var(--transition-theme);
+        }
+        [data-theme="dark"] .landing-nav {
+            background: #1f2126;
+            border-color: var(--border-light);
+        }
+        .landing-nav .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .landing-nav .nav-brand .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--green-dark);
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .landing-nav .nav-brand .logo-icon {
+            background: #d4b55c;
+            color: #0d1f17;
+        }
+        .landing-nav .nav-brand h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+        .landing-nav .nav-brand h1 span {
+            color: var(--gold);
+        }
+        .landing-nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .landing-nav .nav-links a {
+            padding: 8px 18px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            background: transparent;
+        }
+        .landing-nav .nav-links a:hover {
+            background: var(--gray-100);
+            color: var(--text-primary);
+        }
+        .landing-nav .nav-links .btn-signin {
+            background: transparent;
+            color: var(--green);
+            border: 2px solid var(--green);
+            padding: 6px 20px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+        }
+        .landing-nav .nav-links .btn-signin:hover {
+            background: var(--green);
+            color: #fff;
+        }
+        .landing-nav .nav-links .btn-register {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 8px 22px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+        }
+        .landing-nav .nav-links .btn-register:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .landing-nav .nav-links .nav-link-icon {
+            display: none;
+            padding: 6px 10px;
+            font-size: 16px;
+        }
+        @media (max-width: 700px) {
+            .landing-nav .nav-links .nav-link-text {
+                display: none;
+            }
+            .landing-nav .nav-links .nav-link-icon {
+                display: inline-block;
+            }
+            .landing-nav .nav-links .btn-signin,
+            .landing-nav .nav-links .btn-register {
+                padding: 6px 14px;
+                font-size: 13px;
+            }
+            .landing-nav .nav-links .btn-signin .nav-link-text,
+            .landing-nav .nav-links .btn-register .nav-link-text {
+                display: inline;
+            }
+            .landing-nav {
+                padding: 10px 16px;
+            }
+        }
+        @media (max-width: 480px) {
+            .landing-nav .nav-links .btn-signin .nav-link-text,
+            .landing-nav .nav-links .btn-register .nav-link-text {
+                display: none;
+            }
+            .landing-nav .nav-links .btn-signin,
+            .landing-nav .nav-links .btn-register {
+                padding: 6px 12px;
+            }
+            .landing-nav .nav-brand h1 {
+                font-size: 17px;
+            }
+            .landing-nav .nav-brand .logo-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 15px;
+            }
+        }
+
+        /* ========== LANDING HERO ========== */
+        .landing-hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 32px 60px;
+            min-height: 70vh;
+            background: linear-gradient(160deg, var(--cream) 0%, var(--green-pale) 100%);
+            transition: background var(--transition-theme);
+        }
+        [data-theme="dark"] .landing-hero {
+            background: linear-gradient(160deg, #181a1d 0%, #1a2f26 100%);
+        }
+        .landing-hero .hero-content {
+            max-width: 1100px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .landing-hero .hero-text h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 44px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.2;
+            margin-bottom: 16px;
+            transition: color var(--transition-theme);
+        }
+        .landing-hero .hero-text h2 span {
+            color: var(--green);
+        }
+        .landing-hero .hero-text p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            max-width: 480px;
+            transition: color var(--transition-theme);
+        }
+        .landing-hero .hero-text .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .landing-hero .hero-text .hero-buttons button {
+            padding: 14px 32px;
+            border-radius: var(--radius-full);
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: none;
+        }
+        .landing-hero .hero-text .hero-buttons .btn-primary-hero {
+            background: var(--green);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(26, 107, 79, 0.3);
+        }
+        .landing-hero .hero-text .hero-buttons .btn-primary-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(26, 107, 79, 0.4);
+        }
+        .landing-hero .hero-text .hero-buttons .btn-secondary-hero {
+            background: var(--gray-100);
+            color: var(--text-primary);
+            border: 1px solid var(--border-medium);
+        }
+        .landing-hero .hero-text .hero-buttons .btn-secondary-hero:hover {
+            background: var(--gray-200);
+        }
+        .landing-hero .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .landing-hero .hero-visual .hero-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 32px 36px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-light);
+            max-width: 400px;
+            width: 100%;
+            transition: background var(--transition-theme), border-color var(--transition-theme);
+        }
+        .landing-hero .hero-visual .hero-card .hc-icon {
+            font-size: 32px;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+        .landing-hero .hero-visual .hero-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .landing-hero .hero-visual .hero-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .landing-hero .hero-visual .hero-card .hc-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-light);
+        }
+        .landing-hero .hero-visual .hero-card .hc-stats .stat {
+            text-align: center;
+        }
+        .landing-hero .hero-visual .hero-card .hc-stats .stat .num {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--green);
+        }
+        .landing-hero .hero-visual .hero-card .hc-stats .stat .label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        @media (max-width: 900px) {
+            .landing-hero .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .landing-hero .hero-text p {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .landing-hero .hero-text .hero-buttons {
+                justify-content: center;
+            }
+            .landing-hero .hero-text h2 {
+                font-size: 34px;
+            }
+            .landing-hero {
+                padding: 30px 20px 50px;
+                min-height: auto;
+            }
+        }
+        @media (max-width: 480px) {
+            .landing-hero .hero-text h2 {
+                font-size: 26px;
+            }
+            .landing-hero .hero-text p {
+                font-size: 15px;
+            }
+            .landing-hero .hero-text .hero-buttons button {
+                padding: 10px 24px;
+                font-size: 14px;
+            }
+            .landing-hero .hero-visual .hero-card {
+                padding: 20px 18px;
+            }
+        }
+
+        /* ========== REVIEWS SECTION ========== */
+        .landing-reviews {
+            padding: 50px 32px 60px;
+            background: var(--cream);
+            transition: background var(--transition-theme);
+        }
+        [data-theme="dark"] .landing-reviews {
+            background: #181a1d;
+        }
+        .landing-reviews .section-title {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .landing-reviews .section-sub {
+            text-align: center;
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 36px;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .review-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 24px 26px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+        .review-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+        .review-card .review-stars {
+            color: var(--gold);
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .review-card .review-stars .star-empty {
+            color: var(--gray-300);
+        }
+        .review-card .review-text {
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        .review-card .review-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .review-card .review-author .ra-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--green);
+            flex-shrink: 0;
+        }
+        .review-card .review-author .ra-info .ra-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+        .review-card .review-author .ra-info .ra-role {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        @media (max-width: 600px) {
+            .landing-reviews {
+                padding: 30px 16px 40px;
+            }
+            .landing-reviews .section-title {
+                font-size: 24px;
+            }
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========== ABOUT SECTION ========== */
+        .landing-about {
+            padding: 50px 32px 60px;
+            background: var(--gray-50);
+            transition: background var(--transition-theme);
+        }
+        [data-theme="dark"] .landing-about {
+            background: #1f2126;
+        }
+        .landing-about .about-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .landing-about .about-inner .about-text h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .landing-about .about-inner .about-text h2 span {
+            color: var(--green);
+        }
+        .landing-about .about-inner .about-text p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .landing-about .about-inner .about-text .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .landing-about .about-inner .about-text .about-features .af-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+        .landing-about .about-inner .about-text .about-features .af-item i {
+            color: var(--green);
+            font-size: 16px;
+        }
+        .landing-about .about-inner .about-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .landing-about .about-inner .about-image .about-placeholder {
+            background: var(--green-pale);
+            border-radius: var(--radius);
+            padding: 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            border: 2px dashed var(--green);
+            transition: all var(--transition-theme);
+        }
+        .landing-about .about-inner .about-image .about-placeholder i {
+            font-size: 48px;
+            color: var(--green);
+            margin-bottom: 12px;
+            display: block;
+        }
+        .landing-about .about-inner .about-image .about-placeholder h4 {
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+        .landing-about .about-inner .about-image .about-placeholder p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        @media (max-width: 800px) {
+            .landing-about .about-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .landing-about .about-inner .about-text .about-features {
+                justify-items: center;
+            }
+            .landing-about {
+                padding: 30px 16px 40px;
+            }
+            .landing-about .about-inner .about-text h2 {
+                font-size: 24px;
+            }
+        }
+        @media (max-width: 480px) {
+            .landing-about .about-inner .about-text .about-features {
+                grid-template-columns: 1fr;
+            }
+            .landing-about .about-inner .about-image .about-placeholder {
+                padding: 24px;
+            }
+        }
+
+        /* ========== TEAM SECTION ========== */
+        .landing-team {
+            padding: 50px 32px 60px;
+            background: var(--cream);
+            transition: background var(--transition-theme);
+        }
+        [data-theme="dark"] .landing-team {
+            background: #181a1d;
+        }
+        .landing-team .section-title {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .landing-team .section-sub {
+            text-align: center;
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 36px;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .team-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 24px 20px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+        .team-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+        .team-card .tc-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--gold-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--gold);
+            margin: 0 auto 12px;
+            border: 3px solid var(--gold-light);
+        }
+        .team-card .tc-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .team-card .tc-role {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        @media (max-width: 600px) {
+            .landing-team {
+                padding: 30px 16px 40px;
+            }
+            .landing-team .section-title {
+                font-size: 24px;
+            }
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 400px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========== FOOTER ========== */
+        .landing-footer {
+            padding: 24px 32px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-light);
+            background: var(--white);
+            transition: all var(--transition-theme);
+        }
+        .landing-footer strong {
+            color: var(--green);
+        }
+        @media (max-width: 600px) {
+            .landing-footer {
+                padding: 16px;
+                font-size: 12px;
+            }
+        }
+
+        /* ========== AUTH SCREEN (overlay) ========== */
+        .auth-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-y: auto;
+            animation: fadeInOverlay 0.4s ease;
+        }
+        .auth-screen .auth-card {
+            width: 100%;
+            max-width: 520px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 36px 36px 28px;
+            margin: auto;
+            transition: background var(--transition-theme);
+            position: relative;
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .auth-screen .auth-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            line-height: 1;
+        }
+        .auth-screen .auth-close:hover {
+            color: var(--text-primary);
+            transform: rotate(90deg);
+        }
+        @keyframes fadeInOverlay {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
         /* ========== APP SHELL ========== */
         .app {
             width: 100%;
@@ -139,39 +849,17 @@
             position: relative;
             transition: background var(--transition-theme);
         }
-
-        body:not(.authenticated) .app {
+        body.authenticated .app {
+            display: flex;
+        }
+        body.authenticated .landing-page {
             display: none;
         }
         body.authenticated .auth-screen {
-            display: none;
+            display: none !important;
         }
 
-        /* ========== AUTH SCREEN ========== */
-        .auth-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            background: linear-gradient(160deg, var(--green-dark) 0%, var(--green) 45%, var(--teal) 100%);
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 40px 20px;
-            overflow-y: auto;
-        }
-
-        .auth-card {
-            width: 100%;
-            max-width: 520px;
-            background: var(--cream);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            padding: 36px 36px 28px;
-            margin: auto;
-            transition: background var(--transition-theme);
-            position: relative;
-        }
-
+        /* ========== AUTH INSIDE MODAL ========== */
         .auth-brand {
             display: flex;
             align-items: center;
@@ -284,6 +972,13 @@
             border-color: var(--green);
             box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
         }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
 
         .auth-switch {
             text-align: center;
@@ -310,25 +1005,6 @@
         }
         .auth-error.show {
             display: block;
-        }
-
-        .btn-logout {
-            width: 100%;
-            padding: 10px;
-            background: transparent;
-            color: #C0392B;
-            border: 2px solid var(--border-medium);
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 8px;
-        }
-        .btn-logout:hover {
-            border-color: #C0392B;
-            background: #FDEDEC;
         }
 
         .btn-primary {
@@ -403,24 +1079,110 @@
             }
         }
 
-        .btn-secondary {
-            padding: 10px 24px;
-            background: var(--gray-100);
-            color: var(--text-primary);
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-full);
+        .btn-logout {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            color: #C0392B;
+            border: 2px solid var(--border-medium);
+            border-radius: var(--radius-sm);
             font-size: 14px;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
             transition: var(--transition);
+            margin-top: 8px;
         }
-        .btn-secondary:hover {
-            background: var(--gray-200);
-            border-color: var(--gray-300);
+        .btn-logout:hover {
+            border-color: #C0392B;
+            background: #FDEDEC;
         }
 
-        /* ========== SIDEBAR ========== */
+        /* Onboarding styles inside auth modal */
+        #onboardingStep .radio-grid,
+        #onboardingStep .checkbox-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        #onboardingStep .radio-option,
+        #onboardingStep .checkbox-option {
+            flex: 1 1 calc(50% - 10px);
+            min-width: 140px;
+            background: var(--gray-50);
+            border: 2px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-size: 14px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        [data-theme="dark"] #onboardingStep .radio-option,
+        [data-theme="dark"] #onboardingStep .checkbox-option {
+            background: var(--gray-100);
+            border-color: var(--border-light);
+        }
+        #onboardingStep .radio-option:hover,
+        #onboardingStep .checkbox-option:hover {
+            border-color: var(--green);
+            background: var(--green-pale);
+        }
+        #onboardingStep .radio-option.selected,
+        #onboardingStep .checkbox-option.selected {
+            border-color: var(--green);
+            background: var(--green-pale);
+            box-shadow: 0 0 0 2px rgba(26, 107, 79, 0.15);
+        }
+        [data-theme="dark"] #onboardingStep .radio-option.selected,
+        [data-theme="dark"] #onboardingStep .checkbox-option.selected {
+            background: #1a2f26;
+            border-color: #2ea87a;
+        }
+        #onboardingStep .radio-option i,
+        #onboardingStep .checkbox-option i {
+            color: var(--gray-400);
+            transition: color var(--transition);
+            font-size: 16px;
+        }
+        #onboardingStep .radio-option.selected i,
+        #onboardingStep .checkbox-option.selected i {
+            color: var(--green);
+        }
+        #onboardingStep .checkbox-option {
+            flex: 1 1 calc(33.333% - 10px);
+            min-width: 120px;
+        }
+        #onboardingStep .onboarding-footer {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        #onboardingStep .onboarding-footer i {
+            color: var(--green);
+        }
+        @media (max-width: 600px) {
+            #onboardingStep .radio-option,
+            #onboardingStep .checkbox-option {
+                flex: 1 1 100%;
+                min-width: unset;
+            }
+            #onboardingStep .checkbox-option {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* ========== APP SIDEBAR (existing) ========== */
         .sidebar {
             width: 260px;
             min-width: 260px;
@@ -434,12 +1196,10 @@
             overflow-y: auto;
             transition: background var(--transition-theme);
         }
-
         [data-theme="dark"] .sidebar {
             background: #0d1f17;
             border-right: 1px solid #1a3025;
         }
-
         .sidebar-brand {
             display: flex;
             align-items: center;
@@ -450,7 +1210,6 @@
             flex-shrink: 0;
             cursor: pointer;
         }
-
         .sidebar-brand .logo-icon {
             width: 42px;
             height: 42px;
@@ -467,12 +1226,10 @@
         .sidebar-brand .logo-icon:hover {
             transform: scale(1.05);
         }
-
         [data-theme="dark"] .sidebar-brand .logo-icon {
             background: #d4b55c;
             color: #0d1f17;
         }
-
         .sidebar-brand h1 {
             font-family: 'Poppins', sans-serif;
             font-size: 22px;
@@ -482,14 +1239,12 @@
         .sidebar-brand h1 span {
             color: var(--gold-light);
         }
-
         .sidebar-nav {
             flex: 1;
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
-
         .sidebar-nav .nav-item {
             display: flex;
             align-items: center;
@@ -507,31 +1262,26 @@
             text-align: left;
             font-family: 'Inter', sans-serif;
         }
-
         .sidebar-nav .nav-item:hover {
             background: rgba(255, 255, 255, 0.08);
             color: #fff;
         }
-
         .sidebar-nav .nav-item.active {
             background: rgba(255, 255, 255, 0.15);
             color: #fff;
             box-shadow: inset 3px 0 0 var(--gold);
         }
-
         .sidebar-nav .nav-item i {
             width: 20px;
             font-size: 16px;
             text-align: center;
         }
-
         .sidebar-stats {
             margin-top: auto;
             padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.12);
             flex-shrink: 0;
         }
-
         .sidebar-stats .stat-row {
             display: flex;
             justify-content: space-between;
@@ -543,7 +1293,6 @@
             color: #fff;
             font-weight: 600;
         }
-
         .sidebar-hadith {
             margin-top: 16px;
             padding: 16px;
@@ -587,7 +1336,6 @@
             position: relative;
             z-index: 50;
         }
-
         .topbar-left {
             display: flex;
             align-items: center;
@@ -605,7 +1353,6 @@
             font-size: 14px;
             transition: color var(--transition-theme);
         }
-
         .topbar-right {
             display: flex;
             align-items: center;
@@ -613,8 +1360,6 @@
             flex-shrink: 0;
             position: relative;
         }
-
-        /* ===== SEARCH BAR ===== */
         .search-wrapper {
             position: relative;
             display: flex;
@@ -651,8 +1396,6 @@
         .search-wrapper input::placeholder {
             color: var(--gray-400);
         }
-
-        /* Search Popup */
         .search-popup {
             position: absolute;
             top: calc(100% + 8px);
@@ -680,7 +1423,6 @@
             background: var(--gray-300);
             border-radius: 10px;
         }
-
         .search-popup .search-result-item {
             display: flex;
             align-items: center;
@@ -762,7 +1504,6 @@
             color: var(--gray-400);
             border-bottom: 1px solid var(--border-light);
         }
-
         .topbar-right .icon-btn {
             width: 40px;
             height: 40px;
@@ -797,7 +1538,6 @@
             align-items: center;
             justify-content: center;
         }
-
         .profile-avatar-wrapper {
             position: relative;
             cursor: pointer;
@@ -819,7 +1559,6 @@
         .topbar-right .avatar:hover {
             border-color: var(--green);
         }
-
         .profile-popup {
             position: absolute;
             top: calc(100% + 12px);
@@ -877,7 +1616,6 @@
         .profile-popup .pp-logout:hover {
             color: #c0392b;
         }
-
         .notification-popup {
             position: absolute;
             top: calc(100% + 12px);
@@ -1012,14 +1750,6 @@
         .about-overlay.show {
             display: flex;
         }
-        @keyframes fadeInOverlay {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
         .about-modal {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -1030,16 +1760,6 @@
             animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             transition: background var(--transition-theme);
             position: relative;
-        }
-        @keyframes modalPop {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
         }
         .about-modal .about-close {
             position: absolute;
@@ -1128,11 +1848,9 @@
             min-height: 0;
             transition: background var(--transition-theme);
         }
-
         [data-theme="dark"] .screen-container {
             background: #181a1d;
         }
-
         .screen-container::-webkit-scrollbar {
             width: 6px;
         }
@@ -1143,7 +1861,6 @@
             background: var(--gray-300);
             border-radius: 10px;
         }
-
         .screen {
             display: none;
             animation: fadeUp 0.4s ease;
@@ -1151,7 +1868,6 @@
         .screen.active {
             display: block;
         }
-
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -1160,93 +1876,6 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
-            }
-        }
-
-        /* ========== ONBOARDING STEP STYLES ========== */
-        #onboardingStep {
-            padding-top: 8px;
-        }
-        #onboardingStep .radio-grid,
-        #onboardingStep .checkbox-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 4px;
-        }
-        #onboardingStep .radio-option,
-        #onboardingStep .checkbox-option {
-            flex: 1 1 calc(50% - 10px);
-            min-width: 140px;
-            background: var(--gray-50);
-            border: 2px solid var(--border-medium);
-            border-radius: var(--radius-sm);
-            padding: 12px 16px;
-            cursor: pointer;
-            transition: all var(--transition);
-            font-size: 14px;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-        }
-        [data-theme="dark"] #onboardingStep .radio-option,
-        [data-theme="dark"] #onboardingStep .checkbox-option {
-            background: var(--gray-100);
-            border-color: var(--border-light);
-        }
-        #onboardingStep .radio-option:hover,
-        #onboardingStep .checkbox-option:hover {
-            border-color: var(--green);
-            background: var(--green-pale);
-        }
-        #onboardingStep .radio-option.selected,
-        #onboardingStep .checkbox-option.selected {
-            border-color: var(--green);
-            background: var(--green-pale);
-            box-shadow: 0 0 0 2px rgba(26, 107, 79, 0.15);
-        }
-        [data-theme="dark"] #onboardingStep .radio-option.selected,
-        [data-theme="dark"] #onboardingStep .checkbox-option.selected {
-            background: #1a2f26;
-            border-color: #2ea87a;
-        }
-        #onboardingStep .radio-option i,
-        #onboardingStep .checkbox-option i {
-            color: var(--gray-400);
-            transition: color var(--transition);
-            font-size: 16px;
-        }
-        #onboardingStep .radio-option.selected i,
-        #onboardingStep .checkbox-option.selected i {
-            color: var(--green);
-        }
-        #onboardingStep .checkbox-option {
-            flex: 1 1 calc(33.333% - 10px);
-            min-width: 120px;
-        }
-        #onboardingStep .onboarding-footer {
-            text-align: center;
-            margin-top: 18px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        #onboardingStep .onboarding-footer i {
-            color: var(--green);
-        }
-        @media (max-width: 600px) {
-            #onboardingStep .radio-option,
-            #onboardingStep .checkbox-option {
-                flex: 1 1 100%;
-                min-width: unset;
-            }
-            #onboardingStep .checkbox-option {
-                flex: 1 1 100%;
             }
         }
 
@@ -1262,13 +1891,11 @@
             box-shadow: var(--shadow-sm);
             transition: all var(--transition-theme);
         }
-
         [data-theme="dark"] .quran-verse-widget {
             background: linear-gradient(135deg, #1f2418 0%, #23281c 30%, #1e2216 60%, #1f2418 100%);
             border-color: rgba(212, 181, 92, 0.3);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
-
         .quran-verse-widget::before {
             content: '';
             position: absolute;
@@ -1280,7 +1907,6 @@
             background: radial-gradient(circle, rgba(201, 168, 76, 0.12) 0%, transparent 70%);
             pointer-events: none;
         }
-
         .quran-verse-widget::after {
             content: '☾';
             position: absolute;
@@ -1291,12 +1917,10 @@
             pointer-events: none;
             color: var(--gold);
         }
-
         [data-theme="dark"] .quran-verse-widget::after {
             opacity: 0.2;
             color: #d4b55c;
         }
-
         .quran-verse-widget .qv-inner {
             position: relative;
             z-index: 1;
@@ -1305,7 +1929,6 @@
             align-items: flex-start;
             flex-wrap: wrap;
         }
-
         .quran-verse-widget .qv-icon-col {
             flex-shrink: 0;
             width: 52px;
@@ -1319,17 +1942,14 @@
             border: 2px solid var(--gold-light);
             transition: all var(--transition-theme);
         }
-
         [data-theme="dark"] .quran-verse-widget .qv-icon-col {
             background: #2a2418;
             border-color: #5a4820;
         }
-
         .quran-verse-widget .qv-content {
             flex: 1;
             min-width: 200px;
         }
-
         .quran-verse-widget .qv-arabic {
             font-family: 'Amiri', 'Traditional Arabic', serif;
             font-size: 26px;
@@ -1341,11 +1961,9 @@
             letter-spacing: 1px;
             transition: color var(--transition-theme);
         }
-
         [data-theme="dark"] .quran-verse-widget .qv-arabic {
             color: #e8d48a;
         }
-
         .quran-verse-widget .qv-translation {
             font-size: 15px;
             color: var(--charcoal);
@@ -1354,18 +1972,15 @@
             margin-bottom: 6px;
             transition: color var(--transition-theme);
         }
-
         [data-theme="dark"] .quran-verse-widget .qv-translation {
             color: #c5c9d0;
         }
-
         .quran-verse-widget .qv-reference {
             font-size: 13px;
             color: var(--gold);
             font-weight: 600;
             letter-spacing: 0.5px;
         }
-
         .quran-verse-widget .qv-refresh {
             position: absolute;
             bottom: 14px;
@@ -1384,13 +1999,11 @@
             justify-content: center;
             z-index: 2;
         }
-
         .quran-verse-widget .qv-refresh:hover {
             background: var(--gold-pale);
             border-color: var(--gold);
             transform: rotate(60deg);
         }
-
         [data-theme="dark"] .quran-verse-widget .qv-refresh:hover {
             background: #2a2418;
         }
@@ -1413,7 +2026,6 @@
             font-size: 15px;
             transition: color var(--transition-theme);
         }
-
         .dash-progress {
             background: var(--card-bg);
             padding: 18px 24px;
@@ -1465,13 +2077,11 @@
             font-size: 16px;
             color: var(--green);
         }
-
         .dash-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 24px;
         }
-
         .dash-card {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -1503,7 +2113,6 @@
         .dash-card .card-header a:hover {
             text-decoration: underline;
         }
-
         .recommend-item {
             display: flex;
             gap: 14px;
@@ -1570,7 +2179,6 @@
         .recommend-item .rec-info .rec-actions .btn-save:hover {
             background: var(--gray-200);
         }
-
         .mentor-card {
             display: flex;
             gap: 16px;
@@ -1652,7 +2260,6 @@
         .mentor-card .mentor-actions .btn-sched:hover {
             background: var(--green-dark);
         }
-
         .ai-tip {
             margin-top: 12px;
             padding: 14px 18px;
@@ -1681,7 +2288,6 @@
             color: var(--text-secondary);
             font-size: 15px;
         }
-
         .mentor-scholar-badge {
             display: inline-flex;
             align-items: center;
@@ -1700,7 +2306,6 @@
             border-color: #a569bd;
             color: #a569bd;
         }
-
         .mentor-community-badge {
             display: inline-flex;
             align-items: center;
@@ -1719,7 +2324,6 @@
             border-color: #d4b55c;
             color: #d4b55c;
         }
-
         .mentor-section-title {
             font-weight: 700;
             font-size: 18px;
@@ -1732,13 +2336,11 @@
         .mentor-section-title i {
             color: var(--gold);
         }
-
         .mentor-section-desc {
             font-size: 14px;
             color: var(--text-secondary);
             margin-bottom: 16px;
         }
-
         .become-mentor-box {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -1775,8 +2377,6 @@
         .become-mentor-box .already-mentor i {
             font-size: 20px;
         }
-
-        /* My Mentor Profile Section */
         .my-mentor-profile {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -1834,8 +2434,6 @@
             letter-spacing: 0.5px;
             opacity: 0.7;
         }
-
-        /* ========== MENTOR FILTERS ========== */
         .match-filters {
             display: flex;
             flex-wrap: wrap;
@@ -1870,7 +2468,6 @@
         .match-filters .filter-group select:focus {
             border-color: var(--green);
         }
-
         .match-result {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -1993,7 +2590,6 @@
             white-space: nowrap;
             align-self: center;
         }
-
         .notify-cta {
             text-align: center;
             padding: 20px;
@@ -2016,8 +2612,6 @@
         .notify-cta button:hover {
             background: var(--green-dark);
         }
-
-        /* ===== MENTOR REGISTRATION MODAL ===== */
         .mentor-modal-overlay {
             position: fixed;
             inset: 0;
@@ -2125,7 +2719,6 @@
         .disco-tabs .tab:hover:not(.active) {
             background: var(--gray-100);
         }
-
         .disco-search {
             display: flex;
             gap: 12px;
@@ -2175,7 +2768,6 @@
             border-color: var(--green);
             color: var(--green);
         }
-
         .event-card {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -2412,8 +3004,6 @@
             color: var(--text-secondary);
             max-width: 240px;
         }
-
-        /* Custom marker pins */
         .marker-pin {
             width: 34px;
             height: 34px;
@@ -2434,8 +3024,6 @@
             background: var(--green);
             box-shadow: 0 0 0 5px rgba(26, 107, 79, 0.22), var(--shadow-md);
         }
-
-        /* Popup styling to match app look */
         .leaflet-popup-content-wrapper {
             border-radius: var(--radius-sm);
             background: var(--card-bg);
@@ -2467,7 +3055,6 @@
             background: var(--green);
             color: #fff;
         }
-
         .mosque-map-banner {
             position: absolute;
             top: 10px;
@@ -2483,8 +3070,6 @@
             box-shadow: var(--shadow-md);
             white-space: nowrap;
         }
-
-        /* Dim the tile layer a touch in dark mode so it doesn't glare */
         [data-theme="dark"] .mosque-map .leaflet-tile-pane {
             filter: brightness(0.8) invert(1) contrast(0.9) hue-rotate(180deg) saturate(0.6);
         }
@@ -2559,7 +3144,6 @@
         .feed-post-box .post-tools button:hover {
             color: var(--green);
         }
-
         .feed-item {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -2638,7 +3222,6 @@
             background: var(--orange-light);
             color: var(--orange);
         }
-
         .feed-item .feed-body {
             font-size: 15px;
             color: var(--text-primary);
@@ -2723,7 +3306,6 @@
         .feed-item .feed-comments .comment strong {
             color: var(--text-primary);
         }
-
         .comment-input-wrap {
             display: flex;
             gap: 10px;
@@ -2762,7 +3344,6 @@
         .comment-input-wrap button:hover {
             background: var(--green-dark);
         }
-
         .moderation-badge {
             display: inline-block;
             padding: 2px 10px;
@@ -2784,6 +3365,7 @@
             color: var(--red);
         }
 
+        /* ========== MODERATION TOAST ========== */
         .moderation-toast {
             position: fixed;
             bottom: 30px;
@@ -2875,7 +3457,6 @@
             border-color: var(--green);
             color: var(--green);
         }
-
         .profile-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -2884,7 +3465,6 @@
         .profile-grid .dash-card {
             margin-bottom: 0;
         }
-
         .milestone-item {
             display: flex;
             align-items: center;
@@ -2904,7 +3484,6 @@
             width: 20px;
             color: var(--gray-300);
         }
-
         .profile-setting-row {
             display: flex;
             justify-content: space-between;
@@ -2971,7 +3550,6 @@
             font-size: 15px;
             transition: color var(--transition-theme);
         }
-
         .settings-section {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -3002,7 +3580,6 @@
             margin-bottom: 14px;
             transition: color var(--transition-theme);
         }
-
         .settings-row {
             display: flex;
             justify-content: space-between;
@@ -3041,7 +3618,6 @@
             color: var(--text-secondary);
             transition: color var(--transition-theme);
         }
-
         .settings-row .sr-right {
             flex-shrink: 0;
             display: flex;
@@ -3063,7 +3639,6 @@
         .settings-row .sr-right select:focus {
             border-color: var(--green);
         }
-
         .settings-row .sr-right .btn-sm {
             padding: 7px 16px;
             border-radius: var(--radius-full);
@@ -3088,7 +3663,6 @@
             background: #e74c3c;
             color: #fff;
         }
-
         .dark-mode-toggle-wrap {
             display: flex;
             align-items: center;
@@ -3103,7 +3677,6 @@
         .dark-mode-toggle-wrap .toggle-icon {
             font-size: 18px;
         }
-
         .settings-about {
             text-align: center;
             padding: 10px 0;
@@ -3130,7 +3703,6 @@
             font-size: 15px;
             transition: color var(--transition-theme);
         }
-
         .pillar-card {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -3215,7 +3787,6 @@
         .community-tabs .community-tab:hover:not(.active) {
             background: var(--gray-100);
         }
-
         .community-tab-panel {
             display: none;
             animation: fadeUp 0.4s ease;
@@ -3223,7 +3794,6 @@
         .community-tab-panel.active {
             display: block;
         }
-
         .community-profile-card {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -3313,7 +3883,6 @@
         .community-profile-card .cp-actions .cp-view:hover {
             background: var(--green-dark);
         }
-
         .community-join-box {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -3381,7 +3950,6 @@
         .community-join-box .join-status .joined-mosque .jm-leave:hover {
             background: var(--red-light);
         }
-
         .community-events-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -3406,8 +3974,6 @@
             color: var(--text-secondary);
             font-size: 15px;
         }
-
-        /* AI Chatbot (quick ask) */
         .chatbot-container {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -3440,7 +4006,6 @@
             font-size: 14px;
             margin-bottom: 16px;
         }
-
         .chat-input-wrap {
             display: flex;
             gap: 12px;
@@ -3487,7 +4052,6 @@
             cursor: not-allowed;
             transform: none;
         }
-
         .chat-response {
             margin-top: 16px;
             padding: 16px 20px;
@@ -3544,7 +4108,6 @@
         .chat-response .response-loading i {
             color: var(--green);
         }
-
         .chat-suggestions {
             display: flex;
             flex-wrap: wrap;
@@ -3567,8 +4130,6 @@
             color: var(--green);
             background: var(--green-pale);
         }
-
-        /* Articles Section */
         .articles-section {
             margin-top: 20px;
         }
@@ -3621,7 +4182,6 @@
         .articles-section .section-header .article-search button:hover {
             background: var(--green-dark);
         }
-
         .article-card {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -3670,7 +4230,6 @@
             font-size: 11px;
             font-weight: 600;
         }
-
         .no-articles {
             text-align: center;
             padding: 40px;
@@ -3774,7 +4333,6 @@
             font-size: 11px;
             color: var(--gray-400);
         }
-
         .ai-chat {
             flex: 1;
             background: var(--card-bg);
@@ -3877,7 +4435,6 @@
                 opacity: 1;
             }
         }
-
         .ai-chat .ai-chat-input {
             padding: 16px 24px;
             border-top: 1px solid var(--border-light);
@@ -4101,6 +4658,17 @@
             }
             .community-events-grid {
                 grid-template-columns: 1fr;
+            }
+            .landing-hero .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .landing-about .about-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .landing-about .about-inner .about-text .about-features {
+                justify-items: center;
             }
         }
 
@@ -4343,6 +4911,45 @@
                 width: 100%;
                 min-width: unset;
             }
+            .landing-hero .hero-text h2 {
+                font-size: 28px;
+            }
+            .landing-hero {
+                padding: 30px 16px 40px;
+            }
+            .landing-hero .hero-visual .hero-card {
+                padding: 20px 18px;
+            }
+            .landing-reviews .section-title {
+                font-size: 24px;
+            }
+            .landing-reviews {
+                padding: 30px 16px 40px;
+            }
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+            .landing-about .about-inner .about-text h2 {
+                font-size: 24px;
+            }
+            .landing-about {
+                padding: 30px 16px 40px;
+            }
+            .landing-about .about-inner .about-text .about-features {
+                grid-template-columns: 1fr;
+            }
+            .landing-team .section-title {
+                font-size: 24px;
+            }
+            .landing-team {
+                padding: 30px 16px 40px;
+            }
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .landing-nav {
+                padding: 10px 16px;
+            }
         }
 
         @media (max-width: 400px) {
@@ -4391,6 +4998,16 @@
                 width: 260px;
                 right: -30px;
             }
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            .landing-hero .hero-text h2 {
+                font-size: 22px;
+            }
+            .landing-hero .hero-text .hero-buttons button {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -4409,7 +5026,7 @@
     <!-- ========== MODERATION TOAST ========== -->
     <div class="moderation-toast" id="moderationToast"></div>
 
-    <!-- ========== ABOUT OVERLAY ========== -->
+    <!-- ========== ABOUT OVERLAY (app modal) ========== -->
     <div class="about-overlay" id="aboutOverlay">
         <div class="about-modal">
             <button class="about-close" id="aboutCloseBtn">✕</button>
@@ -4435,7 +5052,6 @@
         <div class="mentor-modal">
             <h2>📜 Register as a Scholar</h2>
             <p class="modal-sub">Share your knowledge and help others on their journey. Scholars are verified by our team.</p>
-
             <div class="form-group">
                 <label>Areas of Expertise</label>
                 <select id="mentorExpertise">
@@ -4451,13 +5067,11 @@
                     <option value="other">Other</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label>About You</label>
                 <textarea id="mentorBio" placeholder="Tell us about your background, experience, and what you can offer as a mentor..." rows="4"></textarea>
                 <div class="helper">Share your qualifications and teaching approach.</div>
             </div>
-
             <div class="form-group">
                 <label>Availability</label>
                 <select id="mentorAvailability">
@@ -4467,7 +5081,6 @@
                     <option value="flexible">Flexible</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label>Meeting Preference</label>
                 <select id="mentorMeetingPref">
@@ -4476,13 +5089,11 @@
                     <option value="either">Either</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label>Credentials (Optional)</label>
                 <textarea id="mentorCredentials" placeholder="e.g., Ijazah certification, Islamic Studies degree, years of teaching experience..." rows="3"></textarea>
                 <div class="helper">Providing credentials helps our team verify you as a scholar.</div>
             </div>
-
             <div class="modal-actions">
                 <button class="btn-primary" id="mentorSubmitBtn">
                     <span class="btn-shimmer"></span>
@@ -4494,9 +5105,246 @@
         </div>
     </div>
 
-    <!-- ========== AUTH SCREEN ========== -->
+    <!-- ========== LANDING PAGE ========== -->
+    <div class="landing-page" id="landingPage">
+        <!-- Navbar -->
+        <nav class="landing-nav" id="landingNav">
+            <div class="nav-brand" onclick="document.getElementById('landingHero').scrollIntoView({behavior:'smooth'})">
+                <div class="logo-icon">ص</div>
+                <h1>Silah<span>.</span></h1>
+            </div>
+            <div class="nav-links">
+                <a href="#landingAbout" class="nav-link-text">About</a>
+                <a href="#landingTeam" class="nav-link-text">Our Team</a>
+                <a href="#landingReviews" class="nav-link-text">Reviews</a>
+                <a href="#" class="nav-link-text btn-signin" id="landingSignInBtn">
+                    <i class="fas fa-sign-in-alt nav-link-icon"></i>
+                    <span class="nav-link-text">Sign In</span>
+                </a>
+                <a href="#" class="nav-link-text btn-register" id="landingRegisterBtn">
+                    <i class="fas fa-user-plus nav-link-icon"></i>
+                    <span class="nav-link-text">Register</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="landing-hero" id="landingHero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>Your Path to <span>Community</span> &amp; Belonging</h2>
+                    <p>
+                        Silah is an AI-powered platform that connects Muslims with mentors,
+                        events, and a supportive community. Start your journey today.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary-hero" id="heroGetStarted">Get Started</button>
+                        <button class="btn-secondary-hero" onclick="document.getElementById('landingAbout').scrollIntoView({behavior:'smooth'})">Learn More</button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="hc-icon">🌙</div>
+                        <h4>Welcome to Silah</h4>
+                        <p>AI-powered guidance, authentic community, and spiritual growth — all in one place.</p>
+                        <div class="hc-stats">
+                            <div class="stat">
+                                <div class="num">2.5k+</div>
+                                <div class="label">Members</div>
+                            </div>
+                            <div class="stat">
+                                <div class="num">150+</div>
+                                <div class="label">Mentors</div>
+                            </div>
+                            <div class="stat">
+                                <div class="num">4.9★</div>
+                                <div class="label">Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews -->
+        <section class="landing-reviews" id="landingReviews">
+            <h2 class="section-title">What Our Community Says</h2>
+            <p class="section-sub">Real stories from people who found connection and guidance through Silah</p>
+            <div class="reviews-grid">
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "Silah helped me find a mentor who guided me through my first year as a new Muslim.
+                        I finally feel like I belong."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">SA</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Sarah Ahmed</div>
+                            <div class="ra-role">New Muslim · Chicago</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "The community events and mosque finder made it so easy to connect with Muslims near me.
+                        I've made lifelong friends."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">AK</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Aisha Khan</div>
+                            <div class="ra-role">Community Member · Houston</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "As a scholar, Silah gave me a platform to share my knowledge and connect with students
+                        who truly need guidance."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">OA</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Omar Al-Farouk</div>
+                            <div class="ra-role">Verified Scholar · New York</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 4 -->
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "The AI Model Hub answered all my questions about Islam with sources. It's like having a
+                        scholar in my pocket."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">ZM</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Zainab Mahmoud</div>
+                            <div class="ra-role">Student · London</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 5 -->
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "I was a convert and felt alone. Silah connected me with a sister's halaqa circle and now
+                        I have a whole community."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">YI</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Yusuf Ibrahim</div>
+                            <div class="ra-role">Convert · Los Angeles</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 6 -->
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "The mosque map and community features helped me find my local mosque and get involved.
+                        Silah is a blessing."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">FH</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Fatima Hassan</div>
+                            <div class="ra-role">Community Leader · Chicago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="landing-about" id="landingAbout">
+            <div class="about-inner">
+                <div class="about-text">
+                    <h2>About <span>Silah</span></h2>
+                    <p>
+                        Silah (meaning "connection" in Arabic) is an AI-powered community platform
+                        designed to help Muslims find mentors, connect with local mosques, attend events,
+                        and grow in their faith together.
+                    </p>
+                    <p>
+                        Whether you're a new Muslim, a lifelong believer, or a scholar looking to share
+                        your knowledge, Silah provides the tools you need to build meaningful connections.
+                    </p>
+                    <div class="about-features">
+                        <div class="af-item"><i class="fas fa-check-circle"></i> AI-powered mentorship</div>
+                        <div class="af-item"><i class="fas fa-check-circle"></i> Local mosque finder</div>
+                        <div class="af-item"><i class="fas fa-check-circle"></i> Community events</div>
+                        <div class="af-item"><i class="fas fa-check-circle"></i> Islamic learning hub</div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="about-placeholder">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <h4>Building Bridges</h4>
+                        <p>Connecting Muslims worldwide through faith and community.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team -->
+        <section class="landing-team" id="landingTeam">
+            <h2 class="section-title">Our Team</h2>
+            <p class="section-sub">Passionate individuals dedicated to serving the Muslim community</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="tc-avatar">MA</div>
+                    <div class="tc-name">Mohammed Ali</div>
+                    <div class="tc-role">Founder &amp; CEO</div>
+                </div>
+                <div class="team-card">
+                    <div class="tc-avatar">FH</div>
+                    <div class="tc-name">Fatima Hassan</div>
+                    <div class="tc-role">Community Director</div>
+                </div>
+                <div class="team-card">
+                    <div class="tc-avatar">AK</div>
+                    <div class="tc-name">Aisha Khan</div>
+                    <div class="tc-role">AI &amp; Tech Lead</div>
+                </div>
+                <div class="team-card">
+                    <div class="tc-avatar">OA</div>
+                    <div class="tc-name">Omar Al-Farouk</div>
+                    <div class="tc-role">Islamic Scholar</div>
+                </div>
+                <div class="team-card">
+                    <div class="tc-avatar">ZM</div>
+                    <div class="tc-name">Zainab Mahmoud</div>
+                    <div class="tc-role">Mentor Coordinator</div>
+                </div>
+                <div class="team-card">
+                    <div class="tc-avatar">YI</div>
+                    <div class="tc-name">Yusuf Ibrahim</div>
+                    <div class="tc-role">Community Outreach</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="landing-footer">
+            &copy; 2026 <strong>Silah</strong> Foundation · Built with ❤️ for the global Muslim community
+        </footer>
+    </div>
+
+    <!-- ========== AUTH SCREEN (overlay) ========== -->
     <div class="auth-screen" id="authScreen">
-        <div class="auth-card">
+        <div class="auth-card" id="authCard">
+            <button class="auth-close" id="authCloseBtn">✕</button>
+
+            <!-- Auth content (full existing auth flow) -->
             <div class="auth-brand" id="authBrand">
                 <div class="logo-icon">ص</div>
                 <h1>Silah<span>.</span></h1>
@@ -4618,7 +5466,7 @@
         </div>
     </div>
 
-    <!-- ========== APP ========== -->
+    <!-- ========== APP (authenticated) ========== -->
     <div class="app" id="app">
 
         <!-- ========== SIDEBAR ========== -->
@@ -4686,18 +5534,14 @@
                     </div>
                 </div>
                 <div class="topbar-right">
-                    <!-- ===== SEARCH BAR ===== -->
                     <div class="search-wrapper">
                         <i class="fas fa-search search-icon"></i>
                         <input type="text" id="globalSearchInput" placeholder="Search Silah..." autocomplete="off" />
                         <div class="search-popup" id="globalSearchPopup">
-                            <div id="searchResultsContainer">
-                                <!-- Results rendered by JS -->
-                            </div>
+                            <div id="searchResultsContainer"></div>
                         </div>
                     </div>
 
-                    <!-- Bell -->
                     <div style="position:relative;">
                         <button class="icon-btn" id="bellBtn" title="Notifications">
                             <i class="fas fa-bell"></i>
@@ -4738,7 +5582,6 @@
                         </div>
                     </div>
 
-                    <!-- Profile avatar -->
                     <div class="profile-avatar-wrapper" id="profileAvatarWrapper">
                         <div class="avatar" id="topbarAvatar">SA</div>
                         <div class="profile-popup" id="profilePopup">
@@ -4762,7 +5605,6 @@
                         <p>Here's your personalized path for today.</p>
                     </div>
 
-                    <!-- QURAN VERSE WIDGET -->
                     <div class="quran-verse-widget" id="quranVerseWidget">
                         <div class="qv-inner">
                             <div class="qv-icon-col">📖</div>
@@ -4795,7 +5637,6 @@
                                     <h3>📖 For You</h3>
                                     <a href="#" onclick="navigateTo('discover');return false;">See all →</a>
                                 </div>
-
                                 <div class="recommend-item">
                                     <div class="rec-icon">📖</div>
                                     <div class="rec-info">
@@ -4807,7 +5648,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="recommend-item">
                                     <div class="rec-icon">🤝</div>
                                     <div class="rec-info">
@@ -4818,7 +5658,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="recommend-item">
                                     <div class="rec-icon">🕌</div>
                                     <div class="rec-info">
@@ -4836,13 +5675,11 @@
                                     <h3>⭐ Your Mentor Match</h3>
                                     <a href="#" onclick="navigateTo('mentor');return false;">Find more →</a>
                                 </div>
-
                                 <div class="mentor-card" id="dashMentorCard">
                                     <div style="width:100%;text-align:center;padding:10px;color:var(--text-secondary);font-size:14px;">
                                         <i class="fas fa-spinner fa-spin"></i> Loading mentors...
                                     </div>
                                 </div>
-
                                 <div class="ai-tip">
                                     <i class="fas fa-robot"></i>
                                     Based on your goals, I recommend starting with the <strong>"Daily Duas"</strong> class.
@@ -4886,11 +5723,7 @@
                         <h2>🤝 Find a Mentor</h2>
                         <p>Connect with scholars and community members who can guide you on your journey.</p>
                     </div>
-
-                    <!-- My Mentor Profile (if user is a mentor) -->
                     <div id="myMentorProfileContainer"></div>
-
-                    <!-- Become a Mentor CTA (if user is NOT a mentor) -->
                     <div class="become-mentor-box" id="becomeMentorBox">
                         <div id="becomeMentorContent">
                             <h3>📜 Want to become a scholar?</h3>
@@ -4901,8 +5734,6 @@
                             </button>
                         </div>
                     </div>
-
-                    <!-- Filters -->
                     <div class="match-filters">
                         <div class="filter-group">
                             <span>Type:</span>
@@ -4940,13 +5771,10 @@
                         </button>
                     </div>
 
-                    <!-- Scholars Section -->
                     <div class="mentor-section-title">
                         <i class="fas fa-graduation-cap" style="color:var(--purple);"></i>
                         Verified Scholars
-                        <span style="font-size:13px;font-weight:400;color:var(--text-secondary);">
-                            — Verified by our team
-                        </span>
+                        <span style="font-size:13px;font-weight:400;color:var(--text-secondary);">— Verified by our team</span>
                     </div>
                     <div class="mentor-section-desc">
                         These scholars have been verified by our team. They have provided credentials and have demonstrated knowledge in their field.
@@ -4957,13 +5785,10 @@
                         </div>
                     </div>
 
-                    <!-- Community Mentors Section -->
                     <div class="mentor-section-title" style="margin-top:32px;">
                         <i class="fas fa-users" style="color:var(--orange);"></i>
                         Community Members
-                        <span style="font-size:13px;font-weight:400;color:var(--text-secondary);">
-                            — Willing to help
-                        </span>
+                        <span style="font-size:13px;font-weight:400;color:var(--text-secondary);">— Willing to help</span>
                     </div>
                     <div class="mentor-section-desc" style="color:var(--orange);">
                         <i class="fas fa-info-circle"></i>
@@ -4993,12 +5818,10 @@
                     <div style="margin-bottom:16px;">
                         <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">📍 Discover Near You</h2>
                     </div>
-
                     <div class="disco-tabs">
                         <button class="tab active">📋 List View</button>
                         <button class="tab">🗺️ Map View</button>
                     </div>
-
                     <div class="disco-search">
                         <input type="text" placeholder="🔍 Search events, classes, mosques..." />
                         <div class="filter-chips">
@@ -5007,11 +5830,9 @@
                             <button class="chip">🎯 All</button>
                         </div>
                     </div>
-
                     <div style="font-weight:600;color:var(--text-primary);margin-bottom:12px;font-size:15px;">
                         ═══ UPCOMING EVENTS ═══
                     </div>
-
                     <div class="event-card" data-event="jummah">
                         <div class="ev-left">
                             <div class="ev-icon">📖</div>
@@ -5034,7 +5855,6 @@
                             <button class="btn-share"><i class="fas fa-share-alt"></i></button>
                         </div>
                     </div>
-
                     <div class="event-card" data-event="iftar">
                         <div class="ev-left">
                             <div class="ev-icon">🤝</div>
@@ -5058,12 +5878,10 @@
                         </div>
                     </div>
 
-                    <!-- MOSQUE SECTION -->
                     <div style="font-weight:600;color:var(--text-primary);margin:20px 0 12px;font-size:15px;display:flex;align-items:center;justify-content:space-between;">
                         <span>═══ MOSQUES NEAR YOU ═══</span>
                         <span id="mosqueLocLabel" style="font-weight:400;font-size:12px;color:var(--text-secondary);"></span>
                     </div>
-
                     <div id="mosqueList">
                         <div class="mosque-row" id="mosqueLoading">
                             <div class="mq-icon">⏳</div>
@@ -5087,8 +5905,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Map View -->
                     <div id="mosqueMapContainer" style="display:none;">
                         <div id="mosqueMap" class="mosque-map"></div>
                         <div class="mosque-map-overlay" id="mosqueMapLoading">
@@ -5112,7 +5928,6 @@
                         <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">💬 Community Feed</h2>
                         <p style="color:var(--text-secondary);font-size:14px;">All posts are AI-moderated. You can delete or report any content.</p>
                     </div>
-
                     <div class="feed-post-box">
                         <div class="post-input">
                             <div class="pa" id="feedUserAvatar">SA</div>
@@ -5129,7 +5944,6 @@
                             <span>AI moderation is active on all posts</span>
                         </div>
                     </div>
-
                     <div id="feedContainer">
                         <div style="text-align:center;padding:40px;color:var(--text-secondary);">
                             <i class="fas fa-spinner fa-spin" style="font-size:24px;"></i>
@@ -5144,8 +5958,6 @@
                         <h2 style="font-family:'Poppins',sans-serif;font-size:22px;">🏘️ My Community</h2>
                         <p style="color:var(--text-secondary);font-size:14px;">Connect with your local Muslim community, mosques, and fellow believers.</p>
                     </div>
-
-                    <!-- Join Mosque Section -->
                     <div class="community-join-box" id="communityJoinBox">
                         <h3>🕌 Join Your Local Mosque Community</h3>
                         <p>Select the mosque you attend most frequently to connect with your community.</p>
@@ -5160,8 +5972,6 @@
                         </div>
                         <div class="join-status" id="communityJoinedStatus"></div>
                     </div>
-
-                    <!-- Community Tabs -->
                     <div class="community-tabs">
                         <button class="community-tab active" data-tab="members">👥 Members</button>
                         <button class="community-tab" data-tab="imams">📜 Imams</button>
@@ -5169,38 +5979,27 @@
                         <button class="community-tab" data-tab="events">📅 Events</button>
                         <button class="community-tab" data-tab="mosques">🕌 Mosques</button>
                     </div>
-
-                    <!-- Tab Content -->
                     <div id="communityTabContent">
-                        <!-- Members Tab -->
                         <div class="community-tab-panel active" data-panel="members" id="communityMembersPanel">
                             <div style="text-align:center;padding:20px;color:var(--text-secondary);">
                                 <i class="fas fa-spinner fa-spin"></i> Loading community members...
                             </div>
                         </div>
-
-                        <!-- Imams Tab -->
                         <div class="community-tab-panel" data-panel="imams" id="communityImamsPanel">
                             <div style="text-align:center;padding:20px;color:var(--text-secondary);">
                                 <i class="fas fa-spinner fa-spin"></i> Loading imams...
                             </div>
                         </div>
-
-                        <!-- Converts Tab -->
                         <div class="community-tab-panel" data-panel="converts" id="communityConvertsPanel">
                             <div style="text-align:center;padding:20px;color:var(--text-secondary);">
                                 <i class="fas fa-spinner fa-spin"></i> Loading new converts...
                             </div>
                         </div>
-
-                        <!-- Events Tab -->
                         <div class="community-tab-panel" data-panel="events" id="communityEventsPanel">
                             <div style="text-align:center;padding:20px;color:var(--text-secondary);">
                                 <i class="fas fa-spinner fa-spin"></i> Loading community events...
                             </div>
                         </div>
-
-                        <!-- Mosques Tab -->
                         <div class="community-tab-panel" data-panel="mosques" id="communityMosquesPanel">
                             <div style="text-align:center;padding:20px;color:var(--text-secondary);">
                                 <i class="fas fa-spinner fa-spin"></i> Loading mosques...
@@ -5215,8 +6014,6 @@
                         <h2>📖 Learn About Islam</h2>
                         <p>Ask any Islamic question and get answers with sources. Explore articles on topics that matter to you.</p>
                     </div>
-
-                    <!-- AI Chatbot (quick ask) -->
                     <div class="chatbot-container">
                         <div class="chat-header">
                             <div class="chat-icon">🤖</div>
@@ -5225,14 +6022,12 @@
                         <div class="chat-sub">
                             Ask any question about Islam, and our AI will provide an answer with references from authentic sources.
                         </div>
-
                         <div class="chat-input-wrap">
                             <input type="text" id="chatInput" placeholder="e.g., What is the significance of Ramadan?" />
                             <button id="chatSubmitBtn">
                                 <i class="fas fa-paper-plane"></i> Ask
                             </button>
                         </div>
-
                         <div class="chat-suggestions">
                             <button data-question="What is the meaning of Shahada?">What is Shahada?</button>
                             <button data-question="How do I perform Wudu?">How to perform Wudu?</button>
@@ -5240,7 +6035,6 @@
                             <button data-question="What does the Quran say about patience?">Quran on patience</button>
                             <button data-question="How to pray Salah?">How to pray Salah?</button>
                         </div>
-
                         <div class="chat-response" id="chatResponse">
                             <div class="response-text" id="responseText"></div>
                             <div class="response-sources" id="responseSources">
@@ -5248,7 +6042,6 @@
                                 <ul id="sourcesList"></ul>
                             </div>
                         </div>
-
                         <div class="chat-response" id="chatLoading" style="display:none;">
                             <div class="response-loading">
                                 <i class="fas fa-spinner fa-spin"></i>
@@ -5256,8 +6049,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Articles Section -->
                     <div class="articles-section">
                         <div class="section-header">
                             <h3>📚 Recommended Articles</h3>
@@ -5283,7 +6074,6 @@
                         <div class="p-loc" id="profileLoc">📍 Chicago, IL</div>
                         <button class="p-edit">✎ Edit Profile</button>
                     </div>
-
                     <div class="profile-grid">
                         <div>
                             <div class="dash-card">
@@ -5294,7 +6084,6 @@
                                 <div class="milestone-item"><i class="far fa-circle"></i> Completed beginner class</div>
                                 <div style="margin-top:10px;"><a href="#" style="color:var(--green);font-weight:500;font-size:14px;text-decoration:none;">View All →</a></div>
                             </div>
-
                             <div class="dash-card">
                                 <div class="card-header"><h3>⭐ My Mentor</h3></div>
                                 <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
@@ -5310,7 +6099,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div>
                             <div class="dash-card">
                                 <div class="card-header"><h3>🤝 My Community</h3></div>
@@ -5324,7 +6112,6 @@
                                     📅 <strong>3 events</strong> attended this month
                                 </div>
                             </div>
-
                             <div class="dash-card">
                                 <div class="card-header"><h3>⚙️ Settings Quick</h3></div>
                                 <div class="profile-setting-row">
@@ -5351,12 +6138,8 @@
                         <h2>⚙️ Settings</h2>
                         <p>Customize your Silah experience</p>
                     </div>
-
-                    <!-- Appearance -->
                     <div class="settings-section">
-                        <div class="section-title">
-                            <i class="fas fa-palette"></i> Appearance
-                        </div>
+                        <div class="section-title"><i class="fas fa-palette"></i> Appearance</div>
                         <div class="section-desc">Personalize how Silah looks and feels.</div>
                         <div class="settings-row">
                             <div class="sr-left">
@@ -5393,12 +6176,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Notifications -->
                     <div class="settings-section">
-                        <div class="section-title">
-                            <i class="fas fa-bell"></i> Notifications
-                        </div>
+                        <div class="section-title"><i class="fas fa-bell"></i> Notifications</div>
                         <div class="section-desc">Manage how and when you receive alerts.</div>
                         <div class="settings-row">
                             <div class="sr-left">
@@ -5437,12 +6216,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Privacy -->
                     <div class="settings-section">
-                        <div class="section-title">
-                            <i class="fas fa-shield-alt"></i> Privacy &amp; Data
-                        </div>
+                        <div class="section-title"><i class="fas fa-shield-alt"></i> Privacy &amp; Data</div>
                         <div class="section-desc">Control your data and who can see your profile.</div>
                         <div class="settings-row">
                             <div class="sr-left">
@@ -5472,25 +6247,9 @@
                                 <div class="toggle on" onclick="toggleSwitch(this)"><div class="toggle-knob"></div></div>
                             </div>
                         </div>
-                        <div class="settings-row">
-                            <div class="sr-left">
-                                <i class="fas fa-database"></i>
-                                <div class="sr-info">
-                                    <h4>Data Usage</h4>
-                                    <p>Manage how your data is used for recommendations.</p>
-                                </div>
-                            </div>
-                            <div class="sr-right">
-                                <button class="btn-sm">Manage</button>
-                            </div>
-                        </div>
                     </div>
-
-                    <!-- Language -->
                     <div class="settings-section">
-                        <div class="section-title">
-                            <i class="fas fa-language"></i> Language &amp; Region
-                        </div>
+                        <div class="section-title"><i class="fas fa-language"></i> Language &amp; Region</div>
                         <div class="settings-row">
                             <div class="sr-left">
                                 <i class="fas fa-globe"></i>
@@ -5526,12 +6285,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Account -->
                     <div class="settings-section">
-                        <div class="section-title">
-                            <i class="fas fa-user-cog"></i> Account
-                        </div>
+                        <div class="section-title"><i class="fas fa-user-cog"></i> Account</div>
                         <div class="settings-row">
                             <div class="sr-left">
                                 <i class="fas fa-key"></i>
@@ -5581,12 +6336,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- About -->
                     <div class="settings-section">
-                        <div class="section-title">
-                            <i class="fas fa-info-circle"></i> About Silah
-                        </div>
+                        <div class="section-title"><i class="fas fa-info-circle"></i> About Silah</div>
                         <div class="settings-about">
                             <strong>Silah</strong> v1.4.0 · AI-Powered Community Platform<br />
                             Built with ❤️ for the global Muslim community.<br />
@@ -5601,8 +6352,6 @@
                         <h2>🕌 Five Pillars of Islam</h2>
                         <p>The foundation of a Muslim's faith and practice.</p>
                     </div>
-
-                    <!-- Pillar 1: Shahada -->
                     <div class="pillar-card">
                         <div class="pillar-icon">☝️</div>
                         <div class="pillar-content">
@@ -5611,8 +6360,6 @@
                             <div class="pillar-quote">"Whoever says 'Lā ilāha illā Allāh' sincerely from his heart will enter Paradise." — Bukhari</div>
                         </div>
                     </div>
-
-                    <!-- Pillar 2: Salah -->
                     <div class="pillar-card">
                         <div class="pillar-icon">🧎</div>
                         <div class="pillar-content">
@@ -5621,8 +6368,6 @@
                             <div class="pillar-quote">"The first thing a person will be judged for on the Day of Judgment is prayer." — An-Nasa'i</div>
                         </div>
                     </div>
-
-                    <!-- Pillar 3: Zakat -->
                     <div class="pillar-card">
                         <div class="pillar-icon">💰</div>
                         <div class="pillar-content">
@@ -5631,8 +6376,6 @@
                             <div class="pillar-quote">"Zakat is not a tax; it is a right of the poor in the wealth of the rich."</div>
                         </div>
                     </div>
-
-                    <!-- Pillar 4: Sawm -->
                     <div class="pillar-card">
                         <div class="pillar-icon">🌙</div>
                         <div class="pillar-content">
@@ -5641,8 +6384,6 @@
                             <div class="pillar-quote">"Fasting is a shield; when one of you is fasting, let him not behave foolishly." — Bukhari & Muslim</div>
                         </div>
                     </div>
-
-                    <!-- Pillar 5: Hajj -->
                     <div class="pillar-card">
                         <div class="pillar-icon">🕋</div>
                         <div class="pillar-content">
@@ -5651,7 +6392,6 @@
                             <div class="pillar-quote">"Whoever performs Hajj for the sake of Allah and avoids obscenity and wrongdoing will return sinless as the day his mother gave birth to him." — Bukhari</div>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- ===== AI MODEL HUB ===== -->
@@ -5660,20 +6400,14 @@
                         <h2 style="font-family:'Poppins',sans-serif;font-size:24px;color:var(--text-primary);">🤖 AI Model Hub</h2>
                         <p style="color:var(--text-secondary);font-size:15px;">Your personal AI tutor for Islamic learning and community support.</p>
                     </div>
-
                     <div class="ai-container">
-                        <!-- Sidebar -->
                         <div class="ai-sidebar">
                             <button class="ai-new-btn" id="aiNewChatBtn">
                                 <i class="fas fa-plus-circle"></i> New Conversation
                             </button>
                             <input type="text" class="ai-search" placeholder="Search conversations..." id="aiSearchInput" />
-                            <div class="ai-conv-list" id="aiConvList">
-                                <!-- Conversation items will be injected here -->
-                            </div>
+                            <div class="ai-conv-list" id="aiConvList"></div>
                         </div>
-
-                        <!-- Chat Area -->
                         <div class="ai-chat">
                             <div class="ai-chat-header">
                                 <span style="font-weight:600;color:var(--text-primary);" id="aiActiveTitle">General Assistant</span>
@@ -5684,9 +6418,7 @@
                                     <option value="Islamic History Guide">Islamic History Guide</option>
                                 </select>
                             </div>
-                            <div class="ai-chat-messages" id="aiChatMessages">
-                                <!-- Messages will be injected here -->
-                            </div>
+                            <div class="ai-chat-messages" id="aiChatMessages"></div>
                             <div class="ai-chat-input">
                                 <input type="text" placeholder="Ask me anything..." id="aiChatInput" />
                                 <button id="aiSendBtn"><i class="fas fa-paper-plane"></i> Send</button>
@@ -5716,6 +6448,49 @@
 
     <script>
         // ============================================================
+        // ========== LANDING PAGE AUTH TOGGLE ==========
+        // ============================================================
+        function showAuthScreen(activeTab = 'signin') {
+            document.body.classList.add('show-auth');
+            // Show the correct tab
+            showAuthTab(activeTab);
+        }
+
+        function hideAuthScreen() {
+            document.body.classList.remove('show-auth');
+        }
+
+        // Landing page buttons
+        document.getElementById('landingSignInBtn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            showAuthScreen('signin');
+        });
+
+        document.getElementById('landingRegisterBtn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            showAuthScreen('register');
+        });
+
+        document.getElementById('heroGetStarted')?.addEventListener('click', function() {
+            showAuthScreen('register');
+        });
+
+        // Auth close button
+        document.getElementById('authCloseBtn')?.addEventListener('click', hideAuthScreen);
+
+        // Click outside auth card to close
+        document.getElementById('authScreen')?.addEventListener('click', function(e) {
+            if (e.target === this) hideAuthScreen();
+        });
+
+        // Escape key to close auth
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.body.classList.contains('show-auth')) {
+                hideAuthScreen();
+            }
+        });
+
+        // ============================================================
         // ========== AI MODERATION CONFIGURATION ==========
         // ============================================================
         const OPENAI_API_KEY = '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';
@@ -5734,14 +6509,11 @@
         let allMentors = [];
         let isMentorRegistered = false;
         let currentUserMentorData = null;
-
-        // Community state
         let userCommunityMemberships = [];
         let communityEvents = [];
         let communityMembers = [];
         let communityImams = [];
         let communityConverts = [];
-        let userMosqueChoices = [];
 
         // ========== QURAN VERSES ==========
         const quranVerses = [{
@@ -5802,13 +6574,10 @@
             const arabicEl = document.getElementById('qvArabic');
             const translationEl = document.getElementById('qvTranslation');
             const referenceEl = document.getElementById('qvReference');
-
             if (!arabicEl) return;
-
             arabicEl.style.opacity = '0';
             translationEl.style.opacity = '0';
             referenceEl.style.opacity = '0';
-
             setTimeout(() => {
                 arabicEl.textContent = verse.arabic;
                 translationEl.textContent = verse.translation;
@@ -5823,7 +6592,6 @@
         function applyDarkMode(isDark) {
             const html = document.documentElement;
             const darkToggle = document.getElementById('darkModeToggle');
-
             if (isDark) {
                 html.setAttribute('data-theme', 'dark');
                 if (darkToggle) darkToggle.classList.add('on');
@@ -5837,7 +6605,6 @@
             const html = document.documentElement;
             const isCurrentlyDark = html.getAttribute('data-theme') === 'dark';
             const newMode = !isCurrentlyDark;
-
             applyDarkMode(newMode);
             localStorage.setItem('silah-dark-mode', newMode ? 'dark' : 'light');
             showMiniToast(newMode ? '🌙 Dark mode activated' : '☀️ Light mode activated');
@@ -5846,7 +6613,6 @@
         function showMiniToast(message) {
             const existing = document.querySelector('.mini-toast');
             if (existing) existing.remove();
-
             const toast = document.createElement('div');
             toast.className = 'mini-toast';
             toast.textContent = message;
@@ -5915,50 +6681,39 @@
 
         function navigateTo(screenId) {
             Object.values(screens).forEach(s => { if (s) s.classList.remove('active'); });
-
             const target = screens[screenId];
             if (target) {
                 target.classList.add('active');
                 target.style.animation = 'none';
                 requestAnimationFrame(() => { target.style.animation = 'fadeUp 0.4s ease'; });
             }
-
             navItems.forEach(n => n.classList.remove('active'));
             navItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
-
             bottomNavItems.forEach(n => n.classList.remove('active'));
             bottomNavItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
-
             const container = document.getElementById('screenContainer');
             if (container) container.scrollTop = 0;
-
             if (screenId === 'dashboard') {
                 setTimeout(displayQuranVerse, 200);
                 loadMentorsForDashboard();
             }
-
             if (screenId === 'mentor') {
                 loadAllMentors();
                 renderMyMentorProfile();
             }
-
             if (screenId === 'discover') {
                 loadMosques();
             }
-
             if (screenId === 'feed') {
                 loadFeed();
             }
-
             if (screenId === 'community') {
                 loadCommunityContent();
                 loadUserCommunityMemberships();
             }
-
             if (screenId === 'learn') {
                 loadArticles();
             }
-
             if (screenId === 'ai-model') {
                 renderConversations();
                 renderMessages();
@@ -6008,12 +6763,10 @@
                     parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 }
                 this.classList.add('active');
-
                 const isMapView = this.textContent.includes('Map');
                 const listEl = document.getElementById('mosqueList');
                 const mapContainerEl = document.getElementById('mosqueMapContainer');
                 if (!listEl || !mapContainerEl) return;
-
                 if (isMapView) {
                     listEl.style.display = 'none';
                     mapContainerEl.style.display = 'block';
@@ -6048,7 +6801,6 @@
             });
         });
 
-        // RSVP buttons on events (Discover and Community)
         document.querySelectorAll('.btn-rsvp').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -6107,7 +6859,13 @@
         });
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') navigateTo('dashboard');
+            if (e.key === 'Escape') {
+                if (document.body.classList.contains('show-auth')) {
+                    hideAuthScreen();
+                    return;
+                }
+                navigateTo('dashboard');
+            }
             if (e.ctrlKey && e.shiftKey && e.key === 'D') {
                 e.preventDefault();
                 toggleDarkMode();
@@ -6143,11 +6901,6 @@
         aboutCloseBtn?.addEventListener('click', closeAboutModal);
         aboutOverlay?.addEventListener('click', function(e) {
             if (e.target === this) closeAboutModal();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && aboutOverlay.classList.contains('show')) {
-                closeAboutModal();
-            }
         });
 
         // ========== NOTIFICATION POPUP ==========
@@ -6418,6 +7171,7 @@
                 applyProfileToUI(profile, data.user.email);
                 currentProfile = profile;
             }
+            hideAuthScreen();
             enterApp();
         }
         document.getElementById('signInSubmit')?.addEventListener('click', handleSignIn);
@@ -6505,6 +7259,7 @@
             const profile = { full_name: name, location: locationText };
             applyProfileToUI(profile, email);
             currentProfile = profile;
+            hideAuthScreen();
 
             if (purpose === 'scholar') {
                 mentorModalOverlay.classList.add('show');
@@ -6525,12 +7280,8 @@
                 currentProfile = null;
                 profilePopup.classList.remove('show');
                 notificationPopup.classList.remove('show');
-                showAuthStep();
-                showAuthTab('signin');
-                const emailEl = document.getElementById('signInEmail');
-                const pwdEl = document.getElementById('signInPassword');
-                if (emailEl) emailEl.value = '';
-                if (pwdEl) pwdEl.value = '';
+                // Show landing page again
+                document.body.classList.remove('show-auth');
             });
         }
         document.getElementById('logoutBtn')?.addEventListener('click', performLogout);
@@ -6563,18 +7314,17 @@
                 loadFeed();
             }
             loadUserCommunityMemberships();
+            setupSearch();
         }
 
         // ========== COMMUNITY FUNCTIONS ==========
         async function loadUserCommunityMemberships() {
             if (!currentUser) return;
-
             try {
                 const { data, error } = await sb
                     .from('community_memberships')
                     .select('*')
                     .eq('user_id', currentUser.id);
-
                 if (error) throw error;
                 userCommunityMemberships = data || [];
                 renderCommunityJoinStatus();
@@ -6587,12 +7337,10 @@
         function renderCommunityJoinStatus() {
             const statusDiv = document.getElementById('communityJoinedStatus');
             if (!statusDiv) return;
-
             if (userCommunityMemberships.length === 0) {
                 statusDiv.style.display = 'none';
                 return;
             }
-
             statusDiv.style.display = 'block';
             statusDiv.innerHTML = userCommunityMemberships.map(m => `
                     <div class="joined-mosque">
@@ -6601,7 +7349,6 @@
                         <button class="jm-leave" data-mosque-id="${m.mosque_id}">Leave</button>
                     </div>
                 `).join('');
-
             statusDiv.querySelectorAll('.jm-leave').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const mosqueId = this.dataset.mosqueId;
@@ -6613,18 +7360,14 @@
         async function populateMosqueSelect() {
             const select = document.getElementById('communityMosqueSelect');
             if (!select) return;
-
-            // Get mosques from the list
             const mosqueList = document.getElementById('mosqueList');
             const mosqueRows = mosqueList.querySelectorAll('.mosque-row.dynamic');
-
             if (mosqueRows.length > 0) {
                 select.innerHTML = '<option value="">-- Select a mosque --</option>';
                 mosqueRows.forEach(row => {
                     const name = row.querySelector('.mq-info h4')?.textContent || 'Unnamed Mosque';
                     const detail = row.querySelector('.mq-detail')?.textContent || '';
                     const value = name + '|' + detail;
-                    // Check if already joined
                     const isJoined = userCommunityMemberships.some(m => m.mosque_name === name);
                     if (!isJoined) {
                         const option = document.createElement('option');
@@ -6634,7 +7377,6 @@
                     }
                 });
             } else {
-                // Try to get from localStorage if available
                 const savedMosques = localStorage.getItem('silah-nearby-mosques');
                 if (savedMosques) {
                     try {
@@ -6653,8 +7395,6 @@
                     } catch (e) {}
                 }
             }
-
-            // Also add any mosques from the API that aren't in the list
             const allMosques = JSON.parse(localStorage.getItem('silah-all-mosques') || '[]');
             allMosques.forEach(m => {
                 const name = m.name || 'Unnamed Mosque';
@@ -6676,7 +7416,6 @@
                 showModerationToast('Please select a mosque.', 'warning');
                 return;
             }
-
             const [name, address] = value.split('|');
             await joinCommunity(name, name, address);
         });
@@ -6686,13 +7425,11 @@
                 showModerationToast('Please sign in to join a community.', 'warning');
                 return;
             }
-
             const existing = userCommunityMemberships.find(m => m.mosque_id === mosqueId || m.mosque_name === mosqueName);
             if (existing) {
                 showModerationToast(`You're already part of ${mosqueName}!`, 'info');
                 return;
             }
-
             try {
                 const { data, error } = await sb
                     .from('community_memberships')
@@ -6703,9 +7440,7 @@
                         mosque_address: mosqueAddress || '',
                         is_primary: userCommunityMemberships.length === 0
                     });
-
                 if (error) throw error;
-
                 await loadUserCommunityMemberships();
                 showModerationToast(`🎉 You've joined the ${mosqueName} community!`, 'success');
                 loadCommunityContent();
@@ -6718,16 +7453,13 @@
 
         async function leaveCommunity(mosqueId) {
             if (!confirm('Are you sure you want to leave this community?')) return;
-
             try {
                 const { error } = await sb
                     .from('community_memberships')
                     .delete()
                     .eq('user_id', currentUser.id)
                     .eq('mosque_id', mosqueId);
-
                 if (error) throw error;
-
                 await loadUserCommunityMemberships();
                 showModerationToast('You have left the community.', 'info');
                 loadCommunityContent();
@@ -6738,7 +7470,6 @@
             }
         }
 
-        // Load all community content
         async function loadCommunityContent() {
             await Promise.all([
                 loadCommunityMembers(),
@@ -6749,11 +7480,9 @@
             ]);
         }
 
-        // Load community members
         async function loadCommunityMembers() {
             const panel = document.getElementById('communityMembersPanel');
             if (!panel) return;
-
             const mosqueIds = userCommunityMemberships.map(m => m.mosque_id);
             if (mosqueIds.length === 0) {
                 panel.innerHTML = `
@@ -6765,26 +7494,20 @@
                 `;
                 return;
             }
-
             try {
                 const { data: memberships, error } = await sb
                     .from('community_memberships')
                     .select('user_id, profiles:user_id(full_name, location)')
                     .in('mosque_id', mosqueIds)
                     .neq('user_id', currentUser?.id);
-
                 if (error) throw error;
-
-                // Get community profiles
                 const userIds = memberships.map(m => m.user_id);
                 const { data: profiles } = await sb
                     .from('community_profiles')
                     .select('*')
                     .in('id', userIds);
-
                 const profileMap = {};
                 (profiles || []).forEach(p => profileMap[p.id] = p);
-
                 if (!memberships || memberships.length === 0) {
                     panel.innerHTML = `
                         <div style="text-align:center;padding:30px;color:var(--text-secondary);">
@@ -6794,14 +7517,12 @@
                     `;
                     return;
                 }
-
                 panel.innerHTML = memberships.map(m => {
                     const profile = m.profiles || {};
                     const name = profile.full_name || 'Unknown User';
                     const initials = getInitials(name);
                     const loc = profile.location || 'Location not set';
                     const communityProfile = profileMap[m.user_id] || {};
-
                     return `
                         <div class="community-profile-card">
                             <div class="cp-avatar">${initials}</div>
@@ -6817,29 +7538,22 @@
                         </div>
                     `;
                 }).join('');
-
             } catch (error) {
                 console.error('Error loading community members:', error);
                 panel.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-secondary);">Failed to load members.</div>`;
             }
         }
 
-        // Load community imams
         async function loadCommunityImams() {
             const panel = document.getElementById('communityImamsPanel');
             if (!panel) return;
-
             try {
                 const { data: imams, error } = await sb
                     .from('community_profiles')
                     .select('*, profiles:user_id(full_name, location)')
                     .eq('is_imam', true);
-
                 if (error) throw error;
-
                 let html = '';
-
-                // Platform imams
                 const platformImams = (imams || []).filter(i => i.profiles);
                 if (platformImams.length > 0) {
                     html += `<div style="font-weight:600;color:var(--text-primary);margin:10px 0 8px;">👥 Imams on Silah</div>`;
@@ -6865,7 +7579,6 @@
                         `;
                     }).join('');
                 }
-
                 if (!html) {
                     panel.innerHTML = `
                         <div style="text-align:center;padding:30px;color:var(--text-secondary);">
@@ -6876,29 +7589,23 @@
                 } else {
                     panel.innerHTML = html;
                 }
-
             } catch (error) {
                 console.error('Error loading imams:', error);
                 panel.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-secondary);">Failed to load imams.</div>`;
             }
         }
 
-        // Load new converts
         async function loadCommunityConverts() {
             const panel = document.getElementById('communityConvertsPanel');
             if (!panel) return;
-
             try {
                 const { data: converts, error } = await sb
                     .from('community_profiles')
                     .select('*, profiles:user_id(full_name, location)')
                     .eq('is_convert', true);
-
                 if (error) throw error;
-
                 let html = '';
                 const platformConverts = (converts || []).filter(c => c.profiles);
-
                 if (platformConverts.length > 0) {
                     html = platformConverts.map(convert => {
                         const profile = convert.profiles || {};
@@ -6924,7 +7631,6 @@
                         `;
                     }).join('');
                 }
-
                 if (!html) {
                     panel.innerHTML = `
                         <div style="text-align:center;padding:30px;color:var(--text-secondary);">
@@ -6936,26 +7642,21 @@
                 } else {
                     panel.innerHTML = html;
                 }
-
             } catch (error) {
                 console.error('Error loading converts:', error);
                 panel.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-secondary);">Failed to load converts.</div>`;
             }
         }
 
-        // Load community events
         async function loadCommunityEvents() {
             const panel = document.getElementById('communityEventsPanel');
             if (!panel) return;
-
             try {
                 const { data: events, error } = await sb
                     .from('community_events')
                     .select('*')
                     .order('event_date', { ascending: true });
-
                 if (error) throw error;
-
                 if (!events || events.length === 0) {
                     panel.innerHTML = `
                         <div style="text-align:center;padding:30px;color:var(--text-secondary);">
@@ -6966,7 +7667,6 @@
                     `;
                     return;
                 }
-
                 panel.innerHTML = `
                     <div class="community-events-grid">
                         ${events.map(event => `
@@ -6993,8 +7693,6 @@
                         `).join('')}
                     </div>
                 `;
-
-                // Add RSVP event listeners
                 panel.querySelectorAll('.btn-rsvp').forEach(btn => {
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -7013,18 +7711,15 @@
                         }
                     });
                 });
-
             } catch (error) {
                 console.error('Error loading community events:', error);
                 panel.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-secondary);">Failed to load events.</div>`;
             }
         }
 
-        // Load community mosques
         async function loadCommunityMosques() {
             const panel = document.getElementById('communityMosquesPanel');
             if (!panel) return;
-
             if (userCommunityMemberships.length === 0) {
                 panel.innerHTML = `
                     <div style="text-align:center;padding:30px;color:var(--text-secondary);">
@@ -7035,7 +7730,6 @@
                 `;
                 return;
             }
-
             panel.innerHTML = userCommunityMemberships.map(m => `
                     <div class="mosque-row">
                         <div class="mq-icon">🕌</div>
@@ -7052,7 +7746,7 @@
                 `).join('');
         }
 
-        // ========== MOSQUE FINDER (with map) ==========
+        // ========== MOSQUE FINDER ==========
         const LOCAL_PROXY = 'http://localhost:3001/api/mosques';
         const FALLBACK_PROXY = 'https://api.allorigins.win/raw?url=';
         const UPSTREAM_API = 'https://time.now/mosques/api/mosques';
@@ -7078,7 +7772,6 @@
                 locLabel.textContent = usedFallback ? '📍 Showing results near Chicago, IL' : '📍 Using your location';
             }
 
-            // Store all mosques for later use
             allMosquesData = mosques || [];
             localStorage.setItem('silah-all-mosques', JSON.stringify(allMosquesData));
 
@@ -7091,7 +7784,6 @@
             const dynamicRows = list.querySelectorAll('.mosque-row.dynamic');
             dynamicRows.forEach(row => row.remove());
 
-            // Check which mosques the user has already joined
             const joinedMosqueNames = userCommunityMemberships.map(m => m.mosque_name);
 
             mosques.forEach(m => {
@@ -7121,7 +7813,6 @@
                 `;
                 list.appendChild(row);
 
-                // Add join event listener
                 const joinBtn = row.querySelector('.mq-join-btn');
                 if (joinBtn && !joinBtn.classList.contains('joined')) {
                     joinBtn.addEventListener('click', function() {
@@ -7133,7 +7824,6 @@
             });
 
             updateMosqueMap('success', mosques, usedFallback, lat, lon);
-            // Populate the community join select
             populateMosqueSelect();
         }
 
@@ -7231,11 +7921,10 @@
             loadMosquesWithProxy();
         }
 
-        // ========== MOSQUE MAP VIEW (Leaflet) ==========
+        // ========== MOSQUE MAP VIEW ==========
         let leafletMap = null;
         let mosqueMarkersLayer = null;
         let mosqueMapReady = false;
-
         let mosqueMapState = { status: 'loading', mosques: [], usedFallback: false, lat: null, lon: null };
 
         function getMosqueCoords(m) {
@@ -7249,7 +7938,6 @@
         function ensureLeafletMap() {
             if (mosqueMapReady) return;
             mosqueMapReady = true;
-
             leafletMap = L.map('mosqueMap', { attributionControl: true }).setView(
                 [MOSQUE_FALLBACK_LAT, MOSQUE_FALLBACK_LON], 12
             );
@@ -7264,7 +7952,6 @@
             const loadingEl = document.getElementById('mosqueMapLoading');
             const errorEl = document.getElementById('mosqueMapError');
             const banner = document.getElementById('mosqueMapNoResultsBanner');
-
             if (loadingEl) loadingEl.style.display = which === 'loading' ? 'flex' : 'none';
             if (errorEl) errorEl.style.display = which === 'error' ? 'flex' : 'none';
             if (banner) banner.style.display = which === 'empty' ? 'block' : 'none';
@@ -7278,7 +7965,6 @@
                 lat: lat ?? mosqueMapState.lat,
                 lon: lon ?? mosqueMapState.lon
             };
-
             if (mosqueMapReady) {
                 drawMosqueMap();
             }
@@ -7286,22 +7972,14 @@
 
         function drawMosqueMap() {
             const { status, mosques, usedFallback, lat, lon } = mosqueMapState;
-
-            if (status === 'loading') {
-                setMosqueMapOverlay('loading');
-                return;
-            }
-            if (status === 'error') {
-                setMosqueMapOverlay('error');
-                return;
-            }
+            if (status === 'loading') { setMosqueMapOverlay('loading'); return; }
+            if (status === 'error') { setMosqueMapOverlay('error'); return; }
             if (lat == null || lon == null) return;
-
             setMosqueMapOverlay(mosques && mosques.length ? null : 'empty');
             mosqueMarkersLayer.clearLayers();
-
-            const bounds = [[lat, lon]];
-
+            const bounds = [
+                [lat, lon]
+            ];
             L.marker([lat, lon], {
                 icon: L.divIcon({
                     className: 'user-marker-icon',
@@ -7309,23 +7987,19 @@
                     iconSize: [20, 20],
                     iconAnchor: [10, 10]
                 })
-            })
-                .addTo(mosqueMarkersLayer)
-                .bindPopup(usedFallback ? 'Approximate location (Gaithersburg, MD)' : 'Your location');
-
+            }).addTo(mosqueMarkersLayer).bindPopup(usedFallback ? 'Approximate location (Gaithersburg, MD)' :
+                'Your location');
             (mosques || []).forEach(m => {
                 const coords = getMosqueCoords(m);
                 if (!coords) {
                     console.warn('[mosque debug] no coordinates found for mosque, skipping pin:', m);
                     return;
                 }
-
                 const name = (m.name || 'Unnamed mosque').replace(/</g, '&lt;');
                 const address = (m.address || '').replace(/</g, '&lt;');
                 const distance = typeof m.distance_km === 'number' ? `${m.distance_km.toFixed(1)} km away` : '';
                 const mapsQuery = address ? `${name} ${address}` : name;
                 const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
-
                 L.marker([coords.lat, coords.lon], {
                     icon: L.divIcon({
                         className: 'mosque-marker-icon',
@@ -7334,9 +8008,7 @@
                         iconAnchor: [17, 34],
                         popupAnchor: [0, -30]
                     })
-                })
-                    .addTo(mosqueMarkersLayer)
-                    .bindPopup(`
+                }).addTo(mosqueMarkersLayer).bindPopup(`
                         <div class="mq-popup">
                             <h4>${name}</h4>
                             <div class="mq-detail">${distance}${distance && address ? ' · ' : ''}${address}</div>
@@ -7344,10 +8016,8 @@
                             <button onclick="joinCommunity('${name}', '${name}', '${address}')" style="background:var(--green);color:#fff;margin-top:4px;">Join Community</button>
                         </div>
                     `);
-
                 bounds.push([coords.lat, coords.lon]);
             });
-
             if (bounds.length > 1) {
                 leafletMap.fitBounds(bounds, { padding: [40, 40], maxZoom: 15 });
             } else {
@@ -7364,14 +8034,12 @@
         // ========== CHECK MENTOR STATUS ==========
         async function checkMentorStatus() {
             if (!currentUser) return;
-
             try {
                 const { data, error } = await sb
                     .from('mentors')
                     .select('*')
                     .eq('user_id', currentUser.id)
                     .single();
-
                 if (data) {
                     isMentorRegistered = true;
                     currentUserMentorData = data;
@@ -7398,16 +8066,13 @@
             }
         }
 
-        // ========== MY MENTOR PROFILE ==========
         function renderMyMentorProfile() {
             const container = document.getElementById('myMentorProfileContainer');
             if (!container) return;
-
             if (!isMentorRegistered || !currentUserMentorData) {
                 container.innerHTML = '';
                 return;
             }
-
             const data = currentUserMentorData;
             const name = data.full_name || currentProfile?.full_name || 'You';
             const initials = data.avatar || getInitials(name);
@@ -7438,7 +8103,6 @@
                 'either': 'Either'
             };
             const meetingDisplay = meetingMap[data.meeting_preference] || data.meeting_preference || 'Any';
-
             container.innerHTML = `
                 <div class="my-mentor-profile">
                     <div class="profile-header-simple">
@@ -7552,12 +8216,10 @@
                     .from('mentors')
                     .select('*')
                     .order('created_at', { ascending: false });
-
                 if (error) {
                     console.warn('Error loading mentors from DB:', error);
                     return null;
                 }
-
                 return data;
             } catch (error) {
                 console.warn('Error loading mentors:', error);
@@ -8997,16 +9659,363 @@
         });
 
         // ========== SEARCH FUNCTIONALITY ==========
+        let searchIndex = [];
+
         function buildSearchIndex() {
             const index = [];
-            // ... (same as before, but we'll keep the existing implementation from the merged version)
-            // This is a placeholder - the actual search code is in the merged version.
-            // Since we have the search code earlier, we'll just rely on the existing setup.
-            // We'll call setupSearch() in enterApp.
+            const screenContent = {
+                dashboard: {
+                    title: 'Dashboard',
+                    icon: 'fa-home',
+                    keywords: ['home', 'welcome', 'assalamu alaikum', 'personalized path', 'for you', 'upcoming',
+                        'quick dua'
+                    ],
+                    content: 'Dashboard Home Welcome Personalized path For You Upcoming Quick Dua'
+                },
+                mentor: {
+                    title: 'My Mentor',
+                    icon: 'fa-handshake',
+                    keywords: ['mentor', 'scholar', 'community', 'find mentor', 'guidance'],
+                    content: 'My Mentor Find a Mentor Scholar Community Guidance'
+                },
+                discover: {
+                    title: 'Discover',
+                    icon: 'fa-compass',
+                    keywords: ['discover', 'events', 'mosques', 'near you'],
+                    content: 'Discover Events Mosques Near You'
+                },
+                feed: {
+                    title: 'Community Feed',
+                    icon: 'fa-comments',
+                    keywords: ['feed', 'community', 'posts', 'discussion'],
+                    content: 'Community Feed Posts Discussion'
+                },
+                community: {
+                    title: 'Community',
+                    icon: 'fa-users',
+                    keywords: ['community', 'members', 'imams', 'converts', 'events', 'mosques'],
+                    content: 'Community Members Imams Converts Events Mosques'
+                },
+                learn: {
+                    title: 'Learn',
+                    icon: 'fa-graduation-cap',
+                    keywords: ['learn', 'islam', 'ask', 'question', 'shahada', 'wudu', 'salah'],
+                    content: 'Learn Islam Ask Question Shahada Wudu Salah'
+                },
+                profile: {
+                    title: 'Profile',
+                    icon: 'fa-user',
+                    keywords: ['profile', 'journey', 'milestones', 'shahada', 'jummah'],
+                    content: 'Profile Journey Milestones Shahada Jummah'
+                },
+                settings: {
+                    title: 'Settings',
+                    icon: 'fa-cog',
+                    keywords: ['settings', 'appearance', 'dark mode', 'notifications', 'privacy', 'language',
+                        'account'
+                    ],
+                    content: 'Settings Appearance Dark Mode Notifications Privacy Language Account'
+                },
+                pillars: {
+                    title: 'Five Pillars',
+                    icon: 'fa-star',
+                    keywords: ['pillars', 'shahada', 'salah', 'zakat', 'sawm', 'hajj'],
+                    content: 'Five Pillars Shahada Salah Zakat Sawm Hajj'
+                },
+                'ai-model': {
+                    title: 'AI Model Hub',
+                    icon: 'fa-robot',
+                    keywords: ['ai', 'model', 'tutor', 'assistant', 'chat'],
+                    content: 'AI Model Hub Tutor Assistant Conversation Chat'
+                }
+            };
+
+            for (const [screenId, data] of Object.entries(screenContent)) {
+                index.push({
+                    id: screenId,
+                    title: data.title,
+                    icon: data.icon,
+                    screen: screenId,
+                    type: 'page',
+                    keywords: data.keywords.join(' '),
+                    content: data.content,
+                    score: 0
+                });
+            }
+
+            allMentors.forEach(mentor => {
+                const name = mentor.full_name || 'Unknown';
+                const bio = mentor.bio || '';
+                const expertise = mentor.expertise || '';
+                index.push({
+                    id: 'mentor-' + (mentor.id || Math.random().toString(36).substr(2, 6)),
+                    title: name,
+                    icon: 'fa-user-graduate',
+                    screen: 'mentor',
+                    type: 'mentor',
+                    keywords: `${name} ${bio} ${expertise}`,
+                    content: `${bio} ${expertise}`,
+                    score: 0,
+                    mentorData: mentor
+                });
+            });
+
+            const articleData = [
+                { title: 'Understanding the Meaning of Shahada', source: 'Islamic Center of America',
+                    excerpt: 'The Shahada is the declaration of faith.', tags: ['Shahada', 'Faith'] },
+                { title: 'Step-by-Step Guide to Performing Wudu', source: 'Islamic Relief',
+                    excerpt: 'Learn the proper way to perform Wudu.', tags: ['Wudu', 'Purification'] },
+                { title: 'The Importance of Salah in Daily Life', source: 'Yaqeen Institute',
+                    excerpt: 'Discover how the five daily prayers can transform your life.', tags: ['Salah',
+                        'Prayer'
+                    ] },
+                { title: 'Zakat: Purifying Your Wealth', source: 'Muslim Hands',
+                    excerpt: 'Zakat is not just charity—it\'s a right of the poor.', tags: ['Zakat', 'Charity'] },
+                { title: 'Fasting in Ramadan: A Spiritual Journey', source: 'Islamic Relief',
+                    excerpt: 'Fasting in Ramadan is a time of spiritual reflection.', tags: ['Ramadan', 'Fasting'] },
+                { title: 'The Rituals of Hajj: A Guide for Pilgrims', source: 'Ministry of Hajj',
+                    excerpt: 'Hajj is the pilgrimage to Mecca.', tags: ['Hajj', 'Pilgrimage'] }
+            ];
+
+            articleData.forEach((article, i) => {
+                const tagString = article.tags.join(' ');
+                index.push({
+                    id: 'article-' + (i + 1),
+                    title: article.title,
+                    icon: 'fa-book-open',
+                    screen: 'learn',
+                    type: 'article',
+                    keywords: `${article.title} ${article.excerpt} ${tagString} ${article.source}`,
+                    content: `${article.excerpt} ${tagString} ${article.source}`,
+                    score: 0,
+                    articleData: article
+                });
+            });
+
+            const eventData = [
+                { name: 'New Muslim Essentials', location: 'Islamic Center of Chicago', time: 'Wed 7PM' },
+                { name: 'Community Iftar & Dinner', location: 'Masjid Al-Noor', time: 'Fri 6:30PM' },
+                { name: 'Sister\'s Halaqa Circle', location: 'Weekly', time: 'Sat 10AM' },
+                { name: 'Open Mosque Day', location: 'Various locations', time: 'This Sunday 2PM' }
+            ];
+
+            eventData.forEach((event, i) => {
+                index.push({
+                    id: 'event-' + (i + 1),
+                    title: event.name,
+                    icon: 'fa-calendar-check',
+                    screen: 'discover',
+                    type: 'event',
+                    keywords: `${event.name} ${event.location} ${event.time}`,
+                    content: `${event.location} ${event.time}`,
+                    score: 0,
+                    eventData: event
+                });
+            });
+
+            const pillarData = [
+                { name: 'Shahada', desc: 'Declaration of faith' },
+                { name: 'Salah', desc: 'Five daily prayers' },
+                { name: 'Zakat', desc: 'Obligatory charity' },
+                { name: 'Sawm', desc: 'Fasting during Ramadan' },
+                { name: 'Hajj', desc: 'Pilgrimage to Mecca' }
+            ];
+
+            pillarData.forEach((pillar, i) => {
+                index.push({
+                    id: 'pillar-' + (i + 1),
+                    title: pillar.name,
+                    icon: 'fa-star',
+                    screen: 'pillars',
+                    type: 'pillar',
+                    keywords: `${pillar.name} ${pillar.desc}`,
+                    content: pillar.desc,
+                    score: 0,
+                    pillarData: pillar
+                });
+            });
+
+            return index;
+        }
+
+        function performSearch(query) {
+            if (!query || query.trim().length < 1) {
+                return [];
+            }
+            const q = query.trim().toLowerCase();
+            const results = searchIndex.map(item => {
+                let score = 0;
+                const titleLower = item.title.toLowerCase();
+                const contentLower = item.content.toLowerCase();
+                const keywordsLower = item.keywords.toLowerCase();
+
+                if (titleLower.includes(q)) {
+                    score += 10;
+                    if (titleLower === q) score += 5;
+                }
+                if (q.split(' ').every(word => titleLower.includes(word))) {
+                    score += 6;
+                }
+                if (keywordsLower.includes(q)) {
+                    score += 4;
+                }
+                if (contentLower.includes(q)) {
+                    score += 2;
+                }
+                const words = q.split(' ');
+                for (const word of words) {
+                    if (word.length > 1) {
+                        if (contentLower.includes(word)) score += 1;
+                        if (titleLower.includes(word)) score += 2;
+                    }
+                }
+                if (contentLower.includes(q)) {
+                    score += 1;
+                }
+                item.score = score;
+                return item;
+            });
+
+            return results
+                .filter(item => item.score > 0)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 12);
+        }
+
+        function renderSearchResults(results) {
+            const container = document.getElementById('searchResultsContainer');
+            const popup = document.getElementById('globalSearchPopup');
+
+            if (!container) return;
+
+            if (results.length === 0) {
+                container.innerHTML = `
+                    <div class="search-empty">
+                        <i class="fas fa-search"></i>
+                        <p>No results found. Try a different search term.</p>
+                        <p style="font-size:12px;margin-top:4px;color:var(--gray-400);">Press ⌘K to search</p>
+                    </div>
+                `;
+                popup.classList.add('show');
+                return;
+            }
+
+            const grouped = {};
+            results.forEach(item => {
+                const type = item.type || 'page';
+                if (!grouped[type]) grouped[type] = [];
+                grouped[type].push(item);
+            });
+
+            const typeLabels = {
+                page: 'Pages',
+                mentor: 'Mentors',
+                article: 'Articles',
+                event: 'Events',
+                pillar: 'Pillars'
+            };
+
+            let html = '';
+            for (const [type, items] of Object.entries(grouped)) {
+                const label = typeLabels[type] || type.charAt(0).toUpperCase() + type.slice(1);
+                html += `<div class="search-section-header">${label}</div>`;
+                items.forEach(item => {
+                    const icon = item.icon || 'fa-file';
+                    let desc = '';
+                    if (item.type === 'mentor' && item.mentorData) {
+                        desc = item.mentorData.expertise || 'Mentor';
+                    } else if (item.type === 'article' && item.articleData) {
+                        desc = item.articleData.source || '';
+                    } else if (item.type === 'event' && item.eventData) {
+                        desc = item.eventData.location || '';
+                    } else if (item.type === 'pillar' && item.pillarData) {
+                        desc = item.pillarData.desc || '';
+                    } else {
+                        desc = 'Navigate to ' + item.title;
+                    }
+
+                    html += `
+                        <div class="search-result-item" data-screen="${item.screen}" data-id="${item.id}">
+                            <div class="result-icon"><i class="fas ${icon}"></i></div>
+                            <div class="result-info">
+                                <div class="result-title">${item.title}</div>
+                                <div class="result-desc">${desc}</div>
+                            </div>
+                            <div class="result-badge">${item.screen}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            container.innerHTML = html;
+            popup.classList.add('show');
+
+            container.querySelectorAll('.search-result-item').forEach(el => {
+                el.addEventListener('click', function() {
+                    const screen = this.dataset.screen;
+                    if (screen && screens[screen]) {
+                        navigateTo(screen);
+                        const popup = document.getElementById('globalSearchPopup');
+                        popup.classList.remove('show');
+                        document.getElementById('globalSearchInput').value = '';
+                    }
+                });
+            });
         }
 
         function setupSearch() {
-            // Already defined in the merged version, will be called in enterApp.
+            const input = document.getElementById('globalSearchInput');
+            const popup = document.getElementById('globalSearchPopup');
+
+            if (!input) return;
+
+            searchIndex = buildSearchIndex();
+
+            input.addEventListener('input', function(e) {
+                const query = this.value.trim();
+                if (query.length === 0) {
+                    popup.classList.remove('show');
+                    return;
+                }
+                const results = performSearch(query);
+                renderSearchResults(results);
+            });
+
+            input.addEventListener('focus', function() {
+                const query = this.value.trim();
+                if (query.length > 0) {
+                    const results = performSearch(query);
+                    renderSearchResults(results);
+                } else {
+                    const results = performSearch('mentor');
+                    if (results.length > 0) {
+                        renderSearchResults(results);
+                    }
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                const wrapper = e.target.closest('.search-wrapper');
+                if (!wrapper) {
+                    popup.classList.remove('show');
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    popup.classList.remove('show');
+                    input.blur();
+                }
+                if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                    e.preventDefault();
+                    input.focus();
+                    input.select();
+                }
+            });
+        }
+
+        function rebuildSearchIndex() {
+            searchIndex = buildSearchIndex();
         }
 
         // ========== INIT ==========
@@ -9029,8 +10038,8 @@
                 setTimeout(() => { btn.style.transform = 'scale(1) rotate(0deg)'; }, 300);
             });
 
-            navigateTo('dashboard');
-
+            // If user is already authenticated, the restoreSession will handle it
+            // Otherwise show landing page (default)
             console.log('🌙 Silah — AI-Powered Community Platform loaded.');
             console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
             console.log('💡 Tip: Press ⌘K (or Ctrl+K) to focus the search bar!');
@@ -9042,12 +10051,6 @@
             }
             console.log('🌐 Mosque proxy: local → fallback to allorigins.win');
         });
-
-        // Additional initialization for search
-        function initSearch() {
-            // Build search index from current data
-            // This is already called in enterApp
-        }
     </script>
 
 </body>
