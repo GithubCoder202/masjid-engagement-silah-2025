@@ -6709,6 +6709,22 @@
             await joinCommunity(name, name, address);
         });
 
+        // Community tab switching (Members / Imams / New Converts / Events / Mosques)
+        document.querySelectorAll('.community-tabs .community-tab').forEach(function(tabBtn) {
+            tabBtn.addEventListener('click', function() {
+                const target = tabBtn.dataset.tab;
+
+                document.querySelectorAll('.community-tabs .community-tab').forEach(function(btn) {
+                    btn.classList.remove('active');
+                });
+                tabBtn.classList.add('active');
+
+                document.querySelectorAll('.community-tab-panel').forEach(function(panel) {
+                    panel.classList.toggle('active', panel.dataset.panel === target);
+                });
+            });
+        });
+
         async function joinCommunity(mosqueId, mosqueName, mosqueAddress) {
             if (!currentUser) {
                 showModerationToast('Please sign in to join a community.', 'warning');
