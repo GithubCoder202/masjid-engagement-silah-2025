@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
     <!-- Supabase JS client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
 
     <!-- Leaflet (mosque map view) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
@@ -431,104 +432,6 @@
             font-size: 14px;
             font-weight: 500;
         }
-        @media (max-width:700px) {
-            .landing-nav .nav-links .nav-link-text {
-                display: none;
-            }
-            .landing-nav .nav-links .nav-link-icon {
-                display: inline-block;
-            }
-            .landing-nav .nav-links .btn-signin,
-            .landing-nav .nav-links .btn-register {
-                padding: 6px 14px;
-                font-size: 13px;
-            }
-            .landing-nav .nav-links .btn-signin .nav-link-text,
-            .landing-nav .nav-links .btn-register .nav-link-text {
-                display: inline;
-            }
-            .landing-nav {
-                padding: 10px 16px;
-            }
-            .landing-sidebar {
-                width: 50px;
-                transform: translateX(0);
-                padding: 12px 0 12px 8px;
-            }
-            .landing-sidebar .sidebar-brand span,
-            .landing-sidebar .sidebar-label,
-            .landing-sidebar .sidebar-toggle-btn span {
-                display: none;
-            }
-            .landing-sidebar .sidebar-icon-only {
-                display: inline;
-            }
-            .landing-sidebar a {
-                justify-content: center;
-                padding: 10px 0;
-                font-size: 0;
-            }
-            .landing-sidebar a i {
-                font-size: 18px;
-                margin: 0;
-            }
-            .landing-sidebar .sidebar-toggle-btn {
-                justify-content: center;
-                padding: 10px 0;
-            }
-            .landing-sidebar .sidebar-toggle-btn i {
-                margin: 0;
-            }
-            .landing-sidebar .sidebar-toggle-btn span {
-                display: none;
-            }
-            .landing-sidebar.collapsed {
-                transform: translateX(-40px);
-                width: 40px;
-            }
-            .landing-sidebar.collapsed a i {
-                font-size: 0;
-            }
-            .landing-sidebar.collapsed .sidebar-toggle-btn i {
-                font-size: 18px;
-            }
-            .landing-sidebar.collapsed .sidebar-brand .logo-icon {
-                margin: 0 auto;
-            }
-        }
-        @media (max-width:480px) {
-            .landing-nav .nav-links .btn-signin .nav-link-text,
-            .landing-nav .nav-links .btn-register .nav-link-text {
-                display: none;
-            }
-            .landing-nav .nav-links .btn-signin,
-            .landing-nav .nav-links .btn-register {
-                padding: 6px 12px;
-            }
-            .landing-nav .nav-brand h1 {
-                font-size: 17px;
-            }
-            .landing-nav .nav-brand .logo-icon {
-                width: 32px;
-                height: 32px;
-                font-size: 15px;
-            }
-            .landing-sidebar {
-                width: 40px;
-                padding: 8px 0;
-            }
-            .landing-sidebar a {
-                padding: 8px 0;
-            }
-            .landing-sidebar .sidebar-brand {
-                padding: 4px 0 8px 0;
-            }
-            .landing-sidebar .sidebar-brand .logo-icon {
-                width: 28px;
-                height: 28px;
-                font-size: 14px;
-            }
-        }
 
         /* ========== LANDING SECTIONS ========== */
         .landing-section {
@@ -555,14 +458,6 @@
             font-size: 16px;
             color: var(--text-secondary);
             margin-bottom: 36px;
-        }
-        @media (max-width:700px) {
-            .landing-section {
-                padding: 20px 16px 40px;
-            }
-            .landing-section .section-title {
-                font-size: 24px;
-            }
         }
 
         /* ========== HERO ========== */
@@ -702,41 +597,108 @@
             font-size: 12px;
             color: var(--text-secondary);
         }
-        @media (max-width:900px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-text p {
-                max-width: 100%;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .hero-text .hero-buttons {
-                justify-content: center;
-            }
-            .hero-text h2 {
-                font-size: 34px;
-            }
-            #section-hero {
-                padding: 30px 20px 50px;
-                min-height: auto;
-            }
+
+        /* ========== NEW LANDING FEATURE SECTIONS ========== */
+        #section-features {
+            padding: 60px 32px;
+            background: var(--white);
+            text-align: center;
+            transition: background var(--transition-theme);
         }
-        @media (max-width:480px) {
-            .hero-text h2 {
-                font-size: 26px;
-            }
-            .hero-text p {
-                font-size: 15px;
-            }
-            .hero-text .hero-buttons button {
-                padding: 10px 24px;
-                font-size: 14px;
-            }
-            .hero-visual .hero-card {
-                padding: 20px 18px;
-            }
+        [data-theme="dark"] #section-features {
+            background: #1f2126;
+        }
+        #section-features .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+        #section-features .feature-block {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 30px 24px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            text-align: center;
+        }
+        #section-features .feature-block:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+        #section-features .feature-block .fb-icon {
+            font-size: 42px;
+            color: var(--gold);
+            margin-bottom: 14px;
+            display: block;
+        }
+        #section-features .feature-block h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        #section-features .feature-block p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        #section-how-it-works {
+            padding: 60px 32px;
+            background: var(--green-pale);
+            text-align: center;
+            transition: background var(--transition-theme);
+        }
+        [data-theme="dark"] #section-how-it-works {
+            background: #1a2f26;
+        }
+        #section-how-it-works .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+        #section-how-it-works .step-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 28px 20px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            position: relative;
+        }
+        #section-how-it-works .step-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        #section-how-it-works .step-card .step-num {
+            display: inline-block;
+            width: 48px;
+            height: 48px;
+            line-height: 48px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        #section-how-it-works .step-card h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        #section-how-it-works .step-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
         }
 
         /* ========== ABOUT ========== */
@@ -803,23 +765,6 @@
         #section-about .about-image .about-placeholder p {
             font-size: 14px;
             color: var(--text-secondary);
-        }
-        @media (max-width:800px) {
-            #section-about .about-inner {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            #section-about .about-text .about-features {
-                justify-items: center;
-            }
-        }
-        @media (max-width:480px) {
-            #section-about .about-text .about-features {
-                grid-template-columns: 1fr;
-            }
-            #section-about .about-image .about-placeholder {
-                padding: 24px;
-            }
         }
 
         /* ========== TEAM ========== */
@@ -1082,24 +1027,6 @@
             color: var(--gold);
             font-weight: 400;
         }
-        @media (max-width:700px) {
-            #section-scholar-quote blockquote {
-                font-size: 22px;
-                padding: 0 10px;
-            }
-            #section-scholar-quote blockquote::before,
-            #section-scholar-quote blockquote::after {
-                font-size: 40px;
-            }
-            #section-scholar-quote .quote-author {
-                font-size: 16px;
-            }
-        }
-        @media (max-width:480px) {
-            #section-scholar-quote blockquote {
-                font-size: 18px;
-            }
-        }
 
         /* ========== MOVABLE GRAPHICS ========== */
         #section-movable-graphics {
@@ -1154,31 +1081,6 @@
             color: var(--text-secondary);
             opacity: 0.6;
         }
-        [data-theme="dark"] #section-movable-graphics .mg-overlay-text h3 {
-            color: #e0e3e8;
-        }
-        [data-theme="dark"] #section-movable-graphics .mg-overlay-text p {
-            color: #9a9fa8;
-        }
-        @media (max-width:700px) {
-            #section-movable-graphics .mg-container {
-                height: 320px;
-            }
-            #section-movable-graphics .mg-overlay-text h3 {
-                font-size: 18px;
-            }
-        }
-        @media (max-width:480px) {
-            #section-movable-graphics .mg-container {
-                height: 260px;
-            }
-            #section-movable-graphics .mg-overlay-text h3 {
-                font-size: 15px;
-            }
-            #section-movable-graphics .mg-overlay-text p {
-                font-size: 12px;
-            }
-        }
 
         /* ========== DECORATIVE ELEMENTS ========== */
         .decoration-star {
@@ -1211,12 +1113,6 @@
         }
         .landing-footer strong {
             color: var(--green);
-        }
-        @media (max-width:600px) {
-            .landing-footer {
-                padding: 16px;
-                font-size: 12px;
-            }
         }
 
         /* ============================================================
@@ -1560,36 +1456,57 @@
             gap: 8px;
             font-weight: 500;
         }
-        [data-theme="dark"] #onboardingStep .radio-option,
-        [data-theme="dark"] #onboardingStep .checkbox-option {
+        .radio-option,
+        .checkbox-option {
+            padding: 10px 14px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all var(--transition);
+            user-select: none;
+        }
+        [data-theme="dark"] .radio-option,
+        [data-theme="dark"] .checkbox-option {
             background: var(--gray-100);
             border-color: var(--border-light);
         }
-        #onboardingStep .radio-option:hover,
-        #onboardingStep .checkbox-option:hover {
+        .radio-option:hover,
+        .checkbox-option:hover {
             border-color: var(--green);
             background: var(--green-pale);
         }
-        #onboardingStep .radio-option.selected,
-        #onboardingStep .checkbox-option.selected {
+        .radio-option.selected,
+        .checkbox-option.selected {
             border-color: var(--green);
             background: var(--green-pale);
             box-shadow: 0 0 0 2px rgba(26, 107, 79, 0.15);
+            font-weight: 600;
         }
-        [data-theme="dark"] #onboardingStep .radio-option.selected,
-        [data-theme="dark"] #onboardingStep .checkbox-option.selected {
+        [data-theme="dark"] .radio-option.selected,
+        [data-theme="dark"] .checkbox-option.selected {
             background: #1a2f26;
             border-color: #2ea87a;
+            color: #4ade80;
         }
-        #onboardingStep .radio-option i,
-        #onboardingStep .checkbox-option i {
+        .radio-option i,
+        .checkbox-option i {
             color: var(--gray-400);
             transition: color var(--transition);
             font-size: 16px;
         }
-        #onboardingStep .radio-option.selected i,
-        #onboardingStep .checkbox-option.selected i {
+        .radio-option.selected i,
+        .checkbox-option.selected i {
             color: var(--green);
+        }
+        [data-theme="dark"] .radio-option.selected i,
+        [data-theme="dark"] .checkbox-option.selected i {
+            color: #4ade80;
         }
         #onboardingStep .checkbox-option {
             flex: 1 1 calc(33.333% - 10px);
@@ -1607,16 +1524,6 @@
         }
         #onboardingStep .onboarding-footer i {
             color: var(--green);
-        }
-        @media (max-width:600px) {
-            #onboardingStep .radio-option,
-            #onboardingStep .checkbox-option {
-                flex: 1 1 100%;
-                min-width: unset;
-            }
-            #onboardingStep .checkbox-option {
-                flex: 1 1 100%;
-            }
         }
 
         /* ============================================================
@@ -2482,77 +2389,6 @@
             background: #2a2418;
         }
 
-        /* ========== DASHBOARD ========== */
-        .dash-welcome {
-            margin-bottom: 24px;
-        }
-        .dash-welcome h2 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            color: var(--text-primary);
-            transition: color var(--transition-theme);
-        }
-        .dash-welcome h2 span {
-            color: var(--green);
-        }
-        .dash-welcome p {
-            color: var(--text-secondary);
-            font-size: 15px;
-            transition: color var(--transition-theme);
-        }
-
-        .dash-progress {
-            background: var(--card-bg);
-            padding: 18px 24px;
-            border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            border: 1px solid var(--border-light);
-            transition: all var(--transition-theme);
-        }
-        .dash-progress .prog-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .dash-progress .prog-left .emoji-big {
-            font-size: 28px;
-        }
-        .dash-progress .prog-left .prog-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            transition: color var(--transition-theme);
-        }
-        .dash-progress .prog-left .prog-text strong {
-            color: var(--text-primary);
-            transition: color var(--transition-theme);
-        }
-        .dash-progress .prog-bar {
-            flex: 1;
-            min-width: 120px;
-            height: 8px;
-            background: var(--gray-200);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .dash-progress .prog-bar .fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--green), var(--teal));
-            border-radius: 10px;
-            width: 45%;
-            transition: width 1s ease;
-        }
-        .dash-progress .prog-pct {
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--green);
-        }
-
         /* ========== PRAYER TRACKER ========== */
         .prayer-tracker-grid {
             display: flex;
@@ -2681,6 +2517,77 @@
             margin-top: 12px;
             text-align: right;
             letter-spacing: 0.5px;
+        }
+
+        /* ========== DASHBOARD ========== */
+        .dash-welcome {
+            margin-bottom: 24px;
+        }
+        .dash-welcome h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
+        }
+        .dash-welcome h2 span {
+            color: var(--green);
+        }
+        .dash-welcome p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            transition: color var(--transition-theme);
+        }
+
+        .dash-progress {
+            background: var(--card-bg);
+            padding: 18px 24px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+        }
+        .dash-progress .prog-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .dash-progress .prog-left .emoji-big {
+            font-size: 28px;
+        }
+        .dash-progress .prog-left .prog-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color var(--transition-theme);
+        }
+        .dash-progress .prog-left .prog-text strong {
+            color: var(--text-primary);
+            transition: color var(--transition-theme);
+        }
+        .dash-progress .prog-bar {
+            flex: 1;
+            min-width: 120px;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .dash-progress .prog-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--teal));
+            border-radius: 10px;
+            width: 45%;
+            transition: width 1s ease;
+        }
+        .dash-progress .prog-pct {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--green);
         }
 
         .dash-grid {
@@ -5423,6 +5330,31 @@
             font-size: 20px;
             color: var(--text-primary);
         }
+        .articles-section .section-header .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .articles-section .section-header .header-actions .btn-all-articles {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .articles-section .section-header .header-actions .btn-all-articles:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
         .articles-section .section-header .article-search {
             display: flex;
             gap: 8px;
@@ -5519,6 +5451,45 @@
             color: var(--gray-300);
             display: block;
             margin-bottom: 10px;
+        }
+
+        /* ========== ALL ARTICLES SCREEN ========== */
+        #screen-all-articles .articles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        #screen-all-articles .articles-grid .article-card {
+            margin-bottom: 0;
+        }
+        #screen-all-articles .back-to-learn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
+        }
+        #screen-all-articles .back-to-learn:hover {
+            transform: translateX(-4px);
+            color: var(--green-dark);
+        }
+        #screen-all-articles .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        #screen-all-articles .section-sub {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 24px;
         }
 
         /* ========== AI MODEL HUB ========== */
@@ -5766,6 +5737,341 @@
             transform: none;
         }
 
+        /* ========== RULES SCREEN ========== */
+        #screen-rules .rules-hero {
+            background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+            margin-bottom: 28px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+        }
+        [data-theme="dark"] #screen-rules .rules-hero {
+            background: linear-gradient(135deg, #1a2f26 0%, #2a2418 100%);
+            border-color: var(--border-light);
+        }
+        #screen-rules .rules-hero .rules-icon {
+            font-size: 56px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        #screen-rules .rules-hero h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            color: var(--text-primary);
+        }
+        #screen-rules .rules-hero p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 6px auto 0;
+        }
+        #screen-rules .rules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+        @media (max-width:700px) {
+            #screen-rules .rules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        #screen-rules .rule-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 22px 26px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        #screen-rules .rule-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        #screen-rules .rule-card .rule-num {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gold);
+            flex-shrink: 0;
+            line-height: 1;
+            min-width: 40px;
+            text-align: center;
+        }
+        #screen-rules .rule-card .rule-content h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        #screen-rules .rule-card .rule-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        #screen-rules .rule-card .rule-content .rule-hadith {
+            font-style: italic;
+            font-size: 13px;
+            color: var(--gold);
+            margin-top: 6px;
+            padding: 8px 14px;
+            background: var(--gold-pale);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--gold);
+        }
+        [data-theme="dark"] #screen-rules .rule-card .rule-content .rule-hadith {
+            background: #2a2418;
+        }
+        #screen-rules .rules-footer {
+            text-align: center;
+            padding: 24px;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+        }
+        #screen-rules .rules-footer .back-to-feed {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: var(--radius-full);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        #screen-rules .rules-footer .back-to-feed:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        #screen-rules .rules-footer .rules-credit {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 14px;
+        }
+        #screen-rules .rules-footer .rules-credit strong {
+            color: var(--gold);
+        }
+
+        /* ========== COMMUNITY DIRECTORY ========== */
+        .directory-section {
+            margin-top: 28px;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 24px 28px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+        }
+        .directory-section .dir-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .directory-section .dir-header h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .directory-section .dir-header h3 i {
+            color: var(--gold);
+        }
+        .directory-section .dir-header .dir-count {
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: var(--gray-100);
+            padding: 4px 16px;
+            border-radius: var(--radius-full);
+            font-weight: 500;
+        }
+        .directory-section .dir-search-wrap {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .directory-section .dir-search-wrap input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            outline: none;
+            min-width: 160px;
+            transition: var(--transition);
+        }
+        .directory-section .dir-search-wrap input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
+        }
+        .directory-section .dir-search-wrap .dir-filter-btns {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .directory-section .dir-search-wrap .dir-filter-btns button {
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-medium);
+            background: var(--card-bg);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-secondary);
+        }
+        .directory-section .dir-search-wrap .dir-filter-btns button.active {
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green);
+        }
+        .directory-section .dir-search-wrap .dir-filter-btns button:hover:not(.active) {
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .directory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .directory-grid::-webkit-scrollbar {
+            width: 4px;
+        }
+        .directory-grid::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 10px;
+        }
+        .directory-grid .dir-card {
+            background: var(--gray-50);
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+            cursor: default;
+        }
+        .directory-grid .dir-card:hover {
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-2px);
+        }
+        .directory-grid .dir-card .dir-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--green);
+            margin: 0 auto 8px;
+            border: 2px solid var(--gold-light);
+        }
+        .directory-grid .dir-card .dir-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+        .directory-grid .dir-card .dir-loc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .directory-grid .dir-card .dir-badge {
+            display: inline-block;
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            margin-top: 4px;
+            background: var(--gray-200);
+            color: var(--text-secondary);
+        }
+        .directory-grid .dir-card .dir-badge.scholar {
+            background: var(--purple-light);
+            color: var(--purple);
+        }
+        .directory-grid .dir-card .dir-badge.convert {
+            background: var(--gold-pale);
+            color: var(--gold);
+        }
+        .directory-grid .dir-card .dir-badge.imam {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+        .directory-grid .dir-card .dir-badge.mentor {
+            background: var(--orange-light);
+            color: var(--orange);
+        }
+        .directory-grid .dir-card .dir-msg-btn {
+            margin-top: 8px;
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--green);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .directory-grid .dir-card .dir-msg-btn:hover {
+            background: var(--green-dark);
+        }
+        .directory-grid .dir-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+        .directory-grid .dir-empty i {
+            font-size: 32px;
+            color: var(--gray-300);
+            display: block;
+            margin-bottom: 8px;
+        }
+        .directory-grid .dir-loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+        }
+        .directory-grid .dir-loading i {
+            font-size: 24px;
+            color: var(--green);
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         /* ========== BOTTOM NAV ========== */
         .bottom-nav {
             display: none;
@@ -5961,7 +6267,9 @@
             font-size: 10px;
         }
 
-        /* ========== RESPONSIVE OVERRIDES ========== */
+        /* ============================================================
+                   RESPONSIVE OVERRIDES
+                   ============================================================ */
         @media (max-width:1024px) {
             .sidebar {
                 display: none;
@@ -6096,6 +6404,9 @@
                 max-width: 90%;
             }
             .community-events-grid {
+                grid-template-columns: 1fr;
+            }
+            #screen-all-articles .articles-grid {
                 grid-template-columns: 1fr;
             }
             .landing-section .hero-content {
@@ -6436,7 +6747,7 @@
             <div class="about-credit">
                 <div class="credit-label">✨ Website inspired by <span>Cobalt Coders</span> ✨</div>
             </div>
-            <div class="about-version">v2.0.0 · © 2026 Silah Foundation</div>
+            <div class="about-version">v2.1.0 · © 2026 Silah Foundation</div>
         </div>
     </div>
 
@@ -6524,12 +6835,12 @@
 
             <div class="form-group">
                 <label>Full Name</label>
-                <input type="text" id="editProfileName" placeholder="Your full name" style="width:100%;padding:10px 14px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);background:var(--input-bg);color:var(--text-primary);outline:none;">
+                <input type="text" id="editProfileName" placeholder="Your full name" />
             </div>
 
             <div class="form-group">
                 <label>Location</label>
-                <input type="text" id="editProfileLocation" placeholder="e.g., Chicago, IL" style="width:100%;padding:10px 14px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);background:var(--input-bg);color:var(--text-primary);outline:none;">
+                <input type="text" id="editProfileLocation" placeholder="e.g., Chicago, IL" />
             </div>
 
             <div class="form-group">
@@ -6575,14 +6886,14 @@
                 </div>
                 <div class="form-group">
                     <label>Why did you convert to Islam?</label>
-                    <textarea id="editConvertReason" placeholder="Share your story (optional)..." rows="3" style="width:100%;padding:10px 14px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);background:var(--input-bg);color:var(--text-primary);outline:none;font-family:'Inter',sans-serif;resize:vertical;"></textarea>
+                    <textarea id="editConvertReason" placeholder="Share your story (optional)..." rows="3"></textarea>
                     <div class="helper">This helps the community support you better. Your story may inspire others.</div>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>About Me <span style="font-weight:400;color:var(--gray-400)">(optional)</span></label>
-                <textarea id="editAboutMe" placeholder="Tell the community a little about yourself..." rows="3" style="width:100%;padding:10px 14px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);background:var(--input-bg);color:var(--text-primary);outline:none;font-family:'Inter',sans-serif;resize:vertical;"></textarea>
+                <textarea id="editAboutMe" placeholder="Tell the community a little about yourself..." rows="3"></textarea>
             </div>
 
             <div class="modal-actions">
@@ -6613,17 +6924,17 @@
             <form id="createEventForm">
                 <div class="form-group" style="margin-bottom:14px;">
                     <label style="font-weight:600;font-size:13px;display:block;margin-bottom:4px;">Event Title *</label>
-                    <input type="text" id="eventTitleInput" required placeholder="e.g. Weekly Halaqa Circle" style="width:100%;padding:10px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);" />
+                    <input type="text" id="eventTitleInput" required placeholder="e.g. Weekly Halaqa Circle" />
                 </div>
 
                 <div class="form-group" style="margin-bottom:14px;">
                     <label style="font-weight:600;font-size:13px;display:block;margin-bottom:4px;">Date &amp; Time *</label>
-                    <input type="datetime-local" id="eventDateInput" required style="width:100%;padding:10px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);" />
+                    <input type="datetime-local" id="eventDateInput" required />
                 </div>
 
                 <div class="form-group" style="margin-bottom:14px;">
                     <label style="font-weight:600;font-size:13px;display:block;margin-bottom:4px;">Description</label>
-                    <textarea id="eventDescInput" rows="3" placeholder="Details about the event..." style="width:100%;padding:10px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);font-family:inherit;"></textarea>
+                    <textarea id="eventDescInput" rows="3" placeholder="Details about the event..."></textarea>
                 </div>
 
                 <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
@@ -6649,6 +6960,14 @@
             <a href="#section-hero" class="active" data-section="section-hero">
                 <i class="fas fa-home"></i> <span class="sidebar-label">Home</span>
                 <span class="sidebar-icon-only"><i class="fas fa-home"></i></span>
+            </a>
+            <a href="#section-features" data-section="section-features">
+                <i class="fas fa-rocket"></i> <span class="sidebar-label">Features</span>
+                <span class="sidebar-icon-only"><i class="fas fa-rocket"></i></span>
+            </a>
+            <a href="#section-how-it-works" data-section="section-how-it-works">
+                <i class="fas fa-route"></i> <span class="sidebar-label">How It Works</span>
+                <span class="sidebar-icon-only"><i class="fas fa-route"></i></span>
             </a>
             <a href="#section-about" data-section="section-about">
                 <i class="fas fa-info-circle"></i> <span class="sidebar-label">About</span>
@@ -6691,6 +7010,8 @@
                 <h1>Silah<span>.</span></h1>
             </div>
             <div class="nav-links">
+                <a href="#section-features" class="nav-link nav-link-text" data-section="section-features">Features</a>
+                <a href="#section-how-it-works" class="nav-link nav-link-text" data-section="section-how-it-works">How It Works</a>
                 <a href="#section-about" class="nav-link nav-link-text" data-section="section-about">About</a>
                 <a href="#section-team" class="nav-link nav-link-text" data-section="section-team">Our Team</a>
                 <a href="#section-reviews" class="nav-link nav-link-text" data-section="section-reviews">Reviews</a>
@@ -6721,7 +7042,7 @@
                     <p>Silah is an AI-powered platform that connects Muslims with mentors, events, and a supportive community. Start your journey today.</p>
                     <div class="hero-buttons">
                         <button class="btn-primary-hero" id="heroGetStarted">Get Started</button>
-                        <button class="btn-secondary-hero" onclick="navigateToLandingSection('section-about')">Learn More</button>
+                        <button class="btn-secondary-hero" onclick="navigateToLandingSection('section-features')">Explore Features</button>
                     </div>
                 </div>
                 <div class="hero-visual">
@@ -6740,6 +7061,67 @@
             <div class="decoration-star" style="top:10%;left:5%;font-size:80px;">✦</div>
             <div class="decoration-star" style="bottom:15%;right:3%;font-size:60px;">✦</div>
             <div class="decoration-crescent" style="bottom:5%;left:10%;font-size:140px;">☾</div>
+        </section>
+
+        <!-- ===== FEATURES (NEW) ===== -->
+        <section class="landing-section" id="section-features">
+            <h2 class="section-title">✨ Platform Features</h2>
+            <p class="section-sub">Everything you need to grow in faith, connect with community, and find guidance.</p>
+            <div class="features-grid">
+                <div class="feature-block">
+                    <span class="fb-icon">🧠</span>
+                    <h4>AI-Powered Guidance</h4>
+                    <p>Get instant answers to your Islamic questions with our AI chatbot, backed by authentic sources and scholars.</p>
+                </div>
+                <div class="feature-block">
+                    <span class="fb-icon">🤝</span>
+                    <h4>Mentorship Matching</h4>
+                    <p>Connect with verified scholars and community mentors who can guide you on your spiritual journey.</p>
+                </div>
+                <div class="feature-block">
+                    <span class="fb-icon">🕌</span>
+                    <h4>Mosque Finder &amp; Community</h4>
+                    <p>Discover mosques near you, join local communities, and stay connected with events and gatherings.</p>
+                </div>
+                <div class="feature-block">
+                    <span class="fb-icon">📖</span>
+                    <h4>Islamic Learning Hub</h4>
+                    <p>Access a rich library of articles, Quranic verses, Hadith, and daily inspirations to deepen your knowledge.</p>
+                </div>
+                <div class="feature-block">
+                    <span class="fb-icon">💬</span>
+                    <h4>Community Feed &amp; Forums</h4>
+                    <p>Share your thoughts, ask questions, and engage in respectful discussions with fellow Muslims worldwide.</p>
+                </div>
+                <div class="feature-block">
+                    <span class="fb-icon">📿</span>
+                    <h4>Daily Spiritual Tools</h4>
+                    <p>Track your prayers, reflect on the Names of Allah, and receive daily Hadith and Quranic verses.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== HOW IT WORKS (NEW) ===== -->
+        <section class="landing-section" id="section-how-it-works">
+            <h2 class="section-title">🚀 How It Works</h2>
+            <p class="section-sub">Three simple steps to start your journey with Silah.</p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h4>Sign Up &amp; Tell Us About You</h4>
+                    <p>Create your free account and share your interests, location, and goals so we can personalize your experience.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h4>Get Matched &amp; Explore</h4>
+                    <p>Find the perfect mentor, discover local mosques and events, and start connecting with your community.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h4>Grow &amp; Belong</h4>
+                    <p>Learn from Islamic articles, ask the AI anything, track your spiritual progress, and build lasting friendships.</p>
+                </div>
+            </div>
         </section>
 
         <!-- ===== ABOUT ===== -->
@@ -6978,7 +7360,7 @@
                     </div>
                     <div class="form-group">
                         <label>Why did you convert to Islam?</label>
-                        <textarea id="regConvertReason" placeholder="Share your story (optional)..." rows="3" style="width:100%;padding:10px 14px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);background:var(--input-bg);color:var(--text-primary);outline:none;font-family:'Inter',sans-serif;resize:vertical;"></textarea>
+                        <textarea id="regConvertReason" placeholder="Share your story (optional)..." rows="3"></textarea>
                         <div class="helper">Your story may inspire others on their journey.</div>
                     </div>
                 </div>
@@ -7528,7 +7910,7 @@
                         <div class="settings-row"><div class="sr-left"><i class="fas fa-pen-fancy"></i><div class="sr-info"><h4>Send Feedback</h4><p>Help us improve Silah by sharing your thoughts.</p></div></div><div class="sr-right"><button class="btn-sm" id="feedbackBtn" style="background:var(--green);color:#fff;border-color:var(--green);"><i class="fas fa-paper-plane"></i> Give Feedback</button></div></div>
                     </div>
 
-                    <div class="settings-section"><div class="section-title"><i class="fas fa-info-circle"></i> About Silah</div><div class="settings-about"><strong>Silah</strong> v2.0.0 · AI-Powered Community Platform<br />Built with ❤️ for the global Muslim community.<br /><span style="font-size:11px;color:var(--gray-400);">© 2026 Silah Foundation · All rights reserved.</span></div></div>
+                    <div class="settings-section"><div class="section-title"><i class="fas fa-info-circle"></i> About Silah</div><div class="settings-about"><strong>Silah</strong> v2.1.0 · AI-Powered Community Platform<br />Built with ❤️ for the global Muslim community.<br /><span style="font-size:11px;color:var(--gray-400);">© 2026 Silah Foundation · All rights reserved.</span></div></div>
                 </div>
 
                 <!-- ===== FEEDBACK ===== -->
@@ -7937,6 +8319,8 @@
 
         const landingSections = {
             hero: document.getElementById('section-hero'),
+            features: document.getElementById('section-features'),
+            'how-it-works': document.getElementById('section-how-it-works'),
             about: document.getElementById('section-about'),
             team: document.getElementById('section-team'),
             reviews: document.getElementById('section-reviews'),
@@ -8543,22 +8927,45 @@
             btn.disabled = true;
             btn.innerHTML = 'Saving…';
             try {
-                const updateData = { id: currentUser.id, full_name: name, location: location || '',
-                    interests: interests, about_me: aboutMe || '', is_convert: isConvert,
-                    previous_religion: previousReligion, convert_reason: convertReason,
-                    convert_status: editConvertStatus?.value || '' };
-                const { error } = await sb.from('profiles').upsert(updateData);
-                if (error) throw error;
+                const fullData = {
+                    id: currentUser.id,
+                    full_name: name,
+                    location: location || '',
+                    about_me: aboutMe || ''
+                };
+                if (interests.length) fullData.interests = interests;
+                if (isConvert !== undefined) fullData.is_convert = isConvert;
+                if (previousReligion) fullData.previous_religion = previousReligion;
+                if (convertReason) fullData.convert_reason = convertReason;
+                if (editConvertStatus?.value) fullData.convert_status = editConvertStatus.value;
+
+                let { error } = await sb.from('profiles').upsert(fullData);
+
+                // Retry with minimal fields if columns missing
+                if (error && (error.message?.includes('column') || error.code === 'PGRST204' || error.message?.includes('PGRST204'))) {
+                    console.warn('Retrying profile update with core fields due to missing columns:', error.message);
+                    const minimalData = { id: currentUser.id, full_name: name, location: location || '' };
+                    const retryRes = await sb.from('profiles').upsert(minimalData);
+                    error = retryRes.error;
+                }
+
+                if (error) { console.error('Supabase profile update error details:', error);
+                    throw error; }
+
                 const updatedProfile = { ...(currentProfile || {}), full_name: name, location: location,
                     interests: interests, about_me: aboutMe, is_convert: isConvert,
                     previous_religion: previousReligion, convert_reason: convertReason };
                 applyProfileToUI(updatedProfile, currentUser.email);
+                currentProfile = updatedProfile;
+
                 editProfileModalOverlay.classList.remove('show');
                 document.body.style.overflow = '';
                 showModerationToast('✅ Profile updated!', 'success');
-            } catch (error) { console.error('Error updating profile:', error);
-                showModerationToast('Failed to update profile. Please try again.', 'error'); } finally { btn
-                    .disabled = false;
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                const errMsg = error.message || error.error_description || JSON.stringify(error);
+                showModerationToast(`Failed to update profile: ${errMsg}`, 'error', 6000);
+            } finally { btn.disabled = false;
                 btn.innerHTML = origLabel; }
         });
 
@@ -9111,7 +9518,7 @@
             try {
                 const { data: members, error } = await sb
                     .from('community_memberships')
-                    .select(`user_id,mosque_id,mosque_name,profiles:user_id(full_name,location,interests,is_convert,previous_religion,convert_reason,about_me,convert_status)`)
+                    .select(`user_id,mosque_id,mosque_name,profiles:user_id(id,full_name,location,purpose,interests,is_convert,previous_religion,convert_reason,about_me,convert_status)`)
                     .or(`mosque_id.eq."${primaryMembership.mosque_id}",mosque_name.eq."${primaryMembership.mosque_name}"`);
                 let memberRows = members || [];
                 if (error || !memberRows.length) {
@@ -9127,26 +9534,31 @@
                         memberRows = mRows.map(m => ({ user_id: m.user_id, profiles: pMap[m.user_id] || {} }));
                     }
                 }
+                // Fetch mentors/scholars
+                const { data: dbMentors } = await sb.from('mentors').select('*');
+                const mentorMap = {};
+                (dbMentors || []).forEach(m => { mentorMap[m.user_id || m.id] = m; });
+
                 const otherMembers = memberRows.filter(m => {
                     const prof = Array.isArray(m.profiles) ? m.profiles[0] : m.profiles || {};
-                    return prof.id !== currentUser.id;
+                    return (prof.id || m.user_id) !== currentUser?.id;
                 });
                 const currentUserRow = memberRows.find(m => {
                     const prof = Array.isArray(m.profiles) ? m.profiles[0] : m.profiles || {};
-                    return prof.id === currentUser.id;
+                    return (prof.id || m.user_id) === currentUser?.id;
                 });
-                const imams = otherMembers.filter(m => {
+
+                const communityImams = (dbMentors || []).filter(m => m.verified || m.credentials || m.expertise);
+
+                const convertsAndSeekers = memberRows.filter(m => {
                     const prof = Array.isArray(m.profiles) ? m.profiles[0] : m.profiles || {};
-                    return prof.is_convert === true && prof.convert_status === 'yes';
+                    const isConv = prof.is_convert === true || prof.convert_status === 'yes';
+                    const isSeeker = prof.purpose && (prof.purpose.toLowerCase().includes('seeking') || prof
+                        .purpose.toLowerCase().includes('convert') || prof.purpose.toLowerCase().includes(
+                        'learn'));
+                    return isConv || isSeeker;
                 });
-                const converts = otherMembers.filter(m => {
-                    const prof = Array.isArray(m.profiles) ? m.profiles[0] : m.profiles || {};
-                    return prof.is_convert === true && prof.convert_status === 'yes';
-                });
-                const regularMembers = otherMembers.filter(m => {
-                    const prof = Array.isArray(m.profiles) ? m.profiles[0] : m.profiles || {};
-                    return !(prof.is_convert === true && prof.convert_status === 'yes');
-                });
+
                 if (membersPanel) {
                     let html = '';
                     if (currentUserRow) {
@@ -9155,9 +9567,10 @@
                         const name = prof.full_name || 'You';
                         const initials = getInitials(name);
                         const interests = prof.interests || [];
-                        const isConvert = prof.is_convert === true;
+                        const isConvert = prof.is_convert === true || prof.convert_status === 'yes';
+                        const isSeeker = prof.purpose && prof.purpose.toLowerCase().includes('seeking');
                         const convertInfo = isConvert ? `🔄 Convert from ${prof.previous_religion || 'unknown'}` :
-                            '';
+                            (isSeeker ? '🔍 Seeking Guidance' : '');
                         html += `
                             <div class="community-profile-card" style="border:2px solid var(--gold);background:var(--gold-pale);">
                                 <div class="cp-avatar" style="background:var(--gold-light);color:#fff;">${initials}</div>
@@ -9167,35 +9580,69 @@
                                     ${convertInfo ? `<div class="cp-detail" style="color:var(--gold);">${convertInfo}</div>` : ''}
                                     ${interests.length ? `<div class="cp-detail">${interests.map(i => `<span class="interests-tag"><i class="fas fa-tag"></i> ${i}</span>`).join('')}</div>` : ''}
                                     ${prof.about_me ? `<div class="cp-detail">${prof.about_me}</div>` : ''}
-                                    ${prof.convert_reason ? `<div class="cp-detail" style="font-style:italic;color:var(--text-secondary);">"${prof.convert_reason}"</div>` : ''}
                                 </div>
                             </div>
                         `;
                     }
-                    if (regularMembers.length === 0 && !currentUserRow) {
-                        html += `<div style="text-align:center;padding:20px;color:var(--text-secondary);"><i class="fas fa-users" style="font-size:32px;color:var(--gray-300);display:block;margin-bottom:10px;"></i><p>No other members in ${primaryMembership.mosque_name} yet.</p></div>`;
+                    if (otherMembers.length === 0 && !currentUserRow) {
+                        html += `<div style="text-align:center;padding:20px;color:var(--text-secondary);"><i class="fas fa-users" style="font-size:32px;color:var(--gray-300);display:block;margin-bottom:10px;"></i><p>No members in ${primaryMembership.mosque_name} yet.</p></div>`;
                     } else {
-                        html += regularMembers.map(m => renderUserCard(m, 'Member', 'member')).join('');
+                        html += otherMembers.map(m => {
+                            const prof = Array.isArray(m.profiles) ? m.profiles[0] : m.profiles || {};
+                            const isConv = prof.is_convert === true || prof.convert_status === 'yes';
+                            const isSeeker = prof.purpose && prof.purpose.toLowerCase().includes('seeking');
+                            const isScholar = mentorMap[m.user_id] && mentorMap[m.user_id].verified;
+                            let badgeLabel = 'Member',
+                                badgeClass = 'member';
+                            if (isScholar) { badgeLabel = '🎓 Scholar';
+                                badgeClass = 'imam'; } else if (isConv) { badgeLabel = '🔄 New Convert';
+                                badgeClass = 'convert'; } else if (isSeeker) { badgeLabel = '🔍 Seeking Guidance';
+                                badgeClass = 'convert'; }
+                            return renderUserCard(m, badgeLabel, badgeClass);
+                        }).join('');
                     }
                     membersPanel.innerHTML = html;
                 }
+
                 if (imamsPanel) {
-                    if (imams.length === 0) {
+                    if (!communityImams || communityImams.length === 0) {
                         imamsPanel.innerHTML =
-                            `<div style="text-align:center;padding:30px;color:var(--text-secondary);"><i class="fas fa-mosque" style="font-size:32px;color:var(--gray-300);display:block;margin-bottom:10px;"></i><p>No imams registered for ${primaryMembership.mosque_name} yet.</p></div>`;
+                            `<div style="text-align:center;padding:30px;color:var(--text-secondary);"><i class="fas fa-mosque" style="font-size:32px;color:var(--gray-300);display:block;margin-bottom:10px;"></i><p>No verified imams or scholars listed for ${primaryMembership.mosque_name} yet.</p></div>`;
                     } else {
-                        imamsPanel.innerHTML = imams.map(m => renderUserCard(m, '📜 Imam', 'imam')).join('');
+                        imamsPanel.innerHTML = communityImams.map(mentor => {
+                            const initials = getInitials(mentor.full_name);
+                            return `
+                                <div class="community-profile-card">
+                                    <div class="cp-avatar" style="background:var(--gold-pale);color:var(--gold);border:2px solid var(--gold);">${initials}</div>
+                                    <div class="cp-info">
+                                        <div class="cp-name">${mentor.full_name} <span class="cp-badge imam">🎓 Certified Scholar</span></div>
+                                        <div class="cp-detail" style="color:var(--gold);font-weight:600;">✨ ${mentor.expertise || 'Islamic Scholar'}</div>
+                                        ${mentor.bio ? `<div class="cp-detail">${mentor.bio}</div>` : ''}
+                                        ${mentor.credentials ? `<div class="cp-detail" style="font-size:12px;color:var(--text-secondary);">📜 ${mentor.credentials}</div>` : ''}
+                                    </div>
+                                    <div class="cp-actions">
+                                        <button class="cp-msg" onclick="openChat('${mentor.user_id || mentor.id}','${mentor.full_name.replace(/'/g,"\\'")}')"><i class="fas fa-envelope"></i> Message</button>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
                     }
                 }
+
                 if (convertsPanel) {
-                    if (converts.length === 0) {
+                    if (convertsAndSeekers.length === 0) {
                         convertsPanel.innerHTML =
-                            `<div style="text-align:center;padding:30px;color:var(--text-secondary);"><i class="fas fa-hand-holding-heart" style="font-size:32px;color:var(--gray-300);display:block;margin-bottom:10px;"></i><p>No converts registered for ${primaryMembership.mosque_name} yet.</p></div>`;
+                            `<div style="text-align:center;padding:30px;color:var(--text-secondary);"><i class="fas fa-hand-holding-heart" style="font-size:32px;color:var(--gray-300);display:block;margin-bottom:10px;"></i><p>No new converts or seekers registered for ${primaryMembership.mosque_name} yet.</p></div>`;
                     } else {
-                        convertsPanel.innerHTML = converts.map(m => renderUserCard(m, '🔄 New Convert', 'convert'))
-                            .join('');
+                        convertsPanel.innerHTML = convertsAndSeekers.map(m => {
+                            const prof = Array.isArray(m.profiles) ? m.profiles[0] : m.profiles || {};
+                            const isConv = prof.is_convert === true || prof.convert_status === 'yes';
+                            const badge = isConv ? '🔄 New Convert' : '🔍 Seeking Guidance';
+                            return renderUserCard(m, badge, 'convert');
+                        }).join('');
                     }
                 }
+
             } catch (err) { console.error('Error loading mosque people:', err); }
         }
 
@@ -11281,6 +11728,16 @@
         });
 
         // ============================================================
+        // ========== GLOBAL CHECKBOX HANDLER ==========
+        // ============================================================
+        document.addEventListener('click', function(e) {
+            const opt = e.target.closest('.checkbox-option');
+            if (opt) {
+                opt.classList.toggle('selected');
+            }
+        });
+
+        // ============================================================
         // ========== INIT ==========
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
@@ -11308,7 +11765,7 @@
 
             loadArticles();
 
-            console.log('🌙 Silah — AI-Powered Community Platform loaded. (v2.0.0)');
+            console.log('🌙 Silah — AI-Powered Community Platform loaded. (v2.1.0)');
             console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
             console.log('💡 Tip: Press ⌘K (or Ctrl+K) to focus the search bar!');
             console.log('📜 Scholar Quote & Movable Graphics on landing page!');
@@ -11320,6 +11777,7 @@
             console.log('💬 Direct messaging with real-time chat!');
             console.log('AI Moderation via server /api/moderate');
             console.log('🌐 Mosque proxy: local → fallback to allorigins.win');
+            console.log('✨ New: Features & How It Works sections on landing page!');
         });
     </script>
 
