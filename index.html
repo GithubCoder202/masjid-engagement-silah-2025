@@ -142,6 +142,7 @@
             transition: background var(--transition-theme);
             display: flex;
             flex-direction: column;
+            position: relative;
         }
         .landing-page::-webkit-scrollbar {
             width: 6px;
@@ -170,6 +171,129 @@
             display: flex;
         }
 
+        /* ========== LANDING SIDEBAR ========== */
+        .landing-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 220px;
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-light);
+            z-index: 150;
+            padding: 20px 0 20px 16px;
+            transition: transform var(--transition), width var(--transition), background var(--transition-theme), border-color var(--transition-theme);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: var(--shadow-sm);
+        }
+        .landing-sidebar.collapsed {
+            transform: translateX(-180px);
+            width: 60px;
+        }
+        .landing-sidebar.collapsed .sidebar-label {
+            display: none;
+        }
+        .landing-sidebar.collapsed .sidebar-icon-only {
+            display: inline;
+        }
+        .landing-sidebar .sidebar-icon-only {
+            display: none;
+        }
+        .landing-sidebar .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 0 16px 0;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: border-color var(--transition-theme);
+        }
+        .landing-sidebar .sidebar-brand .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--green-dark);
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .landing-sidebar .sidebar-brand .logo-icon {
+            background: #d4b55c;
+            color: #0d1f17;
+        }
+        .landing-sidebar .sidebar-brand span {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .landing-sidebar .sidebar-brand span span {
+            color: var(--gold);
+        }
+        .landing-sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .landing-sidebar a i {
+            width: 20px;
+            font-size: 16px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .landing-sidebar a:hover {
+            background: var(--gray-100);
+            color: var(--text-primary);
+        }
+        .landing-sidebar a.active {
+            background: var(--green-pale);
+            color: var(--green);
+            font-weight: 600;
+        }
+        [data-theme="dark"] .landing-sidebar a.active {
+            background: #1a2f26;
+            color: #2ea87a;
+        }
+        .landing-sidebar .sidebar-toggle-btn {
+            margin-top: auto;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Inter', sans-serif;
+        }
+        .landing-sidebar .sidebar-toggle-btn:hover {
+            background: var(--gray-100);
+            color: var(--text-primary);
+        }
+        .landing-sidebar .sidebar-toggle-btn i {
+            font-size: 18px;
+        }
+
         /* ========== LANDING NAVBAR ========== */
         .landing-nav {
             position: sticky;
@@ -184,6 +308,7 @@
             flex-wrap: wrap;
             gap: 14px;
             transition: background var(--transition-theme), border-color var(--transition-theme);
+            /* removed margin-left to fill full width */
         }
         [data-theme="dark"] .landing-nav {
             background: #1f2126;
@@ -228,7 +353,7 @@
             gap: 6px;
             flex-wrap: wrap;
         }
-        .landing-nav .nav-links a {
+        .landing-nav .nav-links .nav-link {
             padding: 8px 18px;
             border-radius: var(--radius-full);
             font-size: 14px;
@@ -237,13 +362,18 @@
             text-decoration: none;
             transition: var(--transition);
             cursor: pointer;
-            font-family: 'Inter', sans-serif;
             border: none;
             background: transparent;
+            font-family: 'Inter', sans-serif;
         }
-        .landing-nav .nav-links a:hover {
+        .landing-nav .nav-links .nav-link:hover {
             background: var(--gray-100);
             color: var(--text-primary);
+        }
+        .landing-nav .nav-links .nav-link.active {
+            background: var(--green-pale);
+            color: var(--green);
+            font-weight: 600;
         }
         .landing-nav .nav-links .btn-signin {
             background: transparent;
@@ -275,6 +405,23 @@
             padding: 6px 10px;
             font-size: 16px;
         }
+        .landing-nav .dark-toggle-nav {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: var(--radius-full);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .landing-nav .dark-toggle-nav:hover {
+            background: var(--gray-100);
+            color: var(--text-primary);
+        }
         @media (max-width: 700px) {
             .landing-nav .nav-links .nav-link-text {
                 display: none;
@@ -294,6 +441,51 @@
             .landing-nav {
                 padding: 10px 16px;
             }
+            .landing-sidebar {
+                width: 50px;
+                transform: translateX(0);
+                padding: 12px 0 12px 8px;
+            }
+            .landing-sidebar .sidebar-brand span,
+            .landing-sidebar .sidebar-label,
+            .landing-sidebar .sidebar-toggle-btn span {
+                display: none;
+            }
+            .landing-sidebar .sidebar-icon-only {
+                display: inline;
+            }
+            .landing-sidebar a {
+                justify-content: center;
+                padding: 10px 0;
+                font-size: 0;
+            }
+            .landing-sidebar a i {
+                font-size: 18px;
+                margin: 0;
+            }
+            .landing-sidebar .sidebar-toggle-btn {
+                justify-content: center;
+                padding: 10px 0;
+            }
+            .landing-sidebar .sidebar-toggle-btn i {
+                margin: 0;
+            }
+            .landing-sidebar .sidebar-toggle-btn span {
+                display: none;
+            }
+            .landing-sidebar.collapsed {
+                transform: translateX(-40px);
+                width: 40px;
+            }
+            .landing-sidebar.collapsed a i {
+                font-size: 0;
+            }
+            .landing-sidebar.collapsed .sidebar-toggle-btn i {
+                font-size: 18px;
+            }
+            .landing-sidebar.collapsed .sidebar-brand .logo-icon {
+                margin: 0 auto;
+            }
         }
         @media (max-width: 480px) {
             .landing-nav .nav-links .btn-signin .nav-link-text,
@@ -312,23 +504,75 @@
                 height: 32px;
                 font-size: 15px;
             }
+            .landing-sidebar {
+                width: 40px;
+                padding: 8px 0;
+            }
+            .landing-sidebar a {
+                padding: 8px 0;
+            }
+            .landing-sidebar .sidebar-brand {
+                padding: 4px 0 8px 0;
+            }
+            .landing-sidebar .sidebar-brand .logo-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+            }
         }
 
-        /* ========== LANDING HERO ========== */
-        .landing-hero {
-            flex: 1;
+        /* ========== LANDING SECTIONS ========== */
+        .landing-section {
+            display: none;
+            padding: 40px 32px 60px;
+            /* removed margin-left to fill full width */
+            background: var(--cream);
+            transition: background var(--transition-theme);
+        }
+        .landing-section.active {
+            display: block;
+            animation: fadeUp 0.5s ease;
+        }
+        [data-theme="dark"] .landing-section {
+            background: #181a1d;
+        }
+        .landing-section .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .landing-section .section-sub {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 36px;
+        }
+        @media (max-width: 700px) {
+            .landing-section {
+                padding: 20px 16px 40px;
+            }
+            .landing-section .section-title {
+                font-size: 24px;
+            }
+        }
+
+        /* ========== HERO SECTION ========== */
+        #section-hero {
+            padding-top: 20px;
+            background: linear-gradient(160deg, var(--cream) 0%, var(--green-pale) 100%);
+            min-height: 70vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 32px 60px;
-            min-height: 70vh;
-            background: linear-gradient(160deg, var(--cream) 0%, var(--green-pale) 100%);
-            transition: background var(--transition-theme);
         }
-        [data-theme="dark"] .landing-hero {
+        [data-theme="dark"] #section-hero {
             background: linear-gradient(160deg, #181a1d 0%, #1a2f26 100%);
         }
-        .landing-hero .hero-content {
+        #section-hero.active {
+            display: flex;
+        }
+        .hero-content {
             max-width: 1100px;
             width: 100%;
             display: grid;
@@ -336,7 +580,7 @@
             gap: 40px;
             align-items: center;
         }
-        .landing-hero .hero-text h2 {
+        .hero-text h2 {
             font-family: 'Poppins', sans-serif;
             font-size: 44px;
             font-weight: 800;
@@ -345,10 +589,10 @@
             margin-bottom: 16px;
             transition: color var(--transition-theme);
         }
-        .landing-hero .hero-text h2 span {
+        .hero-text h2 span {
             color: var(--green);
         }
-        .landing-hero .hero-text p {
+        .hero-text p {
             font-size: 18px;
             color: var(--text-secondary);
             line-height: 1.8;
@@ -356,12 +600,12 @@
             max-width: 480px;
             transition: color var(--transition-theme);
         }
-        .landing-hero .hero-text .hero-buttons {
+        .hero-text .hero-buttons {
             display: flex;
             gap: 14px;
             flex-wrap: wrap;
         }
-        .landing-hero .hero-text .hero-buttons button {
+        .hero-text .hero-buttons button {
             padding: 14px 32px;
             border-radius: var(--radius-full);
             font-size: 16px;
@@ -371,29 +615,29 @@
             transition: all var(--transition);
             border: none;
         }
-        .landing-hero .hero-text .hero-buttons .btn-primary-hero {
+        .hero-text .hero-buttons .btn-primary-hero {
             background: var(--green);
             color: #fff;
             box-shadow: 0 4px 20px rgba(26, 107, 79, 0.3);
         }
-        .landing-hero .hero-text .hero-buttons .btn-primary-hero:hover {
+        .hero-text .hero-buttons .btn-primary-hero:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 30px rgba(26, 107, 79, 0.4);
         }
-        .landing-hero .hero-text .hero-buttons .btn-secondary-hero {
+        .hero-text .hero-buttons .btn-secondary-hero {
             background: var(--gray-100);
             color: var(--text-primary);
             border: 1px solid var(--border-medium);
         }
-        .landing-hero .hero-text .hero-buttons .btn-secondary-hero:hover {
+        .hero-text .hero-buttons .btn-secondary-hero:hover {
             background: var(--gray-200);
         }
-        .landing-hero .hero-visual {
+        .hero-visual {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        .landing-hero .hero-visual .hero-card {
+        .hero-visual .hero-card {
             background: var(--card-bg);
             border-radius: var(--radius);
             padding: 32px 36px;
@@ -402,102 +646,230 @@
             max-width: 400px;
             width: 100%;
             transition: background var(--transition-theme), border-color var(--transition-theme);
+            position: relative;
+            overflow: hidden;
         }
-        .landing-hero .hero-visual .hero-card .hc-icon {
+        .hero-visual .hero-card::before {
+            content: '☾';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 80px;
+            opacity: 0.06;
+            color: var(--gold);
+            transform: rotate(20deg);
+        }
+        .hero-visual .hero-card .hc-icon {
             font-size: 32px;
             color: var(--gold);
             margin-bottom: 12px;
         }
-        .landing-hero .hero-visual .hero-card h4 {
+        .hero-visual .hero-card h4 {
             font-size: 18px;
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 6px;
         }
-        .landing-hero .hero-visual .hero-card p {
+        .hero-visual .hero-card p {
             font-size: 14px;
             color: var(--text-secondary);
             line-height: 1.6;
         }
-        .landing-hero .hero-visual .hero-card .hc-stats {
+        .hero-visual .hero-card .hc-stats {
             display: flex;
             gap: 20px;
             margin-top: 16px;
             padding-top: 16px;
             border-top: 1px solid var(--border-light);
         }
-        .landing-hero .hero-visual .hero-card .hc-stats .stat {
+        .hero-visual .hero-card .hc-stats .stat {
             text-align: center;
         }
-        .landing-hero .hero-visual .hero-card .hc-stats .stat .num {
+        .hero-visual .hero-card .hc-stats .stat .num {
             font-size: 22px;
             font-weight: 700;
             color: var(--green);
         }
-        .landing-hero .hero-visual .hero-card .hc-stats .stat .label {
+        .hero-visual .hero-card .hc-stats .stat .label {
             font-size: 12px;
             color: var(--text-secondary);
         }
         @media (max-width: 900px) {
-            .landing-hero .hero-content {
+            .hero-content {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-            .landing-hero .hero-text p {
+            .hero-text p {
                 max-width: 100%;
                 margin-left: auto;
                 margin-right: auto;
             }
-            .landing-hero .hero-text .hero-buttons {
+            .hero-text .hero-buttons {
                 justify-content: center;
             }
-            .landing-hero .hero-text h2 {
+            .hero-text h2 {
                 font-size: 34px;
             }
-            .landing-hero {
+            #section-hero {
                 padding: 30px 20px 50px;
                 min-height: auto;
             }
         }
         @media (max-width: 480px) {
-            .landing-hero .hero-text h2 {
+            .hero-text h2 {
                 font-size: 26px;
             }
-            .landing-hero .hero-text p {
+            .hero-text p {
                 font-size: 15px;
             }
-            .landing-hero .hero-text .hero-buttons button {
+            .hero-text .hero-buttons button {
                 padding: 10px 24px;
                 font-size: 14px;
             }
-            .landing-hero .hero-visual .hero-card {
+            .hero-visual .hero-card {
                 padding: 20px 18px;
             }
         }
 
-        /* ========== REVIEWS SECTION ========== */
-        .landing-reviews {
-            padding: 50px 32px 60px;
-            background: var(--cream);
-            transition: background var(--transition-theme);
+        /* ========== ABOUT SECTION ========== */
+        #section-about .about-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
         }
-        [data-theme="dark"] .landing-reviews {
-            background: #181a1d;
-        }
-        .landing-reviews .section-title {
-            text-align: center;
+        #section-about .about-text h2 {
             font-family: 'Poppins', sans-serif;
             font-size: 30px;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
-        .landing-reviews .section-sub {
-            text-align: center;
+        #section-about .about-text h2 span {
+            color: var(--green);
+        }
+        #section-about .about-text p {
             font-size: 16px;
             color: var(--text-secondary);
-            margin-bottom: 36px;
+            line-height: 1.8;
+            margin-bottom: 16px;
         }
+        #section-about .about-text .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        #section-about .about-text .about-features .af-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+        #section-about .about-text .about-features .af-item i {
+            color: var(--green);
+            font-size: 16px;
+        }
+        #section-about .about-image .about-placeholder {
+            background: var(--green-pale);
+            border-radius: var(--radius);
+            padding: 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            border: 2px dashed var(--green);
+            transition: all var(--transition-theme);
+        }
+        #section-about .about-image .about-placeholder i {
+            font-size: 48px;
+            color: var(--green);
+            margin-bottom: 12px;
+            display: block;
+        }
+        #section-about .about-image .about-placeholder h4 {
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+        #section-about .about-image .about-placeholder p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        @media (max-width: 800px) {
+            #section-about .about-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            #section-about .about-text .about-features {
+                justify-items: center;
+            }
+        }
+        @media (max-width: 480px) {
+            #section-about .about-text .about-features {
+                grid-template-columns: 1fr;
+            }
+            #section-about .about-image .about-placeholder {
+                padding: 24px;
+            }
+        }
+
+        /* ========== TEAM SECTION ========== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .team-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 24px 20px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+        .team-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+        .team-card .tc-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--gold-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--gold);
+            margin: 0 auto 12px;
+            border: 3px solid var(--gold-light);
+        }
+        .team-card .tc-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .team-card .tc-role {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        @media (max-width: 600px) {
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 400px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========== REVIEWS SECTION ========== */
         .reviews-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -561,203 +933,126 @@
             color: var(--text-secondary);
         }
         @media (max-width: 600px) {
-            .landing-reviews {
-                padding: 30px 16px 40px;
-            }
-            .landing-reviews .section-title {
-                font-size: 24px;
-            }
             .reviews-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* ========== ABOUT SECTION ========== */
-        .landing-about {
-            padding: 50px 32px 60px;
-            background: var(--gray-50);
-            transition: background var(--transition-theme);
-        }
-        [data-theme="dark"] .landing-about {
-            background: #1f2126;
-        }
-        .landing-about .about-inner {
-            max-width: 1100px;
-            margin: 0 auto;
+        /* ========== HACKATHON SECTION ========== */
+        #section-hackathon .hackathon-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-        .landing-about .about-inner .about-text h2 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 30px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-        }
-        .landing-about .about-inner .about-text h2 span {
-            color: var(--green);
-        }
-        .landing-about .about-inner .about-text p {
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 16px;
-        }
-        .landing-about .about-inner .about-text .about-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .landing-about .about-inner .about-text .about-features .af-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            color: var(--text-primary);
-        }
-        .landing-about .about-inner .about-text .about-features .af-item i {
-            color: var(--green);
-            font-size: 16px;
-        }
-        .landing-about .about-inner .about-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .landing-about .about-inner .about-image .about-placeholder {
-            background: var(--green-pale);
-            border-radius: var(--radius);
-            padding: 40px;
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-            border: 2px dashed var(--green);
-            transition: all var(--transition-theme);
-        }
-        .landing-about .about-inner .about-image .about-placeholder i {
-            font-size: 48px;
-            color: var(--green);
-            margin-bottom: 12px;
-            display: block;
-        }
-        .landing-about .about-inner .about-image .about-placeholder h4 {
-            font-size: 18px;
-            color: var(--text-primary);
-        }
-        .landing-about .about-inner .about-image .about-placeholder p {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        @media (max-width: 800px) {
-            .landing-about .about-inner {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .landing-about .about-inner .about-text .about-features {
-                justify-items: center;
-            }
-            .landing-about {
-                padding: 30px 16px 40px;
-            }
-            .landing-about .about-inner .about-text h2 {
-                font-size: 24px;
-            }
-        }
-        @media (max-width: 480px) {
-            .landing-about .about-inner .about-text .about-features {
-                grid-template-columns: 1fr;
-            }
-            .landing-about .about-inner .about-image .about-placeholder {
-                padding: 24px;
-            }
-        }
-
-        /* ========== TEAM SECTION ========== */
-        .landing-team {
-            padding: 50px 32px 60px;
-            background: var(--cream);
-            transition: background var(--transition-theme);
-        }
-        [data-theme="dark"] .landing-team {
-            background: #181a1d;
-        }
-        .landing-team .section-title {
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            font-size: 30px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-        .landing-team .section-sub {
-            text-align: center;
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-bottom: 36px;
-        }
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
             max-width: 1100px;
             margin: 0 auto;
         }
-        .team-card {
+        .hackathon-card {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
-            padding: 24px 20px;
-            text-align: center;
+            padding: 24px 26px;
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
             transition: all var(--transition);
+            text-align: center;
         }
-        .team-card:hover {
+        .hackathon-card:hover {
             box-shadow: var(--shadow-md);
             transform: translateY(-4px);
         }
-        .team-card .tc-avatar {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: var(--gold-pale);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 28px;
+        .hackathon-card .hc-icon {
+            font-size: 40px;
             color: var(--gold);
-            margin: 0 auto 12px;
-            border: 3px solid var(--gold-light);
+            margin-bottom: 12px;
         }
-        .team-card .tc-name {
-            font-size: 16px;
+        .hackathon-card h4 {
+            font-size: 18px;
             font-weight: 700;
             color: var(--text-primary);
         }
-        .team-card .tc-role {
-            font-size: 13px;
+        .hackathon-card p {
+            font-size: 14px;
             color: var(--text-secondary);
+            margin: 8px 0 12px;
         }
-        @media (max-width: 600px) {
-            .landing-team {
-                padding: 30px 16px 40px;
-            }
-            .landing-team .section-title {
-                font-size: 24px;
-            }
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        @media (max-width: 400px) {
-            .team-grid {
-                grid-template-columns: 1fr;
-            }
+        .hackathon-card .hc-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            background: var(--green-pale);
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 600;
         }
 
-        /* ========== FOOTER ========== */
+        /* ========== MOTIVATIONS SECTION ========== */
+        #section-motivations .motivations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .motivation-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 24px 26px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .motivation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--green));
+        }
+        .motivation-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+        .motivation-card .mc-icon {
+            font-size: 36px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+        .motivation-card h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .motivation-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            line-height: 1.6;
+        }
+
+        /* ========== DECORATIVE ELEMENTS ========== */
+        .decoration-star {
+            position: absolute;
+            color: var(--gold);
+            opacity: 0.1;
+            font-size: 60px;
+            pointer-events: none;
+            user-select: none;
+        }
+        .decoration-crescent {
+            position: absolute;
+            color: var(--gold);
+            opacity: 0.06;
+            font-size: 120px;
+            pointer-events: none;
+            user-select: none;
+            transform: rotate(15deg);
+        }
+
+        /* ========== LANDING FOOTER ========== */
         .landing-footer {
             padding: 24px 32px;
             text-align: center;
@@ -766,6 +1061,7 @@
             border-top: 1px solid var(--border-light);
             background: var(--white);
             transition: all var(--transition-theme);
+            /* removed margin-left */
         }
         .landing-footer strong {
             color: var(--green);
@@ -776,6 +1072,7 @@
                 font-size: 12px;
             }
         }
+        /* removed the media query rule for margin-left */
 
         /* ========== AUTH SCREEN (overlay) ========== */
         .auth-screen {
@@ -839,7 +1136,7 @@
             }
         }
 
-        /* ========== APP SHELL ========== */
+        /* ========== APP SHELL (existing) ========== */
         .app {
             width: 100%;
             height: 100%;
@@ -4130,6 +4427,8 @@
             color: var(--green);
             background: var(--green-pale);
         }
+
+        /* ---------- ARTICLES SECTION ---------- */
         .articles-section {
             margin-top: 20px;
         }
@@ -4145,6 +4444,31 @@
             font-family: 'Poppins', sans-serif;
             font-size: 20px;
             color: var(--text-primary);
+        }
+        .articles-section .section-header .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .articles-section .section-header .header-actions .btn-all-articles {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .articles-section .section-header .header-actions .btn-all-articles:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
         .articles-section .section-header .article-search {
             display: flex;
@@ -4182,6 +4506,7 @@
         .articles-section .section-header .article-search button:hover {
             background: var(--green-dark);
         }
+
         .article-card {
             background: var(--card-bg);
             border-radius: var(--radius-sm);
@@ -4230,16 +4555,49 @@
             font-size: 11px;
             font-weight: 600;
         }
-        .no-articles {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-secondary);
+
+        /* ========== ALL ARTICLES SCREEN ========== */
+        #screen-all-articles .articles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
-        .no-articles i {
-            font-size: 32px;
-            color: var(--gray-300);
-            display: block;
-            margin-bottom: 10px;
+        #screen-all-articles .articles-grid .article-card {
+            margin-bottom: 0;
+        }
+        #screen-all-articles .back-to-learn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
+        }
+        #screen-all-articles .back-to-learn:hover {
+            transform: translateX(-4px);
+            color: var(--green-dark);
+        }
+        #screen-all-articles .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        #screen-all-articles .section-sub {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        @media (max-width: 700px) {
+            #screen-all-articles .articles-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* ========== AI MODEL HUB ========== */
@@ -4659,352 +5017,159 @@
             .community-events-grid {
                 grid-template-columns: 1fr;
             }
-            .landing-hero .hero-content {
+            #screen-all-articles .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .landing-section .hero-content {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-            .landing-about .about-inner {
+            .landing-section #section-about .about-inner {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-            .landing-about .about-inner .about-text .about-features {
+            .landing-section #section-about .about-text .about-features {
                 justify-items: center;
             }
         }
 
-        @media (max-width: 600px) {
-            .topbar {
-                padding: 12px 16px;
+        @media (max-width: 700px) {
+            .landing-sidebar {
+                width: 50px;
+                transform: translateX(0);
+                padding: 12px 0 12px 8px;
             }
-            .topbar-left .greeting {
-                font-size: 14px;
-            }
-            .topbar-left .greeting small {
-                font-size: 12px;
-                display: block;
-            }
-            .search-wrapper input {
-                width: 100px;
-                font-size: 12px;
-                padding: 6px 12px 6px 32px;
-            }
-            .search-wrapper input:focus {
-                width: 140px;
-            }
-            .search-wrapper .search-icon {
-                left: 10px;
-                font-size: 12px;
-            }
-            .search-popup {
-                min-width: 220px;
-                right: -10px;
-                left: -10px;
-            }
-            .topbar-right .icon-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 14px;
-            }
-            .topbar-right .avatar {
-                width: 32px;
-                height: 32px;
-                font-size: 12px;
-            }
-            .screen-container {
-                padding: 16px;
-            }
-            .dash-progress {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-            .dash-progress .prog-left {
-                flex-wrap: wrap;
-            }
-            .recommend-item {
-                flex-wrap: wrap;
-            }
-            .mentor-card {
-                flex-wrap: wrap;
-            }
-            .mentor-card .mentor-actions {
-                flex-direction: row;
-                width: 100%;
-            }
-            .match-result {
-                flex-direction: column;
-            }
-            .match-result .match-badge {
-                align-self: flex-start;
-            }
-            .disco-search {
-                flex-direction: column;
-            }
-            .disco-search .filter-chips {
-                flex-wrap: wrap;
-            }
-            .form-group .radio-grid,
-            .form-group .checkbox-grid {
-                flex-direction: column;
-            }
-            .form-group .radio-grid .radio-option,
-            .form-group .checkbox-grid .checkbox-option {
-                flex: 1;
-                min-width: unset;
-            }
-            .feed-post-box .post-input {
-                flex-wrap: wrap;
-            }
-            .feed-post-box .post-input input {
-                width: 100%;
-            }
-            .profile-grid {
-                grid-template-columns: 1fr;
-            }
-            .bottom-nav .bn-item {
-                font-size: 8px;
-                padding: 2px 6px;
-            }
-            .bottom-nav .bn-item i {
-                font-size: 15px;
-            }
-            .sidebar-hadith {
+            .landing-sidebar .sidebar-brand span,
+            .landing-sidebar .sidebar-label,
+            .landing-sidebar .sidebar-toggle-btn span {
                 display: none;
             }
-            .sidebar-stats {
+            .landing-sidebar .sidebar-icon-only {
+                display: inline;
+            }
+            .landing-sidebar a {
+                justify-content: center;
+                padding: 10px 0;
+                font-size: 0;
+            }
+            .landing-sidebar a i {
+                font-size: 18px;
+                margin: 0;
+            }
+            .landing-sidebar .sidebar-toggle-btn {
+                justify-content: center;
+                padding: 10px 0;
+            }
+            .landing-sidebar .sidebar-toggle-btn i {
+                margin: 0;
+            }
+            .landing-sidebar .sidebar-toggle-btn span {
                 display: none;
             }
-            .quran-verse-widget .qv-arabic {
-                font-size: 20px;
+            .landing-sidebar.collapsed {
+                transform: translateX(-40px);
+                width: 40px;
             }
-            .quran-verse-widget {
-                padding: 16px 18px;
+            .landing-sidebar.collapsed a i {
+                font-size: 0;
             }
-            .settings-section {
-                padding: 14px 16px;
-            }
-            .auth-card {
-                padding: 24px 16px 20px;
-            }
-            .pillar-card {
-                padding: 16px 18px;
-            }
-            .pillar-card .pillar-icon {
-                font-size: 24px;
-                width: 36px;
-            }
-            .pillar-card .pillar-content h3 {
-                font-size: 16px;
-            }
-            .pillar-card .pillar-content h3 .arabic {
-                font-size: 17px;
-            }
-            .notification-popup {
-                width: 280px;
-                right: -20px;
-            }
-            .about-modal {
-                padding: 24px 20px 20px;
-            }
-            .comment-input-wrap {
-                flex-wrap: wrap;
-            }
-            .comment-input-wrap input {
-                width: 100%;
-            }
-            .feed-item .feed-comments .comment {
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-            .feed-item .feed-head {
-                flex-wrap: wrap;
-            }
-            .feed-item .feed-head .post-actions {
-                flex-wrap: wrap;
-            }
-            .mentor-modal {
-                padding: 20px 16px;
-            }
-            .mentor-modal .modal-actions {
-                flex-direction: column;
-            }
-            .mentor-modal .modal-actions .btn-secondary {
-                width: 100%;
-                text-align: center;
-            }
-            .become-mentor-box {
-                padding: 16px 18px;
-            }
-            .become-mentor-box h3 {
+            .landing-sidebar.collapsed .sidebar-toggle-btn i {
                 font-size: 18px;
             }
-            .match-result .match-body .mname {
-                font-size: 15px;
-            }
-            .mentor-section-title {
-                font-size: 16px;
-            }
-            .my-mentor-profile {
-                padding: 14px 16px;
-            }
-            .my-mentor-profile .profile-header-simple {
-                flex-direction: column;
-                text-align: center;
-            }
-            .chat-response .response-sources ul li {
-                font-size: 12px;
-            }
-            .articles-section .section-header .article-search input {
-                font-size: 13px;
-            }
-            .ai-sidebar {
-                flex-direction: column;
-                gap: 8px;
-            }
-            .ai-sidebar .ai-new-btn {
-                width: 100%;
-            }
-            .ai-sidebar .ai-search {
-                width: 100%;
-                min-width: unset;
-            }
-            .ai-sidebar .ai-conv-list {
-                flex-wrap: nowrap;
-                flex-direction: column;
-                max-height: 100px;
-                overflow-x: hidden;
-            }
-            .ai-chat .ai-chat-messages .message {
-                max-width: 95%;
-                font-size: 14px;
-            }
-            .ai-chat .ai-chat-input {
-                flex-wrap: wrap;
-                padding: 12px 16px;
-            }
-            .ai-chat .ai-chat-input input {
-                width: 100%;
-            }
-            .ai-chat .ai-chat-input button {
-                width: 100%;
-                justify-content: center;
-                padding: 10px;
-            }
-            .ai-chat .ai-chat-header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-            .ai-chat .ai-chat-header .ai-model-select {
-                width: 100%;
-            }
-            .community-tabs {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-            }
-            .community-tabs .community-tab {
-                white-space: nowrap;
-                font-size: 12px;
-                padding: 6px 14px;
-            }
-            .community-join-box .join-mosque-select {
-                width: 100%;
-                min-width: unset;
-            }
-            .landing-hero .hero-text h2 {
-                font-size: 28px;
-            }
-            .landing-hero {
-                padding: 30px 16px 40px;
-            }
-            .landing-hero .hero-visual .hero-card {
-                padding: 20px 18px;
-            }
-            .landing-reviews .section-title {
-                font-size: 24px;
-            }
-            .landing-reviews {
-                padding: 30px 16px 40px;
-            }
-            .reviews-grid {
-                grid-template-columns: 1fr;
-            }
-            .landing-about .about-inner .about-text h2 {
-                font-size: 24px;
-            }
-            .landing-about {
-                padding: 30px 16px 40px;
-            }
-            .landing-about .about-inner .about-text .about-features {
-                grid-template-columns: 1fr;
-            }
-            .landing-team .section-title {
-                font-size: 24px;
-            }
-            .landing-team {
-                padding: 30px 16px 40px;
-            }
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .landing-sidebar.collapsed .sidebar-brand .logo-icon {
+                margin: 0 auto;
             }
             .landing-nav {
                 padding: 10px 16px;
             }
-        }
-
-        @media (max-width: 400px) {
-            .topbar-right .icon-btn {
-                width: 28px;
-                height: 28px;
-                font-size: 12px;
+            .landing-nav .nav-links .nav-link-text {
+                display: none;
             }
-            .topbar-right .avatar {
-                width: 28px;
-                height: 28px;
-                font-size: 10px;
+            .landing-nav .nav-links .nav-link-icon {
+                display: inline-block;
             }
-            .topbar-right .icon-btn .badge {
-                width: 14px;
-                height: 14px;
-                font-size: 8px;
-                top: 2px;
-                right: 2px;
-            }
-            .search-wrapper input {
-                width: 70px;
-                font-size: 11px;
-                padding: 4px 8px 4px 28px;
-            }
-            .search-wrapper input:focus {
-                width: 100px;
-            }
-            .search-wrapper .search-icon {
-                left: 8px;
-                font-size: 11px;
-            }
-            .search-popup {
-                min-width: 180px;
-                right: -20px;
-                left: -20px;
-            }
-            .bottom-nav .bn-item {
-                font-size: 7px;
-                padding: 2px 4px;
-            }
-            .bottom-nav .bn-item i {
+            .landing-nav .nav-links .btn-signin,
+            .landing-nav .nav-links .btn-register {
+                padding: 6px 14px;
                 font-size: 13px;
             }
-            .notification-popup {
-                width: 260px;
-                right: -30px;
+            .landing-nav .nav-links .btn-signin .nav-link-text,
+            .landing-nav .nav-links .btn-register .nav-link-text {
+                display: inline;
+            }
+            .landing-section {
+                padding: 20px 16px 40px;
+            }
+            .landing-section .section-title {
+                font-size: 24px;
+            }
+            #section-hero {
+                padding: 20px 16px 40px;
+            }
+            .hero-text h2 {
+                font-size: 28px;
+            }
+            .hero-visual .hero-card {
+                padding: 20px 18px;
+            }
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hackathon-grid {
+                grid-template-columns: 1fr;
+            }
+            .motivations-grid {
+                grid-template-columns: 1fr;
+            }
+            .landing-footer {
+                padding: 16px;
+                font-size: 12px;
+            }
+            /* removed the margin-left: 0 rule */
+        }
+
+        @media (max-width: 480px) {
+            .landing-nav .nav-links .btn-signin .nav-link-text,
+            .landing-nav .nav-links .btn-register .nav-link-text {
+                display: none;
+            }
+            .landing-nav .nav-links .btn-signin,
+            .landing-nav .nav-links .btn-register {
+                padding: 6px 12px;
+            }
+            .landing-nav .nav-brand h1 {
+                font-size: 17px;
+            }
+            .landing-nav .nav-brand .logo-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 15px;
+            }
+            .landing-sidebar {
+                width: 40px;
+                padding: 8px 0;
+            }
+            .landing-sidebar a {
+                padding: 8px 0;
+            }
+            .landing-sidebar .sidebar-brand {
+                padding: 4px 0 8px 0;
+            }
+            .landing-sidebar .sidebar-brand .logo-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
             }
             .team-grid {
                 grid-template-columns: 1fr;
             }
-            .landing-hero .hero-text h2 {
+            .hero-text h2 {
                 font-size: 22px;
             }
-            .landing-hero .hero-text .hero-buttons button {
+            .hero-text .hero-buttons button {
                 padding: 10px 18px;
                 font-size: 14px;
             }
@@ -5017,6 +5182,34 @@
             }
             .screen-container {
                 overflow-y: auto;
+            }
+        }
+
+        /* ========== DARK TOGGLE ON LANDING NAV ========== */
+        .dark-toggle-nav {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: var(--radius-full);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dark-toggle-nav:hover {
+            background: var(--gray-100);
+            color: var(--text-primary);
+        }
+        .dark-toggle-nav .toggle-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        @media (max-width: 480px) {
+            .dark-toggle-nav .toggle-label {
+                display: none;
             }
         }
     </style>
@@ -5107,16 +5300,60 @@
 
     <!-- ========== LANDING PAGE ========== -->
     <div class="landing-page" id="landingPage">
+
+        <!-- Sidebar -->
+        <div class="landing-sidebar" id="landingSidebar">
+            <div class="sidebar-brand" onclick="navigateToLandingSection('section-hero')">
+                <div class="logo-icon">ص</div>
+                <span>Silah<span>.</span></span>
+                <span class="sidebar-icon-only" style="display:none;">ص</span>
+            </div>
+            <a href="#section-hero" class="active" data-section="section-hero">
+                <i class="fas fa-home"></i> <span class="sidebar-label">Home</span>
+                <span class="sidebar-icon-only"><i class="fas fa-home"></i></span>
+            </a>
+            <a href="#section-about" data-section="section-about">
+                <i class="fas fa-info-circle"></i> <span class="sidebar-label">About</span>
+                <span class="sidebar-icon-only"><i class="fas fa-info-circle"></i></span>
+            </a>
+            <a href="#section-team" data-section="section-team">
+                <i class="fas fa-users"></i> <span class="sidebar-label">Our Team</span>
+                <span class="sidebar-icon-only"><i class="fas fa-users"></i></span>
+            </a>
+            <a href="#section-reviews" data-section="section-reviews">
+                <i class="fas fa-star"></i> <span class="sidebar-label">Reviews</span>
+                <span class="sidebar-icon-only"><i class="fas fa-star"></i></span>
+            </a>
+            <a href="#section-hackathon" data-section="section-hackathon">
+                <i class="fas fa-code"></i> <span class="sidebar-label">Hackathon</span>
+                <span class="sidebar-icon-only"><i class="fas fa-code"></i></span>
+            </a>
+            <a href="#section-motivations" data-section="section-motivations">
+                <i class="fas fa-heart"></i> <span class="sidebar-label">Motivations</span>
+                <span class="sidebar-icon-only"><i class="fas fa-heart"></i></span>
+            </a>
+            <button class="sidebar-toggle-btn" id="sidebarToggleBtn">
+                <i class="fas fa-chevron-left" id="sidebarToggleIcon"></i>
+                <span>Collapse</span>
+            </button>
+        </div>
+
         <!-- Navbar -->
         <nav class="landing-nav" id="landingNav">
-            <div class="nav-brand" onclick="document.getElementById('landingHero').scrollIntoView({behavior:'smooth'})">
+            <div class="nav-brand" onclick="navigateToLandingSection('section-hero')">
                 <div class="logo-icon">ص</div>
                 <h1>Silah<span>.</span></h1>
             </div>
             <div class="nav-links">
-                <a href="#landingAbout" class="nav-link-text">About</a>
-                <a href="#landingTeam" class="nav-link-text">Our Team</a>
-                <a href="#landingReviews" class="nav-link-text">Reviews</a>
+                <a href="#section-about" class="nav-link nav-link-text" data-section="section-about">About</a>
+                <a href="#section-team" class="nav-link nav-link-text" data-section="section-team">Our Team</a>
+                <a href="#section-reviews" class="nav-link nav-link-text" data-section="section-reviews">Reviews</a>
+                <a href="#section-hackathon" class="nav-link nav-link-text" data-section="section-hackathon">Hackathon</a>
+                <a href="#section-motivations" class="nav-link nav-link-text" data-section="section-motivations">Motivations</a>
+                <button class="dark-toggle-nav" id="landingDarkToggle" title="Toggle dark mode">
+                    <i class="fas fa-moon" id="landingDarkIcon"></i>
+                    <span class="toggle-label">Dark</span>
+                </button>
                 <a href="#" class="nav-link-text btn-signin" id="landingSignInBtn">
                     <i class="fas fa-sign-in-alt nav-link-icon"></i>
                     <span class="nav-link-text">Sign In</span>
@@ -5128,8 +5365,9 @@
             </div>
         </nav>
 
+        <!-- Sections -->
         <!-- Hero -->
-        <section class="landing-hero" id="landingHero">
+        <section class="landing-section active" id="section-hero">
             <div class="hero-content">
                 <div class="hero-text">
                     <h2>Your Path to <span>Community</span> &amp; Belonging</h2>
@@ -5139,7 +5377,7 @@
                     </p>
                     <div class="hero-buttons">
                         <button class="btn-primary-hero" id="heroGetStarted">Get Started</button>
-                        <button class="btn-secondary-hero" onclick="document.getElementById('landingAbout').scrollIntoView({behavior:'smooth'})">Learn More</button>
+                        <button class="btn-secondary-hero" onclick="navigateToLandingSection('section-about')">Learn More</button>
                     </div>
                 </div>
                 <div class="hero-visual">
@@ -5164,108 +5402,14 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Reviews -->
-        <section class="landing-reviews" id="landingReviews">
-            <h2 class="section-title">What Our Community Says</h2>
-            <p class="section-sub">Real stories from people who found connection and guidance through Silah</p>
-            <div class="reviews-grid">
-                <!-- Review 1 -->
-                <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
-                    <div class="review-text">
-                        "Silah helped me find a mentor who guided me through my first year as a new Muslim.
-                        I finally feel like I belong."
-                    </div>
-                    <div class="review-author">
-                        <div class="ra-avatar">SA</div>
-                        <div class="ra-info">
-                            <div class="ra-name">Sarah Ahmed</div>
-                            <div class="ra-role">New Muslim · Chicago</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Review 2 -->
-                <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
-                    <div class="review-text">
-                        "The community events and mosque finder made it so easy to connect with Muslims near me.
-                        I've made lifelong friends."
-                    </div>
-                    <div class="review-author">
-                        <div class="ra-avatar">AK</div>
-                        <div class="ra-info">
-                            <div class="ra-name">Aisha Khan</div>
-                            <div class="ra-role">Community Member · Houston</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Review 3 -->
-                <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
-                    <div class="review-text">
-                        "As a scholar, Silah gave me a platform to share my knowledge and connect with students
-                        who truly need guidance."
-                    </div>
-                    <div class="review-author">
-                        <div class="ra-avatar">OA</div>
-                        <div class="ra-info">
-                            <div class="ra-name">Omar Al-Farouk</div>
-                            <div class="ra-role">Verified Scholar · New York</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Review 4 -->
-                <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
-                    <div class="review-text">
-                        "The AI Model Hub answered all my questions about Islam with sources. It's like having a
-                        scholar in my pocket."
-                    </div>
-                    <div class="review-author">
-                        <div class="ra-avatar">ZM</div>
-                        <div class="ra-info">
-                            <div class="ra-name">Zainab Mahmoud</div>
-                            <div class="ra-role">Student · London</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Review 5 -->
-                <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
-                    <div class="review-text">
-                        "I was a convert and felt alone. Silah connected me with a sister's halaqa circle and now
-                        I have a whole community."
-                    </div>
-                    <div class="review-author">
-                        <div class="ra-avatar">YI</div>
-                        <div class="ra-info">
-                            <div class="ra-name">Yusuf Ibrahim</div>
-                            <div class="ra-role">Convert · Los Angeles</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Review 6 -->
-                <div class="review-card">
-                    <div class="review-stars">★★★★★</div>
-                    <div class="review-text">
-                        "The mosque map and community features helped me find my local mosque and get involved.
-                        Silah is a blessing."
-                    </div>
-                    <div class="review-author">
-                        <div class="ra-avatar">FH</div>
-                        <div class="ra-info">
-                            <div class="ra-name">Fatima Hassan</div>
-                            <div class="ra-role">Community Leader · Chicago</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Decorative elements -->
+            <div class="decoration-star" style="top:10%;left:5%;font-size:80px;">✦</div>
+            <div class="decoration-star" style="bottom:15%;right:3%;font-size:60px;">✦</div>
+            <div class="decoration-crescent" style="bottom:5%;left:10%;font-size:140px;">☾</div>
         </section>
 
         <!-- About -->
-        <section class="landing-about" id="landingAbout">
+        <section class="landing-section" id="section-about">
             <div class="about-inner">
                 <div class="about-text">
                     <h2>About <span>Silah</span></h2>
@@ -5293,10 +5437,11 @@
                     </div>
                 </div>
             </div>
+            <div class="decoration-star" style="bottom:10%;right:5%;font-size:70px;">✦</div>
         </section>
 
         <!-- Team -->
-        <section class="landing-team" id="landingTeam">
+        <section class="landing-section" id="section-team">
             <h2 class="section-title">Our Team</h2>
             <p class="section-sub">Passionate individuals dedicated to serving the Muslim community</p>
             <div class="team-grid">
@@ -5333,10 +5478,173 @@
             </div>
         </section>
 
+        <!-- Reviews -->
+        <section class="landing-section" id="section-reviews">
+            <h2 class="section-title">What Our Community Says</h2>
+            <p class="section-sub">Real stories from people who found connection and guidance through Silah</p>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "Silah helped me find a mentor who guided me through my first year as a new Muslim.
+                        I finally feel like I belong."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">SA</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Sarah Ahmed</div>
+                            <div class="ra-role">New Muslim · Chicago</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "The community events and mosque finder made it so easy to connect with Muslims near me.
+                        I've made lifelong friends."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">AK</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Aisha Khan</div>
+                            <div class="ra-role">Community Member · Houston</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "As a scholar, Silah gave me a platform to share my knowledge and connect with students
+                        who truly need guidance."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">OA</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Omar Al-Farouk</div>
+                            <div class="ra-role">Verified Scholar · New York</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "The AI Model Hub answered all my questions about Islam with sources. It's like having a
+                        scholar in my pocket."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">ZM</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Zainab Mahmoud</div>
+                            <div class="ra-role">Student · London</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "I was a convert and felt alone. Silah connected me with a sister's halaqa circle and now
+                        I have a whole community."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">YI</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Yusuf Ibrahim</div>
+                            <div class="ra-role">Convert · Los Angeles</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">
+                        "The mosque map and community features helped me find my local mosque and get involved.
+                        Silah is a blessing."
+                    </div>
+                    <div class="review-author">
+                        <div class="ra-avatar">FH</div>
+                        <div class="ra-info">
+                            <div class="ra-name">Fatima Hassan</div>
+                            <div class="ra-role">Community Leader · Chicago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hackathon -->
+        <section class="landing-section" id="section-hackathon">
+            <h2 class="section-title">💻 Hackathon</h2>
+            <p class="section-sub">Join our upcoming hackathons and build solutions for the community</p>
+            <div class="hackathon-grid">
+                <div class="hackathon-card">
+                    <div class="hc-icon">📱</div>
+                    <h4>Islamic App Challenge</h4>
+                    <p>Build a mobile app that helps Muslims track prayers and Quran reading.</p>
+                    <span class="hc-tag">📅 June 2026</span>
+                </div>
+                <div class="hackathon-card">
+                    <div class="hc-icon">🤖</div>
+                    <h4>AI for Good</h4>
+                    <p>Create an AI-powered tool that provides Islamic guidance and support.</p>
+                    <span class="hc-tag">📅 August 2026</span>
+                </div>
+                <div class="hackathon-card">
+                    <div class="hc-icon">🌐</div>
+                    <h4>Community Platform</h4>
+                    <p>Design a new feature for Silah that enhances community engagement.</p>
+                    <span class="hc-tag">📅 October 2026</span>
+                </div>
+                <div class="hackathon-card">
+                    <div class="hc-icon">🕋</div>
+                    <h4>Hajj Helper</h4>
+                    <p>Build a tool to assist pilgrims during Hajj with real-time information.</p>
+                    <span class="hc-tag">📅 December 2026</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Motivations -->
+        <section class="landing-section" id="section-motivations">
+            <h2 class="section-title">💖 Motivations</h2>
+            <p class="section-sub">Daily reminders and inspirations to keep you connected</p>
+            <div class="motivations-grid">
+                <div class="motivation-card">
+                    <div class="mc-icon">☀️</div>
+                    <h4>Start Your Day with Gratitude</h4>
+                    <p>"Thank Allah for the blessings you have, and He will increase you."</p>
+                </div>
+                <div class="motivation-card">
+                    <div class="mc-icon">📖</div>
+                    <h4>One Verse a Day</h4>
+                    <p>Reflect on a single verse of the Quran each day to strengthen your faith.</p>
+                </div>
+                <div class="motivation-card">
+                    <div class="mc-icon">🤝</div>
+                    <h4>Community Support</h4>
+                    <p>Reach out to a fellow Muslim today. A small act of kindness can change a life.</p>
+                </div>
+                <div class="motivation-card">
+                    <div class="mc-icon">🕌</div>
+                    <h4>Connect with Your Mosque</h4>
+                    <p>Visit your local mosque and participate in activities. You are not alone.</p>
+                </div>
+                <div class="motivation-card">
+                    <div class="mc-icon">🌙</div>
+                    <h4>Ramadan Reflections</h4>
+                    <p>Even outside Ramadan, carry the spirit of fasting and self-discipline.</p>
+                </div>
+                <div class="motivation-card">
+                    <div class="mc-icon">❤️</div>
+                    <h4>Love for the Prophet</h4>
+                    <p>Send salawat upon the Prophet (peace be upon him) and follow his example.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer class="landing-footer">
             &copy; 2026 <strong>Silah</strong> Foundation · Built with ❤️ for the global Muslim community
         </footer>
+
     </div>
 
     <!-- ========== AUTH SCREEN (overlay) ========== -->
@@ -6049,12 +6357,19 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Articles Section -->
                     <div class="articles-section">
                         <div class="section-header">
                             <h3>📚 Recommended Articles</h3>
-                            <div class="article-search">
-                                <input type="text" id="articleSearchInput" placeholder="Search articles..." />
-                                <button id="articleSearchBtn"><i class="fas fa-search"></i> Search</button>
+                            <div class="header-actions">
+                                <button class="btn-all-articles" id="viewAllArticlesBtn">
+                                    All <i class="fas fa-arrow-right"></i>
+                                </button>
+                                <div class="article-search">
+                                    <input type="text" id="articleSearchInput" placeholder="Search articles..." />
+                                    <button id="articleSearchBtn"><i class="fas fa-search"></i> Search</button>
+                                </div>
                             </div>
                         </div>
                         <div id="articlesContainer">
@@ -6062,6 +6377,18 @@
                                 <i class="fas fa-spinner fa-spin"></i> Loading articles...
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- ===== ALL ARTICLES SCREEN ===== -->
+                <div class="screen" id="screen-all-articles">
+                    <button class="back-to-learn" id="backToLearnBtn">
+                        <i class="fas fa-arrow-left"></i> Back to Learn
+                    </button>
+                    <h2 class="section-title">📚 All Articles</h2>
+                    <p class="section-sub">Explore our complete collection of Islamic articles.</p>
+                    <div class="articles-grid" id="allArticlesGrid">
+                        <!-- Will be populated by JS -->
                     </div>
                 </div>
 
@@ -6448,11 +6775,132 @@
 
     <script>
         // ============================================================
+        // ========== LANDING PAGE SIDEBAR & NAVIGATION ==========
+        // ============================================================
+
+        // Collapsible sidebar
+        const sidebar = document.getElementById('landingSidebar');
+        const toggleBtn = document.getElementById('sidebarToggleBtn');
+        const toggleIcon = document.getElementById('sidebarToggleIcon');
+        let sidebarCollapsed = localStorage.getItem('silah-landing-sidebar-collapsed') === 'true' || false;
+
+        function updateSidebar() {
+            if (sidebarCollapsed) {
+                sidebar.classList.add('collapsed');
+                toggleIcon.classList.remove('fa-chevron-left');
+                toggleIcon.classList.add('fa-chevron-right');
+                toggleBtn.querySelector('span').textContent = 'Expand';
+            } else {
+                sidebar.classList.remove('collapsed');
+                toggleIcon.classList.remove('fa-chevron-right');
+                toggleIcon.classList.add('fa-chevron-left');
+                toggleBtn.querySelector('span').textContent = 'Collapse';
+            }
+            localStorage.setItem('silah-landing-sidebar-collapsed', sidebarCollapsed);
+        }
+        updateSidebar();
+
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            sidebarCollapsed = !sidebarCollapsed;
+            updateSidebar();
+        });
+
+        // Section navigation
+        const sections = {
+            hero: document.getElementById('section-hero'),
+            about: document.getElementById('section-about'),
+            team: document.getElementById('section-team'),
+            reviews: document.getElementById('section-reviews'),
+            hackathon: document.getElementById('section-hackathon'),
+            motivations: document.getElementById('section-motivations')
+        };
+
+        const sidebarLinks = sidebar.querySelectorAll('a[data-section]');
+        const navLinks = document.querySelectorAll('.landing-nav .nav-link[data-section]');
+
+        function navigateToLandingSection(sectionId) {
+            // Hide all sections
+            Object.values(sections).forEach(s => s.classList.remove('active'));
+            // Show target
+            const target = document.getElementById(sectionId);
+            if (target) target.classList.add('active');
+            // Update active states
+            const id = sectionId.replace('section-', '');
+            sidebarLinks.forEach(a => {
+                a.classList.toggle('active', a.dataset.section === sectionId);
+            });
+            navLinks.forEach(a => {
+                a.classList.toggle('active', a.dataset.section === sectionId);
+            });
+            // Scroll to top of page
+            document.getElementById('landingPage').scrollTop = 0;
+            // Close mobile sidebar if open
+            if (window.innerWidth <= 700 && !sidebarCollapsed) {
+                // Optionally collapse on mobile after navigation
+            }
+        }
+
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.dataset.section;
+                if (sectionId) navigateToLandingSection(sectionId);
+            });
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.dataset.section;
+                if (sectionId) navigateToLandingSection(sectionId);
+            });
+        });
+
+        // Also handle hash changes
+        window.addEventListener('hashchange', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                navigateToLandingSection(hash);
+            }
+        });
+
+        // On load, if hash present
+        window.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                navigateToLandingSection(hash);
+            }
+        });
+
+        // ========== LANDING PAGE DARK TOGGLE ==========
+        const landingDarkToggle = document.getElementById('landingDarkToggle');
+        const landingDarkIcon = document.getElementById('landingDarkIcon');
+
+        function updateLandingDarkIcon() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            landingDarkIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            landingDarkToggle.querySelector('.toggle-label').textContent = isDark ? 'Light' : 'Dark';
+        }
+        updateLandingDarkIcon();
+
+        landingDarkToggle.addEventListener('click', function() {
+            toggleDarkMode();
+            updateLandingDarkIcon();
+        });
+
+        // Also listen to changes from the app dark toggle
+        const originalToggleDarkMode = toggleDarkMode;
+        toggleDarkMode = function() {
+            originalToggleDarkMode();
+            updateLandingDarkIcon();
+        };
+
+        // ============================================================
         // ========== LANDING PAGE AUTH TOGGLE ==========
         // ============================================================
         function showAuthScreen(activeTab = 'signin') {
             document.body.classList.add('show-auth');
-            // Show the correct tab
             showAuthTab(activeTab);
         }
 
@@ -6514,6 +6962,222 @@
         let communityMembers = [];
         let communityImams = [];
         let communityConverts = [];
+
+        // ========== ARTICLES DATA (30 articles) ==========
+        const allArticlesData = [
+            // First 6 from sampleArticles
+            {
+                id: 1,
+                title: 'Understanding the Meaning of Shahada',
+                source: 'Islamic Center of America',
+                excerpt: 'The Shahada is the declaration of faith that distinguishes a Muslim. This article explores its deep meaning and significance in a Muslim\'s life.',
+                tags: ['Shahada', 'Faith', 'Belief']
+            },
+            {
+                id: 2,
+                title: 'Step-by-Step Guide to Performing Wudu',
+                source: 'Islamic Relief',
+                excerpt: 'Learn the proper way to perform Wudu (ablution) with this comprehensive guide, including the spiritual significance of each step.',
+                tags: ['Wudu', 'Purification', 'Prayer']
+            },
+            {
+                id: 3,
+                title: 'The Importance of Salah in Daily Life',
+                source: 'Yaqeen Institute',
+                excerpt: 'Discover how the five daily prayers can transform your life, bringing peace, discipline, and spiritual connection to Allah.',
+                tags: ['Salah', 'Prayer', 'Spirituality']
+            },
+            {
+                id: 4,
+                title: 'Zakat: Purifying Your Wealth',
+                source: 'Muslim Hands',
+                excerpt: 'Zakat is not just charity—it\'s a right of the poor. This article explains the calculation, distribution, and spiritual benefits of Zakat.',
+                tags: ['Zakat', 'Charity', 'Wealth']
+            },
+            {
+                id: 5,
+                title: 'Fasting in Ramadan: A Spiritual Journey',
+                source: 'Islamic Relief',
+                excerpt: 'Fasting in Ramadan is a time of spiritual reflection, self-improvement, and heightened devotion. Learn how to make the most of this blessed month.',
+                tags: ['Ramadan', 'Fasting', 'Sawm']
+            },
+            {
+                id: 6,
+                title: 'The Rituals of Hajj: A Guide for Pilgrims',
+                source: 'Ministry of Hajj, Saudi Arabia',
+                excerpt: 'Hajj is the pilgrimage to Mecca, required of every able Muslim. This guide explains the rituals, their meanings, and practical tips for pilgrims.',
+                tags: ['Hajj', 'Pilgrimage', 'Mecca']
+            },
+            // Additional 24 articles
+            {
+                id: 7,
+                title: 'The Life of Prophet Muhammad (PBUH): A Summary',
+                source: 'Seerah Foundation',
+                excerpt: 'A concise biography of the Prophet Muhammad (PBUH), highlighting his character, mission, and the major events of his life.',
+                tags: ['Seerah', 'Prophet', 'Biography']
+            },
+            {
+                id: 8,
+                title: 'Understanding the Quran: Revelation and Preservation',
+                source: 'Quranic Studies Institute',
+                excerpt: 'Explore how the Quran was revealed, compiled, and preserved over centuries, and why it remains unchanged.',
+                tags: ['Quran', 'Revelation', 'Preservation']
+            },
+            {
+                id: 9,
+                title: 'The Importance of Islamic Manners (Adab)',
+                source: 'Islamic Ethics Center',
+                excerpt: 'Good manners are integral to Islam. Learn about the key traits of a Muslim\'s character and how to embody them.',
+                tags: ['Adab', 'Manners', 'Character']
+            },
+            {
+                id: 10,
+                title: 'Du\'a: The Weapon of the Believer',
+                source: 'Spiritual Guidance Publications',
+                excerpt: 'Du\'a is a powerful act of worship. This article covers the etiquette of supplication and the best times to make du\'a.',
+                tags: ['Du\'a', 'Supplication', 'Spirituality']
+            },
+            {
+                id: 11,
+                title: 'The Role of the Mosque in Community Life',
+                source: 'Mosque Development Network',
+                excerpt: 'Mosques are more than places of prayer. They serve as community centers for education, social welfare, and unity.',
+                tags: ['Mosque', 'Community', 'Islam']
+            },
+            {
+                id: 12,
+                title: 'Islamic Finance: Principles and Practices',
+                source: 'Islamic Finance Academy',
+                excerpt: 'An introduction to Islamic finance, covering principles like prohibition of riba (interest) and gharar (uncertainty).',
+                tags: ['Finance', 'Economics', 'Riba']
+            },
+            {
+                id: 13,
+                title: 'The Concept of Tawhid (Oneness of God)',
+                source: 'Theology Institute',
+                excerpt: 'Tawhid is the core of Islamic belief. Understand the three categories of Tawhid and their implications for daily life.',
+                tags: ['Tawhid', 'Theology', 'Belief']
+            },
+            {
+                id: 14,
+                title: 'Women in Islam: Rights and Responsibilities',
+                source: 'Women\'s Islamic Council',
+                excerpt: 'A balanced look at the rights and responsibilities of women in Islam, dispelling common misconceptions.',
+                tags: ['Women', 'Rights', 'Gender']
+            },
+            {
+                id: 15,
+                title: 'The Day of Judgment: Signs and Events',
+                source: 'Eschatology Research Center',
+                excerpt: 'Explore the major and minor signs of the Day of Judgment, as described in the Quran and Hadith.',
+                tags: ['Judgment Day', 'Eschatology', 'Signs']
+            },
+            {
+                id: 16,
+                title: 'The Importance of Seeking Knowledge in Islam',
+                source: 'Knowledge Pursuit Foundation',
+                excerpt: 'Islam encourages the pursuit of knowledge. Learn about the virtues of seeking knowledge and the responsibilities of a student.',
+                tags: ['Knowledge', 'Education', 'Learning']
+            },
+            {
+                id: 17,
+                title: 'Islamic Art and Architecture: A Visual Journey',
+                source: 'Art History Institute',
+                excerpt: 'Islamic art is characterized by geometric patterns, calligraphy, and arabesques. Discover its history and significance.',
+                tags: ['Art', 'Architecture', 'Calligraphy']
+            },
+            {
+                id: 18,
+                title: 'The Influence of Islam on Science and Medicine',
+                source: 'History of Science Journal',
+                excerpt: 'Muslim scholars made significant contributions to science, medicine, and mathematics during the Golden Age of Islam.',
+                tags: ['Science', 'Medicine', 'History']
+            },
+            {
+                id: 19,
+                title: 'Dealing with Anxiety and Stress from an Islamic Perspective',
+                source: 'Mental Health in Islam',
+                excerpt: 'Find comfort in Islamic teachings for managing anxiety, stress, and depression, including practical advice from the Sunnah.',
+                tags: ['Mental Health', 'Anxiety', 'Stress']
+            },
+            {
+                id: 20,
+                title: 'The Importance of Fasting Beyond Ramadan',
+                source: 'Islamic Spirituality Center',
+                excerpt: 'Fasting is not limited to Ramadan. Learn about the benefits of voluntary fasting on Mondays, Thursdays, and other days.',
+                tags: ['Fasting', 'Sawm', 'Voluntary']
+            },
+            {
+                id: 21,
+                title: 'Understanding the Concept of Jihad in Islam',
+                source: 'Islamic Studies Institute',
+                excerpt: 'Jihad is often misunderstood. This article explains its true meaning: striving in the way of Allah, both internally and externally.',
+                tags: ['Jihad', 'Striving', 'Islam']
+            },
+            {
+                id: 22,
+                title: 'The Family in Islam: Roles and Responsibilities',
+                source: 'Family Guidance Center',
+                excerpt: 'Learn about the Islamic framework for family life, including the rights and duties of spouses, parents, and children.',
+                tags: ['Family', 'Marriage', 'Parenting']
+            },
+            {
+                id: 23,
+                title: 'The Signs of the Last Hour in Islamic Tradition',
+                source: 'Eschatology Institute',
+                excerpt: 'A detailed look at the major and minor signs that will precede the Day of Judgment, according to Islamic sources.',
+                tags: ['Last Hour', 'Signs', 'Eschatology']
+            },
+            {
+                id: 24,
+                title: 'Islamic Ethics of Business and Trade',
+                source: 'Business Ethics in Islam',
+                excerpt: 'Islam promotes ethical business practices, including honesty, fairness, and avoiding exploitation.',
+                tags: ['Business', 'Ethics', 'Trade']
+            },
+            {
+                id: 25,
+                title: 'The Virtues of Reciting the Quran',
+                source: 'Quran Recitation Academy',
+                excerpt: 'Reciting the Quran brings immense rewards. Learn about the proper etiquette and the spiritual benefits of recitation.',
+                tags: ['Quran', 'Recitation', 'Virtues']
+            },
+            {
+                id: 26,
+                title: 'The Role of the Muslim Scholar in Society',
+                source: 'Scholarship Foundation',
+                excerpt: 'Muslim scholars have traditionally been the preservers and transmitters of Islamic knowledge. Explore their role today.',
+                tags: ['Scholars', 'Knowledge', 'Leadership']
+            },
+            {
+                id: 27,
+                title: 'Introduction to Islamic Jurisprudence (Fiqh)',
+                source: 'Fiqh Academy',
+                excerpt: 'Fiqh is the understanding of Islamic law. This article introduces its sources, schools, and how it applies to daily life.',
+                tags: ['Fiqh', 'Jurisprudence', 'Law']
+            },
+            {
+                id: 28,
+                title: 'The Prophetic Character: Lessons from the Sunnah',
+                source: 'Sunnah Studies Institute',
+                excerpt: 'The Prophet Muhammad (PBUH) is the perfect example of character. Learn from his kindness, honesty, and compassion.',
+                tags: ['Sunnah', 'Prophet', 'Character']
+            },
+            {
+                id: 29,
+                title: 'Islamic Teachings on Environmental Stewardship',
+                source: 'Eco-Islam Initiative',
+                excerpt: 'Islam emphasizes the importance of caring for the earth. Discover how Islamic values support environmental responsibility.',
+                tags: ['Environment', 'Stewardship', 'Ecology']
+            },
+            {
+                id: 30,
+                title: 'The Power of Dhikr (Remembrance of Allah)',
+                source: 'Spiritual Heart Institute',
+                excerpt: 'Dhikr is a profound act of worship that brings peace to the heart. Learn about its forms and benefits.',
+                tags: ['Dhikr', 'Remembrance', 'Spirituality']
+            }
+        ];
 
         // ========== QURAN VERSES ==========
         const quranVerses = [{
@@ -6588,7 +7252,7 @@
             }, 300);
         }
 
-        // ========== DARK MODE ==========
+        // ========== DARK MODE (global) ==========
         function applyDarkMode(isDark) {
             const html = document.documentElement;
             const darkToggle = document.getElementById('darkModeToggle');
@@ -6599,6 +7263,7 @@
                 html.setAttribute('data-theme', 'light');
                 if (darkToggle) darkToggle.classList.remove('on');
             }
+            updateLandingDarkIcon();
         }
 
         function toggleDarkMode() {
@@ -6608,6 +7273,7 @@
             applyDarkMode(newMode);
             localStorage.setItem('silah-dark-mode', newMode ? 'dark' : 'light');
             showMiniToast(newMode ? '🌙 Dark mode activated' : '☀️ Light mode activated');
+            updateLandingDarkIcon();
         }
 
         function showMiniToast(message) {
@@ -6655,14 +7321,18 @@
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const isDark = saved ? saved === 'dark' : prefersDark;
             applyDarkMode(isDark);
+            updateLandingDarkIcon();
         }
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
             const saved = localStorage.getItem('silah-dark-mode');
-            if (!saved) applyDarkMode(e.matches);
+            if (!saved) {
+                applyDarkMode(e.matches);
+                updateLandingDarkIcon();
+            }
         });
 
-        // ========== NAVIGATION ==========
+        // ========== NAVIGATION (app) ==========
         const screens = {
             dashboard: document.getElementById('screen-dashboard'),
             mentor: document.getElementById('screen-mentor'),
@@ -6670,6 +7340,7 @@
             feed: document.getElementById('screen-feed'),
             community: document.getElementById('screen-community'),
             learn: document.getElementById('screen-learn'),
+            'all-articles': document.getElementById('screen-all-articles'),
             profile: document.getElementById('screen-profile'),
             settings: document.getElementById('screen-settings'),
             pillars: document.getElementById('screen-pillars'),
@@ -6680,6 +7351,7 @@
         const bottomNavItems = document.querySelectorAll('.bn-item');
 
         function navigateTo(screenId) {
+            // Hide all screens
             Object.values(screens).forEach(s => { if (s) s.classList.remove('active'); });
             const target = screens[screenId];
             if (target) {
@@ -6687,10 +7359,19 @@
                 target.style.animation = 'none';
                 requestAnimationFrame(() => { target.style.animation = 'fadeUp 0.4s ease'; });
             }
-            navItems.forEach(n => n.classList.remove('active'));
-            navItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
-            bottomNavItems.forEach(n => n.classList.remove('active'));
-            bottomNavItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
+            // Update nav items only for main screens (not sub-pages like all-articles)
+            if (screenId !== 'all-articles') {
+                navItems.forEach(n => n.classList.remove('active'));
+                navItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
+                bottomNavItems.forEach(n => n.classList.remove('active'));
+                bottomNavItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
+            } else {
+                // Keep Learn nav active when showing all articles
+                navItems.forEach(n => n.classList.remove('active'));
+                navItems.forEach(n => { if (n.dataset.screen === 'learn') n.classList.add('active'); });
+                bottomNavItems.forEach(n => n.classList.remove('active'));
+                bottomNavItems.forEach(n => { if (n.dataset.screen === 'learn') n.classList.add('active'); });
+            }
             const container = document.getElementById('screenContainer');
             if (container) container.scrollTop = 0;
             if (screenId === 'dashboard') {
@@ -6713,6 +7394,9 @@
             }
             if (screenId === 'learn') {
                 loadArticles();
+            }
+            if (screenId === 'all-articles') {
+                renderAllArticles();
             }
             if (screenId === 'ai-model') {
                 renderConversations();
@@ -6864,11 +7548,17 @@
                     hideAuthScreen();
                     return;
                 }
+                // If on all-articles, go back to learn
+                if (document.getElementById('screen-all-articles').classList.contains('active')) {
+                    navigateTo('learn');
+                    return;
+                }
                 navigateTo('dashboard');
             }
             if (e.ctrlKey && e.shiftKey && e.key === 'D') {
                 e.preventDefault();
                 toggleDarkMode();
+                updateLandingDarkIcon();
             }
         });
 
@@ -7280,7 +7970,6 @@
                 currentProfile = null;
                 profilePopup.classList.remove('show');
                 notificationPopup.classList.remove('show');
-                // Show landing page again
                 document.body.classList.remove('show-auth');
             });
         }
@@ -9217,50 +9906,91 @@
             },
         };
 
-        const sampleArticles = [{
-            id: 1,
-            title: 'Understanding the Meaning of Shahada',
-            source: 'Islamic Center of America',
-            excerpt: 'The Shahada is the declaration of faith that distinguishes a Muslim. This article explores its deep meaning and significance in a Muslim\'s life.',
-            tags: ['Shahada', 'Faith', 'Belief'],
-            url: '#'
-        }, {
-            id: 2,
-            title: 'Step-by-Step Guide to Performing Wudu',
-            source: 'Islamic Relief',
-            excerpt: 'Learn the proper way to perform Wudu (ablution) with this comprehensive guide, including the spiritual significance of each step.',
-            tags: ['Wudu', 'Purification', 'Prayer'],
-            url: '#'
-        }, {
-            id: 3,
-            title: 'The Importance of Salah in Daily Life',
-            source: 'Yaqeen Institute',
-            excerpt: 'Discover how the five daily prayers can transform your life, bringing peace, discipline, and spiritual connection to Allah.',
-            tags: ['Salah', 'Prayer', 'Spirituality'],
-            url: '#'
-        }, {
-            id: 4,
-            title: 'Zakat: Purifying Your Wealth',
-            source: 'Muslim Hands',
-            excerpt: 'Zakat is not just charity—it\'s a right of the poor. This article explains the calculation, distribution, and spiritual benefits of Zakat.',
-            tags: ['Zakat', 'Charity', 'Wealth'],
-            url: '#'
-        }, {
-            id: 5,
-            title: 'Fasting in Ramadan: A Spiritual Journey',
-            source: 'Islamic Relief',
-            excerpt: 'Fasting in Ramadan is a time of spiritual reflection, self-improvement, and heightened devotion. Learn how to make the most of this blessed month.',
-            tags: ['Ramadan', 'Fasting', 'Sawm'],
-            url: '#'
-        }, {
-            id: 6,
-            title: 'The Rituals of Hajj: A Guide for Pilgrims',
-            source: 'Ministry of Hajj, Saudi Arabia',
-            excerpt: 'Hajj is the pilgrimage to Mecca, required of every able Muslim. This guide explains the rituals, their meanings, and practical tips for pilgrims.',
-            tags: ['Hajj', 'Pilgrimage', 'Mecca'],
-            url: '#'
-        }, ];
+        // ========== ARTICLES - Load and Search ==========
+        function renderArticles(articles, containerId = 'articlesContainer') {
+            const container = document.getElementById(containerId);
+            if (!container) return;
 
+            if (articles.length === 0) {
+                container.innerHTML = `
+                    <div class="no-articles">
+                        <i class="fas fa-book"></i>
+                        <p>No articles found matching your search.</p>
+                        <p style="font-size:13px;margin-top:4px;">Try a different keyword or ask the AI a question.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = articles.map(article => `
+                <div class="article-card">
+                    <div class="article-title">
+                        <i class="fas fa-book-open"></i> ${article.title}
+                    </div>
+                    <div class="article-source">📚 ${article.source}</div>
+                    <div class="article-excerpt">${article.excerpt}</div>
+                    <div class="article-tags">
+                        ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click listeners
+            container.querySelectorAll('.article-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const title = this.querySelector('.article-title')?.textContent || 'Article';
+                    showModerationToast(`Opening: ${title}`, 'info', 2000);
+                });
+            });
+        }
+
+        function loadArticles() {
+            const container = document.getElementById('articlesContainer');
+            const searchInput = document.getElementById('articleSearchInput');
+            const searchTerm = searchInput?.value?.toLowerCase() || '';
+
+            let articles = allArticlesData.slice(0, 6); // Default 6 recommended
+
+            if (searchTerm) {
+                articles = allArticlesData.filter(article =>
+                    article.title.toLowerCase().includes(searchTerm) ||
+                    article.excerpt.toLowerCase().includes(searchTerm) ||
+                    article.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+            }
+
+            renderArticles(articles, 'articlesContainer');
+        }
+
+        // Render all articles (for the All Articles screen)
+        function renderAllArticles() {
+            const grid = document.getElementById('allArticlesGrid');
+            if (!grid) return;
+
+            // We want to show all 30 articles, but we can also add search functionality here if needed.
+            // For simplicity, just display all articles.
+            renderArticles(allArticlesData, 'allArticlesGrid');
+        }
+
+        document.getElementById('articleSearchBtn')?.addEventListener('click', loadArticles);
+        document.getElementById('articleSearchInput')?.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                loadArticles();
+            }
+        });
+
+        // "All" button navigation
+        document.getElementById('viewAllArticlesBtn')?.addEventListener('click', function() {
+            navigateTo('all-articles');
+        });
+
+        // Back button from All Articles
+        document.getElementById('backToLearnBtn')?.addEventListener('click', function() {
+            navigateTo('learn');
+        });
+
+        // ========== CHATBOT ==========
         document.getElementById('chatSubmitBtn')?.addEventListener('click', handleChatSubmit);
 
         document.getElementById('chatInput')?.addEventListener('keydown', function(e) {
@@ -9337,88 +10067,9 @@
         function trackQuestion(question) {
             askedQuestions.push(question);
             localStorage.setItem('silah-asked-questions', JSON.stringify(askedQuestions));
+            // Reload articles to reflect interests
             loadArticles();
         }
-
-        // ========== LEARN PAGE: ARTICLES ==========
-        function loadArticles() {
-            const container = document.getElementById('articlesContainer');
-            const searchInput = document.getElementById('articleSearchInput');
-            const searchTerm = searchInput?.value?.toLowerCase() || '';
-
-            try {
-                const saved = localStorage.getItem('silah-asked-questions');
-                if (saved) {
-                    askedQuestions = JSON.parse(saved);
-                }
-            } catch (e) {
-                askedQuestions = [];
-            }
-
-            let recommendedArticles = [...sampleArticles];
-
-            if (searchTerm) {
-                recommendedArticles = recommendedArticles.filter(article =>
-                    article.title.toLowerCase().includes(searchTerm) ||
-                    article.excerpt.toLowerCase().includes(searchTerm) ||
-                    article.tags.some(tag => tag.toLowerCase().includes(searchTerm))
-                );
-            }
-
-            if (askedQuestions.length > 0) {
-                recommendedArticles.sort((a, b) => {
-                    let scoreA = 0,
-                        scoreB = 0;
-                    for (const q of askedQuestions) {
-                        const lowerQ = q.toLowerCase();
-                        if (a.title.toLowerCase().includes(lowerQ) || a.tags.some(t => lowerQ.includes(t.toLowerCase())))
-                            scoreA++;
-                        if (b.title.toLowerCase().includes(lowerQ) || b.tags.some(t => lowerQ.includes(t.toLowerCase())))
-                            scoreB++;
-                    }
-                    return scoreB - scoreA;
-                });
-            }
-
-            if (recommendedArticles.length === 0) {
-                container.innerHTML = `
-                    <div class="no-articles">
-                        <i class="fas fa-book"></i>
-                        <p>No articles found matching your search.</p>
-                        <p style="font-size:13px;margin-top:4px;">Try a different keyword or ask the AI a question.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = '';
-            recommendedArticles.forEach(article => {
-                const card = document.createElement('div');
-                card.className = 'article-card';
-                card.innerHTML = `
-                    <div class="article-title">
-                        <i class="fas fa-book-open"></i> ${article.title}
-                    </div>
-                    <div class="article-source">📚 ${article.source}</div>
-                    <div class="article-excerpt">${article.excerpt}</div>
-                    <div class="article-tags">
-                        ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
-                `;
-                card.addEventListener('click', () => {
-                    showModerationToast(`Opening: ${article.title}`, 'info', 2000);
-                });
-                container.appendChild(card);
-            });
-        }
-
-        document.getElementById('articleSearchBtn')?.addEventListener('click', loadArticles);
-        document.getElementById('articleSearchInput')?.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                loadArticles();
-            }
-        });
 
         // ========== AI MODEL HUB LOGIC ==========
         let conversations = [];
@@ -9699,8 +10350,8 @@
                 learn: {
                     title: 'Learn',
                     icon: 'fa-graduation-cap',
-                    keywords: ['learn', 'islam', 'ask', 'question', 'shahada', 'wudu', 'salah'],
-                    content: 'Learn Islam Ask Question Shahada Wudu Salah'
+                    keywords: ['learn', 'islam', 'ask', 'question', 'shahada', 'wudu', 'salah', 'articles'],
+                    content: 'Learn Islam Ask Question Shahada Wudu Salah Articles'
                 },
                 profile: {
                     title: 'Profile',
@@ -9760,33 +10411,16 @@
                 });
             });
 
-            const articleData = [
-                { title: 'Understanding the Meaning of Shahada', source: 'Islamic Center of America',
-                    excerpt: 'The Shahada is the declaration of faith.', tags: ['Shahada', 'Faith'] },
-                { title: 'Step-by-Step Guide to Performing Wudu', source: 'Islamic Relief',
-                    excerpt: 'Learn the proper way to perform Wudu.', tags: ['Wudu', 'Purification'] },
-                { title: 'The Importance of Salah in Daily Life', source: 'Yaqeen Institute',
-                    excerpt: 'Discover how the five daily prayers can transform your life.', tags: ['Salah',
-                        'Prayer'
-                    ] },
-                { title: 'Zakat: Purifying Your Wealth', source: 'Muslim Hands',
-                    excerpt: 'Zakat is not just charity—it\'s a right of the poor.', tags: ['Zakat', 'Charity'] },
-                { title: 'Fasting in Ramadan: A Spiritual Journey', source: 'Islamic Relief',
-                    excerpt: 'Fasting in Ramadan is a time of spiritual reflection.', tags: ['Ramadan', 'Fasting'] },
-                { title: 'The Rituals of Hajj: A Guide for Pilgrims', source: 'Ministry of Hajj',
-                    excerpt: 'Hajj is the pilgrimage to Mecca.', tags: ['Hajj', 'Pilgrimage'] }
-            ];
-
-            articleData.forEach((article, i) => {
-                const tagString = article.tags.join(' ');
+            // Add articles to search index
+            allArticlesData.forEach(article => {
                 index.push({
-                    id: 'article-' + (i + 1),
+                    id: 'article-' + article.id,
                     title: article.title,
                     icon: 'fa-book-open',
                     screen: 'learn',
                     type: 'article',
-                    keywords: `${article.title} ${article.excerpt} ${tagString} ${article.source}`,
-                    content: `${article.excerpt} ${tagString} ${article.source}`,
+                    keywords: `${article.title} ${article.excerpt} ${article.tags.join(' ')}`,
+                    content: `${article.excerpt} ${article.tags.join(' ')}`,
                     score: 0,
                     articleData: article
                 });
@@ -10038,8 +10672,19 @@
                 setTimeout(() => { btn.style.transform = 'scale(1) rotate(0deg)'; }, 300);
             });
 
-            // If user is already authenticated, the restoreSession will handle it
-            // Otherwise show landing page (default)
+            // Set default landing section if no hash
+            if (!window.location.hash) {
+                navigateToLandingSection('section-hero');
+            } else {
+                const hash = window.location.hash.substring(1);
+                if (hash && document.getElementById(hash)) {
+                    navigateToLandingSection(hash);
+                }
+            }
+
+            // Load articles on learn screen
+            loadArticles();
+
             console.log('🌙 Silah — AI-Powered Community Platform loaded.');
             console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
             console.log('💡 Tip: Press ⌘K (or Ctrl+K) to focus the search bar!');
