@@ -614,154 +614,7 @@
             position: relative;
         }
 
-        /* ===== SEARCH BAR ===== */
-        .search-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .search-wrapper .search-icon {
-            position: absolute;
-            left: 14px;
-            color: var(--gray-400);
-            font-size: 14px;
-            pointer-events: none;
-            z-index: 2;
-        }
-        .search-wrapper input {
-            padding: 8px 16px 8px 40px;
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-full);
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-            background: var(--gray-50);
-            transition: var(--transition);
-            width: 200px;
-            outline: none;
-            color: var(--text-primary);
-            position: relative;
-            z-index: 1;
-        }
-        .search-wrapper input:focus {
-            border-color: var(--green);
-            background: var(--input-bg);
-            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.1);
-            width: 260px;
-        }
-        .search-wrapper input::placeholder {
-            color: var(--gray-400);
-        }
 
-        /* Search Popup */
-        .search-popup {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
-            left: 0;
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-lg);
-            max-height: 420px;
-            overflow-y: auto;
-            z-index: 200;
-            display: none;
-            animation: fadeUp 0.25s ease;
-            transition: background var(--transition-theme), border-color var(--transition-theme);
-            min-width: 320px;
-        }
-        .search-popup.show {
-            display: block;
-        }
-        .search-popup::-webkit-scrollbar {
-            width: 4px;
-        }
-        .search-popup::-webkit-scrollbar-thumb {
-            background: var(--gray-300);
-            border-radius: 10px;
-        }
-
-        .search-popup .search-result-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 16px;
-            border-bottom: 1px solid var(--border-light);
-            cursor: pointer;
-            transition: background 0.15s ease;
-            text-decoration: none;
-            color: var(--text-primary);
-        }
-        .search-popup .search-result-item:last-child {
-            border-bottom: none;
-        }
-        .search-popup .search-result-item:hover {
-            background: var(--gray-50);
-        }
-        [data-theme="dark"] .search-popup .search-result-item:hover {
-            background: var(--gray-100);
-        }
-        .search-popup .search-result-item .result-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--green-pale);
-            color: var(--green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            flex-shrink: 0;
-        }
-        .search-popup .search-result-item .result-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .search-popup .search-result-item .result-info .result-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .search-popup .search-result-item .result-info .result-desc {
-            font-size: 12px;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .search-popup .search-result-item .result-badge {
-            font-size: 10px;
-            padding: 2px 10px;
-            border-radius: var(--radius-full);
-            background: var(--gray-100);
-            color: var(--text-secondary);
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-        [data-theme="dark"] .search-popup .search-result-item .result-badge {
-            background: var(--gray-200);
-        }
-        .search-popup .search-empty {
-            padding: 30px 20px;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-        .search-popup .search-empty i {
-            font-size: 28px;
-            color: var(--gray-300);
-            display: block;
-            margin-bottom: 8px;
-        }
-        .search-popup .search-section-header {
-            padding: 8px 16px 4px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--gray-400);
-            border-bottom: 1px solid var(--border-light);
-        }
 
         .topbar-right .icon-btn {
             width: 40px;
@@ -1802,13 +1655,7 @@
         .mentor-card .mentor-actions .btn-msg:hover {
             background: var(--gray-200);
         }
-        .mentor-card .mentor-actions .btn-sched {
-            background: var(--green);
-            color: #fff;
-        }
-        .mentor-card .mentor-actions .btn-sched:hover {
-            background: var(--green-dark);
-        }
+
 
         .ai-tip {
             margin-top: 12px;
@@ -3946,15 +3793,7 @@
             .topbar {
                 padding: 14px 20px;
             }
-            .search-wrapper input {
-                width: 140px;
-            }
-            .search-wrapper input:focus {
-                width: 180px;
-            }
-            .search-popup {
-                min-width: 260px;
-            }
+
             .screen-container {
                 padding: 20px;
             }
@@ -4043,23 +3882,6 @@
             .topbar-left .greeting small {
                 font-size: 12px;
                 display: block;
-            }
-            .search-wrapper input {
-                width: 100px;
-                font-size: 12px;
-                padding: 6px 12px 6px 32px;
-            }
-            .search-wrapper input:focus {
-                width: 140px;
-            }
-            .search-wrapper .search-icon {
-                left: 10px;
-                font-size: 12px;
-            }
-            .search-popup {
-                min-width: 220px;
-                right: -10px;
-                left: -10px;
             }
             .topbar-right .icon-btn {
                 width: 32px;
@@ -4250,23 +4072,6 @@
                 font-size: 8px;
                 top: 2px;
                 right: 2px;
-            }
-            .search-wrapper input {
-                width: 70px;
-                font-size: 11px;
-                padding: 4px 8px 4px 28px;
-            }
-            .search-wrapper input:focus {
-                width: 100px;
-            }
-            .search-wrapper .search-icon {
-                left: 8px;
-                font-size: 11px;
-            }
-            .search-popup {
-                min-width: 180px;
-                right: -20px;
-                left: -20px;
             }
             .bottom-nav .bn-item {
                 font-size: 7px;
@@ -4483,11 +4288,7 @@
                 <div class="helper">Providing credentials helps our team verify you as a scholar.</div>
             </div>
 
-            <div class="form-group">
-                <label>Scheduling Link (Optional)</label>
-                <input type="url" id="mentorBookingUrl" class="form-input" placeholder="https://calendly.com/your-link" style="width:100%;padding:10px 14px;border:1px solid var(--border-medium);border-radius:var(--radius-sm);background:var(--input-bg);color:var(--text-primary);outline:none;">
-                <div class="helper">Calendly or Cal.com link for mentees to schedule check-ins with you.</div>
-            </div>
+
 
             <div class="modal-actions">
                 <button class="btn-primary" id="mentorSubmitBtn">
@@ -4746,16 +4547,7 @@
                     </div>
                 </div>
                 <div class="topbar-right">
-                    <!-- ===== SEARCH BAR ===== -->
-                    <div class="search-wrapper">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="globalSearchInput" placeholder="Search Silah..." autocomplete="off" />
-                        <div class="search-popup" id="globalSearchPopup">
-                            <div id="searchResultsContainer">
-                                <!-- Results rendered by JS -->
-                            </div>
-                        </div>
-                    </div>
+
 
                     <!-- Bell -->
                     <div style="position:relative;">
@@ -7840,9 +7632,6 @@
                                     <button class="btn-primary" onclick="openChat('${mentor.user_id}', '${mentor.full_name}')" style="width: auto; padding: 10px 24px;">
                                         <i class="fas fa-envelope"></i> Message
                                     </button>
-                                    <button class="btn-secondary" onclick="openBooking('${mentor.booking_url}', '${mentor.full_name}')" style="background: #fff; border-color: var(--gold);">
-                                        <i class="fas fa-calendar-alt"></i> Schedule Check-in
-                                    </button>
                                     <button class="btn-secondary" onclick="endMentorship('${reqId}')" style="color: var(--red); border-color: var(--red-light); background: var(--red-light); margin-left: auto;">
                                         End Mentorship
                                     </button>
@@ -7858,11 +7647,9 @@
                             <div class="mentor-info">
                                 <div class="name">${mentor.full_name} <span class="stars">★★★★★</span></div>
                                 <div class="title" style="color: var(--gold); font-weight: 600;">Your Active Mentor</div>
-                                <div class="msg">Don't forget to schedule your next check-in!</div>
                             </div>
                             <div class="mentor-actions">
                                 <button class="btn-msg" onclick="openChat('${mentor.user_id}', '${mentor.full_name}')"><i class="fas fa-envelope"></i> Message</button>
-                                <button class="btn-sched" onclick="openBooking('${mentor.booking_url}', '${mentor.full_name}')">Schedule</button>
                             </div>
                         `;
                     }
@@ -7880,7 +7667,6 @@
                             </div>
                             <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
                                 <button onclick="openChat('${mentor.user_id}', '${mentor.full_name}')" style="padding:6px 18px;border-radius:var(--radius-full);border:none;background:var(--gray-100);font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Message</button>
-                                <button onclick="openBooking('${mentor.booking_url}', '${mentor.full_name}')" style="padding:6px 18px;border-radius:var(--radius-full);border:none;background:var(--green);color:#fff;font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Schedule</button>
                             </div>
                         `;
                     }
@@ -8471,24 +8257,14 @@ window.triggerMentorRequest = function(mentorId) {
                 </div>
                 <div class="mentor-actions">
                     <button class="btn-msg"><i class="fas fa-envelope"></i> Message</button>
-                    <button class="btn-sched">Schedule</button>
                 </div>
             `;
 
             const msgBtn = container.querySelector('.btn-msg');
-            const schedBtn = container.querySelector('.btn-sched');
 
             msgBtn?.addEventListener('click', function() {
                 // Pass the Auth User ID and Name to the chat function
                 openChat(displayMentor.user_id, displayMentor.full_name);
-            });
-
-            schedBtn?.addEventListener('click', function() {
-                if (displayMentor.booking_url) {
-                    window.open(displayMentor.booking_url, '_blank');
-                } else {
-                    showModerationToast(`${displayMentor.full_name} hasn't added a scheduling link yet. Send them a message!`, 'info', 4000);
-                }
             });
         }
 
@@ -9765,11 +9541,7 @@ window.triggerMentorRequest = function(mentorId) {
             console.log('🌐 Mosque proxy: local → fallback to allorigins.win');
         });
 
-        // Additional initialization for search
-        function initSearch() {
-            // Build search index from current data
-            // This is already called in enterApp
-        }
+
     </script>
 
 <!-- ========== DIRECT MESSAGING WIDGET ========== -->
