@@ -4561,32 +4561,12 @@
                                 <button class="notif-mark-all" id="markAllBtn">Mark all read</button>
                             </div>
                             <div id="notifList">
-                                <div class="notif-item unread" data-id="1">
-                                    <div class="notif-icon"><i class="fas fa-user-plus"></i></div>
-                                    <div class="notif-body">
-                                        <div class="notif-text"><strong>Fatima H.</strong> accepted your mentor request</div>
-                                        <div class="notif-time">2 min ago</div>
-                                    </div>
-                                </div>
-                                <div class="notif-item unread" data-id="2">
-                                    <div class="notif-icon"><i class="fas fa-calendar-check"></i></div>
-                                    <div class="notif-body">
-                                        <div class="notif-text">Reminder: <strong>Understanding Prayer</strong> class starts in 1 hour</div>
-                                        <div class="notif-time">45 min ago</div>
-                                    </div>
-                                </div>
-                                <div class="notif-item" data-id="3">
-                                    <div class="notif-icon"><i class="fas fa-heart"></i></div>
-                                    <div class="notif-body">
-                                        <div class="notif-text"><strong>Ahmed J.</strong> liked your post</div>
-                                        <div class="notif-time">2h ago</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="notif-empty" id="notifEmpty" style="display:none;">
-                                <i class="fas fa-bell-slash"></i>
-                                No new notifications
-                            </div>
+                                 <!-- Dynamic notifications loaded via JS -->
+                             </div>
+                             <div class="notif-empty" id="notifEmpty" style="display:none; padding: 24px; text-align: center; color: var(--text-secondary);">
+                                 <i class="fas fa-bell-slash" style="font-size:24px; display:block; margin-bottom:8px; color:var(--gray-300);"></i>
+                                 No new notifications
+                             </div>
                         </div>
                     </div>
 
@@ -6023,7 +6003,212 @@
             }
         });
 
-        // ========== NOTIFICATION POPUP ==========
+        // ========== REAL DYNAMIC NOTIFICATION SYSTEM ==========
+        function formatTimeAgo(dateStr) {
+            if (!dateStr) return 'Recently';
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} min ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            if (diffDays < 7) return `${diffDays}d ago`;
+            return date.toLocaleDateString();
+        }
+
+        async function loadRealNotifications() {
+            if (!currentUser) return;
+
+            const notifList = document.getElementById('notifList');
+            const notifEmpty = document.getElementById('notifEmpty');
+            const notifBadge = document.getElementById('notifBadge');
+            if (!notifList) return;
+
+            try {
+                const readNotifIds = JSON.parse(localStorage.getItem(`silah_read_notifs_${currentUser.id}`) || '[]');
+                const notifications = [];
+
+                // 1. Mentorship Requests received (for mentors)
+                const { data: pendingReqs } = await sb
+                    .from('mentorship_requests')
+                    .select('id, created_at, mentee:mentee_id (full_name)')
+                    .eq('mentor_id', currentUser.id)
+                    .eq('status', 'pending');
+
+                if (pendingReqs && pendingReqs.length) {
+                    pendingReqs.forEach(req => {
+                        const name = Array.isArray(req.mentee) ? req.mentee[0]?.full_name : req.mentee?.full_name || 'A user';
+                        notifications.push({
+                            id: `req_${req.id}`,
+                            icon: 'fa-user-plus',
+                            iconColor: 'var(--green)',
+                            text: `<strong>${name}</strong> sent you a mentorship request.`,
+                            time: req.created_at,
+                            action: () => navigateTo('mentor')
+                        });
+                    });
+                }
+
+                // 2. Mentorship Requests accepted (for mentees)
+                const { data: acceptedReqs } = await sb
+                    .from('mentorship_requests')
+                    .select('id, updated_at, mentors:mentor_id (full_name)')
+                    .eq('mentee_id', currentUser.id)
+                    .eq('status', 'accepted');
+
+                if (acceptedReqs && acceptedReqs.length) {
+                    acceptedReqs.forEach(req => {
+                        const name = Array.isArray(req.mentors) ? req.mentors[0]?.full_name : req.mentors?.full_name || 'A mentor';
+                        notifications.push({
+                            id: `acc_${req.id}`,
+                            icon: 'fa-graduation-cap',
+                            iconColor: 'var(--gold)',
+                            text: `<strong>${name}</strong> accepted your mentorship request!`,
+                            time: req.updated_at || req.created_at,
+                            action: () => navigateTo('mentor')
+                        });
+                    });
+                }
+
+                // 3. Direct Messages received
+                const { data: recentMsgs } = await sb
+                    .from('messages')
+                    .select('id, sender_id, text, created_at, profiles:sender_id (full_name)')
+                    .eq('recipient_id', currentUser.id)
+                    .order('created_at', { ascending: false })
+                    .limit(6);
+
+                if (recentMsgs && recentMsgs.length) {
+                    const senderMap = {};
+                    recentMsgs.forEach(msg => {
+                        if (!senderMap[msg.sender_id]) senderMap[msg.sender_id] = msg;
+                    });
+
+                    Object.values(senderMap).forEach(msg => {
+                        const prof = Array.isArray(msg.profiles) ? msg.profiles[0] : msg.profiles || {};
+                        const senderName = prof.full_name || 'Someone';
+                        notifications.push({
+                            id: `msg_${msg.id}`,
+                            icon: 'fa-comment-dots',
+                            iconColor: 'var(--blue)',
+                            text: `<strong>${senderName}</strong>: "${msg.text.substring(0, 30)}${msg.text.length > 30 ? '...' : ''}"`,
+                            time: msg.created_at,
+                            action: () => openChat(msg.sender_id, senderName)
+                        });
+                    });
+                }
+
+                // 4. Primary Mosque Events
+                if (primaryMembership) {
+                    const { data: events } = await sb
+                        .from('community_events')
+                        .select('id, title, event_date, created_at, mosque_name')
+                        .eq('mosque_id', primaryMembership.mosque_id)
+                        .order('event_date', { ascending: true })
+                        .limit(3);
+
+                    if (events && events.length) {
+                        events.forEach(ev => {
+                            notifications.push({
+                                id: `ev_${ev.id}`,
+                                icon: 'fa-calendar-alt',
+                                iconColor: 'var(--teal)',
+                                text: `New event at <strong>${ev.mosque_name || 'your mosque'}</strong>: ${ev.title}`,
+                                time: ev.created_at || ev.event_date,
+                                action: () => navigateTo('community')
+                            });
+                        });
+                    }
+                }
+
+                // Sort by time descending
+                notifications.sort((a, b) => new Date(b.time || 0) - new Date(a.time || 0));
+
+                if (notifications.length === 0) {
+                    notifList.innerHTML = '';
+                    if (notifEmpty) notifEmpty.style.display = 'block';
+                    if (notifBadge) notifBadge.style.display = 'none';
+                    return;
+                }
+
+                if (notifEmpty) notifEmpty.style.display = 'none';
+
+                let unreadCount = 0;
+                notifList.innerHTML = notifications.map(n => {
+                    const isUnread = !readNotifIds.includes(n.id);
+                    if (isUnread) unreadCount++;
+                    const timeAgo = formatTimeAgo(n.time);
+
+                    return `
+                        <div class="notif-item ${isUnread ? 'unread' : ''}" data-notif-id="${n.id}" style="cursor:pointer;">
+                            <div class="notif-icon" style="color:${n.iconColor || 'var(--green)'};"><i class="fas ${n.icon}"></i></div>
+                            <div class="notif-body">
+                                <div class="notif-text">${n.text}</div>
+                                <div class="notif-time">${timeAgo}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                if (notifBadge) {
+                    if (unreadCount > 0) {
+                        notifBadge.textContent = unreadCount;
+                        notifBadge.style.display = 'inline-flex';
+                    } else {
+                        notifBadge.style.display = 'none';
+                    }
+                }
+
+                // Click notification action
+                notifList.querySelectorAll('.notif-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const notifId = this.dataset.notifId;
+                        markNotifAsRead(notifId);
+                        this.classList.remove('unread');
+                        
+                        const target = notifications.find(n => n.id === notifId);
+                        if (target && typeof target.action === 'function') {
+                            target.action();
+                        }
+                        
+                        document.getElementById('notificationPopup')?.classList.remove('show');
+                    });
+                });
+
+            } catch (err) {
+                console.error('Error loading real notifications:', err);
+            }
+        }
+
+        function markNotifAsRead(notifId) {
+            if (!currentUser) return;
+            const readIds = JSON.parse(localStorage.getItem(`silah_read_notifs_${currentUser.id}`) || '[]');
+            if (!readIds.includes(notifId)) {
+                readIds.push(notifId);
+                localStorage.setItem(`silah_read_notifs_${currentUser.id}`, JSON.stringify(readIds));
+            }
+            updateUnreadBadgeCount();
+        }
+
+        function updateUnreadBadgeCount() {
+            if (!currentUser) return;
+            const unreadItems = document.querySelectorAll('#notifList .notif-item.unread');
+            const notifBadge = document.getElementById('notifBadge');
+            if (notifBadge) {
+                if (unreadItems.length > 0) {
+                    notifBadge.textContent = unreadItems.length;
+                    notifBadge.style.display = 'inline-flex';
+                } else {
+                    notifBadge.style.display = 'none';
+                }
+            }
+        }
+
+        // Notification bell toggle & auto fetch
         const bellBtn = document.getElementById('bellBtn');
         const notificationPopup = document.getElementById('notificationPopup');
         const notifBadge = document.getElementById('notifBadge');
@@ -6031,30 +6216,34 @@
 
         bellBtn?.addEventListener('click', function(e) {
             e.stopPropagation();
-            notificationPopup.classList.toggle('show');
-            profilePopup?.classList.remove('show');
+            notificationPopup?.classList.toggle('show');
+            document.getElementById('profilePopup')?.classList.remove('show');
+            loadRealNotifications();
         });
 
         document.addEventListener('click', function(e) {
-            if (notificationPopup && !notificationPopup.contains(e.target) && !bellBtn.contains(e.target)) {
+            if (notificationPopup && !notificationPopup.contains(e.target) && bellBtn && !bellBtn.contains(e.target)) {
                 notificationPopup.classList.remove('show');
             }
         });
 
         markAllBtn?.addEventListener('click', function() {
-            document.querySelectorAll('.notif-item.unread').forEach(item => item.classList.remove('unread'));
-            notifBadge.textContent = '0';
-            notifBadge.style.display = 'none';
+            if (!currentUser) return;
+            const items = document.querySelectorAll('#notifList .notif-item');
+            const readIds = [];
+            items.forEach(item => {
+                const id = item.dataset.notifId;
+                if (id) readIds.push(id);
+                item.classList.remove('unread');
+            });
+            localStorage.setItem(`silah_read_notifs_${currentUser.id}`, JSON.stringify(readIds));
+            if (notifBadge) notifBadge.style.display = 'none';
         });
 
-        document.querySelectorAll('.notif-item').forEach(item => {
-            item.addEventListener('click', function() {
-                this.classList.remove('unread');
-                const count = document.querySelectorAll('.notif-item.unread').length;
-                notifBadge.textContent = count;
-                if (count === 0) notifBadge.style.display = 'none';
-            });
-        });
+        // Periodic notification polling
+        setInterval(() => {
+            if (currentUser) loadRealNotifications();
+        }, 30000);
 
         // ========== AI MODERATION FUNCTIONS ==========
         function showModerationToast(message, type = 'info', duration = 5000) {
@@ -6456,14 +6645,16 @@
             }
         })();
 
-        function enterApp() {
+        async function enterApp() {
             document.body.classList.add('authenticated');
             navigateTo('dashboard');
             checkMentorStatus();
             if (document.getElementById('screen-feed').classList.contains('active')) {
                 loadFeed();
             }
-            loadUserCommunityMemberships();
+            await loadUserCommunityMemberships();
+            loadCommunityContent();
+            loadRealNotifications();
         }
 
         // ========== COMMUNITY FUNCTIONS ==========
