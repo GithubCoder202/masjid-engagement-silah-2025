@@ -308,7 +308,6 @@
             flex-wrap: wrap;
             gap: 14px;
             transition: background var(--transition-theme), border-color var(--transition-theme);
-            /* removed margin-left to fill full width */
         }
         [data-theme="dark"] .landing-nav {
             background: #1f2126;
@@ -525,7 +524,6 @@
         .landing-section {
             display: none;
             padding: 40px 32px 60px;
-            /* removed margin-left to fill full width */
             background: var(--cream);
             transition: background var(--transition-theme);
         }
@@ -1061,7 +1059,6 @@
             border-top: 1px solid var(--border-light);
             background: var(--white);
             transition: all var(--transition-theme);
-            /* removed margin-left */
         }
         .landing-footer strong {
             color: var(--green);
@@ -1072,7 +1069,6 @@
                 font-size: 12px;
             }
         }
-        /* removed the media query rule for margin-left */
 
         /* ========== AUTH SCREEN (overlay) ========== */
         .auth-screen {
@@ -4880,7 +4876,412 @@
             color: var(--green);
         }
 
-        /* ========== RESPONSIVE ========== */
+        /* ============================================================
+               NEW: RULES PAGE
+            ============================================================ */
+        #screen-rules .rules-hero {
+            background: linear-gradient(135deg, var(--green-pale) 0%, var(--gold-pale) 100%);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+            margin-bottom: 28px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+        }
+        [data-theme="dark"] #screen-rules .rules-hero {
+            background: linear-gradient(135deg, #1a2f26 0%, #2a2418 100%);
+            border-color: var(--border-light);
+        }
+        #screen-rules .rules-hero .rules-icon {
+            font-size: 56px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        #screen-rules .rules-hero h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            color: var(--text-primary);
+        }
+        #screen-rules .rules-hero p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 6px auto 0;
+        }
+        #screen-rules .rules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+        @media (max-width: 700px) {
+            #screen-rules .rules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        #screen-rules .rule-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 22px 26px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        #screen-rules .rule-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        #screen-rules .rule-card .rule-num {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gold);
+            flex-shrink: 0;
+            line-height: 1;
+            min-width: 40px;
+            text-align: center;
+        }
+        #screen-rules .rule-card .rule-content h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        #screen-rules .rule-card .rule-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        #screen-rules .rule-card .rule-content .rule-hadith {
+            font-style: italic;
+            font-size: 13px;
+            color: var(--gold);
+            margin-top: 6px;
+            padding: 8px 14px;
+            background: var(--gold-pale);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--gold);
+        }
+        [data-theme="dark"] #screen-rules .rule-card .rule-content .rule-hadith {
+            background: #2a2418;
+        }
+        #screen-rules .rules-footer {
+            text-align: center;
+            padding: 24px;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+        }
+        #screen-rules .rules-footer .back-to-feed {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: var(--radius-full);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        #screen-rules .rules-footer .back-to-feed:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        #screen-rules .rules-footer .rules-credit {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 14px;
+        }
+        #screen-rules .rules-footer .rules-credit strong {
+            color: var(--gold);
+        }
+
+        /* ============================================================
+               NEW: COMMUNITY DIRECTORY (in Profile tab)
+            ============================================================ */
+        .directory-section {
+            margin-top: 28px;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 24px 28px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+        }
+        .directory-section .dir-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .directory-section .dir-header h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .directory-section .dir-header h3 i {
+            color: var(--gold);
+        }
+        .directory-section .dir-header .dir-count {
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: var(--gray-100);
+            padding: 4px 16px;
+            border-radius: var(--radius-full);
+            font-weight: 500;
+        }
+        .directory-section .dir-search-wrap {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .directory-section .dir-search-wrap input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            outline: none;
+            min-width: 160px;
+            transition: var(--transition);
+        }
+        .directory-section .dir-search-wrap input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 107, 79, 0.08);
+        }
+        .directory-section .dir-search-wrap .dir-filter-btns {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .directory-section .dir-search-wrap .dir-filter-btns button {
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-medium);
+            background: var(--card-bg);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-secondary);
+        }
+        .directory-section .dir-search-wrap .dir-filter-btns button.active {
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green);
+        }
+        .directory-section .dir-search-wrap .dir-filter-btns button:hover:not(.active) {
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .directory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .directory-grid::-webkit-scrollbar {
+            width: 4px;
+        }
+        .directory-grid::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 10px;
+        }
+        .directory-grid .dir-card {
+            background: var(--gray-50);
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-theme);
+            cursor: default;
+        }
+        .directory-grid .dir-card:hover {
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-2px);
+        }
+        .directory-grid .dir-card .dir-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--green-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--green);
+            margin: 0 auto 8px;
+            border: 2px solid var(--gold-light);
+        }
+        .directory-grid .dir-card .dir-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+        .directory-grid .dir-card .dir-loc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .directory-grid .dir-card .dir-badge {
+            display: inline-block;
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            margin-top: 4px;
+            background: var(--gray-200);
+            color: var(--text-secondary);
+        }
+        .directory-grid .dir-card .dir-badge.scholar {
+            background: var(--purple-light);
+            color: var(--purple);
+        }
+        .directory-grid .dir-card .dir-badge.convert {
+            background: var(--gold-pale);
+            color: var(--gold);
+        }
+        .directory-grid .dir-card .dir-badge.imam {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+        .directory-grid .dir-card .dir-badge.mentor {
+            background: var(--orange-light);
+            color: var(--orange);
+        }
+        .directory-grid .dir-card .dir-msg-btn {
+            margin-top: 8px;
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--green);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .directory-grid .dir-card .dir-msg-btn:hover {
+            background: var(--green-dark);
+        }
+        .directory-grid .dir-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+        .directory-grid .dir-empty i {
+            font-size: 32px;
+            color: var(--gray-300);
+            display: block;
+            margin-bottom: 8px;
+        }
+        .directory-grid .dir-loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+        }
+        .directory-grid .dir-loading i {
+            font-size: 24px;
+            color: var(--green);
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @media (max-width: 600px) {
+            .directory-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .directory-section {
+                padding: 16px 18px;
+            }
+            .directory-section .dir-header h3 {
+                font-size: 17px;
+            }
+        }
+
+        /* ============================================================
+               FEED — Rules Button
+            ============================================================ */
+        .feed-rules-bar {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-theme);
+        }
+        .feed-rules-bar .rules-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feed-rules-bar .rules-bar-left i {
+            font-size: 24px;
+            color: var(--gold);
+        }
+        .feed-rules-bar .rules-bar-left .rules-bar-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .feed-rules-bar .rules-bar-left .rules-bar-text strong {
+            color: var(--text-primary);
+        }
+        .feed-rules-bar .btn-rules {
+            padding: 8px 24px;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--green);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .feed-rules-bar .btn-rules:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ========== RESPONSIVE OVERRIDES ========== */
         @media (max-width: 1024px) {
             .sidebar {
                 display: none;
@@ -5031,6 +5432,13 @@
             .landing-section #section-about .about-text .about-features {
                 justify-items: center;
             }
+            /* Rules responsive */
+            #screen-rules .rules-hero {
+                padding: 24px 20px;
+            }
+            #screen-rules .rules-hero h2 {
+                font-size: 24px;
+            }
         }
 
         @media (max-width: 700px) {
@@ -5128,7 +5536,33 @@
                 padding: 16px;
                 font-size: 12px;
             }
-            /* removed the margin-left: 0 rule */
+            /* feed rules bar */
+            .feed-rules-bar {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .feed-rules-bar .rules-bar-left {
+                justify-content: center;
+            }
+            .feed-rules-bar .btn-rules {
+                justify-content: center;
+            }
+            /* rules page */
+            #screen-rules .rules-hero .rules-icon {
+                font-size: 40px;
+            }
+            #screen-rules .rules-hero h2 {
+                font-size: 22px;
+            }
+            #screen-rules .rule-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            #screen-rules .rule-card .rule-content .rule-hadith {
+                text-align: left;
+            }
         }
 
         @media (max-width: 480px) {
@@ -5173,6 +5607,15 @@
                 padding: 10px 18px;
                 font-size: 14px;
             }
+            .directory-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+            .directory-section .dir-search-wrap {
+                flex-direction: column;
+            }
+            .directory-section .dir-search-wrap .dir-filter-btns {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -5212,6 +5655,25 @@
                 display: none;
             }
         }
+
+        /* scrollbar for directory grid */
+        .directory-grid::-webkit-scrollbar {
+            width: 5px;
+        }
+        .directory-grid::-webkit-scrollbar-track {
+            background: var(--gray-50);
+            border-radius: 10px;
+        }
+        .directory-grid::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 10px;
+        }
+        [data-theme="dark"] .directory-grid::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+        [data-theme="dark"] .directory-grid::-webkit-scrollbar-thumb {
+            background: var(--gray-400);
+        }
     </style>
 </head>
 <body>
@@ -5236,7 +5698,7 @@
             <div class="about-credit">
                 <div class="credit-label">✨ Website inspired by <span>Cobalt Coders</span> ✨</div>
             </div>
-            <div class="about-version">v1.4.0 · © 2026 Silah Foundation</div>
+            <div class="about-version">v1.5.0 · © 2026 Silah Foundation</div>
         </div>
     </div>
 
@@ -6258,6 +6720,108 @@
                             <p style="margin-top:10px;">Loading posts...</p>
                         </div>
                     </div>
+
+                    <!-- NEW: Rules bar -->
+                    <div class="feed-rules-bar">
+                        <div class="rules-bar-left">
+                            <i class="fas fa-scroll"></i>
+                            <div class="rules-bar-text">
+                                <strong>📋 Community Guidelines</strong> — Ensure a safe &amp; respectful space for all.
+                            </div>
+                        </div>
+                        <button class="btn-rules" id="readRulesBtn">
+                            <i class="fas fa-book-open"></i> Read Rules
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ===== RULES SCREEN (NEW) ===== -->
+                <div class="screen" id="screen-rules">
+                    <button class="back-to-learn" id="backToFeedBtn" style="display:inline-flex;align-items:center;gap:8px;color:var(--green);cursor:pointer;font-weight:600;font-size:15px;margin-bottom:20px;transition:var(--transition);border:none;background:none;font-family:'Inter',sans-serif;">
+                        <i class="fas fa-arrow-left"></i> Back to Feed
+                    </button>
+
+                    <div class="rules-hero">
+                        <span class="rules-icon">📜</span>
+                        <h2>Community Rules &amp; Guidelines</h2>
+                        <p>Our commitment to a safe, respectful, and Islamic-centered space for everyone.</p>
+                    </div>
+
+                    <div class="rules-grid">
+                        <div class="rule-card">
+                            <div class="rule-num">1</div>
+                            <div class="rule-content">
+                                <h4>🤲 Islamic Etiquette (Adab)</h4>
+                                <p>All discussions must be conducted with kindness, respect, and good character. Avoid harsh language, backbiting, and slander.</p>
+                                <div class="rule-hadith">"Whoever believes in Allah and the Last Day, let him speak good or remain silent." — Bukhari</div>
+                            </div>
+                        </div>
+                        <div class="rule-card">
+                            <div class="rule-num">2</div>
+                            <div class="rule-content">
+                                <h4>🕌 Stay on Topic</h4>
+                                <p>Keep discussions relevant to Islam, community, mentorship, and spiritual growth. Off-topic posts may be removed.</p>
+                                <div class="rule-hadith">"Part of a person's good Islam is leaving what does not concern him." — Tirmidhi</div>
+                            </div>
+                        </div>
+                        <div class="rule-card">
+                            <div class="rule-num">3</div>
+                            <div class="rule-content">
+                                <h4>🚫 No Hate Speech</h4>
+                                <p>Racism, sectarianism, misogyny, and any form of hate speech are strictly prohibited. We are one Ummah.</p>
+                                <div class="rule-hadith">"No one is a believer until he loves for his brother what he loves for himself." — Bukhari &amp; Muslim</div>
+                            </div>
+                        </div>
+                        <div class="rule-card">
+                            <div class="rule-num">4</div>
+                            <div class="rule-content">
+                                <h4>📖 Cite Sources</h4>
+                                <p>When sharing Islamic knowledge, cite Quranic verses and authentic Hadith. Avoid spreading misinformation.</p>
+                                <div class="rule-hadith">"Whoever speaks about the Quran without knowledge, let him take his seat in the Fire." — Tirmidhi</div>
+                            </div>
+                        </div>
+                        <div class="rule-card">
+                            <div class="rule-num">5</div>
+                            <div class="rule-content">
+                                <h4>🤝 Respect Privacy</h4>
+                                <p>Do not share personal information of others without consent. Protect your own privacy as well.</p>
+                                <div class="rule-hadith">"The Muslim is the one from whose tongue and hand the Muslims are safe." — Bukhari</div>
+                            </div>
+                        </div>
+                        <div class="rule-card">
+                            <div class="rule-num">6</div>
+                            <div class="rule-content">
+                                <h4>🧠 AI Moderation</h4>
+                                <p>All posts and comments are reviewed by AI moderation. Inappropriate content will be flagged or removed.</p>
+                                <div class="rule-hadith">"Enjoin good and forbid evil." — Quran 3:104</div>
+                            </div>
+                        </div>
+                        <div class="rule-card">
+                            <div class="rule-num">7</div>
+                            <div class="rule-content">
+                                <h4>⭐ Report Responsibly</h4>
+                                <p>Use the report feature only for genuine violations. False reporting may lead to restrictions.</p>
+                                <div class="rule-hadith">"Allah loves moderation in all affairs." — Bukhari</div>
+                            </div>
+                        </div>
+                        <div class="rule-card">
+                            <div class="rule-num">8</div>
+                            <div class="rule-content">
+                                <h4>🕋 Be Supportive</h4>
+                                <p>Encourage one another in faith. Celebrate milestones and offer support during hardships.</p>
+                                <div class="rule-hadith">"The believers are like a single body." — Bukhari</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rules-footer">
+                        <button class="back-to-feed" id="backToFeedBtn2">
+                            <i class="fas fa-arrow-left"></i> Return to Community Feed
+                        </button>
+                        <div class="rules-credit">
+                            📖 <strong>Silah</strong> — Built on Islamic values. Questions? Reach out to <strong>support@silah.org</strong>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- ===== COMMUNITY ===== -->
@@ -6455,6 +7019,27 @@
                                 </div>
                                 <button class="btn-logout" id="logoutBtn"><i class="fas fa-arrow-right-from-bracket"></i> Log Out</button>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== NEW: COMMUNITY DIRECTORY ===== -->
+                    <div class="directory-section" id="directorySection">
+                        <div class="dir-header">
+                            <h3><i class="fas fa-users"></i> Community Directory</h3>
+                            <span class="dir-count" id="dirCount">0 members</span>
+                        </div>
+                        <div class="dir-search-wrap">
+                            <input type="text" id="dirSearchInput" placeholder="Search members..." />
+                            <div class="dir-filter-btns">
+                                <button class="active" data-filter="all">All</button>
+                                <button data-filter="scholar">Scholars</button>
+                                <button data-filter="convert">Converts</button>
+                                <button data-filter="imam">Imams</button>
+                                <button data-filter="mentor">Mentors</button>
+                            </div>
+                        </div>
+                        <div class="directory-grid" id="directoryGrid">
+                            <div class="dir-loading"><i class="fas fa-spinner fa-spin"></i> Loading members...</div>
                         </div>
                     </div>
                 </div>
@@ -6666,7 +7251,7 @@
                     <div class="settings-section">
                         <div class="section-title"><i class="fas fa-info-circle"></i> About Silah</div>
                         <div class="settings-about">
-                            <strong>Silah</strong> v1.4.0 · AI-Powered Community Platform<br />
+                            <strong>Silah</strong> v1.5.0 · AI-Powered Community Platform<br />
                             Built with ❤️ for the global Muslim community.<br />
                             <span style="font-size:11px;color:var(--gray-400);">© 2026 Silah Foundation · All rights reserved.</span>
                         </div>
@@ -6820,12 +7405,9 @@
         const navLinks = document.querySelectorAll('.landing-nav .nav-link[data-section]');
 
         function navigateToLandingSection(sectionId) {
-            // Hide all sections
             Object.values(sections).forEach(s => s.classList.remove('active'));
-            // Show target
             const target = document.getElementById(sectionId);
             if (target) target.classList.add('active');
-            // Update active states
             const id = sectionId.replace('section-', '');
             sidebarLinks.forEach(a => {
                 a.classList.toggle('active', a.dataset.section === sectionId);
@@ -6833,12 +7415,7 @@
             navLinks.forEach(a => {
                 a.classList.toggle('active', a.dataset.section === sectionId);
             });
-            // Scroll to top of page
             document.getElementById('landingPage').scrollTop = 0;
-            // Close mobile sidebar if open
-            if (window.innerWidth <= 700 && !sidebarCollapsed) {
-                // Optionally collapse on mobile after navigation
-            }
         }
 
         sidebarLinks.forEach(link => {
@@ -6857,7 +7434,6 @@
             });
         });
 
-        // Also handle hash changes
         window.addEventListener('hashchange', function() {
             const hash = window.location.hash.substring(1);
             if (hash && document.getElementById(hash)) {
@@ -6865,7 +7441,6 @@
             }
         });
 
-        // On load, if hash present
         window.addEventListener('DOMContentLoaded', function() {
             const hash = window.location.hash.substring(1);
             if (hash && document.getElementById(hash)) {
@@ -6889,16 +7464,13 @@
             updateLandingDarkIcon();
         });
 
-        // Also listen to changes from the app dark toggle
         const originalToggleDarkMode = toggleDarkMode;
         toggleDarkMode = function() {
             originalToggleDarkMode();
             updateLandingDarkIcon();
         };
 
-        // ============================================================
         // ========== LANDING PAGE AUTH TOGGLE ==========
-        // ============================================================
         function showAuthScreen(activeTab = 'signin') {
             document.body.classList.add('show-auth');
             showAuthTab(activeTab);
@@ -6908,7 +7480,6 @@
             document.body.classList.remove('show-auth');
         }
 
-        // Landing page buttons
         document.getElementById('landingSignInBtn')?.addEventListener('click', function(e) {
             e.preventDefault();
             showAuthScreen('signin');
@@ -6923,15 +7494,12 @@
             showAuthScreen('register');
         });
 
-        // Auth close button
         document.getElementById('authCloseBtn')?.addEventListener('click', hideAuthScreen);
 
-        // Click outside auth card to close
         document.getElementById('authScreen')?.addEventListener('click', function(e) {
             if (e.target === this) hideAuthScreen();
         });
 
-        // Escape key to close auth
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && document.body.classList.contains('show-auth')) {
                 hideAuthScreen();
@@ -6965,218 +7533,96 @@
 
         // ========== ARTICLES DATA (30 articles) ==========
         const allArticlesData = [
-            // First 6 from sampleArticles
-            {
-                id: 1,
-                title: 'Understanding the Meaning of Shahada',
-                source: 'Islamic Center of America',
+            { id: 1, title: 'Understanding the Meaning of Shahada', source: 'Islamic Center of America',
                 excerpt: 'The Shahada is the declaration of faith that distinguishes a Muslim. This article explores its deep meaning and significance in a Muslim\'s life.',
-                tags: ['Shahada', 'Faith', 'Belief']
-            },
-            {
-                id: 2,
-                title: 'Step-by-Step Guide to Performing Wudu',
-                source: 'Islamic Relief',
+                tags: ['Shahada', 'Faith', 'Belief'] },
+            { id: 2, title: 'Step-by-Step Guide to Performing Wudu', source: 'Islamic Relief',
                 excerpt: 'Learn the proper way to perform Wudu (ablution) with this comprehensive guide, including the spiritual significance of each step.',
-                tags: ['Wudu', 'Purification', 'Prayer']
-            },
-            {
-                id: 3,
-                title: 'The Importance of Salah in Daily Life',
-                source: 'Yaqeen Institute',
+                tags: ['Wudu', 'Purification', 'Prayer'] },
+            { id: 3, title: 'The Importance of Salah in Daily Life', source: 'Yaqeen Institute',
                 excerpt: 'Discover how the five daily prayers can transform your life, bringing peace, discipline, and spiritual connection to Allah.',
-                tags: ['Salah', 'Prayer', 'Spirituality']
-            },
-            {
-                id: 4,
-                title: 'Zakat: Purifying Your Wealth',
-                source: 'Muslim Hands',
+                tags: ['Salah', 'Prayer', 'Spirituality'] },
+            { id: 4, title: 'Zakat: Purifying Your Wealth', source: 'Muslim Hands',
                 excerpt: 'Zakat is not just charity—it\'s a right of the poor. This article explains the calculation, distribution, and spiritual benefits of Zakat.',
-                tags: ['Zakat', 'Charity', 'Wealth']
-            },
-            {
-                id: 5,
-                title: 'Fasting in Ramadan: A Spiritual Journey',
-                source: 'Islamic Relief',
+                tags: ['Zakat', 'Charity', 'Wealth'] },
+            { id: 5, title: 'Fasting in Ramadan: A Spiritual Journey', source: 'Islamic Relief',
                 excerpt: 'Fasting in Ramadan is a time of spiritual reflection, self-improvement, and heightened devotion. Learn how to make the most of this blessed month.',
-                tags: ['Ramadan', 'Fasting', 'Sawm']
-            },
-            {
-                id: 6,
-                title: 'The Rituals of Hajj: A Guide for Pilgrims',
-                source: 'Ministry of Hajj, Saudi Arabia',
+                tags: ['Ramadan', 'Fasting', 'Sawm'] },
+            { id: 6, title: 'The Rituals of Hajj: A Guide for Pilgrims', source: 'Ministry of Hajj, Saudi Arabia',
                 excerpt: 'Hajj is the pilgrimage to Mecca, required of every able Muslim. This guide explains the rituals, their meanings, and practical tips for pilgrims.',
-                tags: ['Hajj', 'Pilgrimage', 'Mecca']
-            },
-            // Additional 24 articles
-            {
-                id: 7,
-                title: 'The Life of Prophet Muhammad (PBUH): A Summary',
-                source: 'Seerah Foundation',
+                tags: ['Hajj', 'Pilgrimage', 'Mecca'] },
+            { id: 7, title: 'The Life of Prophet Muhammad (PBUH): A Summary', source: 'Seerah Foundation',
                 excerpt: 'A concise biography of the Prophet Muhammad (PBUH), highlighting his character, mission, and the major events of his life.',
-                tags: ['Seerah', 'Prophet', 'Biography']
-            },
-            {
-                id: 8,
-                title: 'Understanding the Quran: Revelation and Preservation',
-                source: 'Quranic Studies Institute',
+                tags: ['Seerah', 'Prophet', 'Biography'] },
+            { id: 8, title: 'Understanding the Quran: Revelation and Preservation', source: 'Quranic Studies Institute',
                 excerpt: 'Explore how the Quran was revealed, compiled, and preserved over centuries, and why it remains unchanged.',
-                tags: ['Quran', 'Revelation', 'Preservation']
-            },
-            {
-                id: 9,
-                title: 'The Importance of Islamic Manners (Adab)',
-                source: 'Islamic Ethics Center',
+                tags: ['Quran', 'Revelation', 'Preservation'] },
+            { id: 9, title: 'The Importance of Islamic Manners (Adab)', source: 'Islamic Ethics Center',
                 excerpt: 'Good manners are integral to Islam. Learn about the key traits of a Muslim\'s character and how to embody them.',
-                tags: ['Adab', 'Manners', 'Character']
-            },
-            {
-                id: 10,
-                title: 'Du\'a: The Weapon of the Believer',
-                source: 'Spiritual Guidance Publications',
+                tags: ['Adab', 'Manners', 'Character'] },
+            { id: 10, title: 'Du\'a: The Weapon of the Believer', source: 'Spiritual Guidance Publications',
                 excerpt: 'Du\'a is a powerful act of worship. This article covers the etiquette of supplication and the best times to make du\'a.',
-                tags: ['Du\'a', 'Supplication', 'Spirituality']
-            },
-            {
-                id: 11,
-                title: 'The Role of the Mosque in Community Life',
-                source: 'Mosque Development Network',
+                tags: ['Du\'a', 'Supplication', 'Spirituality'] },
+            { id: 11, title: 'The Role of the Mosque in Community Life', source: 'Mosque Development Network',
                 excerpt: 'Mosques are more than places of prayer. They serve as community centers for education, social welfare, and unity.',
-                tags: ['Mosque', 'Community', 'Islam']
-            },
-            {
-                id: 12,
-                title: 'Islamic Finance: Principles and Practices',
-                source: 'Islamic Finance Academy',
+                tags: ['Mosque', 'Community', 'Islam'] },
+            { id: 12, title: 'Islamic Finance: Principles and Practices', source: 'Islamic Finance Academy',
                 excerpt: 'An introduction to Islamic finance, covering principles like prohibition of riba (interest) and gharar (uncertainty).',
-                tags: ['Finance', 'Economics', 'Riba']
-            },
-            {
-                id: 13,
-                title: 'The Concept of Tawhid (Oneness of God)',
-                source: 'Theology Institute',
+                tags: ['Finance', 'Economics', 'Riba'] },
+            { id: 13, title: 'The Concept of Tawhid (Oneness of God)', source: 'Theology Institute',
                 excerpt: 'Tawhid is the core of Islamic belief. Understand the three categories of Tawhid and their implications for daily life.',
-                tags: ['Tawhid', 'Theology', 'Belief']
-            },
-            {
-                id: 14,
-                title: 'Women in Islam: Rights and Responsibilities',
-                source: 'Women\'s Islamic Council',
+                tags: ['Tawhid', 'Theology', 'Belief'] },
+            { id: 14, title: 'Women in Islam: Rights and Responsibilities', source: 'Women\'s Islamic Council',
                 excerpt: 'A balanced look at the rights and responsibilities of women in Islam, dispelling common misconceptions.',
-                tags: ['Women', 'Rights', 'Gender']
-            },
-            {
-                id: 15,
-                title: 'The Day of Judgment: Signs and Events',
-                source: 'Eschatology Research Center',
+                tags: ['Women', 'Rights', 'Gender'] },
+            { id: 15, title: 'The Day of Judgment: Signs and Events', source: 'Eschatology Research Center',
                 excerpt: 'Explore the major and minor signs of the Day of Judgment, as described in the Quran and Hadith.',
-                tags: ['Judgment Day', 'Eschatology', 'Signs']
-            },
-            {
-                id: 16,
-                title: 'The Importance of Seeking Knowledge in Islam',
-                source: 'Knowledge Pursuit Foundation',
+                tags: ['Judgment Day', 'Eschatology', 'Signs'] },
+            { id: 16, title: 'The Importance of Seeking Knowledge in Islam', source: 'Knowledge Pursuit Foundation',
                 excerpt: 'Islam encourages the pursuit of knowledge. Learn about the virtues of seeking knowledge and the responsibilities of a student.',
-                tags: ['Knowledge', 'Education', 'Learning']
-            },
-            {
-                id: 17,
-                title: 'Islamic Art and Architecture: A Visual Journey',
-                source: 'Art History Institute',
+                tags: ['Knowledge', 'Education', 'Learning'] },
+            { id: 17, title: 'Islamic Art and Architecture: A Visual Journey', source: 'Art History Institute',
                 excerpt: 'Islamic art is characterized by geometric patterns, calligraphy, and arabesques. Discover its history and significance.',
-                tags: ['Art', 'Architecture', 'Calligraphy']
-            },
-            {
-                id: 18,
-                title: 'The Influence of Islam on Science and Medicine',
-                source: 'History of Science Journal',
+                tags: ['Art', 'Architecture', 'Calligraphy'] },
+            { id: 18, title: 'The Influence of Islam on Science and Medicine', source: 'History of Science Journal',
                 excerpt: 'Muslim scholars made significant contributions to science, medicine, and mathematics during the Golden Age of Islam.',
-                tags: ['Science', 'Medicine', 'History']
-            },
-            {
-                id: 19,
-                title: 'Dealing with Anxiety and Stress from an Islamic Perspective',
-                source: 'Mental Health in Islam',
+                tags: ['Science', 'Medicine', 'History'] },
+            { id: 19, title: 'Dealing with Anxiety and Stress from an Islamic Perspective', source: 'Mental Health in Islam',
                 excerpt: 'Find comfort in Islamic teachings for managing anxiety, stress, and depression, including practical advice from the Sunnah.',
-                tags: ['Mental Health', 'Anxiety', 'Stress']
-            },
-            {
-                id: 20,
-                title: 'The Importance of Fasting Beyond Ramadan',
-                source: 'Islamic Spirituality Center',
+                tags: ['Mental Health', 'Anxiety', 'Stress'] },
+            { id: 20, title: 'The Importance of Fasting Beyond Ramadan', source: 'Islamic Spirituality Center',
                 excerpt: 'Fasting is not limited to Ramadan. Learn about the benefits of voluntary fasting on Mondays, Thursdays, and other days.',
-                tags: ['Fasting', 'Sawm', 'Voluntary']
-            },
-            {
-                id: 21,
-                title: 'Understanding the Concept of Jihad in Islam',
-                source: 'Islamic Studies Institute',
+                tags: ['Fasting', 'Sawm', 'Voluntary'] },
+            { id: 21, title: 'Understanding the Concept of Jihad in Islam', source: 'Islamic Studies Institute',
                 excerpt: 'Jihad is often misunderstood. This article explains its true meaning: striving in the way of Allah, both internally and externally.',
-                tags: ['Jihad', 'Striving', 'Islam']
-            },
-            {
-                id: 22,
-                title: 'The Family in Islam: Roles and Responsibilities',
-                source: 'Family Guidance Center',
+                tags: ['Jihad', 'Striving', 'Islam'] },
+            { id: 22, title: 'The Family in Islam: Roles and Responsibilities', source: 'Family Guidance Center',
                 excerpt: 'Learn about the Islamic framework for family life, including the rights and duties of spouses, parents, and children.',
-                tags: ['Family', 'Marriage', 'Parenting']
-            },
-            {
-                id: 23,
-                title: 'The Signs of the Last Hour in Islamic Tradition',
-                source: 'Eschatology Institute',
+                tags: ['Family', 'Marriage', 'Parenting'] },
+            { id: 23, title: 'The Signs of the Last Hour in Islamic Tradition', source: 'Eschatology Institute',
                 excerpt: 'A detailed look at the major and minor signs that will precede the Day of Judgment, according to Islamic sources.',
-                tags: ['Last Hour', 'Signs', 'Eschatology']
-            },
-            {
-                id: 24,
-                title: 'Islamic Ethics of Business and Trade',
-                source: 'Business Ethics in Islam',
+                tags: ['Last Hour', 'Signs', 'Eschatology'] },
+            { id: 24, title: 'Islamic Ethics of Business and Trade', source: 'Business Ethics in Islam',
                 excerpt: 'Islam promotes ethical business practices, including honesty, fairness, and avoiding exploitation.',
-                tags: ['Business', 'Ethics', 'Trade']
-            },
-            {
-                id: 25,
-                title: 'The Virtues of Reciting the Quran',
-                source: 'Quran Recitation Academy',
+                tags: ['Business', 'Ethics', 'Trade'] },
+            { id: 25, title: 'The Virtues of Reciting the Quran', source: 'Quran Recitation Academy',
                 excerpt: 'Reciting the Quran brings immense rewards. Learn about the proper etiquette and the spiritual benefits of recitation.',
-                tags: ['Quran', 'Recitation', 'Virtues']
-            },
-            {
-                id: 26,
-                title: 'The Role of the Muslim Scholar in Society',
-                source: 'Scholarship Foundation',
+                tags: ['Quran', 'Recitation', 'Virtues'] },
+            { id: 26, title: 'The Role of the Muslim Scholar in Society', source: 'Scholarship Foundation',
                 excerpt: 'Muslim scholars have traditionally been the preservers and transmitters of Islamic knowledge. Explore their role today.',
-                tags: ['Scholars', 'Knowledge', 'Leadership']
-            },
-            {
-                id: 27,
-                title: 'Introduction to Islamic Jurisprudence (Fiqh)',
-                source: 'Fiqh Academy',
+                tags: ['Scholars', 'Knowledge', 'Leadership'] },
+            { id: 27, title: 'Introduction to Islamic Jurisprudence (Fiqh)', source: 'Fiqh Academy',
                 excerpt: 'Fiqh is the understanding of Islamic law. This article introduces its sources, schools, and how it applies to daily life.',
-                tags: ['Fiqh', 'Jurisprudence', 'Law']
-            },
-            {
-                id: 28,
-                title: 'The Prophetic Character: Lessons from the Sunnah',
-                source: 'Sunnah Studies Institute',
+                tags: ['Fiqh', 'Jurisprudence', 'Law'] },
+            { id: 28, title: 'The Prophetic Character: Lessons from the Sunnah', source: 'Sunnah Studies Institute',
                 excerpt: 'The Prophet Muhammad (PBUH) is the perfect example of character. Learn from his kindness, honesty, and compassion.',
-                tags: ['Sunnah', 'Prophet', 'Character']
-            },
-            {
-                id: 29,
-                title: 'Islamic Teachings on Environmental Stewardship',
-                source: 'Eco-Islam Initiative',
+                tags: ['Sunnah', 'Prophet', 'Character'] },
+            { id: 29, title: 'Islamic Teachings on Environmental Stewardship', source: 'Eco-Islam Initiative',
                 excerpt: 'Islam emphasizes the importance of caring for the earth. Discover how Islamic values support environmental responsibility.',
-                tags: ['Environment', 'Stewardship', 'Ecology']
-            },
-            {
-                id: 30,
-                title: 'The Power of Dhikr (Remembrance of Allah)',
-                source: 'Spiritual Heart Institute',
+                tags: ['Environment', 'Stewardship', 'Ecology'] },
+            { id: 30, title: 'The Power of Dhikr (Remembrance of Allah)', source: 'Spiritual Heart Institute',
                 excerpt: 'Dhikr is a profound act of worship that brings peace to the heart. Learn about its forms and benefits.',
-                tags: ['Dhikr', 'Remembrance', 'Spirituality']
-            }
+                tags: ['Dhikr', 'Remembrance', 'Spirituality'] }
         ];
 
         // ========== QURAN VERSES ==========
@@ -7338,6 +7784,7 @@
             mentor: document.getElementById('screen-mentor'),
             discover: document.getElementById('screen-discover'),
             feed: document.getElementById('screen-feed'),
+            rules: document.getElementById('screen-rules'),
             community: document.getElementById('screen-community'),
             learn: document.getElementById('screen-learn'),
             'all-articles': document.getElementById('screen-all-articles'),
@@ -7351,7 +7798,6 @@
         const bottomNavItems = document.querySelectorAll('.bn-item');
 
         function navigateTo(screenId) {
-            // Hide all screens
             Object.values(screens).forEach(s => { if (s) s.classList.remove('active'); });
             const target = screens[screenId];
             if (target) {
@@ -7359,14 +7805,15 @@
                 target.style.animation = 'none';
                 requestAnimationFrame(() => { target.style.animation = 'fadeUp 0.4s ease'; });
             }
-            // Update nav items only for main screens (not sub-pages like all-articles)
-            if (screenId !== 'all-articles') {
+            if (screenId !== 'all-articles' && screenId !== 'rules') {
                 navItems.forEach(n => n.classList.remove('active'));
                 navItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
                 bottomNavItems.forEach(n => n.classList.remove('active'));
                 bottomNavItems.forEach(n => { if (n.dataset.screen === screenId) n.classList.add('active'); });
+            } else if (screenId === 'rules') {
+                navItems.forEach(n => n.classList.remove('active'));
+                bottomNavItems.forEach(n => n.classList.remove('active'));
             } else {
-                // Keep Learn nav active when showing all articles
                 navItems.forEach(n => n.classList.remove('active'));
                 navItems.forEach(n => { if (n.dataset.screen === 'learn') n.classList.add('active'); });
                 bottomNavItems.forEach(n => n.classList.remove('active'));
@@ -7402,6 +7849,9 @@
                 renderConversations();
                 renderMessages();
             }
+            if (screenId === 'profile') {
+                loadDirectory();
+            }
         }
 
         navItems.forEach(item => {
@@ -7417,6 +7867,11 @@
                 if (screen) navigateTo(screen);
             });
         });
+
+        // ========== RULES NAVIGATION ==========
+        document.getElementById('readRulesBtn')?.addEventListener('click', () => navigateTo('rules'));
+        document.getElementById('backToFeedBtn')?.addEventListener('click', () => navigateTo('feed'));
+        document.getElementById('backToFeedBtn2')?.addEventListener('click', () => navigateTo('feed'));
 
         // ========== TOGGLE SWITCH ==========
         function toggleSwitch(el) {
@@ -7548,9 +8003,12 @@
                     hideAuthScreen();
                     return;
                 }
-                // If on all-articles, go back to learn
                 if (document.getElementById('screen-all-articles').classList.contains('active')) {
                     navigateTo('learn');
+                    return;
+                }
+                if (document.getElementById('screen-rules').classList.contains('active')) {
+                    navigateTo('feed');
                     return;
                 }
                 navigateTo('dashboard');
@@ -8004,6 +8462,7 @@
             }
             loadUserCommunityMemberships();
             setupSearch();
+            loadDirectory();
         }
 
         // ========== COMMUNITY FUNCTIONS ==========
@@ -9935,7 +10394,6 @@
                 </div>
             `).join('');
 
-            // Add click listeners
             container.querySelectorAll('.article-card').forEach(card => {
                 card.addEventListener('click', function() {
                     const title = this.querySelector('.article-title')?.textContent || 'Article';
@@ -9949,7 +10407,7 @@
             const searchInput = document.getElementById('articleSearchInput');
             const searchTerm = searchInput?.value?.toLowerCase() || '';
 
-            let articles = allArticlesData.slice(0, 6); // Default 6 recommended
+            let articles = allArticlesData.slice(0, 6);
 
             if (searchTerm) {
                 articles = allArticlesData.filter(article =>
@@ -9962,13 +10420,9 @@
             renderArticles(articles, 'articlesContainer');
         }
 
-        // Render all articles (for the All Articles screen)
         function renderAllArticles() {
             const grid = document.getElementById('allArticlesGrid');
             if (!grid) return;
-
-            // We want to show all 30 articles, but we can also add search functionality here if needed.
-            // For simplicity, just display all articles.
             renderArticles(allArticlesData, 'allArticlesGrid');
         }
 
@@ -9980,12 +10434,10 @@
             }
         });
 
-        // "All" button navigation
         document.getElementById('viewAllArticlesBtn')?.addEventListener('click', function() {
             navigateTo('all-articles');
         });
 
-        // Back button from All Articles
         document.getElementById('backToLearnBtn')?.addEventListener('click', function() {
             navigateTo('learn');
         });
@@ -10067,7 +10519,6 @@
         function trackQuestion(question) {
             askedQuestions.push(question);
             localStorage.setItem('silah-asked-questions', JSON.stringify(askedQuestions));
-            // Reload articles to reflect interests
             loadArticles();
         }
 
@@ -10341,6 +10792,12 @@
                     keywords: ['feed', 'community', 'posts', 'discussion'],
                     content: 'Community Feed Posts Discussion'
                 },
+                rules: {
+                    title: 'Rules & Guidelines',
+                    icon: 'fa-scroll',
+                    keywords: ['rules', 'guidelines', 'community rules', 'forum rules', 'etiquette'],
+                    content: 'Rules Guidelines Community Rules Forum Rules Etiquette Adab'
+                },
                 community: {
                     title: 'Community',
                     icon: 'fa-users',
@@ -10356,8 +10813,8 @@
                 profile: {
                     title: 'Profile',
                     icon: 'fa-user',
-                    keywords: ['profile', 'journey', 'milestones', 'shahada', 'jummah'],
-                    content: 'Profile Journey Milestones Shahada Jummah'
+                    keywords: ['profile', 'journey', 'milestones', 'shahada', 'jummah', 'directory', 'members'],
+                    content: 'Profile Journey Milestones Shahada Jummah Directory Members'
                 },
                 settings: {
                     title: 'Settings',
@@ -10411,7 +10868,6 @@
                 });
             });
 
-            // Add articles to search index
             allArticlesData.forEach(article => {
                 index.push({
                     id: 'article-' + article.id,
@@ -10648,9 +11104,172 @@
             });
         }
 
-        function rebuildSearchIndex() {
-            searchIndex = buildSearchIndex();
+        // ============================================================
+        // ========== COMMUNITY DIRECTORY (in Profile) ==========
+        // ============================================================
+        let allDirectoryUsers = [];
+        let dirFilter = 'all';
+        let dirSearchTerm = '';
+
+        async function loadDirectory() {
+            const grid = document.getElementById('directoryGrid');
+            const countEl = document.getElementById('dirCount');
+            if (!grid) return;
+
+            grid.innerHTML = `<div class="dir-loading"><i class="fas fa-spinner fa-spin"></i> Loading members...</div>`;
+
+            try {
+                const { data: profiles, error } = await sb
+                    .from('profiles')
+                    .select('*');
+
+                if (error) throw error;
+
+                const { data: mentors } = await sb
+                    .from('mentors')
+                    .select('user_id, verified, expertise');
+
+                const mentorMap = {};
+                (mentors || []).forEach(m => {
+                    mentorMap[m.user_id] = m;
+                });
+
+                const { data: communityProfiles } = await sb
+                    .from('community_profiles')
+                    .select('id, is_convert, is_imam, about_me');
+
+                const cpMap = {};
+                (communityProfiles || []).forEach(cp => {
+                    cpMap[cp.id] = cp;
+                });
+
+                allDirectoryUsers = (profiles || []).filter(p => p.id !== currentUser?.id).map(p => {
+                    const cp = cpMap[p.id] || {};
+                    const mentor = mentorMap[p.id] || {};
+                    return {
+                        ...p,
+                        is_mentor: !!mentorMap[p.id],
+                        is_verified_mentor: mentor.verified === true,
+                        mentor_expertise: mentor.expertise || null,
+                        is_convert: cp.is_convert === true,
+                        is_imam: cp.is_imam === true,
+                        about_me: cp.about_me || null,
+                    };
+                });
+
+                renderDirectoryGrid();
+
+                if (countEl) {
+                    countEl.textContent = `${allDirectoryUsers.length} members`;
+                }
+
+            } catch (error) {
+                console.error('Error loading directory:', error);
+                grid.innerHTML = `
+                        <div class="dir-empty">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Failed to load members. Please try again.</p>
+                        </div>
+                    `;
+            }
         }
+
+        function renderDirectoryGrid() {
+            const grid = document.getElementById('directoryGrid');
+            if (!grid) return;
+
+            let filtered = [...allDirectoryUsers];
+
+            if (dirSearchTerm) {
+                const term = dirSearchTerm.toLowerCase();
+                filtered = filtered.filter(u =>
+                    (u.full_name || '').toLowerCase().includes(term) ||
+                    (u.location || '').toLowerCase().includes(term)
+                );
+            }
+
+            if (dirFilter !== 'all') {
+                filtered = filtered.filter(u => {
+                    if (dirFilter === 'scholar') return u.is_verified_mentor === true;
+                    if (dirFilter === 'convert') return u.is_convert === true;
+                    if (dirFilter === 'imam') return u.is_imam === true;
+                    if (dirFilter === 'mentor') return u.is_mentor === true;
+                    return true;
+                });
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                        <div class="dir-empty">
+                            <i class="fas fa-user-slash"></i>
+                            <p>No members found matching your criteria.</p>
+                        </div>
+                    `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(user => {
+                const name = user.full_name || 'Unknown';
+                const initials = getInitials(name);
+                const loc = user.location || 'Location not set';
+                const badges = [];
+                if (user.is_verified_mentor) badges.push({ label: 'Scholar', cls: 'scholar' });
+                else if (user.is_mentor) badges.push({ label: 'Mentor', cls: 'mentor' });
+                if (user.is_convert) badges.push({ label: 'Convert', cls: 'convert' });
+                if (user.is_imam) badges.push({ label: 'Imam', cls: 'imam' });
+                if (badges.length === 0) badges.push({ label: 'Member', cls: '' });
+
+                const badgeHtml = badges.map(b =>
+                    `<span class="dir-badge ${b.cls}">${b.label}</span>`
+                ).join('');
+
+                return `
+                        <div class="dir-card">
+                            <div class="dir-avatar">${initials}</div>
+                            <div class="dir-name">${name}</div>
+                            <div class="dir-loc">📍 ${loc}</div>
+                            <div style="margin-top:4px;">${badgeHtml}</div>
+                            ${user.about_me ? `<div style="font-size:11px;color:var(--text-secondary);margin-top:4px;line-height:1.4;">${user.about_me}</div>` : ''}
+                            <button class="dir-msg-btn" data-user-name="${name}"><i class="fas fa-envelope"></i> Message</button>
+                        </div>
+                    `;
+            }).join('');
+
+            grid.querySelectorAll('.dir-msg-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const name = this.dataset.userName;
+                    showModerationToast(`Message ${name}`, 'info', 2000);
+                });
+            });
+        }
+
+        // Directory search & filter listeners
+        document.getElementById('dirSearchInput')?.addEventListener('input', function() {
+            dirSearchTerm = this.value.trim();
+            renderDirectoryGrid();
+        });
+
+        document.querySelectorAll('.dir-filter-btns button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.dir-filter-btns button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                dirFilter = this.dataset.filter;
+                renderDirectoryGrid();
+            });
+        });
+
+        // Refresh directory when profile screen becomes active
+        const profileScreen = document.getElementById('screen-profile');
+        const profileObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    if (profileScreen.classList.contains('active')) {
+                        loadDirectory();
+                    }
+                }
+            });
+        });
+        profileObserver.observe(profileScreen, { attributes: true });
 
         // ========== INIT ==========
         document.addEventListener('DOMContentLoaded', function() {
@@ -10672,7 +11291,6 @@
                 setTimeout(() => { btn.style.transform = 'scale(1) rotate(0deg)'; }, 300);
             });
 
-            // Set default landing section if no hash
             if (!window.location.hash) {
                 navigateToLandingSection('section-hero');
             } else {
@@ -10682,13 +11300,14 @@
                 }
             }
 
-            // Load articles on learn screen
             loadArticles();
 
-            console.log('🌙 Silah — AI-Powered Community Platform loaded.');
+            console.log('🌙 Silah — AI-Powered Community Platform loaded. (v1.5.0)');
             console.log('💡 Tip: Press Ctrl+Shift+D to toggle dark mode!');
             console.log('💡 Tip: Press ⌘K (or Ctrl+K) to focus the search bar!');
             console.log('💡 Click the Silah logo to see the about modal!');
+            console.log('📋 New: Community Directory in Profile tab!');
+            console.log('📜 New: Rules & Guidelines page accessible from Feed!');
             console.log('AI Moderation:', USE_OPENAI ? 'Enabled (OpenAI)' : 'Disabled');
             if (USE_OPENAI) {
                 console.log('OpenAI API Key:', OPENAI_API_KEY && OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY_HERE' ? '✓ Configured' :
