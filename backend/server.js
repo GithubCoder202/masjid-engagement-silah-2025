@@ -1,4 +1,4 @@
-// server.js – Gemini AI Only
+// server.js – Merged Gemini AI + Mosque Proxy
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -12,7 +12,7 @@ app.use(express.json());
 // TEST ROUTE – to verify server is running
 // ============================================================
 app.get('/ping', (req, res) => {
-    res.json({ message: 'pong', status: 'Gemini server is running' });
+    res.json({ message: 'pong', status: 'Server is running (Gemini + Mosque proxy)' });
 });
 
 // ============================================================
@@ -66,11 +66,125 @@ app.post('/api/chat', async (req, res) => {
 });
 
 // ============================================================
+// MOSQUE FINDER PROXY (with geocoding enrichment)
+// ============================================================
+const UPSTREAM = 'https://time.now/mosques/api/mosques';
+const GEOCODE_URL = 'https://photon.komoot.io/api/';
+const geocodeCache = new Map();
+let lastGeocodeCallAt = 0;
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function coordsFromUrl(url) {
+    if (!url) return null;
+    const match = url.match(/query=(-?\d+\.?\d*),(-?\d+\.?\d*)/);
+    if (!match) return null;
+    return { lat: parseFloat(match[1]), lon: parseFloat(match[2]) };
+}
+
+function simplifyAddress(address) {
+    return address
+        .replace(/,?\s*(suite|ste|unit|apt|#)\s*[\w-]+/gi, '')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+}
+
+async function queryGeocoder(query) {
+    const url = `${GEOCODE_URL}?q=${encodeURIComponent(query)}&limit=1`;
+    const res = await fetch(url);
+    if (!res.ok) {
+        console.error(`[geocode] request failed (${res.status}) for query: "${query}"`);
+        return null;
+    }
+    const data = await res.json();
+    const feature = data && Array.isArray(data.features) ? data.features[0] : null;
+    console.log(`[geocode] query: "${query}" -> ${feature ? 1 : 0} result(s)`);
+    if (feature && Array.isArray(feature.geometry?.coordinates)) {
+        const [lon, lat] = feature.geometry.coordinates;
+        return { lat, lon };
+    }
+    return null;
+}
+
+async function geocodeAddress(address) {
+    if (!address) return null;
+    if (geocodeCache.has(address)) return geocodeCache.get(address);
+
+    // Rate limit – be a good citizen on the public Photon endpoint
+    const waitMs = 1000 - (Date.now() - lastGeocodeCallAt);
+    if (waitMs > 0) await sleep(waitMs);
+    lastGeocodeCallAt = Date.now();
+
+    try {
+        let coords = await queryGeocoder(address);
+        if (!coords) {
+            const simplified = simplifyAddress(address);
+            if (simplified !== address) {
+                await sleep(1000);
+                lastGeocodeCallAt = Date.now();
+                coords = await queryGeocoder(simplified);
+            }
+        }
+        geocodeCache.set(address, coords);
+        return coords;
+    } catch (err) {
+        console.error('Geocode error for address:', address, err);
+        geocodeCache.set(address, null);
+        return null;
+    }
+}
+
+async function enrichWithCoords(mosques) {
+    const enriched = [];
+    for (const m of mosques) {
+        let coords = coordsFromUrl(m.url);
+        if (!coords) {
+            coords = await geocodeAddress(m.address);
+        }
+        enriched.push({
+            ...m,
+            lat: coords ? coords.lat : null,
+            lon: coords ? coords.lon : null
+        });
+    }
+    return enriched;
+}
+
+app.get('/api/mosques', async (req, res) => {
+    try {
+        const upstreamUrl = `${UPSTREAM}${req.url.search || ''}`;
+        const upstreamRes = await fetch(upstreamUrl);
+        const body = await upstreamRes.text();
+
+        if (!upstreamRes.ok) {
+            return res.status(upstreamRes.status).type('application/json').send(body);
+        }
+
+        let mosques;
+        try {
+            mosques = JSON.parse(body);
+        } catch (parseErr) {
+            // Not JSON – pass through as-is
+            return res.status(upstreamRes.status).type('application/json').send(body);
+        }
+
+        const enriched = Array.isArray(mosques) ? await enrichWithCoords(mosques) : mosques;
+        res.json(enriched);
+    } catch (err) {
+        console.error('Mosque proxy error:', err);
+        res.status(502).json({ error: 'Failed to reach mosque API', details: String(err) });
+    }
+});
+
+// ============================================================
 // START SERVER
 // ============================================================
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`✅ Gemini AI server running on port ${PORT}`);
-    console.log(`   📌 GET  /ping      (test)`);
-    console.log(`   📌 POST /api/chat  (Gemini AI)`);
+    console.log(`✅ Merged server running on port ${PORT}`);
+    console.log(`   📌 GET  /ping          (test)`);
+    console.log(`   📌 POST /api/chat      (Gemini AI)`);
+    console.log(`   📌 GET  /api/mosques   (Mosque proxy with geocoding)`);
 });
